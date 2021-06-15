@@ -1,7 +1,4 @@
-
-These SAS tutorials are based on the the content and structure of the R tutorials available from [OpenIntro](https://openintrostat.github.io/ims-tutorials/).
-
-Each tutorial corresponds to one part of the IMS textbook and is comprised of multiple lessons for a total of 35 lessons.
+Each tutorial corresponds to one part of the OpenIntro::IMS textbook and is comprised of multiple lessons for a total of 35 lessons.
 
 [Tutorial 1. Introduction to data](https://bghammill.github.io/ims-01-data)
 
@@ -15,5 +12,5 @@ Each tutorial corresponds to one part of the IMS textbook and is comprised of mu
 
 [Tutorial 6. Inferential modeling](https://bghammill.github.io/ims-06-model-infer)
 
-
+*These SAS tutorials are based on the the content and structure of the R tutorials available from [OpenIntro](https://openintrostat.github.io/ims-tutorials/).*
 
