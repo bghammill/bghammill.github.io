@@ -7,7 +7,7 @@ When I commit to this repo, Pages will re-[Jekyll](https://jekyllrb.com/) to reb
 
 ### Markdown
 
-Just use Markdown.  Don't get fancy.
+Just use *Markdown*.  Don't get fancy.
 
 ```
 Code block time
