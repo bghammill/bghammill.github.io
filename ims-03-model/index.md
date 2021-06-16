@@ -20,7 +20,7 @@ In this tutorial you’ll also take your skills with simple linear regression to
 
 ## Lessons
 
-### 1 - [Visualizing two variables](https://openintro.shinyapps.io/ims-03-model-01/)
+### 1 - [Visualizing two variables](https://bghammill.github.io/ims-03-model/ims-03-lesson-01/)
 
 - Explore bivariate relationships graphically
 - Characterize bivariate relationships
