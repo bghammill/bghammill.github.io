@@ -84,3 +84,5 @@ In this tutorial you’ll also take your skills with simple linear regression to
 ### 10 - [Case study: Italian restaurants in NYC](https://openintro.shinyapps.io/ims-03-model-10/)
 
 - Explore the relationship between price and the quality of food, service, and decor for Italian restaurants in New York City
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
