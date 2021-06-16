@@ -12,11 +12,11 @@ In this tutorial you’ll also take your skills with simple linear regression to
 - Fit, interpret, and assess simple linear regression models
 - Measure and interpret model fit
 - Identify and attend to the disparate impact that unusual data observations may have on a regression model
-- Compute with `lm` objects in R
+- *Compute with `lm` objects in R*
 - Compute and visualize model predictions
 - Visualize, fit, interpret, and assess a variety of multiple regression models, including those with interaction terms
 - Visualize, fit, interpret, and assess logistic regression models
-- Understand the relationship between R modeling syntax and geometric and mathematical specifications for models
+- Understand the relationship between SAS modeling syntax and geometric and mathematical specifications for models
 
 ## Lessons
 
@@ -85,4 +85,7 @@ In this tutorial you’ll also take your skills with simple linear regression to
 
 - Explore the relationship between price and the quality of food, service, and decor for Italian restaurants in New York City
 
+<!-- MathJax -->
+
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
