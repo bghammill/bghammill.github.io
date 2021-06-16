@@ -2,7 +2,7 @@
 
 ## Tutorial description
 
-Ultimately, data analysis is about understanding relationships among variables. Exploring data with multiple variables requires new, more complex tools, but enables a richer set of comparisons. In this tutorial, you will learn how to describe relationships between two numerical quantities. You will characterize these relationships graphically, in the form of summary statistics, and through simple linear regression models.
+Ultimately, data analysis is about understanding relationships among variables. Exploring data with multiple variables requires new, more complex tools, but enables a richer set of comparisons. In this tutorial, you will learn how to describe relationships between two numerical quantities. You will characterize these relationships graphically, in the form of summary statistics, and through simple linear regression models. 
 
 In this tutorial you’ll also take your skills with simple linear regression to the next level. By learning multiple and logistic regression techniques you will gain the skills to model and predict both numeric and categorical outcomes using multiple input variables. You’ll also learn how to fit, visualize, and interpret these models. Then you’ll apply your skills to learn about Italian restaurants in New York City!
 
@@ -52,7 +52,7 @@ In this tutorial you’ll also take your skills with simple linear regression to
 ### 5 - [Model fit](https://openintro.shinyapps.io/ims-03-model-05/)
 
 - Assess the quality of fit of a regression model
-- Interpret $R^2$
+- Interpret $$R^2$$
 - Measure leverage and influence
 - Identify and attend to outliers
 
