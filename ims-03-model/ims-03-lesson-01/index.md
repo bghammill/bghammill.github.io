@@ -20,7 +20,7 @@ In a statistical model, we generally have one variable that is the output and on
   - A variable you think might be related to the response
 - Both variables are (continuous) *numerical*
 
-### Graphical representations
+#### Graphical representations
 
 Just as you learned to visualize the distribution of one variable with a histogram or density plot, statisticians have developed a commonly used framework for visualizing the relationship between two numeric variables: the scatterplot. The scatterplot has been called the most “[generally useful invention in the history of statistical graphics](http://onlinelibrary.wiley.com/doi/10.1002/jhbs.20078/abstract).” It is a simple two-dimensional plot in which the two coordinates of each dot represent the values of two variables measured on a single observation.
 
