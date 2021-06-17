@@ -28,20 +28,20 @@ In this tutorial you’ll also take your skills with simple linear regression to
 - Discuss transformations
 - Identify outliers
 
-### 2 - [Correlation](https://openintro.shinyapps.io/ims-03-model-02/)
+### 2 - [Correlation](https://bghammill.github.io/ims-03-model/ims-03-lesson-02/)
 
 - Quantify the strength of a linear relationship
 - Compute and interpret Pearson Product-Moment correlation
 - Identify spurious correlations
 
-### 3 - [Simple linear regression](https://openintro.shinyapps.io/ims-03-model-03/)
+### 3 - [Simple linear regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-03/)
 
 - Visualize a simple linear model as “best fit” line
 - Conceptualize simple linear regression
 - Fit and describe simple linear regression models
 - Internalize regression to the mean
 
-### 4 - [Interpreting regression models](https://openintro.shinyapps.io/ims-03-model-04/)
+### 4 - [Interpreting regression models](https://bghammill.github.io/ims-03-model/ims-03-lesson-04/)
 
 - Interpret the meaning of coefficients in a regression model
 - Understand the impact of units and scales
@@ -49,39 +49,39 @@ In this tutorial you’ll also take your skills with simple linear regression to
 - Make predictions from regression models
 - Overlay a regression model on a scatterplot
 
-### 5 - [Model fit](https://openintro.shinyapps.io/ims-03-model-05/)
+### 5 - [Model fit](https://bghammill.github.io/ims-03-model/ims-03-lesson-05/)
 
 - Assess the quality of fit of a regression model
 - Interpret $$R^2$$
 - Measure leverage and influence
 - Identify and attend to outliers
 
-### 6 - [Parallel slopes](https://openintro.shinyapps.io/ims-03-model-06/)
+### 6 - [Parallel slopes](https://bghammill.github.io/ims-03-model/ims-03-lesson-06/)
 
 - Visualize, fit, and interpret a parallel slopes model, which has one numeric and one categorical explanatory variable
 - Describe a model in three different ways: mathematically, graphically, and through R syntax
 
-### 7 - [Evaluating and extending parallel slopes model](https://openintro.shinyapps.io/ims-03-model-07/)
+### 7 - [Evaluating and extending parallel slopes model](https://bghammill.github.io/ims-03-model/ims-03-lesson-07/)
 
 - Assess and interpret model fit
 - Compute residuals and predictions
 - Fit and interpret interaction models
 - Recognize Simpson’s paradox
 
-### 8 - [Multiple regression](https://openintro.shinyapps.io/ims-03-model-08/)
+### 8 - [Multiple regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-08/)
 
 - Visualize, fit, and interpret a multiple regression model with two numeric explanatory variables
 - Visualize, fit, and interpret a parallel planes model with two numeric explanatory variables and a categorical variable
 - Fit and interpret multiple regression models in higher dimensions
 - Understand and identify multicollinearity
 
-### 9 - [Logistic regression](https://openintro.shinyapps.io/ims-03-model-09/)
+### 9 - [Logistic regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-09/)
 
 - Visualize, fit, and interpret logistic regression models
 - Interpret coefficients on three different scales
 - Make predictions from a logistic regression model
 
-### 10 - [Case study: Italian restaurants in NYC](https://openintro.shinyapps.io/ims-03-model-10/)
+### 10 - [Case study: Italian restaurants in NYC](https://bghammill.github.io/ims-03-model/ims-03-lesson-10/)
 
 - Explore the relationship between price and the quality of food, service, and decor for Italian restaurants in New York City
 
