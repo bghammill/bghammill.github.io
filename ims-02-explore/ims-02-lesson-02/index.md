@@ -9,7 +9,7 @@ The dataset that we'll be working with is one that has information on the cars t
 In this lesson, you'll be working with the `cars` dataset, which records characteristics on all of the new models of cars for sale in the US in a certain year.
 We can learn more about each variable using the `glimpse()` function.
 
-```{r glimpse-cars, echo = TRUE}
+```
 glimpse(cars)
 ```
 
@@ -42,7 +42,7 @@ Finally, we notice the `geom_dotplot()` function is used to add dots to the plot
 This function has an optional argument (input) of `dotsize`, which specifies how large the dots should be (values closer to 0 are smaller, values closer to 1 are larger). 
 
 
-```{r dotplot-cars, echo = TRUE}
+```
 ggplot(data = cars, aes(x = weight)) +
   geom_dotplot(dotsize = 0.4)
 ```
@@ -58,7 +58,7 @@ Because of the binning, it's not possible to perfectly reconstruct the dataset, 
 
 Notice, the only aspect of the code that changes is the transition from `geom_dotplot()` to `geom_histogram()`. 
 
-```{r hist, message=TRUE, warning=TRUE, echo = TRUE}
+```
 ggplot(data = cars, aes(x = weight)) +
   geom_histogram()
 ```
@@ -78,7 +78,7 @@ The `bins` and `binwidth` arguments to `geom_histogram()` is similar to the `dot
 If we use a binwidth of 5, the result is a histogram that's much smoother.
 Alternatively, we could choose to specify the number of bins we would like, instead of the 30 bins `geom_histogram()` defaults to. 
 
-```{r wbw, echo = TRUE}
+```
 ggplot(data = cars, aes(x = hwy_mpg)) +
   geom_histogram(binwidth = 5)
 
@@ -96,7 +96,7 @@ Create the following three plots:
 - A second histogram of horsepower with a binwidth of 30.
 - A third histogram of horsepower with a binwidth of 60.
 
-```{r ex4, exercise = TRUE}
+```
 # Create hist of horsepwr with binwidth of 3
 ggplot(data = cars, aes(___)) +
   geom_histogram(binwidth = ___) 
@@ -109,12 +109,12 @@ ggplot(data = cars, aes(___)) +
 
 ```
 
-```{r ex4-hint}
+```
 ggplot(data = cars, aes(horsepwr)) +
   geom_histogram(binwidth = 3)
 ```
 
-```{r ex4-solution}
+```
 # Create hist of horsepwr with binwidth of 3
 ggplot(data = cars, aes(horsepwr)) +
   geom_histogram(binwidth = 3) +
@@ -138,7 +138,7 @@ ggplot(data = cars, aes(horsepwr)) +
 
 Answer the following question based on the plots below.
 
-```{r mc3-pre, fig.width = 6, fig.height = 5}
+```
 # Create hist of horsepwr with bw of 3
 p1 <- cars %>%
   ggplot(aes(horsepwr)) +
@@ -160,7 +160,7 @@ p3 <- cars %>%
 grid.arrange(p1, p2, p3, nrow = 1, widths = c(0.3, 0.35, 0.35)) 
 ```
 
-```{r mc3}
+```
 question("What feature is present in Plot A that's not found in B or C?",
   answer("The most common horsepower is around 200.", message = "It seems like Plot B and Plot C have peaks around 200."),
   answer("There is a tendency for cars to have horsepower right at 200 or 300 horsepower.", correct = TRUE, message = "Nice one! Plot A is the only histogram that shows the count for cars with exactly 200 and 300 horsepower."),
@@ -177,7 +177,7 @@ A density plot is fairly sensitive to spikiness in the data, so you'll only want
 
 Notice, the only line in our code that has changed switches to `geom_density()`. 
 
-```{r cars-density-plot, echo=TRUE}
+```
 ggplot(data = cars, aes(x = weight)) +
   geom_density()
 ```
@@ -194,7 +194,7 @@ As you can imagine, it's easier to smooth over a smaller number of bins, so if y
 
 Try a few other values for the bandwidth in the exercise below.
 
-```{r bandwidth-try, exercise = TRUE}
+```
 ggplot(data = cars, aes(x = weight)) +
   geom_density(bw = 100)
 ```
@@ -207,21 +207,21 @@ A boxplot plots the center of the distribution (median), the values that mark of
 
 Notice, we have only changed one line in our `R` code, switching to `geom_boxplot()`. 
 
-```{r cars-boxplot, echo=TRUE}
+```
 ggplot(data = cars, aes(x = weight)) +
   geom_boxplot()
 ```
 
 The box represents the central bulk of the data,
 
-```{r cars-boxplot-2}
+```
 ggplot(data = cars, aes(x = weight)) +
   geom_boxplot(fill = COL[1,1])
 ```
 
 the whiskers contain almost all the data,
 
-```{r cars-boxplot-3}
+```
 ggplot(data = cars, aes(x = weight)) +
   geom_boxplot() +
   annotate("segment",
@@ -238,7 +238,7 @@ ggplot(data = cars, aes(x = weight)) +
 
 and the extreme values are represented as points. You'll see the syntax for this is a bit different: we'll discuss why later on in the lesson.
 
-```{r cars-boxplot-5}
+```
 ggplot(data = cars, aes(x = weight)) +
   geom_boxplot() +
   annotate("segment",
@@ -260,7 +260,7 @@ The boxplot is based around three summary statistics:
 
 - The first quartile of the data -- 25% of the data falls below this number
 
-```{r box1q, fig.height=6, fig.width=6}
+```
 set.seed(234)
 
 common_cyl <- cars %>%
@@ -314,7 +314,7 @@ grid.lines(
 
 - The second quartile -- 50% of the data falls below this number
 
-```{r box2q, fig.height=6, fig.width=6}
+```
 
 g2 <- split_dotplot(stats[3])
 
@@ -342,7 +342,7 @@ grid.lines(
 
 - The third quartile -- 75% of the data falls below this number
 
-```{r box3q, fig.height=6, fig.width=6}
+```
 
 g3 <- split_dotplot(stats[4])
 
@@ -376,7 +376,7 @@ These three numbers form the box in the boxplot, with the median in the middle a
 One thing you always know when looking at a boxplot is that the middle half of the data is inside this box. 
 There are various rules for where to draw the whiskers, the lines that extend out from the box.
 
-```{r box-middle, fig.height=6, fig.width=6}
+```
 plot <- ggplot(data = common_cyl, aes(x = city_mpg)) +
   geom_dotplot(binwidth = 1) +
   theme(
@@ -407,7 +407,7 @@ If an observation is outside of these numbers, it is plotted as a point.
 This is one of the handy features of a boxplot: it flags for you points that are far away from the bulk of the data, a form of automated *potential* outlier detection.
 
 
-```{r box-whiskers, fig.height=6, fig.width=6}
+```
 plot <- ggplot(data = common_cyl, aes(x = city_mpg)) +
   geom_dotplot(binwidth = 1) +
   theme(
@@ -449,7 +449,7 @@ plot_grid(plot, box,
 ```
 
 
-```{r box-outliers, fig.height=6, fig.width=6}
+```
 plot <- ggplot(data = common_cyl, aes(x = city_mpg)) +
   geom_dotplot(binwidth = 1) +
   theme(legend.position = "none",
@@ -498,7 +498,7 @@ One of their weaknesses, however, is their inability to indicate when a distribu
 
 Consider the density plot here, there are two distinct modes. If we construct a boxplot of the same distribution, it sweeps this important structure under the rug and will always only provide a single box. 
 
-```{r}
+```
 bimodal_df <- tibble(x = c(rnorm(100, 10, 2), rnorm(100, 22, 3)))
 p1 <- ggplot(bimodal_df, aes(x = x)) + geom_density()
 p2 <- ggplot(bimodal_df, aes(x = x)) + geom_boxplot()
@@ -517,7 +517,7 @@ For each variable, try both plots and submit the one that is better at capturing
 - Display the distribution of `city_mpg`.
 - Display the distribution of `width`.
 
-```{r ex6, exercise = TRUE}
+```
 # Create plot of city_mpg
 ggplot(data = cars, ___) +
   ___
@@ -531,7 +531,7 @@ ggplot(data = cars, ___) +
 **Hint:** Does a distribution appear to have outliers? If so, a boxplot is more appropriate. Does a distribution have multiple modes? If so, a density plot is more appropriate.  
 </div>
 
-```{r ex6-solution}
+```
 # Create plot of city_mpg
 ggplot(data = cars, aes(x = city_mpg)) +
   geom_boxplot()
@@ -555,7 +555,7 @@ To do this, let's carry out the following steps:
 4. Compare the two plots.
 
 
-```{r ex5, exercise = TRUE}
+```
 # Construct boxplot of msrp
 ggplot(data = cars, aes(x = ___)) +
   ___
@@ -569,7 +569,7 @@ ggplot(data = ___, aes(___)) +
   ___ 
 ```
 
-```{r ex5-hint-1}
+```
 # Construct boxplot of msrp
 cars %>%
   ggplot(aes(x = msrp)) +
@@ -584,7 +584,7 @@ ggplot(data = ___, aes(___)) +
   ___ 
 ```
 
-```{r ex5-hint-2}
+```
 # Construct boxplot of msrp
 cars %>%
   ggplot(aes(x = msrp)) +
@@ -599,7 +599,7 @@ ggplot(data = ___, aes(___)) +
   ___ 
 ```
 
-```{r ex5-hint-3}
+```
 # Construct boxplot of msrp
 cars %>%
   ggplot(aes(x = msrp)) +
@@ -614,7 +614,7 @@ ggplot(data = cars_no_out, aes(___)) +
   ___ 
 ```
 
-```{r ex5-hint-4}
+```
 # Construct boxplot of msrp
 cars %>%
   ggplot(aes(x = msrp)) +
@@ -629,7 +629,7 @@ ggplot(data = cars_no_out, aes(x = msrp)) +
   + geom_boxplot()
 ```
 
-```{r ex5-solution}
+```
 # Construct boxplot of msrp
 cars %>%
   ggplot(aes(x = msrp)) +
@@ -650,14 +650,14 @@ ggplot(data = cars_no_out, aes(x = msrp)) +
 If you're interested in the distribution of a single numerical variable, there are three ways you can get there. 
 The first is to look at the marginal distribution, like, for example, the simple distribution of highway mileage. 
 
-```{r hist-hwy-mpg}
+```
 ggplot(data = cars, aes(x = hwy_mpg)) +
   geom_histogram()
 ```
 
 However, if we want to look at the distribution on a different subset of the data, say cars that are pickup trucks, we can add a second variable to the plot. 
 
-```{r hist-hwy-mpg-pickup}
+```
 ggplot(data = cars, aes(x = hwy_mpg)) +
   geom_histogram() +
   facet_wrap(vars(pickup))
@@ -672,7 +672,7 @@ We can make these separate plots by adding a `facet_wrap()` layer to our `ggplot
 The variable you want to facet by goes inside the `facet_wrap()` function, and needs to be specified with the `vars()` function.
 The `vars()` function selects variables from the dataset with the name provided. 
 
-```{r cars-hist-faceted, exercise = TRUE}
+```
 ggplot(data = cars, aes(x = hwy_mpg)) +
   geom_histogram() +
   facet_wrap(vars(pickup))
@@ -685,21 +685,21 @@ The plot also shows that the typical pickup gets much lower mileage than the typ
 
 Let's investigate the distribution of the fuel efficiency (`city_mpg`) faceted by whether the vehicle is classified as an `suv` (a logical variable indicating whether the car is an SUV or not).
 
-```{r ex1, exercise = TRUE}
+```
 # Create faceted histogram
 ggplot(data = cars, aes(x = ___)) +
   geom_histogram() +
   facet_wrap(vars(___))
 ```
 
-```{r ex1-hint-1}
+```
 # Create faceted histogram
 ggplot(data = cars, aes(x = city_mpg)) +
   geom_histogram() +
   facet_wrap(vars(___))
 ```
 
-```{r ex1-solution}
+```
 # Create faceted histogram
 ggplot(data = cars, aes(x = city_mpg)) +
   geom_histogram() +
@@ -717,7 +717,7 @@ The `alpha` argument changes the transparency of the density plots.
 Ordinarily, it would be impossible to see the area where these plots overlap. 
 However, by making them more transparent (an `alpha` less than 1), we can see the overlapping areas. 
 
-```{r cars-box-faceted, echo = TRUE}
+```
 ggplot(data = cars, aes(x = hwy_mpg, fill = pickup)) +
   geom_density(alpha = 0.5)
 ```
@@ -730,7 +730,7 @@ To explore the relationship between these two variables, you could stick to usin
 First, let's see how many unique values number of cylinders there are in the dataset. 
 We can use the `count()` function to find the unique values for a variable and also see how many observations there are for each value. 
 
-```{r echo = TRUE}
+```
 cars %>%
   count(ncyl)
 ```
@@ -746,7 +746,7 @@ Thus, the `%in%` operator always comes with the `c()` function, which makes the 
 
 Putting this all together, our code looks like: 
 
-```{r, ex2-setup, echo = TRUE}
+```
 common_cyl <- cars %>%
   filter(ncyl %in% c(4, 6, 8))
 ```
@@ -754,19 +754,19 @@ common_cyl <- cars %>%
 Now, with the `common_cyl` dataset, create overlaid density plots of `city_mpg` colored by `ncyl`.
 Keep in mind that `ncyl` is a numerical variable, so you will need to convert it to a categorical variable to use it as the `fill`. 
 
-```{r ex2, exercise = TRUE}
+```
 # Create overlaid density plots for same data
 ggplot(data = common_cyl, aes(x = ___, fill = ___)) +
   geom_density(alpha = 0.3)
 ```
 
-```{r ex2-hint-1}
+```
 # Create overlaid density plots for same data
 ggplot(data = common_cyl, aes(x = city_mpg, fill = ___)) +
   geom_density(alpha = 0.3)
 ```
 
-```{r ex2-solution}
+```
 # Create overlaid density plots for same data
 ggplot(data = common_cyl, aes(x = city_mpg, fill = as.factor(ncyl))) +
   geom_density(alpha = 0.3)
@@ -776,7 +776,7 @@ ggplot(data = common_cyl, aes(x = city_mpg, fill = as.factor(ncyl))) +
 
 Let's take a more careful look at that plot you just made.
 
-```{r mc1}
+```
 question("Which of the following interpretations of the plot **is not** valid?",
   answer("The highest mileage cars have 4 cylinders.", message = "No. What color is the region on the right of the plot?"),
   answer("The typical 4 cylinder car gets better mileage than the typical 6 cylinder car, which gets better mileage than the typical 8 cylinder car.", message = "No. Look at the midpoint of each region."),
@@ -793,7 +793,7 @@ This workflow, however, is a bit inefficient, since we have no real interest in 
 
 We can solve this by linking these two components into a continuous data pipeline, like the one below.
 
-```{r dp2, echo=TRUE, eval = FALSE}
+```
 cars %>%
   filter(eng_size < 2.0) %>%
   ggplot(aes(x = hwy_mpg)) +
@@ -817,7 +817,7 @@ Ridgeline plots are especially useful for staggering the layout of overlapping d
 Essentially a ridge plot separates each density plot, creating the impression of a mountain range.
 To create a ridge plot, you use the **ggridges** package, and the `geom_density_ridges()` function.
 
-```{r, echo = TRUE}
+```
 common_cyl %>% 
   ggplot(aes(x = city_mpg, y = as.factor(ncyl), fill = as.factor(ncyl))) +
   geom_density_ridges()
@@ -833,7 +833,7 @@ we can change it!
 The `labs()` function controls the labels of the different plot aesthetics. 
 To change the `y` axis label, we specify a new name inside quotations (`""`), like so: 
 
-```{r, echo = TRUE}
+```
 common_cyl %>% 
   ggplot(aes(x = city_mpg, y = as.factor(ncyl), fill = as.factor(ncyl))) +
   geom_density_ridges() + 
@@ -845,7 +845,7 @@ This indicates that the legend isn't adding any new information to our plot, and
 To remove the legend, you add a `theme()` to the `ggplot()`. 
 The theme specifies the `legend.position` and sets it to `"hide"`. 
 
-```{r, echo = TRUE}
+```
 common_cyl %>% 
   ggplot(aes(x = city_mpg, y = as.factor(ncyl), fill = as.factor(ncyl))) +
   geom_density_ridges() + 
@@ -874,7 +874,7 @@ In the end, we will have multiple density plots of the `msrp` variable!
 The code for this would look something like:
 
 
-```{r pf3v, echo=TRUE}
+```
 cars %>% 
   ggplot(aes(x = msrp)) +
   geom_density() +
@@ -884,7 +884,7 @@ cars %>%
 Within the `facet_wrap()` function, whichever variable you put first will go in the rows of the grid and the the one that you put last form the columns.
 Unfortunately, this plot is difficult to interpret since it doesn't remind us which variable is on the rows versus columns. We can solve this by adding an option to the facet grid layer: labeller is equal to `label_both`.
 
-```{r labeller, echo=TRUE}
+```
 cars %>% 
   ggplot(aes(x = msrp)) +
   geom_density() +
@@ -898,7 +898,7 @@ We can use the `count()` function to do this!
 The code below should look familiar, with one addition: a second variable as an input to the `count()` function.
 When we add a second variable, the `count()` function will count the number of observations at the intersection of each of the two variables (e.g. non-rear wheel drive pickups). 
 
-```{r echo = TRUE}
+```
 cars %>% 
   count(rear_wheel, pickup)
 ```
@@ -936,11 +936,11 @@ The `common_cyl` dataset you created before, containing only cars with 4, 6, or 
 
 - Finally, add facet labels to your plot to indicate what variables are being faceted on.
 
-```{r ex7-setup}
+```
 common_cyl <- filter(cars, ncyl %in% c(4, 6, 8))
 ```
 
-```{r ex7, exercise = TRUE}
+```
 # Facet histograms using hwy mileage and ncyl
 common_cyl %>%
   ggplot(aes(x = ___)) +
@@ -948,7 +948,7 @@ common_cyl %>%
   facet_grid(vars(___), vars(___), labeller = ___)
 ```
 
-```{r ex7-hint-1}
+```
 common_cyl %>%
   ggplot(aes(x = hwy_mpg)) +
   geom_histogram() +
@@ -956,7 +956,7 @@ common_cyl %>%
 
 ```
 
-```{r ex7-hint-2}
+```
 common_cyl %>% 
   ggplot(aes(x = hwy_mpg)) +
   geom_histogram() +
@@ -964,7 +964,7 @@ common_cyl %>%
 
 ```
 
-```{r ex7-hint-3}
+```
 common_cyl %>% 
   ggplot(aes(x = hwy_mpg)) +
   geom_histogram() +
@@ -972,7 +972,7 @@ common_cyl %>%
 
 ```
 
-```{r ex7-solution}
+```
 # Facet histograms using hwy mileage and ncyl
 common_cyl %>% 
   ggplot(aes(x = hwy_mpg)) +
@@ -982,7 +982,7 @@ common_cyl %>%
 
 ### Interpreting plots with three variables
 
-```{r mc4}
+```
 question("Which of the following interpretations of the plot **is** valid?",
   answer("Across both SUVs and non-SUVs, mileage tends to decrease as the number of cylinders
 increases.", correct = TRUE, message = "Good job! Continue to the next exercise."),

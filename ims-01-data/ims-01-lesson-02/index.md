@@ -34,7 +34,7 @@ Let's put these ideas into practice.
 
 A study is designed to evaluate whether people read text faster in Arial or Helvetica font. A group of volunteers who agreed to be a part of the study are randomly assigned to two groups: one where they read some text in Arial, and another where they read the same text in Helvetica. At the end, average reading speeds from the two groups are compared. 
 
-```{r quiz-identify-type-study}
+```
 quiz(
   question("What type of study is this?", correct = "Awesome! Even though participants are volunteers, this is still an experiment!", allow_retry = TRUE,
     answer("Observational study", message = "Not quite, this is not an observational study."),
@@ -51,14 +51,14 @@ Let's take a look at data from a different study on country characteristics. The
 
 To view the top 10 rows of the data, simply type `gapminder`. You are welcome to view the data using functions from the **tidyverse** package you have learned previously to inspect it.
 
-```{r gapminder-final, exercise=TRUE}
+```
 library(gapminder)
 gapminder
 ```
 
 Then, identify the type of study this data come from.
 
-```{r quiz-gapminder-final}
+```
 quiz(
   question("What type of study is this?", correct = "Awesome!", allow_retry = TRUE,
     answer("Observational study", correct = TRUE),
@@ -95,7 +95,7 @@ You'll get some more practice with these concepts now.
 
 One of the early studies linking smoking and lung cancer compared patients who are already hospitalized with lung cancer to similar patients without lung cancer (hospitalized for other reasons), and recorded whether each patient smoked. Then, proportions of smokers for patients with and without lung cancer were compared.
 
-```{r quiz-random-sampling}
+```
 quiz(
   question("Does this study employ random sampling and/or random assignment?", correct = "Right! Random assignment is not employed because the conditions are not imposed on the patients by the people conducting the study; random sampling is not employed because the study records the patients who are already hospitalized, so it wouldn't be appropriate to apply the findings back to the population as a whole.", allow_retry = TRUE,
     answer("Random sampling, but not random assignment", message = "Hm, not quite!"),
@@ -111,7 +111,7 @@ Volunteers were recruited to participate in a study where they were asked to typ
 
 Then, the subjects were asked to remember these bits of trivia, and the number of bits of trivia each subject could correctly recall were recorded. It was found that the subjects were significantly more likely to remember information if they thought they would not be able to find it later.
 
-```{r quiz-identify-scope}
+```
 quiz(
   question("The results of the study ______ be generalized to all people and a causal link between believing information is stored and memory ______ be inferred based on these results.", correct = "Correct! There is no random sampling since the subjects of the study were volunteers, so the results cannot be generalized to all people. However, due to random assignment, we are able to infer a causal link between the belief information is stored and the ability to recall that same information.", allow_retry = TRUE,
     answer("cannot, cannot", message = "Nope, try again!"),
@@ -172,13 +172,13 @@ To do so we will use the `count()` function. In one step, `count()` groups the d
 
 Pass the `Gender` and `Admit` columns from the `ucb_admit` dataset (which is already pre-loaded) into the `count()` function, to count how many students of each gender are admitted and how many are rejected.
 
-```{r count-male, exercise=TRUE}
+```
 # Count number of male and female applicants admitted
 ___ %>%
   count(___, ___)
 ```
 
-```{r count-male-solution}
+```
 # Count number of male and female applicants admitted
 ucb_admit %>%
   count(Gender, Admit)
@@ -192,7 +192,7 @@ Proportions for each row of the data frame we created in the previous exercise c
 
 The `group_by()` function takes as arguments the column names of the **categorical** variables for which you want to perform grouped operations. We add this grouping into our data wrangling pipeline, by inserting a `group_by()` statement before we perform our subsequent tasks. For example, we could have found the same admission table as before, if we first grouped the data based on `Gender`, and then counted how many students were admitted and rejected. This process would look like this:  
 
-```{r grouped-count-male, exercise = TRUE}
+```
 ucb_admit %>% 
   group_by(Gender) %>% 
   count(Admit)
@@ -208,7 +208,7 @@ To accomplish this task you will need to take the following steps:
 
 Then answer the following question: *Which gender had a higher admission rate, male or female?*
 
-```{r gender-male, exercise=TRUE}
+```
 ucb_admission_counts %>%
   # Group by gender
   ___(___) %>%
@@ -218,7 +218,7 @@ ucb_admission_counts %>%
   ___(___ == "___")
 ```
 
-```{r gender-male-hint-1}
+```
 ucb_admission_counts %>%
   # Group by gender
   group_by(Gender) %>%
@@ -228,7 +228,7 @@ ucb_admission_counts %>%
   ___(___ == "___")
 ```
 
-```{r gender-male-hint-2}
+```
 ucb_admission_counts %>%
   # Group by gender
   group_by(Gender) %>%
@@ -238,7 +238,7 @@ ucb_admission_counts %>%
   ___(___ == "___")
 ```
 
-```{r gender-male-hint-3}
+```
 ucb_admission_counts %>%
   # Group by gender
   group_by(Gender) %>%
@@ -248,7 +248,7 @@ ucb_admission_counts %>%
   filter(Admit == "Admitted")
 ```
 
-```{r gender-male-solution}
+```
 ucb_admission_counts %>%
   # Group by gender
   group_by(Gender) %>%
@@ -264,7 +264,7 @@ Finally we'll make a table similar to the one we constructed earlier, except we'
 
 Proportions for each row of the data frame we create can be calculated as `n / sum(n)`. Note that since the data are grouped by department **and**  gender, `sum(n)` will be calculated for males and females separately **for each department**.
 
-```{r prepare-gender2}
+```
 ucb_admission_counts <- ucb_admit %>%
   # Counts by department, then gender, then admission status
   count(Dept, Gender, Admit)
@@ -272,7 +272,7 @@ ucb_admission_counts <- ucb_admit %>%
 
 First, let's make a new object named `ucb_admission_counts` to store the `count()`s of `ucb_admit` by department, gender, and admission status. In this case, it doesn't matter what order you place `Dept`, `Gender`, or `Admit` inside of `count()`! 
 
-```{r gender-male2, exercise=TRUE, exercise.setup="prepare-gender2"}
+```
 ucb_admission_counts <- ucb_admit %>%
   # Counts by department, gender, and admission status
   ___(___, ___, ___)
@@ -281,7 +281,7 @@ ucb_admission_counts <- ucb_admit %>%
 ucb_admission_counts
 ```
 
-```{r gender-male2-solution}
+```
 ucb_admission_counts <- ucb_admit %>%
   # Counts by department, then gender, then admission status
   count(Dept, Gender, Admit)
@@ -296,7 +296,7 @@ Next, create a table with the proportions of male students admitted across depar
 2. Use `mutate()` to add a new column named `prop`, which is the ratio of those admitted or rejected by department and gender. Remember the calculation you used previously for row proportions! 
 3. Use `filter()` to filter the rows for those who are males **and** those who who were admitted. To "join" our filters we insert a comma between the filters we are interested (e.g. `filter(grade == "middle school", class == "Music"))`). 
 
-```{r gender-male3, exercise=TRUE, exercise.setup="prepare-gender2"}
+```
  ucb_admission_counts  %>%
   # Group by department, then gender
   ___(___, ___) %>%
@@ -306,7 +306,7 @@ Next, create a table with the proportions of male students admitted across depar
   ___(___, ___)
 ```
 
-```{r gender-male3-hint-1}
+```
  ucb_admission_counts  %>%
   # Group by department, then gender
   group_by(Dept, Gender) %>%
@@ -316,7 +316,7 @@ Next, create a table with the proportions of male students admitted across depar
   ___(___, ___)
 ```
 
-```{r gender-male3-hint-2}
+```
  ucb_admission_counts  %>%
   # Group by department, then gender
   group_by(Dept, Gender) %>%
@@ -326,7 +326,7 @@ Next, create a table with the proportions of male students admitted across depar
   ___(___, ___)
 ```
 
-```{r gender-male3-hint-3}
+```
  ucb_admission_counts  %>%
   # Group by department, then gender
   group_by(Dept, Gender) %>%
@@ -336,7 +336,7 @@ Next, create a table with the proportions of male students admitted across depar
   filter(Gender == "Male", ___)
 ```
 
-```{r gender-male3-hint-4}
+```
  ucb_admission_counts  %>%
   # Group by department, then gender
   group_by(Dept, Gender) %>%
@@ -346,7 +346,7 @@ Next, create a table with the proportions of male students admitted across depar
   filter(Gender == "Male", Admit == "Admitted")
 ```
 
-```{r gender-male3-solution}
+```
 ucb_admission_counts  %>%
   # Group by department, then gender
   group_by(Dept, Gender) %>%
@@ -358,7 +358,7 @@ ucb_admission_counts  %>%
 
 ### Admission rates for males across departments
 
-```{r prepare-gender3}
+```
 perc_admit_by_dept <- ucb_admit %>%
   # Group by department, then gender
   group_by(Dept, Gender) %>%
@@ -370,7 +370,7 @@ perc_admit_by_dept <- ucb_admit %>%
   filter(Gender == "Male", Admit == "Admitted")
 ```
 
-```{r quiz-gender}
+```
 quiz(
   question("Which of the following best describes the relationship between admission status and gender?", correct = "Correct! Let's recap what we've learned in the next section.", allow_retry = TRUE,
     answer("Within most departments, female applicants are more likely to be admitted.", correct = TRUE),
@@ -381,7 +381,7 @@ quiz(
 
 The final result from the previous exercise is available in your workspace as `perc_admit_by_dept`. Feel free to inspect the table to address the question above.  
 
-```{r gender-male4, exercise=TRUE, exercise.setup="prepare-gender3"}
+```
 
 
 

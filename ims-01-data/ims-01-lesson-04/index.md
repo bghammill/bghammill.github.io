@@ -20,7 +20,7 @@ Inspect the `evals` data frame using techniques you learned in previous lessons.
 
 Note that for the purposes of this analysis we have added an additional variable to the dataset, `cls_type`. This variable classifies classes as small, midsize, or large, depending on the number of students in the class. This was done using the following.
 
-```{r echo = TRUE}
+```
 evals <- evals %>%
   mutate(cls_type = case_when(
     cls_students <= 18                      ~ "small",
@@ -31,11 +31,11 @@ evals <- evals %>%
 ```
 
 
-```{r inspect-data, exercise=TRUE, exercise.lines=5}
+```
 # Inspect evals
 ```
 
-```{r inspect-data-solution}
+```
 # Inspect evals
 glimpse(evals)
 
@@ -45,7 +45,7 @@ dim(evals)
 
 ### Identify type of study
 
-```{r quiz-identify-type-study}
+```
 quiz(
   question("What type of study is this?", correct = "How observant! It was an observational study.", allow_retry = TRUE,
     answer("Observational study", correct = TRUE),
@@ -55,7 +55,7 @@ quiz(
 
 ### Sampling / experimental attributes
 
-```{r quiz-sampling-experimental-atributes}
+```
 quiz(
   question("The data from this study were gathered by ___.", correct = "Good!", allow_retry = TRUE,
     answer("randomly sampling classes", correct = TRUE),
@@ -71,7 +71,7 @@ Let's take a closer look at each of the variables in the course evaluations data
 
 Remember that using the `glimpse()` function we can obtain a list of the variables and take a peek at the first few observations from each.
 
-```{r glimpse-evals, echo=TRUE}
+```
 # Glimpse the data
 glimpse(evals)
 ```
@@ -106,7 +106,7 @@ It's always useful to start your exploration of a dataset by identifying variabl
 
 - We've created a vector of variable names in the editor called `cat_vars`. To test your understanding of the data, remove the names of any variables that are *not* categorical.
 
-```{r inspect-variable-types, exercise=TRUE}
+```
 # Inspect variable types
 
 
@@ -116,7 +116,7 @@ cat_vars <- c("score", "rank", "ethnicity", "gender", "language", "age",
               "bty_avg", "pic_outfit", "pic_color")
 ```
 
-```{r inspect-variable-types-solution}
+```
 # Inspect variable types
 glimpse(evals)
 
@@ -138,7 +138,7 @@ The `cls_students` variable in `evals` tells you the number of students in the c
 
 - *What type of variable is `cls_type`?*
 
-```{r type-of-variable, exercise=TRUE}
+```
 # Recode cls_students as cls_type
 evals <- evals %>%
   mutate(
@@ -150,7 +150,7 @@ evals <- evals %>%
   )
 ```
 
-```{r type-of-variable-solution}
+```
 # Recode cls_students as cls_type
 evals <- evals %>%
   mutate(
@@ -170,13 +170,13 @@ The `bty_avg` variable shows the average beauty rating of the professor by the s
 
 - *How would you describe the relationship apparent in this visualization?*
 
-```{r create-scatterplot, exercise=TRUE}
+```
 # Scatterplot of score vs. bty_avg
 ___(evals, ___) +
   ___
 ```
 
-```{r create-scatterplot-solution}
+```
 # Scatterplot of score vs. bty_avg
 ggplot(evals, aes(x = bty_avg, y = score)) +
   geom_point()
@@ -190,13 +190,13 @@ Suppose you are interested in evaluating how the relationship between a professo
 
 - *How would you describe the relationship apparent in this visualization?*
 
-```{r scatterplot-added-layer, exercise=TRUE}
+```
 # Scatterplot of score vs. bty_avg colored by cls_type
 ___(evals, ___) +
   ___
 ```
 
-```{r scatterplot-added-layer-solution}
+```
 # Scatterplot of score vs. bty_avg colored by cls_type
 ggplot(evals, aes(x = bty_avg, y = score, color = cls_type)) +
   geom_point()

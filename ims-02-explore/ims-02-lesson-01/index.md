@@ -16,20 +16,20 @@ In this tutorial, you'll be exploring data from a wide range of contexts. The fi
 
 The comics dataset has information on all comic characters that have been introduced by DC and Marvel. If we type the name of the dataset at the console, we get the first few rows and columns. Here we see that each row, or case, is a different character and each column, or variable, is a different observation made about that character. At the top the output tell us the dimensions of this dataset: over 23,000 cases and 11 variables. Right under the variable names, we see that the first three variables are characters, or the `chr` data type. These are variables that we could potentially consider categorical, as they all have a finite number of levels. The first case in the dataset is Peter Parker, alias: Spiderman, where his alias and character name are included in the first variable `name`. The second column, `id`, shows that Peter Parker's personal identity is kept secret, and the third column tell us that his `align`ment is good; that he's a superhero, not a super villain. If you scroll the table to the right side, you will see several additional variables, including eye color and hair color, almost all of which are also characters.
 
-```{r comics, echo=FALSE}
+```
 comics 
 ```
 
 We can learn the different values of a particular character variable by using the `distinct()` function. It's clear that the alignment variable can be "good" or "neutral", but what other values are possible? Here, we pipe the `comics` data into the `distinct()` function, and then insert the `align` column into the `distinct()` function. Inspecting the resulting table, we learn that there are in fact four possible alignments, "Good", "Bad", "Neutral", and "Reformed criminals". 
 
-```{r levels, echo=TRUE}
+```
 comics %>% 
   distinct(align)
 ```
 
 Good thing we checked that! If we do the same for identity, we learn that there are four possible identities.
 
-```{r levels2, echo=TRUE}
+```
 comics %>% 
   distinct(id)
 ```
@@ -42,7 +42,7 @@ A common way to represent the number of cases that fall into each combination of
 
 This is what the process looks like:
 
-```{r levels3, echo=TRUE, eval = FALSE}
+```
 # to get the long table
 comics %>% 
   count(align, id)
@@ -57,7 +57,7 @@ The first two steps should look familiar to you, but the third step is a bit ove
 
 We want for the values of `align` to be in the rows and the values of `id` to be in the columns. We can use the `pivot_wider()` function to "pivot" our table so that it has this form, by moving the `id` variable to the columns, and filling the values of the table with the count variable (`n`). The `names_from` argument tells R where the names of the new columns are coming from (i.e. what variable), and the `values_from` argument tells R where the values in the table are coming from. Here, the values we want in our table are stored as a variable labeled `n` in our table. 
 
-```{r level3out, echo=FALSE}
+```
 comics %>% 
   count(align, id) %>% 
   pivot_wider(names_from = id, values_from = n) %>% 
@@ -75,7 +75,7 @@ While tables of counts can be useful, you can get the bigger picture by translat
 
 Generally, your `ggplot()` will look something like this, where the dataset is the first argument in the `ggplot()` function. Next, the variables we are interested in plotting are found inside the the `aes()` function, which stands for aesthetics. Finally, we specify the `geom` function to use when plotting the data. 
 
-```{r formula1, eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
+```
 ggplot(data = [DATASET], aes(x = [X VARIABLE], 
                              y = [Y VARIABLE], 
                              fill = [COLOR VARIABLE])) +
@@ -84,21 +84,21 @@ ggplot(data = [DATASET], aes(x = [X VARIABLE],
 
 Here, we're interested in the relationship between two categorical variables, which is represented well by a stacked bar chart. In a bar chart, we plot the counts or frequencies of different levels of a categorical variable, by specifying the categorical variable we want to be on the x-axis, and adding a `geom_bar()` layer to the plot. 
 
-```{r formula2, eval=FALSE, include=TRUE}
+```
 ggplot(comics, aes(x = id)) +
   geom_bar() 
 ```
 
 A stacked bar chart adds another layer to the plot, by dividing each bar into different levels of another variable. This coloring of the bars comes from adding a second categorical variable into the `fill` argument of the `aes()` function. This looks something like this: 
 
-```{r formula3, eval=FALSE, include=TRUE}
+```
 ggplot(comics, aes(x = id, fill = align)) +
   geom_bar() 
 ```
 
 Let's look carefully at how this is constructed: each colored bar segment actually corresponds to a count in our table, with the x-axis and the fill color indicating the category being plotted. Several things pop out, like the fact that there are very few characters whose identities are unknown (since it's nearly flat). The single largest bar segment corresponds to the most common category: characters with secret identities that are also bad. We can look across the identity types and realize that bad is not always the largest category. This indicates that there is indeed an association between alignment and identity.
 
-```{r bar, echo=TRUE}
+```
 ggplot(comics, aes(x = id, fill = align)) +
     geom_bar()
 ```
@@ -109,7 +109,7 @@ That should be enough to get started. Now it's your turn to start exploring the 
 
 Suppose you've asked 30 people, some young, some old, what their preferred flavor of pie is: apple or pumpkin. Your data could be summarized in a side-by-side barchart. Here are three possibilities for how it might look.
 
-```{r premch1, echo=FALSE, fig.height=3, fig.width=8}
+```
 d1 <- data.frame(age = rep(c("young", "old"), c(10, 20)),
                  flavor = c(rep(c("apple", "pumpkin"), c(5, 5)), 
                             rep(c("apple", "pumpkin"), c(10, 10))))
@@ -132,7 +132,7 @@ grid.arrange(p1, p2, p3, ncol = 3)
 ```
 
 
-```{r mch1, echo = FALSE}
+```
 question("Which one of the barcharts shows no relationship between `age` and `flavor`? In other words, which plot shows that pie preference is the same for both young and old?",
   answer("Plot 1", correct = TRUE, message = "Nice one!"),
   answer("Plot 2", message = "Hmm, looks like the old prefer apple pies and the young prefer pumpkin pies in Plot 2."),
@@ -152,7 +152,7 @@ In this lesson you'll continue working with the `comics` dataset introduced prev
 
 Let's start by creating a contingency table, which is a useful way to represent the total counts of observations that fall into each combination of the levels of categorical variables. Make sure the contingency table has the different levels of `gender` in the rows, and the different levels of `align` in the columns. 
 
-```{r ex1, exercise=TRUE}
+```
 # Print the first rows of the data
 # Check levels of align
 comics %>% 
@@ -161,7 +161,7 @@ comics %>%
 # Create a 2-way contingency table
 ```
 
-```{r ex1-hint-1}
+```
 # Print the first rows of the data
 glimpse(comics)
 # Check levels of align
@@ -171,7 +171,7 @@ comics %>%
 # Create a 2-way contingency table
 ```
 
-```{r ex1-hint-2}
+```
 # Print the first rows of the data
 glimpse(comics)
 # Check levels of align
@@ -183,7 +183,7 @@ comics %>%
 # Create a 2-way contingency table
 ```
 
-```{r ex1-solution}
+```
 # Print the first rows of the data
 comics
 # Check levels of align
@@ -217,13 +217,13 @@ The contingency table from the last exercise is available in your workspace as `
 4. save the simplified dataset as `comics_filtered`
 
 
-```{r ex2-setup}
+```
 tab <- comics %>%
   count(align, gender) %>% 
   pivot_wider(names_from = align, values_from = n)
 ```
 
-```{r ex2, exercise=TRUE}
+```
 # Print tab
 ___
 # Remove align level
@@ -234,7 +234,7 @@ comics_filtered <- ___ %>%
  comics_filtered
 ```
 
-```{r ex2-solution}
+```
 # Print tab
 tab
 # Remove align level
@@ -262,14 +262,14 @@ To create these plots, let's carry out the following steps:
 2. create a side-by-side barchart with `align` on the x-axis, and `fill` the bars with the `gender` of the character  
 3. create another side-by-side barchart with `gender` on the x-axis, and `fill` the bars with the `align`ment of the character 
 
-```{r ex3-setup}
+```
 comics <- as_tibble(comics)
 comics <- comics %>%
   filter(align != "Reformed Criminals") %>%
   droplevels()
 ```
 
-```{r ex3, exercise=TRUE}
+```
 # Load ggplot2
 # Create side-by-side barchart of alignment by gender
 ggplot(___, aes(x = ___, fill = ___)) + 
@@ -279,7 +279,7 @@ ggplot(___, aes(x = ___, fill = ___)) +
   geom_bar(position = ___)
 ```
 
-```{r ex3-hint-1}
+```
 # Load ggplot2
 library(ggplot2)
 # Create side-by-side barchart of alignment by gender
@@ -290,7 +290,7 @@ ggplot(___, aes(x = ___, fill = ___)) +
   geom_bar(position = ___)
 ```
 
-```{r ex3-hint-2}
+```
 # Load ggplot2
 library(ggplot2)
 # Create side-by-side barchart of alignment by gender
@@ -301,7 +301,7 @@ ggplot(___, aes(x = ___, fill = ___)) +
   geom_bar(position = ___)
 ```
 
-```{r ex3-solution}
+```
 # Load ggplot2
 library(ggplot2)
 # Create side-by-side barchart of alignment by gender
@@ -314,7 +314,7 @@ ggplot(comics, aes(x = gender, fill = align)) +
 
 In many visualizations you make, you may be interested in changing the axis labels on the plot. Here, the axis labels of "gender" and "align" could use some spicing up, to be more descriptive. To change the labels of a `ggplot()`, you add (`+`) a `labs()` layer to the plot, where you can specify the `x`, `y`, and `fill` labels, as well as the plot's `title`. 
 
-```{r}
+```
 ggplot(comics, aes(x = gender, fill = align)) + 
   geom_bar(position = "dodge") + 
   labs(x = "Character's Sex", 
@@ -324,7 +324,7 @@ ggplot(comics, aes(x = gender, fill = align)) +
 
 ### Bar chart interpretation
 
-```{r barchartex, echo=FALSE, fig.height=3, fig.width=8}
+```
 comics <- comics %>%
   filter(align != "Reformed Criminals") %>%
   droplevels()
@@ -338,7 +338,7 @@ grid.arrange(p1, p2, ncol = 2)
 ```
 
 
-```{r mc, echo=FALSE}
+```
 question("Which of the following interpretations of the bar charts above is **not** valid?",
   answer("Among characters with `Neutral` alignment, males are the most common.", message = "Nope, not quite!"),
   answer("In general, there is an association between gender and alignment."),
@@ -358,7 +358,7 @@ Let's return to our table of counts of cases by identity and alignment. If we wa
 
 After counting the number of observations at each level of `id` and `align`, we use the `mutate()` function to calculate the proportion of observations that fell in those levels. We save these proportions into a new variable named `prop`. Similar to before, we then pivot our table from long to wide, but here we need to specify what columns we are interested in pivoting. This is because we have one additional column in our dataframe which we are not interested in including in our table (`n`). To select variables, we specify a vector of column names to the `id_cols` argument.  
 
-```{r fctp, echo = TRUE, eval = FALSE}
+```
 comics %>% 
   count(id, align) %>% 
   mutate(prop = n / sum(n)) %>% 
@@ -366,7 +366,7 @@ comics %>%
               names_from = align, values_from = prop)
 ```
 
-```{r fctp2kable, echo=FALSE}
+```
 comics %>% 
   count(id, align) %>% 
   mutate(prop = n / sum(n)) %>% 
@@ -395,7 +395,7 @@ We see here that around 57% of all secret characters are bad. Because we're cond
 
 **Condition on the rows (i.e. rows sum to 1)**
 
-```{r cp, echo = TRUE, eval = FALSE}
+```
 comics %>% 
   count(id, align) %>% 
   group_by(id) %>% 
@@ -404,7 +404,7 @@ comics %>%
               names_from = align, values_from = prop)
 ```
 
-```{r cpkable, echo=FALSE}
+```
 comics %>% 
   count(id, align) %>%
   group_by(id) %>% 
@@ -429,7 +429,7 @@ As the number of cells in these tables gets large, it becomes much easier to mak
 
 **Condition on the columns (i.e. columns sum to 1)**
 
-```{r cp2, echo = TRUE, eval = FALSE}
+```
 comics %>% 
   count(id, align) %>% 
   group_by(align) %>% 
@@ -438,7 +438,7 @@ comics %>%
               names_from = align, values_from = prop)
 ```
 
-```{r cp2kable, echo = FALSE}
+```
 comics %>% 
   count(id, align) %>% 
   group_by(align) %>% 
@@ -460,14 +460,14 @@ comics %>%
 
 Below is the code to create a bar chart of conditional proportions. In this plot, we want to condition on the variable that is on the x-axis and stretch each bar to add up to a total proportion of 1. To stretch the bars this way, we add the `position = "fill"` option inside the `geom_bar()` function. 
 
-```{r chart, echo=TRUE, fig.height=3, fig.width=5}
+```
 ggplot(comics, aes(x = id, fill = align)) +
   geom_bar(position = "fill") 
 ```
 
 Let's add one additional layer: A change to our y-axis to indicate we're looking at proportions rather than counts! When we run this code, we get a plot that reflects our table of proportions after we had conditioned on `id`, as the bar for every level of `id` adds up to 1.
 
-```{r cbc, echo=TRUE, fig.height=3, fig.width=5}
+```
 ggplot(comics, aes(x = id, fill = align)) +
   geom_bar(position = "fill") +
   labs(y = "Proportion of Characters")
@@ -475,7 +475,7 @@ ggplot(comics, aes(x = id, fill = align)) +
 
  While the proportion of secret characters that are bad is still large, it's actually less than the proportion of bad characters in those that are listed as unknown. 
 
-```{r cbc2, echo=FALSE, fig.height=3, fig.width=5}
+```
   ggplot(comics, aes(x = id, fill = align)) +
   geom_bar(position = "fill") +
   ylab("proportion") +
@@ -495,14 +495,14 @@ We get a very different picture if we condition instead on `align`ment. The only
 
 In the plot below, we see that within characters that are bad, the greatest proportion of those are indeed secret. This might seem paradoxical, but it's just a result of having different numbers of cases in each single level.
 
-```{r cbc3, eval=FALSE, fig.align='center', fig.height=3, fig.width=5, include=TRUE}
+```
 ggplot(comics, aes(x = align, fill = id)) +
   geom_bar(position = "fill") +
   ylab("proportion") 
 ```
 
 
-```{r cbc4, echo=FALSE, fig.align='center', fig.height=3, fig.width=5}
+```
 ggplot(comics, aes(x = align, fill = id)) +
   geom_bar(position = "fill") +
   ylab("proportion") +
@@ -520,13 +520,13 @@ ggplot(comics, aes(x = align, fill = id)) +
 
 The following code generates tables of joint and conditional proportions, respectively. Go ahead and run it in the console:
 
-```{r prob5-setup, echo = FALSE}
+```
 comics <- comics %>%
   filter(align != "Reformed Criminals") %>%
   droplevels()
 ```
 
-```{r prob5, exercise = TRUE}
+```
 # Joint proportions
 comics %>% 
   count(align, gender) %>% 
@@ -542,7 +542,7 @@ comics %>%
               names_from = align, values_from = prop) 
 ```
 
-```{r mccp5, echo=FALSE}
+```
 question("Using the tables above, approximately what proportion of all female characters are good?",
   answer("44%", message = "Nope, try again!"),
   answer("1.3%", message = "Not quite!"),
@@ -564,7 +564,7 @@ Bar charts can tell dramatically different stories depending on how we choose to
 `align` is plotted on the x-axis.
 2.  Create a stacked barchart of the *proportions* of `gender` within different `align`ments, where the bars for each `align`ment are filled, so that they sum to 1. 
 
-```{r ex4, exercise = TRUE}
+```
 # Plot counts of gender by align
 ggplot(comics, aes(x = ___, fill = ___)) +
   geom_bar()
@@ -579,7 +579,7 @@ ggplot(comics, aes(x = ___, fill = ___)) +
 
 </div>
 
-```{r ex4-solution}
+```
 # Plot of gender by align
 ggplot(comics, aes(x = align, fill = gender)) +
   geom_bar()
@@ -599,12 +599,12 @@ You might not have noticed, but already you've been creating plots that illustra
 
 To compute a table of counts for a single variable like `id`, we can use our previous tools for counting a variable with the `count()` function. One way to think of this simpler table is that we've taken the original two-way table (with two categorical variables) and added up the cells across each level of `align`. Since we've added over the margins of the other variables, this is sometimes known as a **marginal distribution**.
 
-```{r md1, eval=FALSE, include=TRUE}
+```
 comics %>% 
   count(id)
 ```
 
-```{r md1kable, echo=FALSE}
+```
 comics %>% 
   count(id) %>% 
   kable(format = "html") %>% 
@@ -613,13 +613,13 @@ comics %>%
   
 ```
 
-```{r md2, eval=FALSE, include=TRUE}
+```
 comics %>% 
   count(id, align) %>% 
   pivot_wider(names_from = align, values_from = n)
 ```
 
-```{r md2kable, echo=FALSE}
+```
 comics %$% 
   table(id, align) %>% 
   kable(format = "html") %>% 
@@ -633,7 +633,7 @@ comics %$%
 
 The syntax to create the simple bar chart is straightforward as well, which we saw at the beginning of the lesson. To do this, we simply remove the `fill = align` argument from the aesthetics (`aes`).
 
-```{r md3, fig.height=3, fig.width=5}
+```
 ggplot(comics, aes(x = id)) +
   geom_bar()
 ```
@@ -648,7 +648,7 @@ To implement faceting in ggplot2, all we need to do is add another layer to our 
 
 If this plot feels familiar, it should!
 
-```{r md4, fig.height=3, fig.width=8}
+```
 ggplot(comics, aes(x = id)) +
   geom_bar() +
   facet_wrap(~align)
@@ -658,7 +658,7 @@ ggplot(comics, aes(x = id)) +
 
 In essence, the faceted plot is a rearrangement of the stacked bar charts that we considered at the beginning of the lesson.
 
-```{r fvs, echo=FALSE, fig.height=3, fig.width=8}
+```
 plot1 <- ggplot(comics, aes(x = id)) +
   geom_bar() +
   facet_wrap(~align) +
@@ -670,7 +670,7 @@ gridExtra::grid.arrange(plot1, plot2, nrow = 1)
 
 Each facet in the plot on the left corresponds to a single stacked bar in the plot on the right. They allow you to get a sense the distribution of a single variable, by looking at a single facet or a single stacked bar or the association between the variables, by looking across facets or across stacked bars.
 
-```{r lines, echo = FALSE, fig.height=3, fig.width=8}
+```
 plot1 <- ggplot(comics, aes(x = id))+
   geom_bar() +
   facet_wrap(~align) + 
@@ -700,7 +700,7 @@ The pie chart is a common way to display categorical data where the size of the 
 
 If we represent this data using a barchart the answer is obvious: the proportion of public is greater. For that reason, it's generally a good idea to stick to barcharts.
 
-```{r pie, echo=FALSE, fig.height=3, fig.width=6, cache = TRUE}
+```
 plot1 <- ggplot(comics, aes(x = "", y = id, fill = id))+
  geom_bar(stat="identity", width=1)+
  coord_polar("y", start=0) +
@@ -727,7 +727,7 @@ Luckily, R has a built-in `factor()` function specifically for these types of da
 
 Converting a variable from a character to a factor looks something like this:
 
-```{r, eval = FALSE}
+```
 comics %>% 
   mutate(gender = factor(id, 
                          levels = c("Secret", "Public", "No Dual", "Unknown")
@@ -745,7 +745,7 @@ To do this variable conversion we use the following steps:
 Once you've reordered the `align` variable, create a barchart of counts of the
 `align` variable.
 
-```{r ex5, exercise = TRUE}
+```
 # Change the order of the levels in align
 comics_updated <- comics %>% 
   mutate(align = factor(___, 
@@ -756,7 +756,7 @@ ggplot(___, aes(x = ___)) +
   geom_bar()
 ```
 
-```{r ex5-hint-1}
+```
 # Change the order of the levels in align
 comics_updated <- comics %>% 
   mutate(align = factor(align, 
@@ -764,7 +764,7 @@ comics_updated <- comics %>%
   )
 ```
 
-```{r ex5-hint-2}
+```
 # Change the order of the levels in align
 comics_updated <- comics %>% 
   mutate(align = factor(align, 
@@ -776,7 +776,7 @@ ggplot(___, aes(x = ___)) +
 ```
 
 
-```{r ex5-solution}
+```
 # Change the order of the levels in align
 comics_updated <- comics %>% 
   mutate(align = factor(align, 
@@ -796,7 +796,7 @@ You could make these by creating multiple filtered datasets (one for each gender
 
 Create a barchart of `align` faceted by `gender`.
 
-```{r ex6-setup}
+```
 comics_updated <- comics %>% 
   mutate(align = factor(align, 
                        levels = c("Good", "Neutral", "Bad"))
@@ -805,18 +805,18 @@ ggplot(comics_updated, aes(x = align)) +
   geom_bar()
 ```
 
-```{r ex6, exercise = TRUE}
+```
 # Plot of alignment broken down by gender
 ggplot(comics_updated, aes(x = ___)) + 
   geom_bar() +
   facet_wrap(~ ___)
 ```
 
-```{r ex6-hint}
+```
 Specify align as the x aesthetic, then facet by gender within facet_wrap().
 ```
 
-```{r ex6-solution}
+```
 ggplot(comics_updated, aes(x = align)) + 
   geom_bar() +
   facet_wrap(~ gender)
@@ -827,7 +827,7 @@ ggplot(comics_updated, aes(x = align)) +
 
 The piechart is a very common way to represent the distribution of a single categorical variable, but they can be more difficult to interpret than barcharts.
 
-```{r, echo = FALSE}
+```
 flavor <- rep(c("cherry", "key lime", "boston creme", "strawberry", 
                  "blueberry", "apple", "pumpkin"),
                c(13, 16, 15, 11, 14, 17, 12))
@@ -850,7 +850,7 @@ This is a piechart of a dataset called `pies` that contains the favorite pie fla
 - Create a barchart of `flavor`. The default coloring may look drab by comparison, so change the `fill` of the bars to `"chartreuse"`. 
 - Plot `flavor` on the y-axis, so that the labels of the flavors don't smoosh together! 
 
-```{r ex7, exercise = TRUE}
+```
 # Discover what the counts of pie flavors are 
 pies %>% 
   count(flavor)
@@ -867,7 +867,7 @@ ggplot(___, aes(y = ___)) +
   geom_bar(fill = ___) 
 ```
 
-```{r ex7-solution}
+```
 # Create barchart of flavor
 # Using plot flavor on y-axis so label text fits
 ggplot(pies_updated, aes(y = flavor)) + 

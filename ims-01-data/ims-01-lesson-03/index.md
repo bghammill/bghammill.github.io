@@ -64,7 +64,7 @@ Time to put these concepts into practice!
 
 A consulting company is planning a pilot study on marketing in Boston. They identify the zip codes that make up the greater Boston area, then sample 50 randomly selected addresses from each zip code and mail a coupon to these addresses. They then track whether the coupon was used in the following month.
 
-```{r quiz-sampling-strategies-determine-wich}
+```
 quiz(
   question("What sampling strategy has this company used?", correct = "Nice! Let's continue to the next exercise.", allow_retry = TRUE,
     answer("Simple random sample", message = "Try again. The company is dividing the Boston area by zip code."),
@@ -80,7 +80,7 @@ A school district has requested a survey be conducted on the socioeconomic statu
 
 Students living in this district generally attend a school in their neighbourhood. The district is broken into many distinct and unique neighbourhoods, some including large single-family homes and others with only low-income housing. 
 
-```{r quiz-sampling-strategies-choose-worst}
+```
 quiz(
   question("Which approach would likely be the **least effective** for selecting the schools where the survey will be conducted?", correct = "Nice job! This sampling strategy would be a bad idea because each neighborhood has a unique socioeconomic status. A good study would collect information about every neighborhood.", allow_retry = TRUE,
     answer("Simple random sample", message = "Incorrect!"),
@@ -99,7 +99,7 @@ Suppose we want to collect data from counties in the United States, but we do no
 
 So, let's start by loading the necessary packages with the `library()` function. We need the **usdata** package for the relevant data frame and the **tidyverse** package for the sampling and grouping functions we'll introduce shortly.
 
-```{r load-packages, exercise=TRUE}
+```
 library(usdata)
 library(tidyverse)
 ```
@@ -112,7 +112,7 @@ That is, we will create a new data frame, called `county_noDC` that `filter()`s 
 
 We'll also `droplevels()` for good measure, so that the level District of Columbia is removed completely from the data frame.
 
-```{r remove-dc, exercise=TRUE}
+```
 county_noDC <- county %>%
   filter(state != "District of Columbia") %>%
   droplevels()
@@ -126,7 +126,7 @@ One option is to take a simple random sample. We will use the `slice_sample()` f
 
 We start with the `county_noDC` data frame and pipe it into the `slice_sample()` function, setting the size (`n`) argument to 150. We will call the data frame containing this simple random sample *`county_srs`*.
 
-```{r random-sample, exercise=TRUE}
+```
 # Simple random sample of 150 counties
 county_srs <- county_noDC %>%
   slice_sample(n = 150)
@@ -145,7 +145,7 @@ We can confirm this by counting the number of counties per state.
 
 To do so we will start with the `county_srs` data frame: first group these data by state, then count the number of observations per state.
 
-```{r random-sample3, exercise=TRUE}
+```
 # State distribution of SRS counties
 county_srs %>%
   group_by(state) %>%
@@ -162,7 +162,7 @@ The code looks very similar to how we selected the simple random sample, except 
 
 A quick glimpse at the resulting data frame confirms that we indeed have _150_ observations in this sample.
 
-```{r stratified-sample, exercise=TRUE}
+```
 # Stratified sample of 150 counties, each state is a stratum
 county_str <- county_noDC %>%
   group_by(state) %>%
@@ -184,7 +184,7 @@ The dplyr package and `us_regions` data frame have been loaded.
 
 - Count the number of states from each region in your sample.
 
-```{r simple-random-sample, exercise=TRUE}
+```
 # Simple random sample: states_srs
 states_srs <- ___ %>%
   ___
@@ -194,7 +194,7 @@ states_srs %>%
   ___(___)
 ```
 
-```{r simple-random-sample-solution}
+```
 # Simple random sample
 states_srs <- us_regions %>%
   slice_sample(n = 8)
@@ -220,7 +220,7 @@ For this exercise you should use stratified sampling to select a total of eight 
 Once you've collected your sample, count the number of states from each region 
 in your sample to confirm that each region is represented equally in your sample.
 
-```{r stratified-sample4, exercise=TRUE}
+```
 # Stratified sample
 states_str <- ___ %>%
   group_by(___) %>%
@@ -231,7 +231,7 @@ ___ %>%
   ___
 ```
 
-```{r stratified-sample4-solution}
+```
 # Stratified sample
 states_str <- us_regions %>%
   group_by(region) %>%
@@ -245,7 +245,7 @@ states_str %>%
 ### Exercise: Compare SRS vs. stratified sample
 
 
-```{r quiz-compare-SRS-stratified-sample}
+```
 quiz(
   question("Which method you implemented, simple random sampling or stratified sampling, ensured an equal number of states from each region?", correct = "Super! Simple random sampling would result in different amounts of data being sampled from each state.", allow_retry = TRUE,
     answer("Simple random sampling", message = "Try again!"),
@@ -291,7 +291,7 @@ Now it's time to practice these experimental design concepts.
 
 A researcher designs a study to test the effect of light and noise levels on exam performance of students. The researcher also believes that light and noise levels might have different effects on males and females, so she wants to make sure both sexes are represented equally under different conditions.
 
-```{r quiz-identify-study-components}
+```
 quiz(
   question("Which of the below is correct?", correct = "Nice job!", allow_retry = TRUE,
     answer("There are 3 explanatory variables (light, noise, sex) and 1 response variable (exam performance).", message = "Close, but sex is thought to be a confounding variable, not an explanatory one!"),
@@ -304,7 +304,7 @@ quiz(
 
 ___ variables are conditions you can impose on the experimental units, while ___ variables are characteristics that the experimental units come with that you would like to control for.
 
-```{r quiz-experimental-desing-terminology}
+```
 quiz(
   question("", correct = "Nice job!", allow_retry = TRUE,
     answer("Blocking, explanatory", message = "Not quite!"),
@@ -317,7 +317,7 @@ quiz(
 
 In random sampling, we use ___ to control for a variable. In random assignment, we use ___ to achieve the same goal.
 
-```{r quiz-blocking-and-stratifying}
+```
 quiz(
   question("", correct = "Correct!", allow_retry = TRUE,
     answer("stratifying, blocking", correct = TRUE),

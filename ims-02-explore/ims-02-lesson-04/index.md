@@ -4,7 +4,7 @@ In this lesson, you'll get a chance to put to use what you know about explorator
 
 The `email` dataset contains information on all of the emails received by a single email account in a single month. Each email is a case, so we see that this email account received 3,921 emails. Twenty-one different variables were recorded on each email, some of which are numerical, others are categorical. Of primary interest is the first column, a categorical variable indicating whether or not the email is `spam`. This was created by actually reading through each email individually and deciding if it looked like spam or not. The subsequent columns were easier to create. `to_multiple` is TRUE if the email was addressed to more than one recipient and FALSE otherwise. `image` is the number of images attached in the email. It's important that you have a full sense of what each of the variables mean, so you'll want to start your exercises by reading about them in the [data set description](https://www.openintro.org/data/index.php?data=email).
 
-```{r email}
+```
 email
 ```
 
@@ -21,7 +21,7 @@ Here, you'll use the `email` dataset to settle that question.
 
 As you explore the association between spam and the length of an email, we'll use the **tidyverse** package for building data pipelines and visualisations and the **openintro** package that contains the `email`. These are loaded for you below.
 
-```{r load-pkg, eval = FALSE, echo = TRUE}
+```
 library(tidyverse)
 library(openintro)
 ```
@@ -30,7 +30,7 @@ Using the `email` dataset:
 
 - Compute appropriate measures of the center and spread of `num_char` for both spam and not spam using `group_by()` and `summarize()`. No need to name the new columns created by `summarize()`.
 - Construct side-by-side box plots to visualize the association between the same two variables. It will be useful to `mutate()` a new column containing a log-transformed version of `num_char`.
-```{r ex1, exercise = TRUE}
+```
 # Compute summary statistics
 email %>%
   ___ %>%
@@ -42,7 +42,7 @@ email %>%
   ___
 ```
 
-```{r ex1-hint-1}
+```
 # Compute summary statistics
 email %>%
   group_by(spam) %>%
@@ -54,7 +54,7 @@ email %>%
   ___
 ```
 
-```{r ex1-hint-2}
+```
 # Compute summary statistics
 email %>%
   group_by(spam) %>%
@@ -67,7 +67,7 @@ email %>%
   ___
 ```
 
-```{r ex1-hint-3}
+```
 # Compute summary statistics
 email %>%
   group_by(spam) %>%
@@ -80,7 +80,7 @@ email %>%
   ___
 ```
 
-```{r ex1-solution}
+```
 # Compute summary statistics
 email %>%
   group_by(spam) %>%
@@ -95,14 +95,14 @@ email %>%
 
 ### Spam and num_char interpretation
 
-```{r mc1-pre}
+```
 email %>%
   mutate(log_num_char = log(num_char)) %>%
   ggplot(aes(x = spam, y = log_num_char)) +
   geom_boxplot()
 ```
 
-```{r mc1}
+```
 question("Which of the following interpretations of the plot is valid?",
   answer("The shortest email in this dataset was not spam.", message = "Nope, try again."),
   answer("The median length of not spam emails is greater than that of spam emails.", correct = TRUE, message = "Awesome!"),
@@ -130,7 +130,7 @@ The `email` dataset is still available in your workspace.
 
 **Hint:** Take a look at how we calculated the summary statistics for `num_char` with the `median()` and `IQR()` functions in the `summarize()` call earlier.
 
-```{r ex2, exercise = TRUE}
+```
 # Compute center and spread for exclaim_mess by spam
 # Create plot for spam and exclaim_mess
 ```
@@ -138,7 +138,7 @@ The `email` dataset is still available in your workspace.
 
 
 
-```{r ex2-solution}
+```
 # Compute center and spread for exclaim_mess by spam
 email %>%
   group_by(spam) %>%
@@ -165,7 +165,7 @@ email %>%
 
 ### Spam and !!! interpretation
 
-```{r mc2-pre}
+```
 email %>%
   mutate(log_exclaim_mess = log(exclaim_mess + .01)) %>%
   ggplot(aes(x = log_exclaim_mess)) +
@@ -173,7 +173,7 @@ email %>%
   facet_wrap(~spam)
 ```
 
-```{r mc2}
+```
 question(
   "Which interpretation of these faceted histograms **is not** correct?
 ",
@@ -196,7 +196,7 @@ When you looked at the distribution of spam and the number of exclamation marks 
 
 The dominant feature of the exclaim mess variable, though, is the large proportion of cases that report zero or on this log scale, -4.6 exclamation marks. This is a common occurrence in data analysis that is often termed "zero-inflation", and there are several common ways to think about those zeros.
 
-```{r}
+```
 p1 <- email %>% 
   mutate(log_num_char = log(num_char)) %>% 
   ggplot(aes(y = spam , x = log_num_char)) +
@@ -213,7 +213,7 @@ p1 / p2
 
 One approach says that there are two mechanisms going on: one generating the zeros and the other generating the non-zeros, so we will analyze these two groups separately. A simpler approach is to think of the variable as two level categorical variable (zero or not zero) and to treat it like a categorical variable.
 
-```{r 9}
+```
 email2 <- email %>%
   mutate(zero = exclaim_mess == 1, log_exclaim_mess = log(exclaim_mess))
 email2 %>% 
@@ -227,7 +227,7 @@ email2 %>%
 
 To do so we create a new variable, we'll call it `zero` and use it to color in our bar chart.
 
-```{r facet}
+```
 email %>%
   mutate(zero = exclaim_mess == 0) %>%
   ggplot(aes(x = zero, fill = zero)) +
@@ -241,7 +241,7 @@ In the resulting plot, yes, we've lost a lot of information. But it's become ver
 
 Another way that we've seen is using a stacked bar chart. For that plot, you move the second variable from the facet layer to the fill argument inside the aesthetics function. 
 
-```{r}
+```
 email %>%
   mutate(zero = exclaim_mess == 0) %>%
   ggplot(aes(x = zero, fill = spam)) +
@@ -250,7 +250,7 @@ email %>%
 
 The other consideration you have to make is if you're more interested in counts or proportions. If the latter, you'll want to normalize the plot, which you can do by adding the position equals fill argument to `geom_bar()`. The result is a series of conditional proportions, where you're conditioning on whichever variable you're in.
 
-```{r}
+```
 email %>%
   mutate(zero = exclaim_mess == 0) %>%
   ggplot(aes(x = zero, fill = spam)) +
@@ -261,7 +261,7 @@ email %>%
 
 If it was difficult to work with the heavy skew of `exclaim_mess`, the number of images attached to each email (`image`) poses even more of a challenge. Run the following code to get a sense of its distribution: 
 
-```{r count-images, exercise = TRUE}
+```
 email %>%
   count(image)
 ```
@@ -273,7 +273,7 @@ Starting with `email`, form a continuous chain that links together the following
 - Create a new variable called `has_image` that is `TRUE` where the number of images is greater than zero and `FALSE` otherwise.
 - Create an appropriate plot with `email` to visualize the relationship between `has_image` and `spam`.
 
-```{r ex3, exercise = TRUE}
+```
 # Create plot of proportion of spam by image
 email %>%
   mutate(has_image = ___) %>%
@@ -281,21 +281,21 @@ email %>%
   geom_bar(position = ___)
 ```
 
-```{r ex3-hint-1}
+```
 email %>%
   mutate(has_image = image > 0) %>%
   ggplot(aes(x = ___, fill = ___)) +
   geom_bar(position = ___)
 ```
 
-```{r ex3-hint-2}
+```
 email %>%
   mutate(has_image = image > 0) %>%
   ggplot(aes(x = ___, fill = ___)) +
   geom_bar(position = "fill")
 ```
 
-```{r ex3-solution}
+```
 # Create plot of proportion of spam by image
 email %>%
   mutate(has_image = image > 0) %>%
@@ -305,14 +305,14 @@ email %>%
 
 ### Image and spam interpretation
 
-```{r mc3-pre}
+```
 email %>%
   mutate(has_image = image > 0) %>%
   ggplot(aes(x = has_image, fill = spam)) +
   geom_bar(position = "fill")
 ```
 
-```{r mc3}
+```
 question(
   "Which of the following interpretations of the plot **is** valid?",
   answer("There are more emails with images than without images."),
@@ -329,7 +329,7 @@ In the process of exploring a dataset, you'll sometimes come across something th
 
 You can formulate a test to ensure this variable is behaving as we expect:
 
-```{r logical, echo=TRUE}
+```
 email %>%
   mutate(num_char_check = num_char < 0) %>%
   select(num_char_check)
@@ -337,7 +337,7 @@ email %>%
 
 If the entire dataset was printed out, you'd see a long vector of 3921 logical values indicating for each case in the dataset whether that condition is `TRUE`. Here, the first 10 values all appear to be `FALSE`. To verify that *all* of the cases indeed have non-negative values for `num_char`, we can take the *sum* of this vector:
 
-```{r num-logical, echo=TRUE}
+```
 email %>%
   mutate(num_char_check = num_char < 0) %>%
   summarize(sum(num_char_check))
@@ -349,35 +349,35 @@ Consider the variables `image` and `attach`. You can read about them with `?emai
 
 Design a simple test to determine if images count as attached files. This involves creating a logical condition to compare the values of the two variables, then using `sum()` to assess every case in the dataset. Recall that the logical operators are `<` for *less than*, `<=` for *less than or equal to*, `>` for *greater than*, `>=` for *greater than or equal to*, and `==` for *equal to*.
 
-```{r ex4, exercise = TRUE}
+```
 # Test if images count as attachments
 email %>%
   mutate(image_gt_attach = ___) %>%
   summarize(___)
 ```
 
-```{r ex4-hint-1}
+```
 # Test if images count as attachments
 email %>%
   mutate(image_gt_attach = (___ > ___)) %>%
   summarize(___)
 ```
 
-```{r ex4-hint-2}
+```
 # Test if images count as attachments
 email %>%
   mutate(image_gt_attach = (image > attach)) %>%
   summarize(___)
 ```
 
-```{r ex4-hint-3}
+```
 # Test if images count as attachments
 email %>%
   mutate(image_gt_attach = (image > attach)) %>%
   summarize(sum(image_gt_attach))
 ```
 
-```{r ex4-solution}
+```
 # Test if images count as attachments
 email %>%
   mutate(image_gt_attach = (image > attach)) %>%
@@ -391,7 +391,7 @@ When you have a specific question about a dataset, you can find your way to an a
 > "Within non-spam emails, is the typical length of emails shorter for those that were sent to multiple people?"
 > This can be answered with the following chain:
 
-```{r chain}
+```
 email %>%
    filter(spam == "not spam") %>%
    group_by(to_multiple) %>%
@@ -406,7 +406,7 @@ Build a chain to answer each of the following questions, both about the variable
 - For emails containing the word "dollar", does the typical spam email contain a greater number of occurrences of the word than the typical non-spam email? Create a summary statistic that answers this question.
 - If you encounter an email with greater than 10 occurrences of the word "dollar", is it more likely to be spam or not spam? Create a bar plot that answers this question.
 
-```{r ex5, exercise = TRUE}
+```
 # Question 1
 email %>%
   filter(___) %>%
@@ -419,7 +419,7 @@ email %>%
   geom_bar()
 ```
 
-```{r ex5-hint-1}
+```
 # Question 1
 email %>%
   filter(dollar > 0) %>%
@@ -432,7 +432,7 @@ email %>%
   geom_bar()
 ```
 
-```{r ex5-hint-2}
+```
 # Question 1
 email %>%
   filter(dollar > 0) %>%
@@ -445,7 +445,7 @@ email %>%
   geom_bar()
 ```
 
-```{r ex5-hint-3}
+```
 # Question 1
 email %>%
   filter(dollar > 0) %>%
@@ -458,7 +458,7 @@ email %>%
   geom_bar()
 ```
 
-```{r ex5-hint-4}
+```
 # Question 1
 email %>%
   filter(dollar > 0) %>%
@@ -471,7 +471,7 @@ email %>%
   geom_bar()
 ```
 
-```{r ex5-solution}
+```
 # Question 1
 email %>%
   filter(dollar > 0) %>%
@@ -492,7 +492,7 @@ Let's revisit the exercise where you explored the association between whether an
 
 The plot you created was this bar chart of proportions. We want to emphasize an important, but subtle distinction when discussing proportions like this. This plot shows the proportions of spam or not spam within the subsets of emails that either have an image or do not. Said another way, they are conditioned on the has image variable. We get a slightly different story if we exchange the variables so that we condition on spam. Among emails that are spam, almost none of them have an image, while the proportion within non-spam is larger, but still less than 5%. If you're building a spam filter, a situation where you don't actually get to see the value of spam, it'd make more sense to think about conditioning on the has image variable.
 
-```{r echo=TRUE}
+```
 email %>%
   mutate(has_image = image == 1) %>%
   ggplot(aes(x = has_image, fill = spam)) +
@@ -501,7 +501,7 @@ email %>%
 
 In this case, we can tell that this variable would be an awful spam filter by itself.
 
-```{r echo=TRUE}
+```
 email %>%
   mutate(has_image = image == 1) %>%
   ggplot(aes(x = spam, fill = has_image)) +
@@ -516,13 +516,13 @@ That led to this bar chart, which was informative, but you might caused you to d
 
 Let's go through how we would flip the ordering of those bars so that they agree with the plot on the left.
 
-```{r switch-bars}
+```
 knitr::include_graphics("images/switch-bars.png")
 ```
 
 The first step is to save the mutated categorical variable back into the dataset. The ordering of the bars isn't determined within the code for the plot, but in the way that R represents that variable. If we call levels on the new variable, it returns NULL. 
 
-```{r echo=TRUE}
+```
 email <- email %>%
   mutate(zero = exclaim_mess == 0)
 levels(email$zero)
@@ -530,7 +530,7 @@ levels(email$zero)
 
 This is because this variable is actually a logical variable, not a factor. To set the ordering of the levels, let's make it a character variable and then change the order of its levels with the `fct_relevel()` function from the **forcats** package.
 
-```{r echo=TRUE}
+```
 email <- email %>%
   mutate(
     zero = if_else(exclaim_mess == 0, "TRUE", "FALSE"),
@@ -540,7 +540,7 @@ email <- email %>%
 
 Now, when we go to make the plot with the same code, the order of the bars are as we wan them.
 
-```{r echo=TRUE}
+```
 email %>%
   ggplot(aes(x = zero)) +
   geom_bar() +
@@ -567,14 +567,14 @@ Let's practice constructing a faceted bar plot.
 
 - Construct a faceted bar plot of the association between `number` and `spam`.
 
-```{r ex6, exercise = TRUE}
+```
 # Construct plot of
 ___(email, ___
   ___
   ___
 ```
 
-```{r ex6-solution}
+```
 # Construct plot of number_reordered
 ggplot(email, aes(x = number)) +
   geom_bar() +
@@ -583,13 +583,13 @@ ggplot(email, aes(x = number)) +
 
 ### What's in a number interpretation
 
-```{r mc4-pre}
+```
 ggplot(email, aes(x = number)) +
   geom_bar() +
   facet_wrap(~spam)
 ```
 
-```{r mc4}
+```
 question("Which of the following interpretations of the plot **is not** valid?",
   answer("Given that an email contains a small number, it is more likely to be 
 not spam"),
@@ -611,14 +611,14 @@ We started with categorical data, often the domain of the pie chart, and hopeful
 
 Let's take a look at a comparison of pie vs. bar charts for data on identities of superheroes from comics. We will be visualizing the following distribution. 
 
-```{r}
+```
 comics %>%
   count(id)
 ```
 
 On the bar plot, it's quite difficult to tell how the `NA` group compares to the `Public` group, but this comparison is much easier in the bar plot. Also `Unknown` is barely visible in the bar plot and almost not there in the pie chart.
 
-```{r}
+```
 p1 <- comics %>%
   count(id) %>%
   ggplot(aes(x = "", y = n, fill = id))+
@@ -638,7 +638,7 @@ p1 / p2
 
 We saw how the story can change, depending on if we're visualizing counts or proportions.
 
-```{r fig.width=10}
+```
 p1 <- ggplot(comics, aes(y = id))+
   geom_bar() +
   facet_wrap(~align, nrow = 1)
@@ -653,7 +653,7 @@ From there, we moved on to numerical data and a collection of graphical techniqu
 
 Let's take a look at a distribution of the number of appearances of the super heroes.
 
-```{r comics-appearances-hist, exercise = TRUE}
+```
 ggplot(comics, aes(x = appearances)) +
     geom_histogram(binwidth = 100)
 ```
@@ -664,7 +664,7 @@ Super skewed!
 
 We can see this in the density plot as well.
 
-```{r comics-appearances-density, exercise = TRUE}
+```
 ggplot(comics, aes(x = appearances)) +
     geom_density()
 ```
@@ -673,7 +673,7 @@ ggplot(comics, aes(x = appearances)) +
 
 Or make side-by-side box plots for comparison across levels of a categorical variable.
 
-```{r comics-appearances-boxplot, exercise = TRUE}
+```
 ggplot(comics, aes(x = appearances, y = id)) +
   geom_boxplot()
 ```
@@ -682,7 +682,7 @@ ggplot(comics, aes(x = appearances, y = id)) +
 
 In the third lesson, we discussed the common numerical measures of a distribution: measures of center, variability, shape, plus the presence of outliers. Our life was made much easier by using the combination of `group_by()` and `summarize()` to compute statistics on different groups within our data.
 
-```{r}
+```
 comics %>%
   group_by(id) %>%
   summarise(
