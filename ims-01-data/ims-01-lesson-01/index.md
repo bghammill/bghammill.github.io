@@ -34,7 +34,7 @@ packages into R.
 
 Let's load these two packages to be used in the remainder of this lesson.
 
-```{r load-packages, exercise=TRUE}
+```
 library(tidyverse)
 library(openintro)
 ```
@@ -52,7 +52,7 @@ preview of the dataset. You can use the arrow on the right hand side to scroll
 through the variables, and the numbers on the bottom to see different rows in 
 the dataset.
 
-```{r print-hsb2}
+```
 hsb2
 ```
 
@@ -69,7 +69,7 @@ the data look like. The `glimpse()` function is one good way of doing this. Clic
 on the blue "Run Code" button to run the code below, and take a look at the 
 output of the `glimpse()` function. 
 
-```{r glimpse-hsb2, exercise=TRUE}
+```
 glimpse(hsb2)
 ```
 
@@ -85,11 +85,11 @@ Take a peek at the `email50` dataset using the `glimpse()` function.
 
 *How many observations and variables are there?*
 
-```{r glimpse-email50, exercise=TRUE}
+```
 
 ```
 
-```{r glimpse-email50-solution}
+```
 glimpse(email50)
 ```
 
@@ -127,7 +127,7 @@ If the levels of a categorical variable do not have an inherent ordering to them
 
 Let's take a moment to go through the variables in the High School and Beyond dataset:
 
-```{r glimpse-hsb2-again, echo=TRUE}
+```
 glimpse(hsb2)
 ```
 
@@ -135,7 +135,7 @@ Using the `glimpse()` function, we can obtain a list of the variables in the dat
 
 The first variable is id, which is an identifier variable for the student. 
 
-```{r glimpse-hsb2-id}
+```
 hsb2 %>% 
   select(id) %>% 
   glimpse()
@@ -155,7 +155,7 @@ anyone tells you! So, this is just a categorical variable.The same is true for
 the race variable, which has levels of `"white"`, `"african american"`,
 `"hispanic"`, and `"asian"`.
 
-```{r glimpse-hsb2-race-gender}
+```
 hsb2 %>% 
   select(race, gender) %>% 
   glimpse()
@@ -165,7 +165,7 @@ Socio-economic status, on the other hand, has three levels `"low"`, `"middle"`,
 and `"high"` that have an inherent ordering, hence this variable is an *ordinal*
 categorical variable.
 
-```{r glimpse-hsb2-ses}
+```
 hsb2 %>% 
   select(ses) %>% 
   glimpse()
@@ -173,7 +173,7 @@ hsb2 %>%
 
 School type and program are also both categorical variables, with no inherent ordering to their levels.
 
-```{r glimpse-hsb2-schtyp-prog}
+```
 hsb2 %>% 
   select(schtyp, prog) %>% 
   glimpse()
@@ -196,15 +196,15 @@ dataset) in the code box and running it.
 
 *Review the output to identify each variable as either numerical or categorical, and further as discrete or continuous (if numerical) or ordinal or not ordinal (if categorical).*
 
-```{r glimpse-data, exercise=TRUE}
+```
 
 ```
 
-```{r glimpse-data-hint}
+```
 glimpse(___)
 ```
 
-```{r glimpse-data-solution}
+```
 glimpse(email50)
 ```
 
@@ -227,7 +227,7 @@ Suppose we want to do an analysis of only the students in public schools in the 
 
 One option for obtaining this information in R uses the `count()` function from the **dplyr** package, one of the packages included in the tidyverse. This package provides a variety of functions for wrangling and summarizing data. Once such function is `count()` which gives the frequencies of occurrence of the unique values in a given column. In this case we're interested in the number of students for each level of the `schtyp` (school type) column.
 
-```{r hsb2-count-schtyp, exercise=TRUE}
+```
 hsb2 %>% 
   count(schtyp)
 ```
@@ -260,7 +260,7 @@ would use the following code. Notice, 3 and 4 are separated by a comma,
 indicating that these are the two numbers we wish for the `sum()` function to 
 add. 
 
-```{r sumdata1, echo=TRUE}
+```
 # Sum of 3 and 4, without pipe
 sum(3, 4)
 ```
@@ -269,7 +269,7 @@ If we wanted to do the same operation with a pipe, we would instead use the
 code below. The pipe operator inserts 3 as the first argument into the `sum()`
 function, which looks like `sum(3, 4)`. 
 
-```{r sumdata2, echo=TRUE}
+```
 # Sum of 3 and 4, with pipe
 3 %>% sum(4)
 ```
@@ -285,7 +285,7 @@ longer pipes that perform multiple operations.
 Next, let's use the `filter()` function to filter the data to only include
 public school students. 
 
-```{r hsb2-filter-schtyp-public, exercise=TRUE}
+```
 hsb2_public <- hsb2 %>%
   filter(schtyp == "public")
 ```
@@ -312,7 +312,7 @@ an error message!
 Now, if we make another frequency table of school type in the filtered dataset,
 we should only see public school in the output.
 
-```{r hsb2-count-schtyp-again, exercise=TRUE}
+```
 hsb2_public %>%
   count(schtyp)
 ```
@@ -328,7 +328,7 @@ Modify the code below to:
 - Create a new dataset called `email50_big` that is a subset of the original `email50` dataset containing only emails with `"big"` numbers. This information is stored in the `number` variable.
 - Report the dimensions of `email50_big` using the `glimpse()` function again. *How many emails contain big numbers?*
 
-```{r email50-filter-number-big, exercise=TRUE}
+```
 # Subset of emails with big numbers: email50_big
 email50_big <- ___ %>%
   filter(___)
@@ -341,7 +341,7 @@ email50_big <- ___ %>%
 **Hint:** We're looking for emails with big numbers, so filter for `number == "big"`.
 </div>
 
-```{r email50-filter-number-big-solution}
+```
 # Subset of emails with big numbers: email50_big
 email50_big <- email50 %>%
   filter(number == "big")
@@ -356,13 +356,13 @@ A common way of creating a new variable from an existing variable is discretizin
 
 For example, suppose we are not interested in the actual reading score of students, but instead whether their reading score is below average or at or above average. First, we need to calculate the average reading score with the `mean()` function. This will give us the mean value, 52.23. 
 
-```{r hsb2-mean-read, exercise=TRUE}
+```
 # Calculate average reading score and show the value
 mean(hsb2$read)
 ```
 However, in order to be able to refer back to this value later on, we might want to store it as an object that we can refer to by name. So instead of just printing the result, let's save it as a new object called **avg underscore read**.
 
-```{r hsb2-mean-read-assign, exercise=TRUE}
+```
 # Calculate average reading score and store as avg_read
 avg_read <- mean(hsb2$read)
 ```
@@ -371,7 +371,7 @@ Before we move on, a quick tip: most often we want to do both; see the value and
 way to accomplish this task is to wrap your assignment code in parentheses so that R will both assign the average value of reading test scores to `avg_read`, and print out the value assigned to 
 `avg_read`. 
 
-```{r hsb2-mean-read-assign-show, exercise=TRUE}
+```
 (avg_read <- mean(hsb2$read))
 ```
 
@@ -385,7 +385,7 @@ let's explore another option!
 Instead we can create a new variable, named `read_cat`, with the `mutate()`
 function and the helpful `if_else()` function. 
 
-```{r hsb2-mutate-read-cat, exercise=TRUE}
+```
 hsb2 <- hsb2 %>%
   mutate(read_cat = if_else(read < avg_read,
                             "below average",
@@ -421,7 +421,7 @@ The `email50` dataset is available in your workspace. Modify the code below to:
 - Assign the resulting data frame to a new data frame named `email50_updated`.
 - Then, using `count()`, determine the number of emails in each level of `num_char_cat`. Evaluate whether these counts match the expected numbers.
 
-```{r hsb2-mutate-num-char-cat, exercise=TRUE}
+```
 # Calculate median number of characters: med_num_char
 med_num_char <- median(___)
 
@@ -441,7 +441,7 @@ email50_updated %>%
 **Hint:** In the `if_else()` function, the second argument is the value `num_char_cat` should take if the condition `num_char < med_num_char` is `TRUE`, and the third is if it's `FALSE`.
 </div>
 
-```{r hsb2-mutate-num-char-cat-solution}
+```
 # Calculate median number of characters: med_num_char
 med_num_char <- median(email50$num_char)
 
@@ -479,7 +479,7 @@ Use what you know about the `mutate` and `if_else()` functions to:
 - Assign the resulting data frame to a new data frame named `email50_updated`.
 - Run the code provided to visualize the distribution of the `number_cat` variable.
 
-```{r email50-fortified, exercise=TRUE}
+```
 # Create number_cat column in email50
 email50_updated <- email50 %>%
   mutate(___ = if_else(___, 
@@ -494,26 +494,26 @@ ggplot(email50_updated, aes(x = number_cat)) +
   geom_bar()
 ```
 
-```{r email50-fortified-hint-1}
+```
 number_cat = if_else(number == "none", 
                      "[VALUE IF TRUE]", 
                      "[VALUE IF FALSE]") 
 ```
 
-```{r email50-fortified-hint-2}
+```
 number_cat = if_else(number == "none", 
                      "no", 
                      "[VALUE IF FALSE]") 
 ```
 
-```{r email50-fortified-hint-3}
+```
 number_cat = if_else(number == "none", 
                      "no", 
                      "yes") 
 
 ```
 
-```{r email50-fortified-solution}
+```
 # Create number_cat column in email50
 email50_updated <- email50 %>%
   mutate(number_cat = if_else(number == "none",
@@ -544,7 +544,7 @@ Another attractive feature of ggplot2 is that you can build your plots in layers
 
 We'll visualize the relationship between the math and science scores of the students in the High School and Beyond dataset.
 
-```{r hsb2-science-math, exercise=TRUE}
+```
 ggplot(data = hsb2, aes(x = science, y = math)) + 
   geom_point()
 ```
@@ -567,7 +567,7 @@ Now that you've learned how to make the plot, let's talk about what the plot say
 
 We can see that there is a positive relationship between the science and math scores of students, meaning that students who score highly in science tend to also score highly in math. Probably not that surprising a result.
 
-```{r hsb2-science-math-lm}
+```
 ggplot(data = hsb2, aes(x = science, y = math)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE)
@@ -579,7 +579,7 @@ We also mentioned earlier that extending from bivariate to multivariate plots is
 
 Let's plot the same math and science test scores, but this time let's also consider the program that the student is in: general, academic, or vocational. 
 
-```{r hsb2-science-math-prog, exercise=TRUE}
+```
 ggplot(data = hsb2, aes(x = science, y = math, color = prog)) +
   geom_point()
 ```
@@ -591,7 +591,7 @@ think about where the lines would go if we fit a separate line for each level
 of the program variable (each color of points). The result would be a plot that
 looks like the one below. 
 
-```{r hsb2-science-mat-prog-lm}
+```
 ggplot(data = hsb2, aes(x = science, y = math, color = prog)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE)
@@ -620,27 +620,27 @@ it as a categorical variable in this plot. To do this we can force R to think of
 To do this we insert the name of the variable we want to convert to a factor 
 (`spam`) into the the `factor()` function (e.g. `factor(spam)`). 
 
-```{r email50-plot, exercise=TRUE}
+```
 ggplot(email50, aes(x = ___, y = ___, color = ___)) +
   [GEOM]
 ```
 
-```{r email50-plot-hint-1}
+```
 ggplot(email50, aes(x = num_char, y = ___, color = ___)) +
   [GEOM]
 ```
 
-```{r email50-plot-hint-2}
+```
 ggplot(email50, aes(x = num_char, y = exclaim_mess, color = ___)) +
   [GEOM]
 ```
 
-```{r email50-plot-hint-3}
+```
 ggplot(email50, aes(x = num_char, y = exclaim_mess, color = factor(spam))) +
   {GEOM}
 ```
 
-```{r email50-plot-solution}
+```
 ggplot(email50, aes(x = num_char, y = exclaim_mess, color = factor(spam))) +
   geom_point()
 ```
