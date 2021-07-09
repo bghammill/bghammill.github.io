@@ -24,34 +24,35 @@ We will encounter several new point estimates and a couple new distributions. In
 
 ## Lessons
 
-### 1 - [Inference for a single proportion](https://openintro.shinyapps.io/ims-05-infer-01/)
+### 1 - [Inference for a single proportion](https://bghammill.github.io/ims-05-infer/ims-05-lesson-01/)
 
 In this lesson you will learn how to form a confidence interval on a single proportion using bootstrapping and an approximation-based method. You’ll explore how the sample size and the true proportion effect the width of the interval.
 
-### 2 - [Hypothesis tests to compare proportions](https://openintro.shinyapps.io/ims-05-infer-02/)
+### 2 - [Hypothesis tests to compare proportions](https://bghammill.github.io/ims-05-infer/ims-05-lesson-02/)
 
 This lesson dives deeper into inference for a single parameter by performing hypothesis tests. Then, you’ll extend this technique to the difference between two proportions. Finally, this lesson wraps up with an exploration of what happens when you know the null hypothesis is true and the types of statistical errors that are baked in to this approach.
 
-### 3 - [Chi-squared test of independence](https://openintro.shinyapps.io/ims-05-infer-03/)
+### 3 - [Chi-squared test of independence](https://bghammill.github.io/ims-05-infer/ims-05-lesson-03/)
 
 This part of the tutorial will teach you how to use both bootstrapping and approximation methods to test for the independence of two categorical variables. This commonly-used method is called the chi-squared Test of Independence.
 
-### 4 - [Chi-squared goodness of fit test](https://openintro.shinyapps.io/ims-05-infer-04/)
+### 4 - [Chi-squared goodness of fit test](https://bghammill.github.io/ims-05-infer/ims-05-lesson-04/)
 
 The tutorial wraps up with two case studies using election data. Here, you’ll learn how to a second Chi-squared test to check the goodness of fit between your data and a hypothetical distribution. You’ll study election results from Iran and Iowa and evaluate whether we can detect fraud using something called Benford’s Law.
 
-### 5 - [Bootstrapping for estimating a parameter](https://openintro.shinyapps.io/ims-05-infer-05/)
+### 5 - [Bootstrapping for estimating a parameter](https://bghammill.github.io/ims-05-infer/ims-05-lesson-05/)
 
 Construct confidence intervals for a median, mean, and any other statistic for the distribution of a numerical variable using bootstrapping.
 
-### 6 - [Introducing the t-distribution](https://openintro.shinyapps.io/ims-05-infer-06/)
+### 6 - [Introducing the t-distribution](https://bghammill.github.io/ims-05-infer/ims-05-lesson-06/)
 
 Introduce the t-distribution for theoretical inference on means and constrast it to the normal distribution.
 
-### 7 - [Inference for difference in two means](https://openintro.shinyapps.io/ims-05-infer-07/)
+### 7 - [Inference for difference in two means](https://bghammill.github.io/ims-05-infer/ims-05-lesson-07/)
 
 Use simulation based and theoretical methods for inference in the difference of two means.
 
-### 8 - [Comparing many means](https://openintro.shinyapps.io/ims-05-infer-08/)
+### 8 - [Comparing many means](https://bghammill.github.io/ims-05-infer/ims-05-lesson-08/)
 
 Compare many means using ANOVA.
+
