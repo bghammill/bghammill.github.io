@@ -14,7 +14,7 @@ When your dataset is represented as a table or a database, it’s difficult to o
 
 ## Lessons
 
-### 1 - [Visualizing categorical data](https://openintro.shinyapps.io/ims-02-explore-01/)
+### 1 - [Visualizing categorical data](https://bghammill.github.io/ims-02-explore/ims-02-lesson-01/)
 
 Creating graphical and numerical summaries of two categorical variables, primarily using two R packages: ggplot2 and dplyr.
 
@@ -33,7 +33,7 @@ Creating graphical and numerical summaries of two categorical variables, primari
     - data integrity check for levels
   - Pie chart
 
-### 2 - [Visualizing numerical data](https://openintro.shinyapps.io/ims-02-explore-02/)
+### 2 - [Visualizing numerical data](https://bghammill.github.io/ims-02-explore/ims-02-lesson-02/)
 
 Learn useful statistics for describing distributions of data.
 
@@ -50,7 +50,7 @@ Learn useful statistics for describing distributions of data.
 - Boxplot
 - outlier detection
 
-### 3 - [Summarizing with statistics](https://openintro.shinyapps.io/ims-02-explore-03/)
+### 3 - [Summarizing with statistics](https://bghammill.github.io/ims-02-explore/ims-02-lesson-03/)
 
 Statistics for describing distributions of data.
 
@@ -60,7 +60,7 @@ Statistics for describing distributions of data.
 - Unusual observations
 - Transformations: Logarithm and sqrt to reduce skew in graphics and ease comparisons.
 
-### 4 - [Case study](https://openintro.shinyapps.io/ims-02-explore-04/)
+### 4 - [Case study](https://bghammill.github.io/ims-02-explore/ims-02-lesson-04/)
 
 Apply what you’ve learned to explore and summarize a real world dataset in this case study of email spam.
 
