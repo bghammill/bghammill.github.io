@@ -22,7 +22,7 @@ In this tutorial, we focus on steps 1 and 2 of this process.
 
 ## Lessons
 
-### 1 - [Language of data](https://openintro.shinyapps.io/ims-01-data-01/)
+### 1 - [Language of data](https://bghammill.github.io/ims-01-model/ims-01-lesson-01/)
 
 - Load data from the textbook companion package
 - Introduce data frames and tidy data
@@ -33,7 +33,7 @@ In this tutorial, we focus on steps 1 and 2 of this process.
   - Combine levels of categorical
   - Create new variable based on two existing variables (e.g. BMI)
 
-### 2 - [Types of studies](https://openintro.shinyapps.io/ims-01-data-02/)
+### 2 - [Types of studies](https://bghammill.github.io/ims-01-model/ims-01-lesson-02/)
 
 - Define observational studies and experiments
 - Discuss scope of inference 2x2 grid with random assignment and sampling
@@ -41,7 +41,7 @@ In this tutorial, we focus on steps 1 and 2 of this process.
   - Use R to make a contingency table
   - `group_by()` third variable and make table again to demonstrate Simpson’s paradox
 
-### 3 - [Sampling strategies and experimental design](https://openintro.shinyapps.io/ims-01-data-03/)
+### 3 - [Sampling strategies and experimental design](https://bghammill.github.io/ims-01-model/ims-01-lesson-03/)
 
 - Define simple random sample, stratified sample, cluster sample, multistage sample
 - Use R to obtain SRS and stratified sample
@@ -54,7 +54,7 @@ In this tutorial, we focus on steps 1 and 2 of this process.
   - `slice_sample()`
   - `group_by()` %>% `slice_sample()`
 
-### 4 - [Case study](https://openintro.shinyapps.io/ims-01-data-04/)
+### 4 - [Case study](https://bghammill.github.io/ims-01-model/ims-01-lesson-04/)
 
 - Apply terminology, principles, and R code learned in this tutorial to a case study
 

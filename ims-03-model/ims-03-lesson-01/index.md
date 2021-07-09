@@ -20,7 +20,7 @@ In a statistical model, we generally have one variable that is the output and on
   - A variable you think might be related to the response
 - Both variables are (continuous) *numerical*
 
-#### Graphical representations
+**Graphical representations**
 
 Just as you learned to visualize the distribution of one variable with a histogram or density plot, statisticians have developed a commonly used framework for visualizing the relationship between two numeric variables: the scatterplot. The scatterplot has been called the most “[generally useful invention in the history of statistical graphics](http://onlinelibrary.wiley.com/doi/10.1002/jhbs.20078/abstract).” It is a simple two-dimensional plot in which the two coordinates of each dot represent the values of two variables measured on a single observation.
 
@@ -33,7 +33,7 @@ By convention, we always put the response variable on the vertical, or $$y$$-axi
 
 
 
-### Scatterplot
+**Scatterplot**
 
 In `ggplot`, we bind the `x` and `y` aesthetics to our explanatory and response variables, and then use the `geom_point()` function to actually draw the points. Here we can see a scatterplot of the total length of a possum’s body as a function of the length of its tail.
 
@@ -48,7 +48,7 @@ Note that the axes have been labeled with the names of the variables automatical
 
 
 
-### Labeling Axes
+**Labeling Axes**
 
 For clarity, it is important to give your axes human-readable labels. We can do that with the `labs()` function. It is a good data visualization practice to include any necessary units in axis labels!
 
