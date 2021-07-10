@@ -35,7 +35,7 @@ Here, however, the sample from the East Coast prefers cola *at a rate which is t
 
 At this point, it is important for you to know some new vocabulary to describe the previous setting.
 
-The claim that is not interesting is called the *null hypothesis* and is denoted **$H_0$** (pronounced "H-naught"). For example, that soda preference is the same on the two coasts.
+The claim that is not interesting is called the *null hypothesis* and is denoted $$H_0$$ (pronounced "H-naught"). For example, that soda preference is the same on the two coasts.
 
 The claim that corresponds to the research hypothesis is called the *alternative hypothesis* and is denoted by **$H_A$** (pronounced "H-A"). For example, that people on the East Coast prefer soda at a higher rate than those on the West Coast.
 
@@ -1104,10 +1104,10 @@ question("What can you conclude from the analysis?", correct = "Right! We've fai
     answer("We have learned that our data is consistent with the hypothesis of no difference in home ownership across gender.", correct = TRUE),
     answer("We have learned that the observed difference (from the data) in proportion of home ownership across gender is due to something other than random variation.", message = "Unfortunately, there is not sufficient evidence to reject the null hypothesis.")
 )
-```    
-    
+```
+
 ## Study conclusions
-        
+
 In the calculations on the `NHANES` data, the observed statistic was consistent with the null statistics. That is, 212 of the 1000 permutations were smaller than the original value. There is no evidence that the data are inconsistent with the null hypothesis. That is, if gender played no role in home ownership, we would be likely to get data similar to those observed.
 
 However, this does not mean that we know for sure the gender doesn't play a role. It is possible that the true difference in homeownership rates is 0.1, and surely our data would be consistent with that population as well. The logic of inference allows us only to reject null claims. The process does not allow us to have certainty in the null hypothesis being true.
