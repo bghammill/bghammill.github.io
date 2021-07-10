@@ -37,7 +37,7 @@ At this point, it is important for you to know some new vocabulary to describe t
 
 The claim that is not interesting is called the *null hypothesis* and is denoted $$H_0$$ (pronounced "H-naught"). For example, that soda preference is the same on the two coasts.
 
-The claim that corresponds to the research hypothesis is called the *alternative hypothesis* and is denoted by **$H_A$** (pronounced "H-A"). For example, that people on the East Coast prefer soda at a higher rate than those on the West Coast.
+The claim that corresponds to the research hypothesis is called the *alternative hypothesis* and is denoted by $$H_A$$ (pronounced "H-A"). For example, that people on the East Coast prefer soda at a higher rate than those on the West Coast.
 
 Almost always, the *goal is to disprove the null hypothesis and claim that the alternative hypothesis is true.*
 
@@ -1167,3 +1167,10 @@ What's next?
 `r emo::ji("one")` [Tutorial 5 - Lesson 4: Parameters and confidence intervals](https://openintro.shinyapps.io/ims-05-introduction-to-statistical-inference-04/)
 
 `r emo::ji("open_book")` [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
+
+
+
+<!-- MathJax -->
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
