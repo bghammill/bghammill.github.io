@@ -1,6 +1,4 @@
-# Lesson 7
-
-## Evaluating and extending parallel slopes model
+## Evaluating and extending the parallel slopes model
 
 This lesson covers model evaluation. By looking at different properties of the model, including the adjusted R2R2., you’ll learn to compare models so that you can select the best one. You’ll also learn about interaction terms in linear models.
 
@@ -8,7 +6,7 @@ This lesson covers model evaluation. By looking at different properties of the m
 
 ### Residuals
 
-![img](https://openintro.shinyapps.io/ims-03-model-07/_w_024758d8/03-07-lesson_files/figure-html/mpg-displ-resid-1.png)
+![img](images/mpg-displ-resid-1.png)
 
 One of the most natural questions we might have about our model is: “how well does it fit?” We measure this by computing—for each observation—the difference between the actual value of the response variable and the fitted value from our model. This distance is called a **residual**. Residuals for two observations are illustrated in this plot with vertical arrows. Just as in simple linear regression, the model fitting procedure will automatically minimize the length of those arrows across all of the points.
 
@@ -50,7 +48,7 @@ Another important bit of functionality is the ability to make out-of-sample pred
 
 ### 2008 Toyota Matrix
 
-![img](https://openintro.shinyapps.io/ims-03-model-07/_w_024758d8/images/2006_toyota_matrix-pic-49683-1600x1200.jpeg)
+![img](images/2006_toyota_matrix-pic-49683-1600x1200.jpeg)
 
 For example, suppose you currently drive a 2008 Toyota Matrix like the one you see here. However, this car isn’t in our dataset. What does our model predict for the fuel economy of this car?
 
@@ -130,7 +128,7 @@ ggplot(data = mpg, aes(x = displ, y = hwy, color = factor(year))) +
   geom_smooth(method = "lm", se = 0)
 ```
 
-![img](https://openintro.shinyapps.io/ims-03-model-07/_w_024758d8/03-07-lesson_files/figure-html/mpg-interaction-1.png)
+![img](images/mpg-interaction-1.png)
 
 Thus far we have considered models where the regression lines were constrained to be parallel. But what if the lines didn’t have to be parallel? In this plot, we illustrate the model when the lines are allowed to have their own slopes. Now, the relationship between fuel economy and engine size is not the same for the newer cars as it is for the older cars. The slope of that relationship now changes based on the year. Thus, engine size and year are allowed to *interact* in their relationship with fuel economy.
 
@@ -303,7 +301,7 @@ ggplot(data = SAT, aes(x = salary, y = total)) +
   geom_smooth(method = "lm", se = 0)
 ```
 
-![img](https://openintro.shinyapps.io/ims-03-model-07/_w_024758d8/03-07-lesson_files/figure-html/sat-salary-1.png)
+![img](images/sat-salary-1.png)
 
 
 
@@ -346,7 +344,7 @@ ggplot(data = SAT, aes(x = salary, y = total, color = sat_bin)) +
   geom_line(data = broom::augment(mod), aes(y = .fitted))
 ```
 
-![img](https://openintro.shinyapps.io/ims-03-model-07/_w_024758d8/03-07-lesson_files/figure-html/sat-binned-1.png)
+![img](images/sat-binned-1.png)
 
 But wait, now all three lines have a positive slope!
 
@@ -385,57 +383,32 @@ The object `slr` is already defined for you.
 - Fit a simple linear regression model for final auction price (`total_pr`) as a function of duration (`duration`).
 - Use `aes()` to add a color aesthetic that’s mapped to the condition variable to the `slr` object, which is the plot shown below.
 
-![img](https://openintro.shinyapps.io/ims-03-model-07/_w_024758d8/03-07-lesson_files/figure-html/unnamed-chunk-12-1.png)
+![img](images/unnamed-chunk-12-1.png)
 
 You have successfully completed Lesson 2 in Tutorial 4: Multiple and Logistic Regression.
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 What’s next?
 
-📒 [Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://openintrostat.github.io/ims-tutorials/)
+[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
 
-🗒 [Tutorial 3: Introduction to Linear Models Data](https://openintrostat.github.io/ims-tutorials/03-introduction-to-linear-models/)
+[Tutorial 3: Introduction to Linear Models Data](https://bghammill.github.io/ims-03-model/)
 
-1️⃣ [Tutorial 3 - Lesson 1: Visualizing two variables](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-01/)
+- [Tutorial 3 - Lesson 1: Visualizing two variables](https://bghammill.github.io/ims-03-model/ims-03-lesson-01/)
+- [Tutorial 3 - Lesson 2: Correlation](https://bghammill.github.io/ims-03-model/ims-03-lesson-02/)
+- [Tutorial 3 - Lesson 3: Simple linear regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-03/)
+- [Tutorial 3 - Lesson 4: Interpreting regression models](https://bghammill.github.io/ims-03-model/ims-03-lesson-04/)
+- [Tutorial 3 - Lesson 5: Model fit](https://bghammill.github.io/ims-03-model/ims-03-lesson-05/)
+- [Tutorial 3 - Lesson 6: Parallel slopes](https://bghammill.github.io/ims-03-model/ims-03-lesson-06/)
+- [Tutorial 3 - Lesson 7: Evaluating & extending parallel slopes model](https://bghammill.github.io/ims-03-model/ims-03-lesson-07/)
+- [Tutorial 3 - Lesson 8: Multiple regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-08/)
+- [Tutorial 3 - Lesson 9: Logistic regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-09/)
+- [Tutorial 3 - Lesson 10: Case study ](https://bghammill.github.io/ims-03-model/ims-03-lesson-10/)
 
-2️⃣ [Tutorial 3 - Lesson 2: Correlation](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-02/)
+[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
-3️⃣ [Tutorial 3 - Lesson 3: Simple linear regression](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-03/)
-
-4️⃣ [Tutorial 3 - Lesson 4: Interpreting regression models](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-04/)
-
-5️⃣ [Tutorial 3 - Lesson 5: Model fit](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-05/)
-
-📖 [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
-
-
-
-
-
-[Next Topic](https://bghammill.github.io/ims-03-model/ims-03-lesson-02/)
-
-[Back to lesson list](https://bghammill.github.io/ims-03-model/)
-
-[Back to tutorial list (main page)](https://bghammill.github.io/)
-
-
+<!-- MathJax -->
 
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 

@@ -1,8 +1,4 @@
-# Lesson 6
-
-
-
-## Welcome
+## Parallel slopes model
 
 In this tutorial, we will learn how to extend simple linear regression to an arbitrary number of explanatory variables, which can be a mixture of numeric and categorical. We’ll also learn about logistic regression, which allows us to model a binary response variable.
 
@@ -19,7 +15,7 @@ ggplot(data = mpg_manuals, aes(x = displ, y = hwy)) +
   geom_point()
 ```
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-01/_w_72b32c9a/04-01-lesson_files/figure-html/fuel-efficiency-size-1.png)
+![img](images/fuel-efficiency-size-1.png)
 
 ### Fuel efficiency over time
 
@@ -30,7 +26,7 @@ ggplot(data = mpg_manuals, aes(x = factor(year), y = hwy)) +
   geom_boxplot()
 ```
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-01/_w_72b32c9a/04-01-lesson_files/figure-html/fuel-efficiency-time-1.png)
+![img](images/fuel-efficiency-time-1.png)
 
 
 
@@ -40,7 +36,7 @@ What we really want is a model that will assess the effects of engine size and y
 
 Here we see a visual depiction of a parallel slopes model. These models occur when one of the explanatory variables is numeric, and the other is categorical. In this case, the year variables has two levels, and the model accordingly consists of two parallel lines.
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-01/_w_72b32c9a/04-01-lesson_files/figure-html/mpg-displ-resid-1.png)
+![img](images/mpg-displ-resid-1.png)
 
 
 
@@ -106,7 +102,7 @@ In this scatterplot, we use color to differentiate the cars from 2008 from those
 
 In this manner, we have depicted three variables—two numeric and one categorical—on the same scatterplot. Thus, this plot will enable us to visualize our parallel slopes model in the data space.
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-01/_w_72b32c9a/04-01-lesson_files/figure-html/mpg-data-space-1.png)
+![img](images/mpg-data-space-1.png)
 
 ### Setting up the model
 
@@ -218,7 +214,7 @@ data_space +
   geom_line(data = augment(mod), aes(y = .fitted, color = `factor(year)`))
 ```
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-01/_w_72b32c9a/04-01-lesson_files/figure-html/mpg-data-parallel-1.png)
+![img](images/mpg-data-parallel-1.png)
 
 
 
@@ -379,7 +375,7 @@ Math isn’t everyone’s cup of tea, and while this doesn’t make it any less 
 
 A simple linear regression model can be visualized as a line through this data space.
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-01/_w_72b32c9a/04-01-lesson_files/figure-html/mpg-data-parallel-1.png)
+![img](images/mpg-data-parallel-1.png)
 
 ### Syntactic
 
@@ -431,7 +427,7 @@ R Code
 
 This time, we’d like to build a model for birthweight as a function of the length of gestation and the mother’s smoking status. Use the plot to inform your model specification.
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-01/_w_72b32c9a/04-01-lesson_files/figure-html/unnamed-chunk-9-1.png)
+![img](images/unnamed-chunk-9-1.png)
 
 Use `lm()` to build a parallel slopes model implied by the plot. It’s not necessary to use `factor()` in this case either.
 
@@ -441,55 +437,26 @@ You have successfully completed Lesson 1 in Tutorial 4: Multiple and Logistic Re
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 What’s next?
 
-📒 [Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://openintrostat.github.io/ims-tutorials/)
+[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
 
-🗒 [Tutorial 3: Introduction to Linear Models Data](https://openintrostat.github.io/ims-tutorials/03-introduction-to-linear-models/)
+[Tutorial 3: Introduction to Linear Models Data](https://bghammill.github.io/ims-03-model/)
 
-1️⃣ [Tutorial 3 - Lesson 1: Visualizing two variables](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-01/)
+- [Tutorial 3 - Lesson 1: Visualizing two variables](https://bghammill.github.io/ims-03-model/ims-03-lesson-01/)
+- [Tutorial 3 - Lesson 2: Correlation](https://bghammill.github.io/ims-03-model/ims-03-lesson-02/)
+- [Tutorial 3 - Lesson 3: Simple linear regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-03/)
+- [Tutorial 3 - Lesson 4: Interpreting regression models](https://bghammill.github.io/ims-03-model/ims-03-lesson-04/)
+- [Tutorial 3 - Lesson 5: Model fit](https://bghammill.github.io/ims-03-model/ims-03-lesson-05/)
+- [Tutorial 3 - Lesson 6: Parallel slopes](https://bghammill.github.io/ims-03-model/ims-03-lesson-06/)
+- [Tutorial 3 - Lesson 7: Evaluating & extending parallel slopes model](https://bghammill.github.io/ims-03-model/ims-03-lesson-07/)
+- [Tutorial 3 - Lesson 8: Multiple regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-08/)
+- [Tutorial 3 - Lesson 9: Logistic regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-09/)
+- [Tutorial 3 - Lesson 10: Case study ](https://bghammill.github.io/ims-03-model/ims-03-lesson-10/)
 
-2️⃣ [Tutorial 3 - Lesson 2: Correlation](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-02/)
+[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
-3️⃣ [Tutorial 3 - Lesson 3: Simple linear regression](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-03/)
-
-4️⃣ [Tutorial 3 - Lesson 4: Interpreting regression models](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-04/)
-
-5️⃣ [Tutorial 3 - Lesson 5: Model fit](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-05/)
-
-📖 [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
-
-
-
-
-
-[Next Topic](https://bghammill.github.io/ims-03-model/ims-03-lesson-02/)
-
-[Back to lesson list](https://bghammill.github.io/ims-03-model/)
-
-[Back to tutorial list (main page)](https://bghammill.github.io/)
-
-
+<!-- MathJax -->
 
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 

@@ -1,8 +1,4 @@
-# Lesson 9
-
-In this lesson you’ll learn about using logistic regression, a generalized linear model (GLM), to predict a binary outcome and classify observations.
-
-## What is logistic regression?
+## Logistic regression
 
 Thus far, we have only built models for a numeric response variable.
 
@@ -19,7 +15,7 @@ ggplot(data = heart_transplant, aes(x = age, y = survived)) +
   geom_jitter(width = 0, height = 0.05, alpha = 0.5)
 ```
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-04/_w_7d891fa1/04-04-lesson_files/figure-html/heart-age-1.png)
+![img](images/heart-age-1.png)
 
 
 
@@ -39,7 +35,7 @@ data_space <- ggplot(data = heart_transplant, aes(x = age, y = is_alive)) +
 data_space
 ```
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-04/_w_7d891fa1/04-04-lesson_files/figure-html/heart-data-space-1.png)
+![img](images/heart-data-space-1.png)
 
 ### Regression with a binary response
 
@@ -52,7 +48,7 @@ data_space +
   geom_smooth(method = "lm", se = FALSE)
 ```
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-04/_w_7d891fa1/04-04-lesson_files/figure-html/heart-lm-1.png)
+![img](images/heart-lm-1.png)
 
 
 
@@ -154,7 +150,7 @@ data_space <- ggplot(data = heart_transplant, aes(x = age, y = is_alive)) +
 data_space
 ```
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-04/_w_7d891fa1/04-04-lesson_files/figure-html/heart-data-space-redux-1.png)
+![img](images/heart-data-space-redux-1.png)
 
 Let’s return to our heart transplant data. In the data space, we can see the relationship between age and our binary response variable: whether the patient was alive when the study ended. Here again we’ve added some jitter and transparency to the points to make the individual observations easier to see.
 
@@ -169,7 +165,7 @@ data_space +
   geom_smooth(method = "lm", se = FALSE)
 ```
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-04/_w_7d891fa1/04-04-lesson_files/figure-html/heart-lm-redux-1.png)
+![img](images/heart-lm-redux-1.png)
 
 
 
@@ -182,7 +178,7 @@ data_space +
               method.args = list(family = "binomial"))
 ```
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-04/_w_7d891fa1/04-04-lesson_files/figure-html/heart-glm-1.png)
+![img](images/heart-glm-1.png)
 
 In contrast, notice how the logistic regression line is curved—most noticeably at the ends. The red logistic regression line will never reach 0 or 1, eliminating those invalid predicted probabilities. In this case, for most ages, the simple linear regression line and the logistic regression line don’t differ by very much, and you might not lose much by using the simpler regression model. But for older people, the logistic model should perform much better.
 
@@ -204,7 +200,7 @@ data_binned_space <- data_space +
 data_binned_space
 ```
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-04/_w_7d891fa1/04-04-lesson_files/figure-html/heart-data-binned-1.png)
+![img](images/heart-data-binned-1.png)
 
 One way to address this question is to separate the observations into bins based on age, and then compute the average probability of being alive for each age group. Here, we separate the data into seven bins such that each bin contains roughly the same number of observations. The choice of how to define the bins is somewhat arbitrary, but this choice seems to provide us with a reasonable picture of what is happening. In general, it seems clear that the probability of being alive declines with age.
 
@@ -222,7 +218,7 @@ data_binned_space +
   )
 ```
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-04/_w_7d891fa1/04-04-lesson_files/figure-html/heart-data-binned-line-1.png)
+![img](images/heart-data-binned-line-1.png)
 
 To add our model to the plot, we’ll employ the same technique that we used for the parallel slopes models. First, we use the `augment()` function from the broom package to compute the fitted values for our original observations based on our model. Note that we have set the `type.predict` argument to ensure that the fitted values are on the same scale as the response variable. Second, we use the `geom_line()` function to draw a blue line through these points.
 
@@ -294,7 +290,7 @@ ggplot(heart_transplant_plus, aes(x = age, y = y_hat)) +
   scale_y_continuous("Probability of being alive", limits = c(0, 1))
 ```
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-04/_w_7d891fa1/04-04-lesson_files/figure-html/heart-glm-prob-1.png)
+![img](images/heart-glm-prob-1.png)
 
 We can no longer say that “each additional year of age is associated with a particular change in the probability of surviving,” because that change in probability is not constant across ages. Thus, while the probability scale is natural, it can be cumbersome to work with.
 
@@ -326,7 +322,7 @@ ggplot(heart_transplant_plus, aes(x = age, y = odds_hat)) +
   scale_y_continuous("Odds of being alive")
 ```
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-04/_w_7d891fa1/04-04-lesson_files/figure-html/heart-glm-odds-1.png)
+![img](images/heart-glm-odds-1.png)
 
 If we change the y-scale to odds, then our model must change shape as well. In fact, our model now has the form of an exponential function. In this case, the odds of survival decrease exponentially as people age.
 
@@ -358,7 +354,7 @@ ggplot(heart_transplant_plus, aes(x = age, y = log_odds_hat)) +
   scale_y_continuous("Log(odds) of being alive")
 ```
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-04/_w_7d891fa1/04-04-lesson_files/figure-html/heart-glm-log-odds-1.png)
+![img](images/heart-glm-log-odds-1.png)
 
 The benefit to this approach is clear: now the logistic regression model can be visualized as a line!
 
@@ -666,57 +662,26 @@ You have successfully completed Lesson 4 in Tutorial 4: Multiple and Logistic Re
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 What’s next?
 
-📒 [Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://openintrostat.github.io/ims-tutorials/)
+[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
 
-🗒 [Tutorial 3: Introduction to Linear Models Data](https://openintrostat.github.io/ims-tutorials/03-introduction-to-linear-models/)
+[Tutorial 3: Introduction to Linear Models Data](https://bghammill.github.io/ims-03-model/)
 
-1️⃣ [Tutorial 3 - Lesson 1: Visualizing two variables](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-01/)
+- [Tutorial 3 - Lesson 1: Visualizing two variables](https://bghammill.github.io/ims-03-model/ims-03-lesson-01/)
+- [Tutorial 3 - Lesson 2: Correlation](https://bghammill.github.io/ims-03-model/ims-03-lesson-02/)
+- [Tutorial 3 - Lesson 3: Simple linear regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-03/)
+- [Tutorial 3 - Lesson 4: Interpreting regression models](https://bghammill.github.io/ims-03-model/ims-03-lesson-04/)
+- [Tutorial 3 - Lesson 5: Model fit](https://bghammill.github.io/ims-03-model/ims-03-lesson-05/)
+- [Tutorial 3 - Lesson 6: Parallel slopes](https://bghammill.github.io/ims-03-model/ims-03-lesson-06/)
+- [Tutorial 3 - Lesson 7: Evaluating & extending parallel slopes model](https://bghammill.github.io/ims-03-model/ims-03-lesson-07/)
+- [Tutorial 3 - Lesson 8: Multiple regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-08/)
+- [Tutorial 3 - Lesson 9: Logistic regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-09/)
+- [Tutorial 3 - Lesson 10: Case study ](https://bghammill.github.io/ims-03-model/ims-03-lesson-10/)
 
-2️⃣ [Tutorial 3 - Lesson 2: Correlation](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-02/)
+[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
-3️⃣ [Tutorial 3 - Lesson 3: Simple linear regression](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-03/)
-
-4️⃣ [Tutorial 3 - Lesson 4: Interpreting regression models](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-04/)
-
-5️⃣ [Tutorial 3 - Lesson 5: Model fit](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-05/)
-
-📖 [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
-
-
-
-
-
-[Next Topic](https://bghammill.github.io/ims-03-model/ims-03-lesson-02/)
-
-[Back to lesson list](https://bghammill.github.io/ims-03-model/)
-
-[Back to tutorial list (main page)](https://bghammill.github.io/)
-
-
+<!-- MathJax -->
 
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 

@@ -1,7 +1,3 @@
-# Lesson 5
-
-
-
 ## Assessing model fit
 
 ### How well does our textbook model fit?
@@ -14,7 +10,7 @@ ggplot(data = textbooks, aes(x = amaz_new, y = ucla_new)) +
   geom_smooth(method = "lm", se = FALSE)
 ```
 
-![img](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-05/_w_46c3b33a/03-05-lesson_files/figure-html/textbooks-1.png)
+![img](images/textbooks-1.png)
 
 ### How well does our possum model fit?
 
@@ -26,7 +22,7 @@ ggplot(data = possum, aes(y = total_l, x = tail_l)) +
   geom_smooth(method = "lm", se = FALSE)
 ```
 
-![img](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-05/_w_46c3b33a/03-05-lesson_files/figure-html/possum-1.png)
+![img](images/possum-1.png)
 
 Can we quantify our intuition about the quality of the model fit?
 
@@ -36,7 +32,7 @@ Can we quantify our intuition about the quality of the model fit?
 
 In fact we can. Recall that we initially considered any number of lines. We settled on the unique regression line by applying the least squares criterion. That is, we found the line that minimizes the sum of the squared residuals. For each observation–which is represented on the scatterplot by a point–the residual is simply the vertical distance between that point and the line.
 
-![img](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-05/_w_46c3b33a/03-05-lesson_files/figure-html/possum_augment_total_tail-1.png)
+![img](images/possum_augment_total_tail-1.png)
 
 Here, we have highlighted the possum residuals with gray arrows. If we could find a line that made those gray arrows shorter –collectively, and after squaring them–that would be our regression line; but there is no such line: this one is the best.
 
@@ -155,13 +151,13 @@ You can recover the residuals from `wgt_hgt_mod` with `residuals()`, and the deg
 
 Previously, you learned about how we could use the sum of the squared residuals to quantify how well our model fit the data. However, we noted that although the textbook model seemed to fit the data really well, the residual standard error was more than $10.
 
-![img](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-05/_w_46c3b33a/03-05-lesson_files/figure-html/textbooks-plot-1.png)
+![img](images/textbooks-plot-1.png)
 
 ### How well does our possum model fit?
 
 On the other hand, the residual standard error for the possum model was about 3.5 cm, which seems like a high degree of accuracy, for a model that does not seem to be as tight of a fit.
 
-![img](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-05/_w_46c3b33a/03-05-lesson_files/figure-html/possum-plot-1.png)
+![img](images/possum-plot-1.png)
 
 ### Null (average) model
 
@@ -177,7 +173,7 @@ A sensible choice would be the average length of all possum. And in fact, if you
 
 This model is often called the **null model**. This model makes sense to use as a benchmark, since it doesn’t require any insight to make, and yet there is no reasonable model that could be any worse. It looks like this:
 
-![img](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-05/_w_46c3b33a/03-05-lesson_files/figure-html/possum-null-1.png)
+![img](images/possum-null-1.png)
 
 
 
@@ -336,7 +332,7 @@ ggplot(data = regulars, aes(x = stolen_base, y = home_run)) +
   geom_smooth(method = "lm", se = 0)
 ```
 
-![img](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-05/_w_46c3b33a/03-05-lesson_files/figure-html/up2-1.png)
+![img](images/up2-1.png)
 
 We noted previously that there were two potential outliers here: the point corresponding to the slugger Jose Bautista in the upper left, and the point belonging to speedster Juan Pierre in the lower right.
 
@@ -386,7 +382,7 @@ Observations of high leverage, by virtue of their extreme values of the explanat
 
 However, suppose that there was a player with a similar number of stolen bases, but a decent number of home runs as well. In fact, Hall of Famer Rickey Henderson was such a player, and in his MVP-winning season of 1990, he stole 65 bases while hitting 28 home runs. Let’s add this observation to our plot.
 
-![img](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-05/_w_46c3b33a/03-05-lesson_files/figure-html/up4-1.png)
+![img](images/up4-1.png)
 
 The original regression line is plotted as the dashed black line, and the new regression line (with Rickey Henderson) is plotted as a solid blue line. Notice how the new regression line pulls upward ever so slightly from the previous dotted regression line. This is a direct result of Henderson’s influence.
 
@@ -438,7 +434,7 @@ Use `augment()` and `slice_max()` to list the top 6 observations by their Cook�
 
 Previously, we learned about how leverage and influence can help us understand how outliers affect our regression model. Suppose you have determined that an influential observation is affecting the slope of your regression line in a way that undermines the scientific merit of your model. What can you do about it?
 
-![img](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-05/_w_46c3b33a/03-05-lesson_files/figure-html/o2-1.png)
+![img](images/o2-1.png)
 
 The short answer is that there isn’t much you can do about it other than removing the outliers. As the statistical modeller, this is a decision you can make, but it’s crucial that you understand the ramifications of this decision and act in good scientific faith.
 
@@ -551,7 +547,7 @@ ggplot(data = nontrivial_players,
 
   ___ +
 
-  ___
+___
 
 \# Visualize old model
 
@@ -561,7 +557,7 @@ ggplot(data = mlbbat10,
 
   ___ +
 
-  ___
+___
 
 ### 
 
@@ -593,43 +589,26 @@ Together, we hope that these concepts will inform your thinking about the nature
 
 
 
-
-
-
-
-
-
-
-
 What’s next?
 
-📒 [Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://openintrostat.github.io/ims-tutorials/)
+[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
 
-🗒 [Tutorial 3: Introduction to Linear Models Data](https://openintrostat.github.io/ims-tutorials/03-introduction-to-linear-models/)
+[Tutorial 3: Introduction to Linear Models Data](https://bghammill.github.io/ims-03-model/)
 
-1️⃣ [Tutorial 3 - Lesson 1: Visualizing two variables](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-01/)
+- [Tutorial 3 - Lesson 1: Visualizing two variables](https://bghammill.github.io/ims-03-model/ims-03-lesson-01/)
+- [Tutorial 3 - Lesson 2: Correlation](https://bghammill.github.io/ims-03-model/ims-03-lesson-02/)
+- [Tutorial 3 - Lesson 3: Simple linear regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-03/)
+- [Tutorial 3 - Lesson 4: Interpreting regression models](https://bghammill.github.io/ims-03-model/ims-03-lesson-04/)
+- [Tutorial 3 - Lesson 5: Model fit](https://bghammill.github.io/ims-03-model/ims-03-lesson-05/)
+- [Tutorial 3 - Lesson 6: Parallel slopes](https://bghammill.github.io/ims-03-model/ims-03-lesson-06/)
+- [Tutorial 3 - Lesson 7: Evaluating & extending parallel slopes model](https://bghammill.github.io/ims-03-model/ims-03-lesson-07/)
+- [Tutorial 3 - Lesson 8: Multiple regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-08/)
+- [Tutorial 3 - Lesson 9: Logistic regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-09/)
+- [Tutorial 3 - Lesson 10: Case study ](https://bghammill.github.io/ims-03-model/ims-03-lesson-10/)
 
-2️⃣ [Tutorial 3 - Lesson 2: Correlation](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-02/)
+[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
-3️⃣ [Tutorial 3 - Lesson 3: Simple linear regression](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-03/)
-
-4️⃣ [Tutorial 3 - Lesson 4: Interpreting regression models](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-04/)
-
-5️⃣ [Tutorial 3 - Lesson 5: Model fit](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-05/)
-
-📖 [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
-
-
-
-
-
-[Next Topic](https://bghammill.github.io/ims-03-model/ims-03-lesson-02/)
-
-[Back to lesson list](https://bghammill.github.io/ims-03-model/)
-
-[Back to tutorial list (main page)](https://bghammill.github.io/)
-
-
+<!-- MathJax -->
 
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 

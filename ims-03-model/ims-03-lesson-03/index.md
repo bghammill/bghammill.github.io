@@ -1,4 +1,4 @@
-# Lesson 3
+# Simple linear regression
 
 
 
@@ -13,7 +13,7 @@ ggplot(data = possum, aes(y = total_l, x = tail_l)) +
   geom_point()
 ```
 
-![img](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-03/_w_c2ef6693/03-03-lesson_files/figure-html/1-1.png)
+![img](images/1-1.png)
 
 ## Picking a line of best fit
 
@@ -21,7 +21,7 @@ ggplot(data = possum, aes(y = total_l, x = tail_l)) +
 
 In the plot below, we’ve superimposed a line that goes through the origin - that is, the point where both xx and yy are equal to zero. The line has a slope of 2.5 centimeters (of total length) per centimeter (of tail length). We notice that, in some sense, the line does go “through” the points, but doesn’t capture the general trend as best we could imagine.
 
-![img](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-03/_w_c2ef6693/03-03-lesson_files/figure-html/2-1.png)
+![img](images/2-1.png)
 
 
 
@@ -29,7 +29,7 @@ In the plot below, we’ve superimposed a line that goes through the origin - th
 
 This line also goes through the origin, but has a gentler slope of 2.3 cm (of total length) per cm (of tail length). It seems like a “better” fit, since it cuts through the points in a more central way.
 
-![img](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-03/_w_c2ef6693/03-03-lesson_files/figure-html/3-1.png)
+![img](images/3-1.png)
 
 
 
@@ -39,7 +39,7 @@ But why should we force the line to go through the origin? Here is a line that h
 
 Do you think you could find an even better fit? In order to do so, you need some criteria for judging which line fits better. In particular, you need a numerical measurement of how good the fit of each possible line is.
 
-![img](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-03/_w_c2ef6693/03-03-lesson_files/figure-html/4-1.png)
+![img](images/4-1.png)
 
 
 
@@ -59,7 +59,7 @@ ggplot(data = possum, aes(y = total_l, x = tail_l)) +
   geom_smooth(method = "lm")
 ```
 
-![img](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-03/_w_c2ef6693/03-03-lesson_files/figure-html/5-1.png)
+![img](images/5-1.png)
 
 
 
@@ -73,7 +73,7 @@ ggplot(data = possum, aes(y = total_l, x = tail_l)) +
   geom_smooth(method = "lm", se = FALSE)
 ```
 
-![img](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-03/_w_c2ef6693/03-03-lesson_files/figure-html/6-1.png)
+![img](images/6-1.png)
 
 You’ll explore the “best fit” line on your own in these next exercise.
 
@@ -340,43 +340,26 @@ You have successfully completed Lesson 3 in Tutorial 3: Introduction to Linear M
 
 
 
-
-
-
-
-
-
-
-
 What’s next?
 
-📒 [Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://openintrostat.github.io/ims-tutorials/)
+[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
 
-🗒 [Tutorial 3: Introduction to Linear Models Data](https://openintrostat.github.io/ims-tutorials/03-introduction-to-linear-models/)
+[Tutorial 3: Introduction to Linear Models Data](https://bghammill.github.io/ims-03-model/)
 
-1️⃣ [Tutorial 3 - Lesson 1: Visualizing two variables](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-01/)
+- [Tutorial 3 - Lesson 1: Visualizing two variables](https://bghammill.github.io/ims-03-model/ims-03-lesson-01/)
+- [Tutorial 3 - Lesson 2: Correlation](https://bghammill.github.io/ims-03-model/ims-03-lesson-02/)
+- [Tutorial 3 - Lesson 3: Simple linear regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-03/)
+- [Tutorial 3 - Lesson 4: Interpreting regression models](https://bghammill.github.io/ims-03-model/ims-03-lesson-04/)
+- [Tutorial 3 - Lesson 5: Model fit](https://bghammill.github.io/ims-03-model/ims-03-lesson-05/)
+- [Tutorial 3 - Lesson 6: Parallel slopes](https://bghammill.github.io/ims-03-model/ims-03-lesson-06/)
+- [Tutorial 3 - Lesson 7: Evaluating & extending parallel slopes model](https://bghammill.github.io/ims-03-model/ims-03-lesson-07/)
+- [Tutorial 3 - Lesson 8: Multiple regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-08/)
+- [Tutorial 3 - Lesson 9: Logistic regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-09/)
+- [Tutorial 3 - Lesson 10: Case study ](https://bghammill.github.io/ims-03-model/ims-03-lesson-10/)
 
-2️⃣ [Tutorial 3 - Lesson 2: Correlation](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-02/)
+[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
-3️⃣ [Tutorial 3 - Lesson 3: Simple linear regression](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-03/)
-
-4️⃣ [Tutorial 3 - Lesson 4: Interpreting regression models](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-04/)
-
-5️⃣ [Tutorial 3 - Lesson 5: Model fit](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-05/)
-
-📖 [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
-
-
-
-
-
-[Next Topic](https://bghammill.github.io/ims-03-model/ims-03-lesson-02/)
-
-[Back to lesson list](https://bghammill.github.io/ims-03-model/)
-
-[Back to tutorial list (main page)](https://bghammill.github.io/)
-
-
+<!-- MathJax -->
 
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 

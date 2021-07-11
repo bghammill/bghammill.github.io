@@ -1,4 +1,4 @@
-# Lesson 4
+# Interpreting regression models
 
 ## Data set-up
 
@@ -26,7 +26,7 @@ textbooks %>%
     geom_point()
 ```
 
-![img](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-04/_w_925f5d3d/03-04-lesson_files/figure-html/2-1.png)
+![img](images/2-1.png)
 
 This relationship is very weak, and if anything it appears to be negative.
 
@@ -41,7 +41,7 @@ ggplot(data = textbooks, aes(x = amaz_new, y = ucla_new)) +
   geom_point()
 ```
 
-![img](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-04/_w_925f5d3d/03-04-lesson_files/figure-html/3-1.png)
+![img](images/3-1.png)
 
 Here we see clear evidence of a strong, positive, linear relationship.
 
@@ -53,7 +53,7 @@ ggplot(data = textbooks, aes(x = amaz_new, y = ucla_new)) +
   geom_smooth(method = "lm", se = FALSE)
 ```
 
-![img](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-04/_w_925f5d3d/03-04-lesson_files/figure-html/4-1.png)
+![img](images/4-1.png)
 
 
 
@@ -385,7 +385,7 @@ textbooks %>%
 
 1 row | 1-7 of 9 columns
 
-![img](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-04/_w_925f5d3d/images/FSSV.png)
+![img](images/FSSV.png)
 
 
 
@@ -395,7 +395,7 @@ What about textbooks that aren’t in our original data set? Using our model to 
 
 For example, the OpenIntro book “Introductory Statistics with Randomization and Simulation” sells for $8.49 on Amazon. What would our model predict is the retail price at the UCLA bookstore?
 
-![img](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-04/_w_925f5d3d/images/ISRS.png)
+![img](images/ISRS.png)
 
 
 
@@ -428,7 +428,7 @@ ggplot(data = textbooks, aes(x = amaz_new, y = ucla_new)) +
   geom_point(data = isrs, aes(y = .fitted), size = 3, color = "red")
 ```
 
-![img](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-04/_w_925f5d3d/03-04-lesson_files/figure-html/lm5-1.png)
+![img](images/lm5-1.png)
 
 Now it’s time for you to make some of your own predictions.
 
@@ -477,33 +477,24 @@ You have successfully completed Lesson 4 in Tutorial 3: Introduction to Linear M
 
 What’s next?
 
-📒 [Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://openintrostat.github.io/ims-tutorials/)
+[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
 
-🗒 [Tutorial 3: Introduction to Linear Models Data](https://openintrostat.github.io/ims-tutorials/03-introduction-to-linear-models/)
+[Tutorial 3: Introduction to Linear Models Data](https://bghammill.github.io/ims-03-model/)
 
-1️⃣ [Tutorial 3 - Lesson 1: Visualizing two variables](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-01/)
+- [Tutorial 3 - Lesson 1: Visualizing two variables](https://bghammill.github.io/ims-03-model/ims-03-lesson-01/)
+- [Tutorial 3 - Lesson 2: Correlation](https://bghammill.github.io/ims-03-model/ims-03-lesson-02/)
+- [Tutorial 3 - Lesson 3: Simple linear regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-03/)
+- [Tutorial 3 - Lesson 4: Interpreting regression models](https://bghammill.github.io/ims-03-model/ims-03-lesson-04/)
+- [Tutorial 3 - Lesson 5: Model fit](https://bghammill.github.io/ims-03-model/ims-03-lesson-05/)
+- [Tutorial 3 - Lesson 6: Parallel slopes](https://bghammill.github.io/ims-03-model/ims-03-lesson-06/)
+- [Tutorial 3 - Lesson 7: Evaluating & extending parallel slopes model](https://bghammill.github.io/ims-03-model/ims-03-lesson-07/)
+- [Tutorial 3 - Lesson 8: Multiple regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-08/)
+- [Tutorial 3 - Lesson 9: Logistic regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-09/)
+- [Tutorial 3 - Lesson 10: Case study ](https://bghammill.github.io/ims-03-model/ims-03-lesson-10/)
 
-2️⃣ [Tutorial 3 - Lesson 2: Correlation](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-02/)
+[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
-3️⃣ [Tutorial 3 - Lesson 3: Simple linear regression](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-03/)
-
-4️⃣ [Tutorial 3 - Lesson 4: Interpreting regression models](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-04/)
-
-5️⃣ [Tutorial 3 - Lesson 5: Model fit](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-05/)
-
-📖 [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
-
-
-
-
-
-[Next Topic](https://bghammill.github.io/ims-03-model/ims-03-lesson-02/)
-
-[Back to lesson list](https://bghammill.github.io/ims-03-model/)
-
-[Back to tutorial list (main page)](https://bghammill.github.io/)
-
-
+<!-- MathJax -->
 
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 

@@ -1,7 +1,3 @@
-# Lesson 10
-
-
-
 ## Case Study: Italian restaurants in NYC
 
 Explore the relationship between price and the quality of food, service, and decor for Italian restaurants in NYC.
@@ -10,13 +6,13 @@ No matter where you are, or where you’ve been, if you’re taking this tutoria
 
 What are the factors that contribute to a price of a meal at Italian restaurants in New York City? We will address this question with a series of multiple regression models.
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-05/_w_c7b488f1/images/italian-restaurants.jpg)
+![img](images/italian-restaurants.jpg)
 
 ### Zagat guide
 
 The Zagat guide is an influential review of restaurants. They are made famous by their use of selective quotes from actual diners to build a pithy description of each restaurant. But we won’t be working with the text. Rather, we’ll be working with the numeric reviews you see posted here. Each restaurant is rated on a scale of 0 to 30 for the quality of its food, decor, and service. The average price of a meal—which includes one drink and a tip—will be our response variable. How do these factors influence the average price of a meal?
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-05/_w_c7b488f1/images/zagat.jpg)
+![img](images/zagat.jpg)
 
 
 
@@ -47,7 +43,7 @@ nyc %>%
   pairs()
 ```
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-05/_w_c7b488f1/04-05-lesson_files/figure-html/nyc-pairs-1.png)
+![img](images/nyc-pairs-1.png)
 
 Before we can sensibly build models, we should spend some time exploring the data. How are the variables distributed? How are they related to one another? What patterns are present? The `pairs()` function can help us explore these relationships visually. It shows a grid of scatterplots for each pair of variables in the `nyc` data frame. It’s easy to see that, for example, `Price` and `Decor` are strongly correlated, while `Case` and `Food` are uncorrelated.
 
@@ -96,13 +92,13 @@ On your own, interpret these coefficients and examine the fit of the model. What
 
 Fifth Avenue is one the most well-known streets in the world, renowned for its flagship stores for shopping, landmark hotels, and internationally-recognized sites. A walk down 5th Avenue from Central Park to Washington Square Park would take you past the Plaza Hotel, Trump Tower, Saks Fifth Avenue, the New York Public Library, the Empire State Building, and the Flatiron building.
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-05/_w_c7b488f1/images/5th-avenue.jpg)
+![img](images/5th-avenue.jpg)
 
 ### CUNY
 
 It would also take you past the Graduate Center of the City University of New York, where one of the authors studied for their doctoral degree. Good times!
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-05/_w_c7b488f1/images/cuny.jpg)
+![img](images/cuny.jpg)
 
 
 
@@ -110,7 +106,7 @@ It would also take you past the Graduate Center of the City University of New Yo
 
 5th Avenue divides the island of Manhattan vertically. The city’s east side has historically been home to expensive residences and opulent attractions. Maybe everything is more expensive on the East side. Maybe even food is more expensive on the east side. Do Italian restaurants located on the east side of 5th Avenue tend to charge more? How much more?
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-05/_w_c7b488f1/images/dividing-city.jpg)
+![img](images/dividing-city.jpg)
 
 
 
@@ -137,7 +133,7 @@ It’s certainly true that the average price of a meal for restaurants located o
 
 Another important consideration in dining out is the quality of the service. Are people willing to pay more for higher quality service, even if the food doesn’t taste any better? How much more? How does the average price of meal vary with respect to the quality of the food and the service? It’s up to you to figure it out.
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-05/_w_c7b488f1/images/service.jpg)
+![img](images/service.jpg)
 
 
 
@@ -179,7 +175,7 @@ Next, let’s visually assess our model using `plotly`. The `x` and `y` vectors,
 
 The last criteria for the Zagat review is decor. This refers to the visual presentation of the restaurant: the furniture, the wall adornments, and the overall ambiance. Clearly, restaurants vary widely in the quality of their decor. But how does the perceived quality of decor vary with the price of a meal? And how is the effect moderated by the quality of food and service?
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-05/_w_c7b488f1/images/italian-pizza-restaurant-italy.jpg)
+![img](images/italian-pizza-restaurant-italy.jpg)
 
 
 
@@ -370,33 +366,24 @@ To complete your understanding, you should learn about inferential techniques fo
 
 What’s next?
 
-📒 [Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://openintrostat.github.io/ims-tutorials/)
+[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
 
-🗒 [Tutorial 3: Introduction to Linear Models Data](https://openintrostat.github.io/ims-tutorials/03-introduction-to-linear-models/)
+[Tutorial 3: Introduction to Linear Models Data](https://bghammill.github.io/ims-03-model/)
 
-1️⃣ [Tutorial 3 - Lesson 1: Visualizing two variables](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-01/)
+- [Tutorial 3 - Lesson 1: Visualizing two variables](https://bghammill.github.io/ims-03-model/ims-03-lesson-01/)
+- [Tutorial 3 - Lesson 2: Correlation](https://bghammill.github.io/ims-03-model/ims-03-lesson-02/)
+- [Tutorial 3 - Lesson 3: Simple linear regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-03/)
+- [Tutorial 3 - Lesson 4: Interpreting regression models](https://bghammill.github.io/ims-03-model/ims-03-lesson-04/)
+- [Tutorial 3 - Lesson 5: Model fit](https://bghammill.github.io/ims-03-model/ims-03-lesson-05/)
+- [Tutorial 3 - Lesson 6: Parallel slopes](https://bghammill.github.io/ims-03-model/ims-03-lesson-06/)
+- [Tutorial 3 - Lesson 7: Evaluating & extending parallel slopes model](https://bghammill.github.io/ims-03-model/ims-03-lesson-07/)
+- [Tutorial 3 - Lesson 8: Multiple regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-08/)
+- [Tutorial 3 - Lesson 9: Logistic regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-09/)
+- [Tutorial 3 - Lesson 10: Case study ](https://bghammill.github.io/ims-03-model/ims-03-lesson-10/)
 
-2️⃣ [Tutorial 3 - Lesson 2: Correlation](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-02/)
+[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
-3️⃣ [Tutorial 3 - Lesson 3: Simple linear regression](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-03/)
-
-4️⃣ [Tutorial 3 - Lesson 4: Interpreting regression models](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-04/)
-
-5️⃣ [Tutorial 3 - Lesson 5: Model fit](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-05/)
-
-📖 [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
-
-
-
-
-
-[Next Topic](https://bghammill.github.io/ims-03-model/ims-03-lesson-02/)
-
-[Back to lesson list](https://bghammill.github.io/ims-03-model/)
-
-[Back to tutorial list (main page)](https://bghammill.github.io/)
-
-
+<!-- MathJax -->
 
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 

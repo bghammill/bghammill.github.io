@@ -1,6 +1,4 @@
-# Lesson 2
-
-### Correlation
+## Correlation
 
 In the previous lesson, we learned how to visually assess the *strength* of the relationship between two variables by examining a scatterplot. Correlation is a way to quantify the strength of that linear relationship.
 
@@ -10,13 +8,13 @@ The correlation coefficient is a number between -1 and 1 that indicates the stre
 
 A correlation coefficient of close to 1 indicates near-perfect positive correlation, as we see in this plot.
 
-![img](https://openintro.shinyapps.io/ims-03-model-02/_w_767d57e3/03-02-lesson_files/figure-html/plot-1.png)
+![img](images/plot-1.png)
 
 ### Strong
 
 For scatterplots in which the points are more spread out, the value of the correlation coefficient is lower. Here we see a scatterplot with correlation that we might call “strong.”
 
-![img](https://openintro.shinyapps.io/ims-03-model-02/_w_767d57e3/03-02-lesson_files/figure-html/cor-1.png)
+![img](images/cor-1.png)
 
 
 
@@ -24,13 +22,13 @@ For scatterplots in which the points are more spread out, the value of the corre
 
 Values of the correlation coefficient that are closer to 0.5 might be considered “moderate”…
 
-![img](https://openintro.shinyapps.io/ims-03-model-02/_w_767d57e3/03-02-lesson_files/figure-html/cor2-1.png)
+![img](images/cor2-1.png)
 
 ### Weak
 
 …while values of the correlation coefficient closer to 0.2 might be considered “weak.”
 
-![img](https://openintro.shinyapps.io/ims-03-model-02/_w_767d57e3/03-02-lesson_files/figure-html/cor3-1.png)
+![img](images/cor3-1.png)
 
 
 
@@ -38,7 +36,7 @@ Values of the correlation coefficient that are closer to 0.5 might be considered
 
 If there really is no linear relationship between the two variables, then the correlation coefficient will be close to zero. This scatterplot shows two variables that are relatively uncorrelated. Note how knowing one of the xx values gives you very little information about where the corresponding value of yy will be.
 
-![img](https://openintro.shinyapps.io/ims-03-model-02/_w_767d57e3/03-02-lesson_files/figure-html/cor4-1.png)
+![img](images/cor4-1.png)
 
 
 
@@ -46,7 +44,7 @@ If there really is no linear relationship between the two variables, then the co
 
 Alternatively, when the direction of the relationship is negative, the value of the correlation coefficient is negative as well.
 
-![img](https://openintro.shinyapps.io/ims-03-model-02/_w_767d57e3/03-02-lesson_files/figure-html/cor5-1.png)
+![img](images/cor5-1.png)
 
 
 
@@ -54,7 +52,7 @@ Alternatively, when the direction of the relationship is negative, the value of 
 
 It is crucial to remember that the correlation coefficient only captures the strength of the *linear* relationship between two variables. It is quite common to encounter variables that are strongly-related, but in a non-linear way. Blindly computing and reporting the correlation between such variables **does not** yield meaningful results.
 
-![img](https://openintro.shinyapps.io/ims-03-model-02/_w_767d57e3/03-02-lesson_files/figure-html/plot2-1.png)
+![img](images/plot2-1.png)
 
 Here, this scatterplot shows a clear, quadratic relationship. To simply interpret the low correlation coefficient as evidence that xx and yy are unrelated would be plainly incorrect. Here, xx and yy are very closely related—just not in a linear fashion.
 
@@ -62,7 +60,7 @@ Here, this scatterplot shows a clear, quadratic relationship. To simply interpre
 
 Here is an example of real data from a 10-mile run. The pace of the top 10 finishers in each age group are plotted against their age. Note how the relationship between the pace and age is non-linear: 25-year-olds tend to actually be faster than 20-year-olds, but as people age beyond their thirties, they tend to get slower. This pattern is present for both men and women.
 
-![img](https://openintro.shinyapps.io/ims-03-model-02/_w_767d57e3/03-02-lesson_files/figure-html/code1-1.png)
+![img](images/code1-1.png)
 
 The value of the correlation coefficient here is about 0.718, but we have some intuitive sense that pace and age are more closely-related than the figure indicates.
 
@@ -112,25 +110,25 @@ Then, you will use `cor()` to compute the correlation between the birthweight (`
 
 In 1973, statistician Francis Anscombe created a synthetic data set that has been used extensively to illustrate concepts related to correlation and regression.
 
-![img](https://openintro.shinyapps.io/ims-03-model-02/_w_767d57e3/03-02-lesson_files/figure-html/ans-1.png)
+![img](images/ans-1.png)
 
 Here we see four datasets, each having a very different graphical presentation. However, these datasets have the same number of points, the same mean and standard deviation in both xx and yy, the same correlation, and the same regression line. How is it possible that four datasets with such obvious visual differences could have so many identical important properties?
 
 The first set looks the most like “real data.” Here we see a positive, linear, moderately strong relationship. As you gain experience working with real data, you will see lots of scatterplots that look similar to this one. Here, the correlation coefficient of 0.82 is giving us an accurate measurement of the strength of the linear relationship between xx and yy.
 
-![img](https://openintro.shinyapps.io/ims-03-model-02/_w_767d57e3/03-02-lesson_files/figure-html/ans2-1.png)
+![img](images/ans2-1.png)
 
 However, in the next set we see something quite different. The relationship here is clearly non-linear. But note also that while the value of the correlation coefficient is 0.82, the correlation—in an intuitive sense—is *perfect*. That is, knowing the value of xx tells you the value of yy exactly—there is no statistical noise. It’s just that the relationship is not linear.
 
-![img](https://openintro.shinyapps.io/ims-03-model-02/_w_767d57e3/03-02-lesson_files/figure-html/ans3-1.png)
+![img](images/ans3-1.png)
 
 In the third data set, we have an outlier. Here again, our eyes tell us that with the exception of the outlier, the correlation between xx and yy is perfect, and in this case, it is linear. However, the presence of the outlier has lowered the value of the correlation coefficient, and (as you will learn later) the slope of the regression line.
 
-![img](https://openintro.shinyapps.io/ims-03-model-02/_w_767d57e3/03-02-lesson_files/figure-html/ans4-1.png)
+![img](images/ans4-1.png)
 
 Finally, in the fourth data set we see a pathological example with almost the opposite problem. In the previous plot, we saw that the presence of a single outlier had lowered the correlation from 1 to 0.82. In this plot, the presence of a single outlier raises the correlation from undefined to 0.82. Note that here, with the exception of the outlier, knowing xx doesn’t tell you anything about yy. It is only the outlier that gives you the appearance of a correlation, but that correlation is very spurious!
 
-![img](https://openintro.shinyapps.io/ims-03-model-02/_w_767d57e3/03-02-lesson_files/figure-html/ans5-1.png)
+![img](images/ans5-1.png)
 
 The Anscombe datasets are fabricated, but they help to illustrate some properties of correlation. Above all else, these examples help to underscore the importance of visually inspecting your data! You never know what you are going to see.
 
@@ -142,7 +140,7 @@ In 1973, Francis Anscombe famously created four datasets with remarkably similar
 
 It may be helpful to remind yourself of the graphic relationship by viewing the four scatterplots:
 
-![img](https://openintro.shinyapps.io/ims-03-model-02/_w_767d57e3/03-02-lesson_files/figure-html/explot-1.png)
+![img](images/explot-1.png)
 
 For each of the four `set`s of data points in the `anscombe` dataset, compute the following in the order specified. Names are provided in your call to `summarize()`.
 
@@ -157,7 +155,7 @@ For each of the four `set`s of data points in the `anscombe` dataset, compute th
 
 Recall the scatterplot between the poverty rate of counties in the United States and the high school graduation rate in those counties from the previous lesson.
 
-![img](https://openintro.shinyapps.io/ims-03-model-02/_w_767d57e3/03-02-lesson_files/figure-html/mr3-pre-1.png)
+![img](images/mr3-pre-1.png)
 
 
 
@@ -183,7 +181,7 @@ The word “correlation” has both a precise mathematical definition and a more
 
 For example, consider the following article from the New York Times about the connection between exercise and drinking beer.
 
-![img](https://openintro.shinyapps.io/ims-03-model-02/_w_767d57e3/images/nytimes_beer.png)
+![img](images/nytimes_beer.png)
 
 
 
@@ -191,7 +189,7 @@ After discussing some relatable scenarios, the lead-in raises the question of ca
 
 But causation is not really the goal here. Notice how in the next two paragraphs, verbs linking exercise and beer-drinking include: “influence”, “affect”, and “tend to”. The “interplay between” the two activities is also mentioned.
 
-![img](https://openintro.shinyapps.io/ims-03-model-02/_w_767d57e3/images/nytimes_beer2.png)
+![img](images/nytimes_beer2.png)
 
 
 
@@ -201,7 +199,7 @@ Note how this statement makes it clear that *an association was observed*, but d
 
 In observational studies–which are especially common in nutritional science, health, and epidemiology–one must always be careful not to erroneously suggest that correlation implies causation.
 
-![img](https://openintro.shinyapps.io/ims-03-model-02/_w_767d57e3/images/nytimes_beer3.png)
+![img](images/nytimes_beer3.png)
 
 
 
@@ -209,13 +207,13 @@ In observational studies–which are especially common in nutritional science, h
 
 Here is another interesting use of correlation from the New York Times. The article examines the arrest records of National Football League players, and considers whether certain franchises tend to have more or fewer players arrested consistently over time. This use of correlation—often called *serial correlation* or *autocorrelation*—checks to see whether a single numeric variable is highly correlated with past measurements of itself.
 
-![img](https://openintro.shinyapps.io/ims-03-model-02/_w_767d57e3/images/nytimes_nfl.png)
+![img](images/nytimes_nfl.png)
 
 From the plot and the reported 0.53 correlation, we see some evidence that the number of players arrested from each team during the seven-year period from 2000 to 2006 was positively associated with the number of players arrested by that same team during the subsequent seven-year period from 2007 to 2013.
 
 The author interprets both the plot and reported “pretty solid” correlation as evidence of a team-specific effect. Without offering explanations or implying cause-and-effect, the author effectively communicates that player arrests in the NFL do not appear to be randomly distributed across teams, but rather that certain teams may have player-acquisition philosophies that result in them having consistently higher numbers of players arrested.
 
-![img](https://openintro.shinyapps.io/ims-03-model-02/_w_767d57e3/images/nytimes_nfl2.png)
+![img](images/nytimes_nfl2.png)
 
 
 
@@ -223,7 +221,7 @@ The author interprets both the plot and reported “pretty solid” correlation 
 
 Sometimes journalists can leave statistical concepts lost in translation. The first sentence of this article reports that no correlation was found between economic growth and lower tax rates at the top of the income bracket. This is a politically-sensitive finding, and indeed much of the article discusses attempts by Senate Republicans to bury these findings, which run counter to their ideological position on macroeconomic issues.
 
-![img](https://openintro.shinyapps.io/ims-03-model-02/_w_767d57e3/images/nytimes_tax.png)
+![img](images/nytimes_tax.png)
 
 Of greater interest to us is that the word “correlation” here is not being used in its precise statistical sense. The link to the actual report reveals that the findings are based on a multiple regression model, not a simple correlation. Multiple regression models are the subject of the next tutorial, but for now, it is enough to know that multiple regression is a technique that extends regression such that more than one explanatory variable can be taken into account. Although you can extend regression to include more than one explanatory variable, this is impossible to do with correlation.
 
@@ -235,7 +233,7 @@ Finally, it is not uncommon to encounter references to a “plot” of a correla
 
 The authors reached the conclusion that there was no correlation between voting for Brexit and racism, based on the small correlation values. What other evidence would you want to see in order to have confidence in these findings?
 
-![img](https://openintro.shinyapps.io/ims-03-model-02/_w_767d57e3/images/heatst_brexit.png)
+![img](images/heatst_brexit.png)
 
 
 
@@ -245,7 +243,7 @@ The next few exercises will test your ability to interpret correlation like a pr
 
 Recall that you previously determined the value of the correlation coefficient between the poverty rate of counties in the United States and the high school graduation rate in those counties was -0.6808085.
 
-![img](https://openintro.shinyapps.io/ims-03-model-02/_w_767d57e3/03-02-lesson_files/figure-html/mc4-pre-1.png)
+![img](images/mc4-pre-1.png)
 
 
 
@@ -287,7 +285,7 @@ Above all else, we must always remember that correlation does not imply causatio
 
 Remarkable–but nonsensical–correlations are called “spurious.” In fact, there is an entire blog devoted to them. Here is how the number of films Nicolas Cage has appeared in correlates with the number of people who drowned by falling into a pool.
 
-![img](http://tylervigen.com/images/spurious-correlations-share.png)
+![img](images/spurious-correlations-share.png)
 
 Are these two variables related by any substantive means? Of course not.
 
@@ -295,7 +293,7 @@ Are these two variables related by any substantive means? Of course not.
 
 Here is another example that traces U.S. oil production to the quality of rock music. We suppose one may need to burn the midnight oil to make a truly endearing rock classic!
 
-![img](http://strata.uga.edu/6370/lecturenotes/images/spuriousCorrelationOilMusic.jpg)
+![img](images/spuriousCorrelationOilMusic.jpg)
 
 In each of these cases, the correlation was illustrated as two variables that seem to move together over time. In fact, time is an obvious confounder for many of these spurious correlations. Any time you see two variables linked over time, you should be skeptical of the role that time can play as a confounder.
 
@@ -305,7 +303,7 @@ In each of these cases, the correlation was illustrated as two variables that se
 
 This webcomic from XKCD illustrates how space can also be present in spurious correlations. Colored maps–called choropleths–can be visually arresting ways of conveying information, but they can also reveal spurious correlations. Many things occur more often in places where there are more people, so failure to control for the confounding influence of population can lead to spurious correlations.
 
-![img](http://imgs.xkcd.com/comics/heatmap.png)
+![img](images/heatmap.png)
 
 
 
@@ -313,7 +311,7 @@ This webcomic from XKCD illustrates how space can also be present in spurious co
 
 In other cases it may not be so obvious what confounding variables are driving the spurious correlation. This plot shows that as the number of lemons imported into the U.S. from Mexico has increased over time, the number of U.S. highway fatalities has decreased. The relationship appears to be strong, but there is no plausible causative mechanism that could explain the relationship.
 
-![img](http://www.tutor2u.net/_legacy/blog/files//blog-correlation-291209.gif)
+![img](images/blog-correlation.png)
 
 Now it’s time for you to get your hands dirty with some truly spurious correlations.
 
@@ -354,7 +352,7 @@ ggplot(data = noise, aes(x = x, y = y)) +
 
   geom_point() + 
 
-  ___
+___
 
 1. Compute the correlation between each set of `x` and `y`.
 
@@ -398,33 +396,24 @@ You have successfully completed Lesson 2 in Tutorial 3: Introduction to Linear M
 
 What’s next?
 
-📒 [Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://openintrostat.github.io/ims-tutorials/)
+[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
 
-🗒 [Tutorial 3: Introduction to Linear Models Data](https://openintrostat.github.io/ims-tutorials/03-introduction-to-linear-models/)
+[Tutorial 3: Introduction to Linear Models Data](https://bghammill.github.io/ims-03-model/)
 
-1️⃣ [Tutorial 3 - Lesson 1: Visualizing two variables](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-01/)
+- [Tutorial 3 - Lesson 1: Visualizing two variables](https://bghammill.github.io/ims-03-model/ims-03-lesson-01/)
+- [Tutorial 3 - Lesson 2: Correlation](https://bghammill.github.io/ims-03-model/ims-03-lesson-02/)
+- [Tutorial 3 - Lesson 3: Simple linear regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-03/)
+- [Tutorial 3 - Lesson 4: Interpreting regression models](https://bghammill.github.io/ims-03-model/ims-03-lesson-04/)
+- [Tutorial 3 - Lesson 5: Model fit](https://bghammill.github.io/ims-03-model/ims-03-lesson-05/)
+- [Tutorial 3 - Lesson 6: Parallel slopes](https://bghammill.github.io/ims-03-model/ims-03-lesson-06/)
+- [Tutorial 3 - Lesson 7: Evaluating & extending parallel slopes model](https://bghammill.github.io/ims-03-model/ims-03-lesson-07/)
+- [Tutorial 3 - Lesson 8: Multiple regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-08/)
+- [Tutorial 3 - Lesson 9: Logistic regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-09/)
+- [Tutorial 3 - Lesson 10: Case study ](https://bghammill.github.io/ims-03-model/ims-03-lesson-10/)
 
-2️⃣ [Tutorial 3 - Lesson 2: Correlation](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-02/)
+[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
-3️⃣ [Tutorial 3 - Lesson 3: Simple linear regression](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-03/)
-
-4️⃣ [Tutorial 3 - Lesson 4: Interpreting regression models](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-04/)
-
-5️⃣ [Tutorial 3 - Lesson 5: Model fit](https://openintro.shinyapps.io/ims-03-introduction-to-linear-models-05/)
-
-📖 [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
-
-
-
-
-
-[Next Topic](https://bghammill.github.io/ims-03-model/ims-03-lesson-02/)
-
-[Back to lesson list](https://bghammill.github.io/ims-03-model/)
-
-[Back to tutorial list (main page)](https://bghammill.github.io/)
-
-
+<!-- MathJax -->
 
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 

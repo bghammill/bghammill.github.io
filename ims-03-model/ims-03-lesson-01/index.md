@@ -1,11 +1,3 @@
-# Lesson 1
-
-## Welcome
-
-In the previous tutorials, you’ve learned how to describe the distribution of a single variable. This is useful, but in many cases, what we are more interested in is understanding the relationship between two variables.
-
-
-
 ## Visualizing two variables
 
 In particular, in these tutorials you will learn techniques for characterizing and quantifying the relationship between two numeric variables.
@@ -27,7 +19,7 @@ Just as you learned to visualize the distribution of one variable with a histogr
 - Put the response variable on vertical axis
 - Put the explanatory variable on horizontal axis
 
-![img](https://openintro.shinyapps.io/ims-03-model-01/_w_0ddccaa9/03-01-lesson_files/figure-html/2-1.png)
+![img](images/2-1.png)
 
 By convention, we always put the response variable on the vertical, or $$y$$-axis, and the explanatory variable on the horizontal, or $$x$$-axis.
 
@@ -42,7 +34,7 @@ ggplot(data = possum, aes(y = total_l, x = tail_l)) +
   geom_point()
 ```
 
-![img](https://openintro.shinyapps.io/ims-03-model-01/_w_0ddccaa9/03-01-lesson_files/figure-html/3-1.png)
+![img](images/3-1.png)
 
 Note that the axes have been labeled with the names of the variables automatically, based on the names of the variables in the dataset.
 
@@ -59,7 +51,7 @@ ggplot(data = possum, aes(y = total_l, x = tail_l)) +
        y = "Length of Possum Body (cm)")
 ```
 
-![img](https://openintro.shinyapps.io/ims-03-model-01/_w_0ddccaa9/03-01-lesson_files/figure-html/4-1.png)
+![img](images/4-1.png)
 
 Note that the names of the axis labels must include quotations (`""`), indicating to `ggplot()` that these are names **not** variables.
 
@@ -105,7 +97,7 @@ ggplot(data = possum, aes(y = total_l, x = tail_cut)) +
   geom_point()
 ```
 
-![img](https://openintro.shinyapps.io/ims-03-model-01/_w_0ddccaa9/03-01-lesson_files/figure-html/5-1.png)
+![img](images/5-1.png)
 
 
 
@@ -118,7 +110,7 @@ ggplot(data = possum, aes(y = total_l, x = tail_cut)) +
   geom_boxplot()
 ```
 
-![img](https://openintro.shinyapps.io/ims-03-model-01/_w_0ddccaa9/03-01-lesson_files/figure-html/6-1.png)
+![img](images/6-1.png)
 
 A notable attribute of a scatterplot is its connection to the raw data. A boxplot, however, is wholly disconnected from the raw data, only plotting summaries of the data. To re-forge this connection, we can overlay the original data points on top of the boxplots, by simply adding another layer to our `ggplot()`!
 
@@ -130,7 +122,7 @@ ggplot(data = possum, aes(y = total_l, x = tail_cut)) +
   geom_jitter(color = "sky blue", width = 0.2)
 ```
 
-![img](https://openintro.shinyapps.io/ims-03-model-01/_w_0ddccaa9/03-01-lesson_files/figure-html/boxdot-1.png)
+![img](images/boxdot-1.png)
 
 Now we can see the original data points, and the boxplots of the different tail length groups. We can see that overall, as the median tail length increases the body length also increases.
 
@@ -213,7 +205,7 @@ Here we see a negative, slightly non-linear relationship between sign legibility
 
 This relationship may be a good candidate for fitting a regression model, but the curvature in the relationship deserves attention. Indeed, very few relationships will be truly “linear,” but it is our responsibility to assess if it is reasonable to assume if a relationship is linear “enough.”
 
-![img](http://bolt.mph.ufl.edu/files/2012/07/images-mod2-scatterplot4.gif)
+![img](images/images-mod2-scatterplot4.gif)
 
 
 
@@ -221,7 +213,7 @@ This relationship may be a good candidate for fitting a regression model, but th
 
 Conversely, in this next scatterplot we see little evidence of any relationship at all. The direction is neither positive nor negative, nor is there any clearly identifiable form. Any perceived relationship would be exceptionally weak.
 
-![img](https://openintro.shinyapps.io/ims-03-model-01/_w_0ddccaa9/images/chp1_scat3.png)
+![img](images/chp1_scat3.png)
 
 
 
@@ -231,7 +223,7 @@ Conversely, in this next scatterplot we see little evidence of any relationship 
 
 In this “Example Scatter Plot” we see another clear, non-linear relationship. In this case, the direction is negative for negative values of xx, but positive for positive values of xx. The points are clustered fairly close together, so the relationship is fairly strong. The point in the upper-left-hand corner might be considered an outlier - since it is far from the other points - but it doesn’t represent a break from the overall pattern of the points.
 
-![img](C:\Users\hammill\Documents\GitHub\bghammill.github.io\scatterplot.png)
+![img](images/scatterplot.png)
 
 
 
@@ -241,7 +233,7 @@ In this “Example Scatter Plot” we see another clear, non-linear relationship
 
 In this scatterplot, we see what is known as a “fan shape.” The direction is certainly positive, but the spread of the points increases dramatically as we get further from the origin. We will discuss this type of pattern more later, but it is an indicator of “non-constant” variance, as the variability (spread) in the y-values increases for larger values of x. Generally, log-transformations do a great job of “taming” these fan shapes, allowing for us to use a linear regression model on the transformed data.
 
-![img](https://openintro.shinyapps.io/ims-03-model-01/_w_0ddccaa9/images/plotpng.png)
+![img](images/plotpng.png)
 
 In these next exercises, you’ll get more practice creating scatterplots and characterizing what you see in them.
 
@@ -292,7 +284,7 @@ Finally, using the `smoking` dataset, create a scatterplot illustrating how the 
 
 This scatterplot shows the relationship between the poverty rates and high school graduation rates of counties in the United States.
 
-![img](https://openintro.shinyapps.io/ims-03-model-01/_w_0ddccaa9/03-01-lesson_files/figure-html/plotmc1-1.png)
+![img](images/plotmc1-1.png)
 
 
 
@@ -334,7 +326,7 @@ Observations that don’t seem to fit with the rest of points may be considered 
 
 In this scatterplot, we consider the relationship between the number of home runs hit by Major League baseball players in 2010 and the number of bases they stole. Home runs are a measure of batting power, while stolen bases are a measure of footspeed. It is not surprising that we see a negative relationship here, since power and speed are generally complementary skills.
 
-![img](https://openintro.shinyapps.io/ims-03-model-01/_w_0ddccaa9/03-01-lesson_files/figure-html/homerun-1.png)
+![img](images/homerun-1.png)
 
 Since both variables here are integer-valued, several of the observations have the same coordinates, and thus the corresponding points are plotted on top of one another. This can misrepresent the data!
 
@@ -347,7 +339,7 @@ ggplot(data = mlbbat10, aes(x = stolen_base, y = home_run)) +
   geom_point(alpha = 0.5)
 ```
 
-![img](https://openintro.shinyapps.io/ims-03-model-01/_w_0ddccaa9/03-01-lesson_files/figure-html/hr_alpha-1.png)
+![img](images/hr_alpha-1.png)
 
 
 
@@ -362,7 +354,7 @@ ggplot(data = mlbbat10, aes(x = stolen_base, y = home_run)) +
   geom_jitter(alpha = 0.5)
 ```
 
-![img](https://openintro.shinyapps.io/ims-03-model-01/_w_0ddccaa9/03-01-lesson_files/figure-html/hr_jitter-1.png)
+![img](images/hr_jitter-1.png)
 
 
 
@@ -453,8 +445,8 @@ What’s next?
 - [Tutorial 3 - Lesson 3: Simple linear regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-03/)
 - [Tutorial 3 - Lesson 4: Interpreting regression models](https://bghammill.github.io/ims-03-model/ims-03-lesson-04/)
 - [Tutorial 3 - Lesson 5: Model fit](https://bghammill.github.io/ims-03-model/ims-03-lesson-05/)
-- [Tutorial 3 - Lesson 6: Parallel slopes](https://bghammill.github.io/ims-03-model/ims-03-lesson-065/)
-- [Tutorial 3 - Lesson 7: Evaluating & extended parallel slopes model](https://bghammill.github.io/ims-03-model/ims-03-lesson-07/)
+- [Tutorial 3 - Lesson 6: Parallel slopes](https://bghammill.github.io/ims-03-model/ims-03-lesson-06/)
+- [Tutorial 3 - Lesson 7: Evaluating & extending parallel slopes model](https://bghammill.github.io/ims-03-model/ims-03-lesson-07/)
 - [Tutorial 3 - Lesson 8: Multiple regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-08/)
 - [Tutorial 3 - Lesson 9: Logistic regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-09/)
 - [Tutorial 3 - Lesson 10: Case study ](https://bghammill.github.io/ims-03-model/ims-03-lesson-10/)
