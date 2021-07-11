@@ -94,7 +94,7 @@ ggplot(starbucks_many, aes(x=Fat, y=Calories, group=replicate)) +
   geom_point() + 
   ggtitle("Fat vs. Calories for Starbucks Food Items") + 
   geom_smooth(method="lm", se=FALSE)
-```  
+```
 
 Indeed, when we take repeated samples of size 20 (here we took 50 different samples), every single line is different.  Notice that the `rep_sample_n` command let us take many samples of size 20 and ggplot fit the linear model separately for each of those samples.
 
@@ -601,7 +601,7 @@ summary(lm(Carbs ~ Protein, data = starbucks))
 
 ```
 lm(Carbs ~ Protein, data = starbucks) %>% tidy()
-``` 
+```
 
 
 Note the two different (but similar) ways to output the linear model information.  recall that the estimates have been calculated using least squares optimization, the value for the slope (0.381) is exactly the same regardless of the format of the output.   
@@ -1040,3 +1040,4 @@ What's next?
 `r emo::ji("one")` [Tutorial 8 - Lesson 5: Inference beyond the simple linear regression model](https://openintro.shinyapps.io/ims-08-inference-for-regression-05/)
 
 `r emo::ji("open_book")` [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
+
