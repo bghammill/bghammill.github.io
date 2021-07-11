@@ -14,7 +14,7 @@ Typically, the data represent only a small portion of the larger group which you
 
 At first glance, the logic of statistical inference seems to be backwards, but as you become more familiar with the steps in the process, the logic will make much more sense.
 
-![](images/lesson1_img1.png){ width=80% }
+<img src="images/lesson1_img1.png" style="zoom:30%;" />
 
 Consider a situation where you are trying to convince your marketing director that people on the East Coast prefer cola versus orange soda at a higher rate than people on the West Coast. 
 

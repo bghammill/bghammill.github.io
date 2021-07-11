@@ -34,27 +34,27 @@ Sampling data is a bit different than sampling soup though. So next, we'll intro
 
 In simple random sampling, we randomly select cases from the population, such that each case is equally likely to be selected. This is similar to randomly drawing names from a hat.
 
-![](images/random-sample.png){width="70%"}
+![](images/random-sample.png)
 
 ### Stratified sample
 
 In stratified sampling, we first divide the population into homogeneous groups, called strata, and then we randomly sample from within each stratum. For example, if we wanted to make sure that people from low, medium, and high socioeconomic status are equally represented in a study, we would first divide our population into three groups as such and then sample from within each group.
 
-![](images/stratified-sample.png){width="70%"}
+![](images/stratified-sample.png)
 
 
 ### Cluster sample
 
 In cluster sampling, we divide the population into clusters, randomly sample a few clusters, and then sample all observations within these clusters. The clusters, unlike strata in stratified sampling, are heterogeneous within themselves and each cluster is similar to the others, such that we can get away with sampling from just a few of the clusters.
 
-![](images/cluster-sample.png){width="70%"}
+![](images/cluster-sample.png)
 
 
 ### Multistage sample
 
 Multistage sampling adds another step to cluster sampling. Just like in cluster sampling, we divide the population into clusters, randomly sample a few clusters, and then we randomly sample observations from within those clusters.
 
-![](images/multistage-sample.png){width="70%"}
+![](images/multistage-sample.png)
 
 Cluster and multistage sampling are often used for economical reasons. For example, one might divide a city into geographic regions that are on average similar to each other and then sample randomly from a few randomly picked regions in order to avoid traveling to all regions.
 
@@ -279,7 +279,7 @@ To do so, we divide our sample into two, those with programming experience and t
 
 Then, we randomly assign individuals from each block into the two courses, ensuring that those with and without programming experience are equally represented in the two treatment groups.
 
-![](images/blocking.png){width="50%"}
+![](images/blocking.png)
 
 In this experiment the _explanatory_ variable is the _course type_ lecture versus interactive online and the variable that we're _blocking_ for is _previous programming experience_.
 
@@ -346,3 +346,8 @@ What's next?
 `r emo::ji("four")` [Tutorial 1 - Lesson 4: Case study](https://openintro.shinyapps.io/ims-01-getting-started-with-data-04/)
 
 `r emo::ji("open_book")` [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
+
+<!-- MathJax -->
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+

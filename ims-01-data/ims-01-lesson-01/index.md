@@ -1,5 +1,3 @@
-## Welcome
-
 Hello, and welcome to **Getting Started with Data**!
 
 In this tutorial we will take you through concepts and R code that are essential for getting started with data analysis.
@@ -244,14 +242,14 @@ You might be wondering what we mean by _"pipe it into the `count()` function"_?
 
 ### The pipe operator
 
-![](images/pipe-operator.png){width="30%"}
+![](images/pipe-operator.png)
 
 The **pipe operator**, which **is percent greater than percent**, tells `R` to
 pass the object that comes before it into the first argument of the function
 that comes after it. Mathematically, **x pipe f(y)** becomes *f(x, y)*, since x
 is piped into the first argument of the function f().
 
-![](images/pipe-operator2.png){width="30%"}
+![](images/pipe-operator2.png)
 
 For example, one way of adding numbers in R is using the `sum()` function. The 
 `sum()` function has as many arguments as there are numbers you wish to add, 
@@ -380,7 +378,7 @@ let's explore another option!
 
 ### New variable: `read_cat`
 
-![](images/new-variable-read-cat.png){width="50%"}
+![](images/new-variable-read-cat.png)
 
 Instead we can create a new variable, named `read_cat`, with the `mutate()`
 function and the helpful `if_else()` function. 
@@ -647,22 +645,24 @@ ggplot(email50, aes(x = num_char, y = exclaim_mess, color = factor(spam))) +
 
 *Based on the plot, does there appear to be a relationship between these variables?* 
 
-## Congratulations!
+
 
 You have successfully completed Lesson 1 in Tutorial 1: Getting Started with Data.
 
 What's next?
 
-`r emo::ji("ledger")` [Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://openintrostat.github.io/ims-tutorials/)
+[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
 
-`r emo::ji("spiral_notepad")` [Tutorial 1: Getting Started with Data](https://openintrostat.github.io/ims-tutorials/01-getting-started-with-data/)
+[Tutorial 1: Getting Started with Data](https://bghammill.github.io/ims-01-data/)
 
-`r emo::ji("one")` [Tutorial 1 - Lesson 1: Language of data](https://openintro.shinyapps.io/ims-01-getting-started-with-data-01/)
+- [Tutorial 1 - Lesson 1: Language of data](https://bghammill.github.io/ims-01-data/ims-01-lesson-01/)
+- [Tutorial 1 - Lesson 2: Types of studies](https://bghammill.github.io/ims-01-data/ims-01-lesson-02/)
+- [Tutorial 1 - Lesson 3: Sampling strategies and Experimental design](https://bghammill.github.io/ims-01-data/ims-01-lesson-03/)
+- [Tutorial 1 - Lesson 4: Case study](https://bghammill.github.io/ims-01-data/ims-01-lesson-04/)
 
-`r emo::ji("two")` [Tutorial 1 - Lesson 2: Types of studies](https://openintro.shinyapps.io/ims-01-getting-started-with-data-02/)
+[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
-`r emo::ji("three")` [Tutorial 1 - Lesson 3: Sampling strategies and Experimental design](https://openintro.shinyapps.io/ims-01-getting-started-with-data-03/)
+<!-- MathJax -->
 
-`r emo::ji("four")` [Tutorial 1 - Lesson 4: Case study](https://openintro.shinyapps.io/ims-01-getting-started-with-data-04/)
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
-`r emo::ji("open_book")` [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)

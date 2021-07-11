@@ -4,7 +4,7 @@ In this last lesson of the tutorial, we will work on a case study, based on data
 
 As you might know, many college courses conclude by giving students the opportunity to anonymously evaluate both the course and the instructor. However, the use of these student evaluations as an indicator of course quality and teaching effectiveness is often criticized because the measures may reflect the influence of non teaching related characteristics, such as the physical appearance of the instructor.
 
-![](images/evals-data.png){width="70%"}
+![](images/evals-data.png)
 
 The data that we will be working with, which includes information on course evaluations as well as students' scoring of professors' physical attractiveness, was collected as part of a study conducted at University of Texas, Austin.
 
@@ -225,4 +225,8 @@ What's next?
 `r emo::ji("four")` [Tutorial 1 - Lesson 4: Case study](https://openintro.shinyapps.io/ims-01-getting-started-with-data-04/)
 
 `r emo::ji("open_book")` [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
+
+<!-- MathJax -->
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 

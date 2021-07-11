@@ -12,21 +12,21 @@ In an observational study, we sample two types of people from the population: th
 
 Then, we find the average attention span for the two groups of people and compare.
 
-![](images/design-observational.png){width="70%"}
+![](images/design-observational.png)
 
 On the other hand, in an experiment, we sample a group of people from the population and then we randomly assign these people into two groups: those who are asked to use screens at bedtime and those who asked not to use them. The difference is that the decision of whether to use screens or not is not left up to the subjects, as it was in the observational study, but is instead imposed by the researcher.
 
 At the end, we compare the attention spans of the two groups.
 
-![](images/design-experiment.png){width="70%"}
+![](images/design-experiment.png)
 
 Based on the observational study, even if we find a difference between the average attention span of these two groups of people, we can't attribute this difference solely to using screens because there may be other variables that we didn't control for in this study that contribute to the observed difference. For example, people who use screens at night might also be using screens for longer time periods during the day and their attention span might be affected by the daytime usage as well.
 
-![](images/design-observational-association.png){width="70%"}
+![](images/design-observational-association.png)
 
 However, in the experiment, such variables that might also contribute to the outcome, called confounding variables, are most likely represented equally in the two groups due to random assignment. Therefore, if we find a difference between the two averages, we can indeed make a causal statement attributing this difference to bedtime screen usage.
 
-![](images/design-experiment-causation.png){width="70%"}
+![](images/design-experiment-causation.png)
 
 Let's put these ideas into practice.
 
@@ -79,7 +79,7 @@ Here is a quick summary of how random sampling and random assignment affect the 
 
 #### Scope of inference
 
-![](images/scope-inference.png){width="70%"}
+![](images/scope-inference.png)
 
 A study that employs random sampling and random assignment can be used to make causal conclusions and these conclusions can be generalized to the whole population. This would be an ideal experiment, but such studies are usually difficult to carry out, especially if the experimental units are humans, since it may be difficult to randomly sample people from the population and then impose treatments on them. This is why most experiments recruit volunteer subjects. You may have seen ads for these on a university campus or in a newspaper.
 
@@ -129,23 +129,23 @@ First, let's clarify what we mean when we say explanatory and response variables
 
 ### Explanatory and response
 
-![](images/explanatory-single.png){width="30%"}
+![](images/explanatory-single.png)
 
 And these definitions can be expanded to more than just two variables. For example, we could study the relationship between three explanatory variables and a single response variable.
 
 ### Multivariate relationships
 
-![](images/explanatory-multivariate.png){width="50%"}
+![](images/explanatory-multivariate.png)
 
 This is often a more realistic scenario since most real world relationships are multivariable. For example, if we're interested in the relationship between calories consumed daily and heart health, we would probably also want to consider information on variables like age and fitness level of the person as well.
 
-![](images/explanatory-multivariate-example.png){width="50%"}
+![](images/explanatory-multivariate-example.png)
 
 Not considering an important variable when studying a relationship can result in what we call a **Simpson's paradox**. This paradox illustrates the effect the omission of an explanatory variable can have on the measure of association between another explanatory variable and the response variable. In other words, the inclusion of a third variable in the analysis can change the apparent relationship between the other two variables. 
 
 Consider the eight dots in the scatter plot below (the points happen to fall on the orange and blue lines). The trend describing the points when only considering `x1` and `y`, illustrated by the black dashed line, is reversed when `x2`, the grouping variable, is also considered. If we don't consider `x2`, the relationship between `x1` and `y` is positive. If we do consider `x2`, we see that within each group the relationship between `x1` and `y` is actually negative.
 
-![](images/simpson-paradox-plot.png){width="50%"}
+![](images/simpson-paradox-plot.png)
 
 We'll explore Simpson's paradox further with another dataset, which comes from a study carried out by the graduate Division of the University of California, Berkeley in the early 70’s to evaluate whether there was a sex bias in graduate admissions. The data come from six departments. For confidentiality we'll call them A through F. The dataset contains information on whether the applicant identified as male or female, recorded as `Gender`, and whether they were admitted or rejected, recorded as `Admit`. First, we will evaluate whether the percentage of males admitted is indeed higher than females, overall. Next, we will calculate the same percentage for each individual department.
 
@@ -429,4 +429,8 @@ What's next?
 `r emo::ji("four")` [Tutorial 1 - Lesson 4: Case study](https://openintro.shinyapps.io/ims-01-getting-started-with-data-04/)
 
 `r emo::ji("open_book")` [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
+
+<!-- MathJax -->
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
