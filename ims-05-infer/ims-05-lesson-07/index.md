@@ -1,5 +1,5 @@
 
-## Hypothesis testing for a differnece in two means via simulation
+## Inference for a difference in two means
 
 In this lesson we demonstrate setting up and conducting a hypothesis test to compare means from two independent distributions using simulation.
 
@@ -834,9 +834,7 @@ The p-value of the test is 0.5637, which is higher than any reasonable significa
 >   *  The two samples should be independent of each other. 
 > - Sample size / skew: The more skewed the original data, the higher the sample size required to have a symmetric sampling distribution. 
 
-```
-knitr::include_graphics("images/chp3-vid3-hrly-rate-citizen-smaller.png")
-```
+![](images/chp3-vid3-hrly-rate-citizen-smaller.png)
 
 Before we wrap up our discussion of comparing means across two groups, let's also review conditions for this test.
 

@@ -342,9 +342,7 @@ As usual, let's frame our discussion around a real-world problem. 200 observatio
 > The same students took a reading and writing test. 
 > At a first glance, how are the distributions of reading and writing scores similar? How are they different?
 
-```
-knitr::include_graphics("images/chp2-vid2-hsb2.png")
-```
+![](images/chp2-vid2-hsb2.png)
 
 It appears that the median writing score is slightly higher than the median reading score. Both distributions seem fairly symmetric. But the reading scores are slightly more right skewed, as evidenced by the median that is closer to the 25th percentile than the 75th percentile. Also, the reading scores are slightly more variable than the writing scores. That all being said, at a first glance it's difficult to tell if there's a difference in the reading and writing scores.
 

@@ -1,5 +1,5 @@
 
-## Proportions: testing and power
+## Hypothesis tests to compare proportions
 
 This lesson dives deeper into performing hypothesis tests and creating confidence intervals for a single parameter. Then, you'll learn how to perform inference on a difference between two proportions. Finally, this lesson wraps up with an exploration of what happens when you know the null hypothesis is true.
 
@@ -9,51 +9,31 @@ In this lesson you will extend your toolbox to include hypothesis tests on propo
 
 ### Confidence interval
 
-A confidence interval is formed using the standard error, which is the standard deviation of the sampling distribution. This distribution is the heart of the confidence interval.
+A confidence interval is formed using the standard error, which is the standard deviation of the sampling distribution. This distribution is the heart of the confidence interval
 
-```
-knitr::include_graphics("images/2-1-1.png")
-```
-
-### 
+![](images/2-1-1.png)
 
 It captures how much uncertainty you have in your estimate. The more data that your estimate is based upon, the narrower this distribution and the confidence interval become.
 
-```
-knitr::include_graphics("images/2-1-2.png")
-```
+![](images/2-1-2.png)
 
 ### Hypothesis test
 
 A hypothesis test on a proportion asks the question: what sort of p-hats would you observe if the true parameter p held a particular value?
 
-```
-knitr::include_graphics("images/2-1-3.png")
-```
-
-### 
+![](images/2-1-3.png)
 
 We assert this hypothesis, this model of the true state of the word, using hypothesize.
 
-```
-knitr::include_graphics("images/2-1-4.png")
-```
-
-### 
+![](images/2-1-4.png)
 
 The insertion of this command will cause generate to now generate data sets according to the world as set out in hypothesize.
 
-```
-knitr::include_graphics("images/2-1-5.png")
-```
-
-### 
+![](images/2-1-5.png)
 
 Thus the sampling distribution, now called the null distribution, captures the variability in p-hat that you might observe in a world where H0 is true.
 
-```
-knitr::include_graphics("images/2-1-6.png")
-```
+![](images/2-1-6.png)
 
 ### Do half of Americans favor capital punishment?
 
@@ -716,10 +696,7 @@ ggplot(null, aes(x = stat)) +
 
 **These data suggest that there is a difference between sexes in the belief of life after death.** 
 
-
-```
-knitr::include_graphics("images/ch2v2-density-plot.png")
-```
+![](images/ch2v2-density-plot.png)
 
 
 When we plot our observed statistic against the null distribution,  we learn that that observed difference of around point-1-5 is quite a bit greater than the sort of differences that we'd see if there was no association.  This corresponds to a p-value of point-0-2.  These data constitute evidence that there is a more general association between sex and belief in the afterlife in the population of all Americans.
@@ -1131,144 +1108,73 @@ Any time you perform a hypothesis test, there is a chance that you've made an er
 
 The first such error can occur in situations where the null hypothesis that you're testing is indeed true.
 
-```
-knitr::include_graphics("images/2-3-2.png")
-```
-
-### 
+![](images/2-3-2.png)
 
 In this case, you would be right to retain the null hypothesis,
 
-```
-knitr::include_graphics("images/2-3-3.png")
-```
-
-
-### 
+![](images/2-3-3.png) 
 
 and you'd be committing what's called a Type I error if you rejected it.
 
-```
-knitr::include_graphics("images/2-3-4.png")
-```
+![](images/2-3-4.png)
 
-### 
-
-```
-knitr::include_graphics("images/2-3-5.png")
-```
-
-### 
+![](images/2-3-5.png)
 
 What is the probability that you will reject a true null hypothesis?
 
-```
-knitr::include_graphics("images/2-3-6.png")
-```
-
-### 
+![](images/2-3-6.png) 
 
 Consider the situation where you're testing a null hypothesis that the difference in two proportions is zero.
 
-```
-knitr::include_graphics("images/2-3-7.png")
-```
-
-### 
+![](images/2-3-7.png)
 
 You can use either permutation or the normal approximation to find the null distribution...
 
-```
-knitr::include_graphics("images/2-3-8.png")
-```
-
-### 
+![](images/2-3-8.png)
 
 The distribution of the differences in p-hats that you might observe in a given sample if the null is true.
 
-```
-knitr::include_graphics("images/2-3-9.png")
-```
-
-### 
+![](images/2-3-9.png)
 
 If the sample statistic calculated from your data falls into the tails of this distribution, it is considered too unlikely to have happened under the null hypothesis, so you would reject the null.
 
-```
-knitr::include_graphics("images/2-3-10.png")
-```
-
-### 
+![](images/2-3-10.png)
 
 This is formalized by checking to see if the statistic falls within the area of the tails that account for some proportion, alpha, of the total distribution. It's most common to set alpha to point-0-5.
 
-```
-knitr::include_graphics("images/2-3-11.png")
-```
-
-### 
+![](images/2-3-11.png)
 
 Since you will reject the null hypothesis anytime you observe a statistic in this region, in setting alpha you're actually setting your Type I error rate.
 
-```
-knitr::include_graphics("images/2-3-12.png")
-```
-
-### 
+![](images/2-3-12.png)
 
 If you use alpha equal to point-0-5, you're resigning yourself to incorrectly rejecting the null hypothesis 5% of the time.
 
-```
-knitr::include_graphics("images/2-3-13.png")
-```
-
-### 
+![](images/2-3-13.png)
 
 There's a second type of error to be aware of when conducting hypothesis tests, one that occurs when in fact H0 is false and some other model we'll call HA is the true model.
 
-```
-knitr::include_graphics("images/2-3-14.png")
-```
-
-### 
+![](images/2-3-14.png)
 
 One hopes that after looking at your data and computing a p-value you would decide to reject H0.
 
-```
-knitr::include_graphics("images/2-3-15.png")
-```
-
-### 
+![](images/2-3-15.png)
 
 If you fail to reject H0, you've committed what's called a Type II error.
 
-```
-knitr::include_graphics("images/2-3-16.png")
-```
-
-### 
+![](images/2-3-16.png)
 
 To visualize a Type II error, you have to start by realizing that H0 is no longer the model that is generating your data. Now, it's coming from HA.
 
-```
-knitr::include_graphics("images/2-3-17.png")
-```
-
-### 
+![](images/2-3-17.png)
 
 However, you are using the same thresholds, those dotted gray lines, for the reject and fail-to-reject regions, so you will retain H0 whenever you observe a statistic in this region.
 
-```
-knitr::include_graphics("images/2-3-18.png")
-```
-
-### 
+![](images/2-3-18.png)
 
 The probability of that event corresponds to the area shaded here, which is usually given the Greek letter beta.
 
-```
-knitr::include_graphics("images/2-3-19.png")
-```
+![](images/2-3-19.png)
 
 The other potion of the area under this curve, 1 - Beta, is called the power. The statistical power of the test is the probability that it will reject H0 if in fact it is false. Said another way, it's your power to detect an effect if it exists. This is an extremely important property of a statistical test. In general, you can affect and increase in the power in two ways. First is to increase the size of the reject region by increasing alpha. This has a trade-off though: now you're increased the Type I error rate. The second is to increase your sample size. This will have the effect of shrinking the variance of these curves, which would increase the area of the curve that is in the reject region.
 

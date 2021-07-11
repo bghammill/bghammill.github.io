@@ -1,5 +1,5 @@
 
-## Vocabulary score vs. self-identified social class
+## Comparing many means
 
 ### Vocabulary score and self-identified social class
 
@@ -57,7 +57,7 @@ The distribution of vocabulary scores is shown in this histogram. The scores ran
 
 
 *If you were asked to use one of four names for your social class, which would you say you belong in: the lower class, the working class, the middle class, or the upper class?*
- 
+
 ```
 ggplot(data = gss, aes(x = class)) +
   geom_bar()
@@ -194,7 +194,6 @@ Variability attributed to differences within each social group is called "within
 > - Variability that can be attributed to differences in social class - **between group** variability 
 > 
 > - Variability attributed to factors within a group - **within group** variability 
-> 
 
 ## Parametric ANOVA
 
@@ -268,7 +267,7 @@ The p-value is the area under the $F$-distribution beyond the observed $F$-stati
 ```
 aov(wordsum ~ class, gss) %>%
   tidy()
-``` 
+```
 
 > F-statistic = $\frac{\frac{between~group~var}{group~size}}{\frac{within~group~var}{n - group~size}} = \frac{\frac{236.5644}{3}}{\frac{2869.8003}{791}} = \frac{78.854810}{3.628066} = 21.73467$
 
@@ -679,22 +678,28 @@ For which of the pairwise comparisons would you conclude that there is a "signif
 
 ## Congratulations!
 
-You have successfully completed Lesson 4 in Tutorial 7: Comparing many means.  
+You have successfully completed Lesson 8 in Tutorial 5: Statistical Inference.   
 
 You should now have a very good understanding of statistical inference for numerical data. In this tutorial you have learned about parametric procedures for conducing an analysis of variance (ANOVA). Specifically, you should now be familiar with the concepts of variability within and between groups, the $F$-distribution, and multiple comparison procedures. 
 
 What's next?
 
-`r emo::ji("ledger")` [Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://openintrostat.github.io/ims-tutorials/)
+[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
 
-`r emo::ji("spiral_notepad")` [Tutorial 7: Inference for Numerical Responses](https://openintrostat.github.io/ims-tutorials/07-inference-for-numerical-responses/)
+[Tutorial 5: Statistical Inference](https://bghammill.github.io/ims-05-infer/)
 
-`r emo::ji("one")` [Tutorial 7 - Lesson 1: Bootstrapping for estimating a parameter](https://openintro.shinyapps.io/ims-07-inference-for-numerical-responses-01/)
+- [Tutorial 5 - Lesson 1: Inference for a single proportion](https://bghammill.github.io/ims-05-infer/ims-05-lesson-01/)
+- [Tutorial 5 - Lesson 2: Hypothesis tests to compare proportions](https://bghammill.github.io/ims-05-infer/ims-05-lesson-02/)
+- [Tutorial 5 - Lesson 3: Chi-square test of independence](https://bghammill.github.io/ims-05-infer/ims-05-lesson-03/)
+- [Tutorial 5 - Lesson 4: Chi-square test for goodness of fit](https://bghammill.github.io/ims-05-infer/ims-05-lesson-04/)
+- [Tutorial 5 - Lesson 5: Bootstrapping to estimate a parameter](https://bghammill.github.io/ims-05-infer/ims-05-lesson-05/)
+- [Tutorial 5 - Lesson 6: T-distribution](https://bghammill.github.io/ims-05-infer/ims-05-lesson-06/)
+- [Tutorial 5 - Lesson 7: Inference for difference in two means](https://bghammill.github.io/ims-05-infer/ims-05-lesson-07/)
+- [Tutorial 5 - Lesson 8: Comparing many means](https://bghammill.github.io/ims-05-infer/ims-05-lesson-08/)
 
-`r emo::ji("two")` [Tutorial 7 - Lesson 2: Introducing the t-distribution](https://openintro.shinyapps.io/ims-07-inference-for-numerical-responses-02/)
+[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
-`r emo::ji("three")` [Tutorial 7 - Lesson 3: Inference for difference in two parameters](https://openintro.shinyapps.io/ims-07-inference-for-numerical-responses-03/)
+<!-- MathJax -->
 
-`r emo::ji("four")` [Tutorial 7 - Lesson 4: Comparing many means](https://openintro.shinyapps.io/ims-07-inference-for-numerical-responses-04/)
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
-`r emo::ji("open_book")` [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)

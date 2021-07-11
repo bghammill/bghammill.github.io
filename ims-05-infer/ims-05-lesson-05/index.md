@@ -1,5 +1,5 @@
 
-## Welcome
+## Bootstrapping to estimate a parameter
 
 Welcome to Inference for Numerical Data! In this tutorial you will learn concepts that are essential for conducting inference on numerical data and the associated R code for doing so.
 

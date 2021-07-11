@@ -1,5 +1,5 @@
 
-## Comparing many parameters: goodness of fit
+## Chi-square test for goodness of fit
 
 The tutorial wraps up with two case studies using election data. Here, you'll learn how to use a Chi-squared test to check goodness-of-fit. You'll study election results from Iran and Iowa and test if Benford's law applies to these datasets.
 
@@ -13,17 +13,11 @@ The phrase election fraud can mean many things including vote buying, casting tw
 
 As an example, imagine that these were the vote totals at the end of the night at several precincts in your town
 
-```
-knitr::include_graphics("images/4-1-1.png")
-```
-
-### 
+![](images/4-1-1.png)
 
 An official who was perpetrating election fraud would come in and alter these numbers before reporting them to the authorities, usually in a manner that favored one of the candidates, in this case candidate B. If the original ballot data is not retained, this sort of fraud may be difficult to detect and prove. This has led some to look to a statistical method based on something called Benford's Law.
 
-```
-knitr::include_graphics("images/4-1-2.png")
-```
+![](images/4-1-2.png)
 
 ### Benford’s Law A.K.A. "the first digit law"
 
@@ -37,6 +31,10 @@ knitr::include_graphics("images/ch4v1-bar-plot-benford.png")
 knitr::include_graphics("images/ch4v1-country-population-bar-plots.png")
 ```
 
+![](images/ch4v1-bar-plot-benford.png)
+
+![](images/ch4v1-country-population-bar-plots.png)
+
 It turns out it's not, not by a long shot. The most common number is one, the second most common is two, and so on with the higher numbers being less common. This decaying distribution of first digits is what is captured precisely by Benford's Law. It proposes, for example, that exactly thirty-point-one percent of the first digits should be one, seventeen-point-six percent should be two, and so on.
 
 ### 
@@ -44,13 +42,9 @@ It turns out it's not, not by a long shot. The most common number is one, the se
 - If the election was fair then vote counts should follow Benford’s Law.
 - If the election was fraudulent then vote counts should not follow Benford’s Law.
 
-```
-knitr::include_graphics("images/ch4v1-first-digit-number-line.png")
-```
+![](images/ch4v1-first-digit-number-line.png)
 
-```
-knitr::include_graphics("images/ch4v1-bar-plot-benford.png")
-```
+![](images/ch4v1-bar-plot-benford.png)
 
 To think about why this pattern emerges, imagine if these populations were drawn randomly from the integers between 1 and 150. What proportion of these numbers lead with a 1? Well, there's 1, there's 10 through 19, then there's the whole swath of 100 to 150. That's more than 40% of these numbers. To see why two is the second most common, imagine if instead these numbers were between 1 and 250. That would be a lot of leading twos. 
 
@@ -63,9 +57,7 @@ This approach to detecting election fraud was prominently used in the 2009 presi
 
 In this election, the incumbent, Mahmoud Ahmadinejad, faced several challengers, the most prominent of whom was Mir-Hossein Mousavi. There were widespread claims of election fraud from both the international community and some parties within Iran.
 
-```
-knitr::include_graphics("images/ahmedinejad-mousavi.png")
-```
+![](images/ahmedinejad-mousavi.png)
 
 One of the key points of evidence that was used in arguing fraud were the vote counts, which are available in a data set called Iran.
 
@@ -381,19 +373,14 @@ The distribution of first digit counts in the Iran data
 
 ### First Digit Distribution
 
-```
-knitr::include_graphics("images/4-2-1.png")
-```
-
+![](images/4-2-1.png)
 
 captures many of the main features of Benford's Law: 1 is the most common digit,
 
 
 ### 
 
-```
-knitr::include_graphics("images/4-2-2.png")
-```
+![](images/4-2-2.png)
 
 
 followed by 2, then it generally continues to decay as the numbers increase. You'll note, though, that it's not a perfect fit. There sure are a lot of twos
@@ -401,9 +388,7 @@ followed by 2, then it generally continues to decay as the numbers increase. You
 
 ### 
 
-```
-knitr::include_graphics("images/4-2-3.png")
-```
+![](images/4-2-3.png)
 
 
 and also the number of sevens
@@ -412,9 +397,7 @@ and also the number of sevens
 
 ### 
 
-```
-knitr::include_graphics("images/4-2-4.png")
-```
+![](images/4-2-4.png)
 
 
 
@@ -423,9 +406,7 @@ is actually greater than the number of sixes. Essentially, we're left wondering 
 
 ### 
 
-```
-knitr::include_graphics("images/4-2-5.png")
-```
+![](images/4-2-5.png)
 
 
 
@@ -435,9 +416,7 @@ a measure of how far the vote distribution is from Benford's Law. In fact, we do
 
 ### Chi-squared distance
 
-```
-knitr::include_graphics("images/4-2-6.png")
-```
+![](images/4-2-6.png)
 
 
 
@@ -451,9 +430,7 @@ Let's review how we used that statistic to measure the distance between these tw
 
 ### 
 
-```
-knitr::include_graphics("images/4-2-7.png")
-```
+![](images/4-2-7.png)
 
 
 
@@ -462,10 +439,7 @@ This calculation goes cell by cell, so let's start up in this corner
 
 ### 
 
-
-```
-knitr::include_graphics("images/4-2-8.png")
-```
+![](images/4-2-8.png)
 
 
 
@@ -475,9 +449,7 @@ and take difference between the observed count, O,
 
 ### 
 
-```
-knitr::include_graphics("images/4-2-9.png")
-```
+![](images/4-2-9.png)
 
 
 
@@ -487,9 +459,7 @@ and the expected count over here, E.
 
 ### 
 
-```
-knitr::include_graphics("images/4-2-10.png")
-```
+![](images/4-2-10.png)
 
 
 
@@ -499,9 +469,7 @@ To be sure this difference is positive, we square it ,
 
 ### 
 
-```
-knitr::include_graphics("images/4-2-11.png")
-```
+![](images/4-2-11.png)
 
 
 
@@ -512,9 +480,7 @@ then we divide it by E to scale it by the size of this cell. The resulting numbe
 
 ### 
 
-```
-knitr::include_graphics("images/4-2-12.png")
-```
+![](images/4-2-12.png)
 
 
 
@@ -524,9 +490,7 @@ We then move to the next cell and do the same thing.
 
 ### 
 
-```
-knitr::include_graphics("images/4-2-13.png")
-```
+![](images/4-2-13.png)
 
 
 
@@ -535,9 +499,7 @@ Take the squared and scaled difference.
 
 ### 
 
-```
-knitr::include_graphics("images/4-2-14.png")
-```
+![](images/4-2-14.png)
 
 
 
@@ -547,9 +509,7 @@ We continue this routine through all 9 cells, then add them up: that is the chi-
 
 ### 
 
-```
-knitr::include_graphics("images/4-2-15.png")
-```
+![](images/4-2-15.png)
 
 
 
@@ -559,9 +519,7 @@ For these distributions, that distance was 1-point-32. Let's see how this applie
 
 ### First Digit Distribution
 
-```
-knitr::include_graphics("images/4-2-16.png")
-```
+![](images/4-2-16.png)
 
 
 
@@ -572,9 +530,7 @@ Here each cell is on of the digit categories, but the rest of the calculation is
 
 ### 
 
-```
-knitr::include_graphics("images/4-2-17.png")
-```
+![](images/4-2-17.png)
 
 
 
@@ -583,9 +539,7 @@ the counts of leading ones
 
 ### 
 
-```
-knitr::include_graphics("images/4-2-18.png")
-```
+![](images/4-2-18.png)
 
 
 and we add that to the squared difference in counts of leading twos
@@ -593,10 +547,7 @@ and we add that to the squared difference in counts of leading twos
 
 ### 
 
-
-```
-knitr::include_graphics("images/4-2-19.png")
-```
+![](images/4-2-19.png)
 
 
 
@@ -664,9 +615,7 @@ ggplot(sim_1, aes(x = party)) +
    geom_bar()
 ```
 
-```
-knitr::include_graphics("images/4-2-21.png")
-```
+![](images/4-2-21.png)
 
 
 
@@ -916,9 +865,7 @@ The goodness of fit test that you just conducted used as the null hypothesis tha
 
 ### Iran election fraud
 
-```
-knitr::include_graphics("images/4-3-1.png")
-```
+![](images/4-3-1.png)
 
 
 
@@ -928,9 +875,7 @@ This corresponds to the notion that the 2009 presidential election in Iran was f
 
 ### 
 
-```
-knitr::include_graphics("images/4-3-2.png")
-```
+![](images/4-3-2.png)
 
 
 The alternative hypothesis was that the election was fraudulent, that Benford's law does not describe this voting data well.
@@ -939,9 +884,7 @@ The alternative hypothesis was that the election was fraudulent, that Benford's 
 
 ### 
 
-```
-knitr::include_graphics("images/4-3-3.png")
-```
+![](images/4-3-3.png)
 
 
 
@@ -951,9 +894,7 @@ Our results are well summarized by looking at the null distribution of the chi s
 
 ### 
 
-```
-knitr::include_graphics("images/4-3-4.png")
-```
+![](images/4-3-4.png)
 
 
 If we're comfortable with establishing election fraud by using Benford's law, then this analysis serves as evidence of fraud in the Iranian election, but before you embrace that real life conclusion, let's take a moment and think through a good sanity check. One way to check the viability of assessing electoral fraud using Benford's law is to look to an election that you think to be fair and run the same analysis.
@@ -974,11 +915,7 @@ For that, let's turn to the voting data from the US presidential election of 201
 
 ### Iowa vote totals
 
-```
-knitr::include_graphics("images/Iowa_in_United_States.svg")
-```
-
-
+![](images/Iowa_in_United_States.svg)
 
 In the following exercises, you'll be working with the Iowa dataset.
 By TUBS [CC BY SA 3.0], from Wikimedia Commons
@@ -1363,10 +1300,7 @@ OK, at this point, you're probably thinking: wait, what?
 
 ### Iowa election fraud
 
-
-```
-knitr::include_graphics("images/4-4-1.png")
-```
+![](images/4-4-1.png)
 
 
 
@@ -1376,9 +1310,7 @@ Were officials in Iowa really altering vote totals?!
 
 ### 
 
-```
-knitr::include_graphics("images/4-4-2.png")
-```
+![](images/4-4-2.png)
 
 
 
@@ -1387,9 +1319,7 @@ Political scientists and election observers assure us that the answer to this qu
 
 ### 
 
-```
-knitr::include_graphics("images/4-4-3.png")
-```
+![](images/4-4-3.png)
 
 
 
@@ -1398,9 +1328,7 @@ So what happened? Why did your hypothesis test give you the wrong answer?
 
 ### What went wrong?
 
-```
-knitr::include_graphics("images/4-4-5.png")
-```
+![](images/4-4-5.png)
 
 
 
@@ -1410,9 +1338,7 @@ One possibility that you should always consider when you reject the null hypothe
 
 ### 
 
-```
-knitr::include_graphics("images/4-4-6.png")
-```
+![](images/4-4-6.png)
 
 
 
@@ -1422,9 +1348,7 @@ If your test is performing properly, you know exactly the probability of this ev
 
 ### 
 
-```
-knitr::include_graphics("images/4-4-7.png")
-```
+![](images/4-4-7.png)
 
 
 So you may have made a Type I error but a more fundamental issue might be at work here. To be very precise, you tested the hypothesis that the first digit distribution from Benford's Law is a good fit to the first digit distribution of your data.
@@ -1433,9 +1357,7 @@ So you may have made a Type I error but a more fundamental issue might be at wor
 
 ### 
 
-```
-knitr::include_graphics("images/4-4-8.png")
-```
+![](images/4-4-8.png)
 
 
 What if Benford's Law doesn't actually apply to this sort of data even when it's a free and fair election? To get that nicely shaped decaying distribution of first digits, the counts need to span many orders of magnitude and be uniformly distributed in their logarithms.
@@ -1443,9 +1365,7 @@ What if Benford's Law doesn't actually apply to this sort of data even when it's
 
 ### 
 
-```
-knitr::include_graphics("images/4-4-9.png")
-```
+![](images/4-4-9.png)
 
 
 
@@ -1455,18 +1375,11 @@ Certain phenomena like populations of world cities fit these criteria and are a 
 
 ### Take-home lesson
 
-```
-knitr::include_graphics("images/Iowa_in_United_States.svg")
-```
-
+![](images/Iowa_in_United_States.svg)
 
 The statistical tool must be appropriate for the task.
 
-```
-knitr::include_graphics("images/Iran_orthographic_projection.svg")
-```
-
-
+![](images/Iran_orthographic_projection.svg)
 
 This is an important lesson: you need to be certain of the appropriateness of a particular analytical method to the context of the data that you're studying before you put much weight in the result. When in doubt, one solution is to do as you've done here: do a sanity check with an analysis where you know the correct answer. In this case, your Iowa analysis should make you skeptical of the Iran analysis. Of course, there may be other, more convincing sources of evidence that the 2009 Iran Election was fraudulent, but this particular analysis, based on Benford's Law, can't really tell us much either way.
 
@@ -1498,9 +1411,7 @@ That might seem like a long list to remember, but really all you need to interna
 
 ### 
 
-```
-knitr::include_graphics("images/4-4-11.png")
-```
+![](images/4-4-11.png)
 
 
 You specify the variable or variables of interest,
@@ -1509,9 +1420,7 @@ You specify the variable or variables of interest,
 
 ### 
 
-```
-knitr::include_graphics("images/4-4-12.png")
-```
+![](images/4-4-12.png)
 
 
 
@@ -1521,9 +1430,7 @@ you propose your null hypothesis,
 
 ### 
 
-```
-knitr::include_graphics("images/4-4-13.png")
-```
+![](images/4-4-13.png)
 
 
 
@@ -1532,9 +1439,7 @@ you generate data sets that would appear in a world where that hypothesis is tru
 
 ### 
 
-```
-knitr::include_graphics("images/4-4-14.png")
-```
+![](images/4-4-14.png)
 
 
 
@@ -1544,9 +1449,7 @@ then you calculate an appropriate test statistic for each one of those data sets
 
 ### 
 
-```
-knitr::include_graphics("images/4-4-15.png")
-```
+![](images/4-4-15.png)
 
 
 

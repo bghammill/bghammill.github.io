@@ -1,5 +1,5 @@
 
-## Inference for a single parameter
+## Inference for a single proportion
 
 In this lesson you will learn how to perform statistical inference on a single parameter that describes categorical data. This includes both resampling based methods and approximation based methods for a single proportion.
 
@@ -14,33 +14,19 @@ One particularly rich trove of categorical data can be found in the General Soci
 
 Every year, researchers visit the homes of Americans and ask them a long list of questions about their history, behavior, and opinions on a number of topics of interest to social scientists.
 
-```
-knitr::include_graphics("images/gss-data.png")
-```
-
-### 
+![](images/gss-data.png)
 
 There are generally a few thousand people that are surveyed every year, but researchers...
 
-```
-knitr::include_graphics("images/gss-usa.png")
-```
-
-### 
+![](images/gss-usa.png) 
 
 would like to make general statements about the opinions and social trends of the entire United States.
 
-```
-knitr::include_graphics("images/gss-usa2.png")
-```
-
-### 
+![](images/gss-usa2.png)
 
 This process of inference from the sample to the population is possible because the researchers are careful to select their respondents in such a way that their sample is representative of the population of all Americans. The result is a data set where each sampled respondent is one row and each column is their response to a single question.
 
-```
-knitr::include_graphics("images/gss-usa3.png")
-```
+![](images/gss-usa3.png)
 
 ### Exploring GSS
 
@@ -98,90 +84,49 @@ We can estimate the standard error by using the bootstrap. Let's review how we c
 
 We start with our full dataset and specify the variable that we'd like to focus on.
 
-```
-knitr::include_graphics("images/boot-01.png")
-```
-
-### 
+![](images/boot-01.png)
 
 This is done with the `specify()` function.
 
-```
-knitr::include_graphics("images/boot-02.png")
-```
-
-### 
+![](images/boot-02.png)
 
 Next we draw a sample from that variable with replacement that is of the same size as our original dataset. This recreates the random variation that creeps in when you draw a sample from a population.
 
-```
-knitr::include_graphics("images/boot-03.png")
-```
-
-### 
+![](images/boot-03.png)
 
 We do this many times to create many bootstrap replicate data sets.
 
-```
-knitr::include_graphics("images/boot-04.png")
-```
-
-### 
+![](images/boot-04.png)
 
 This is done with the `generate()` function.
 
-```
-knitr::include_graphics("images/boot-05.png")
-```
+![](images/boot-05.png)
 
 ### Bootstrap
 
 Next, for each replicate, we calculate the sample statistic, in this case: the proportion of respondents that said "happy".
 
-```
-knitr::include_graphics("images/boot-06.png")
-```
-
-### 
+![](images/boot-06.png)
 
 This is done with the `calculate()` function.
 
-```
-knitr::include_graphics("images/boot-07.png")
-```
-
-### 
+![](images/boot-07.png)
 
 At this point, we should save this object: the collection of statistics from repeated resampling of our data set.
 
-```
-knitr::include_graphics("images/boot-08.png")
-```
-
-### 
+![](images/boot-08.png)
 
 From here, we can visualize its distribution using the `ggplot()` function. This is called the **bootstrap** distribution.
 
-```
-knitr::include_graphics("images/boot-09.png")
-```
-
-
-### 
+![](images/boot-09.png)
 
 The standard deviation of this distribution is a good estimate of the standard error. 
 
-```
-knitr::include_graphics("images/boot-10.png")
-```
-
-###
+![](images/boot-10.png)
 
 So our last step is to extract that using summarize.
 
-```
-knitr::include_graphics("images/boot-11.png")
-```
+![](images/boot-11.png)
 
 ## Bootstrap confidence interval with infer
 
@@ -512,89 +457,51 @@ Let's look deeper into this by starting with the confidence interval that we've 
 
 The data from which this interval was constructed is from 2016, and we can plot both p-hat and the resulting interval on a number line here. To understand what is meant by confident, we need to consider how this interval fits into the big picture.
 
-```
-knitr::include_graphics("images/confidence-interval.png")
-```
+![](images/confidence-interval.png)
 
 ### The unknown proportion: p
 
 In classical statistical inference, there is thought to be a fixed but unknown parameter of interest, in this case the population proportion of Americans that are happy.
 
-```
-knitr::include_graphics("images/p-01.png")
-```
+![](images/p-01.png)
 
 ### 
 
 The 2016, the survey drew a small sample of this population...
 
-```
-knitr::include_graphics("images/p-02.png")
-```
-
-### 
+![](images/p-02.png)
 
 calculated $\hat{p}$ to estimate the parameter, $p$,
 
-```
-knitr::include_graphics("images/p-03.png")
-```
-
-### 
+![](images/p-03.png)
 
 and quantified the uncertainty in that estimate with a confidence interval.
 
-```
-knitr::include_graphics("images/p-04.png")
-```
-
-### 
+![](images/p-04.png)
 
 Now imagine what would happen if we were to draw a new sample...
 
-```
-knitr::include_graphics("images/p-05.png")
-```
-
-### 
+![](images/p-05.png)
 
 of the same size from that population and come up with a new p-hat and a new interval. It wouldn't be the same as our first, but it'd likely be similar.
 
-```
-knitr::include_graphics("images/p-06.png")
-```
-
-### 
+![](images/p-06.png)
 
 We can imagine doing this a third time: a new data sample,
 
-```
-knitr::include_graphics("images/p-07.png")
-```
-
-### 
+![](images/p-07.png)
 
 a new p-hat and a new interval.
 
-```
-knitr::include_graphics("images/p-08.png")
-```
-
-### 
+![](images/p-08.png)
 
 We can keep this thought experiment going
 
-```
-knitr::include_graphics("images/p-09.png")
-```
-
-### 
+![](images/p-09.png)
 
 but what we want to focus on is the properties of this collection of confidence intervals that are accumulating.
 
-```
-knitr::include_graphics("images/p-10.png")
-```
+![](images/p-10.png)
 
 ### Happiness in 2014
 
@@ -626,9 +533,7 @@ SE_happy <- gss2014 %>%
 c(p_hat_happy - 2 * SE_happy, p_hat_happy + 2 * SE_happy)
 ```
 
-```
-knitr::include_graphics("images/gss2014-happy.png")
-```
+![](images/gss2014-happy.png)
 
 ### Happiness in 2012 
 
@@ -658,27 +563,21 @@ SE_happy <- gss2012 %>%
 c(p_hat_happy - 2 * SE_happy, p_hat_happy + 2 * SE_happy)
 ```
 
-```
-knitr::include_graphics("images/gss2012-happy.png")
-```
+![](images/gss2012-happy.png)
 
-### 
+
 
 If we were to continue this process many times, we'd get many different $\hat{p}$s and many different intervals. These intervals aren't arbitrary: they're designed to capture that unknown population parameter $p$.
 
-```
-knitr::include_graphics("images/gssMany-happy.png")
-```
-
-### 
+![](images/gssMany-happy.png)
 
 You can see in this plot that almost all of our intervals succeeded in capturing p, but not all of them. 
 
 This interval missed the mark. If these are 95% confident intervals, they will have the property that if we form a very large collection of intervals, we'd expect that 95% of them would capture the parameter and 5% of them would not.
 
-```
-knitr::include_graphics("images/gssMany-happy-nocapture.png")
-```
+![](images/gssMany-happy-nocapture.png)
+
+
 
 ### Confidence Intervals
 
@@ -700,9 +599,7 @@ We learned that for a 95% confidence interval (a confidence level of .95), if we
 
 The population proportion is represented by the p in the cloud and the dotted line and each confidence interval is represented by a segment that extends out from it's p-hat. Intervals that capture the true value are in green; those that miss it are in red.
 
-```
-knitr::include_graphics("images/gssMany-happy-nocapture.png")
-```
+![](images/gssMany-happy-nocapture.png)
 
 You can guess the confidence level using the proportion of intervals that contain the true parameter value.
 
@@ -1012,17 +909,13 @@ In summary, standard errors increase when
 
 So far we've estimated them using the computational approach of bootstrapping.
 
-```
-knitr::include_graphics("images/bootstrap_one.png")
-```
-
-### 
+![](images/bootstrap_one.png)
 
 There is another method, however, that skips the computation entirely and relies upon an approximation.
 
-```
-knitr::include_graphics("images/bootstrap_two.png")
-```
+![](images/bootstrap_two.png)
+
+
 
 ### The normal distribution
 
@@ -1037,9 +930,7 @@ A.K.A the "bell curve".
 
 - $\hat{p}$ follows a normal distribution  
 
-```
-knitr::include_graphics("images/normal-curve.png")
-```
+![](images/normal-curve.png)
 
 That approximation is the normal distribution, also known as the bell curve. A useful result in mathematics says that if you have independent observations and a sufficiently large sample size, then p-hat will follow a normal distribution with a known standard deviation. This distribution is called the sampling distribution of p-hat and it's very similar to the bootstrap distribution in that it captures the variability of our estimate across many possible data sets.
 

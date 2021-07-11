@@ -1,5 +1,5 @@
 
-## Comparing many parameters: independence
+## Chi-square test of independence
 
 This part of the tutorial will teach you how to use both resampling methods and classical methods to test for the independence of two categorical variables. This lesson covers how to perform a Chi-squared test.
 
@@ -322,21 +322,13 @@ null <- data %>%
 
 ### Choosing a statistic
 
-What we'd like is a test statistic that can capture how different each of these bar plots is from...
+What we'd like is a test statistic that can capture how different each of these bar plots is from... 
 
-```
-knitr::include_graphics("images/ch3v2-two-bar-plots.png")
-```
-
-### 
+![](images/ch3v2-two-bar-plots.png)
 
 the bar plot that shows absolutely no relationship - this one. This plot, though, is built from proportions, and a statistic will be be easier to build from counts.
 
-```
-knitr::include_graphics("images/ch3v2-three-bar-plots.png")
-```
-
-### 
+![](images/ch3v2-three-bar-plots.png)
 
 So let's switch to looking at the bar plot of counts for space and the corresponding contingency table which this time we've renamed "observed_counts".
 
@@ -390,9 +382,7 @@ One option would be to simply find the difference in the counts in each cell and
 
 This statistic that we've just formulated is called the chi-squared statistic. It captures the distance between a contingency table and the table you would expect if the variables were independent of one another. We found that the statistic for the relationship between party and natspac was 1.33. If we calculate the statistic for the relationship with natarms, we get a much greater distance: 18.97.
 
-```
-knitr::include_graphics("images/ch3v2-annotated-three-bar-plots.png")
-```
+![](images/ch3v2-annotated-three-bar-plots.png)
 
 With this statistic in hand, you can return to the hypothesis test to answer the question of if either of these observed statistics: 1.33 or 18.97 is so great as to lead you to reject the null hypothesis that these spending priorities are independent of political party.
 
@@ -640,11 +630,7 @@ Now you have some experience conducting a hypothesis test of independence using 
 
 - Statistics: $\hat{p}, \hat{p}\_{1} - \hat{p}\_{2}$
 
-```
-knitr::include_graphics("images/categorical-inference-ch3v3-normal-curve.png")
-```
-
-
+![](images/categorical-inference-ch3v3-normal-curve.png)
 
 Next, you'll learn how to conduct the same test using an approximation method. This is the most commonly-used way to formulate the null distribution, so let's dive in.
 
@@ -659,9 +645,7 @@ The approximation distribution that you're most familiar with is the Normal dist
 - Shape is determined by degrees of freedom {{1}}
 - $df = (nrows - 1) \times (ncols - 1)$  {{2}}
 
-```
-knitr::include_graphics("images/categorical-inference-ch3v3-chisq-curve.png")
-```
+![](images/categorical-inference-ch3v3-chisq-curve.png)
 
 
 
@@ -715,12 +699,7 @@ pchisq(chi_obs_spac, df = 4)
 1 - pchisq(chi_obs_spac, df = 4)
 ```
 
-
-```
-knitr::include_graphics("images/ch3v3-htest-approx.png")
-```
-
-
+![](images/ch3v3-htest-approx.png)
 
 Instead of using this null distribution, we could instead rely upon the chi-squared distribution. The number of rows in this table was three and the number of columns was three, so the appropriate chi-squared distribution to use is the one with four degrees of freedom. If we plot that on top of our null distribution, we see that the two very close. 
 
@@ -736,11 +715,7 @@ Becomes a good approximation when:
 
 - $df >= 2$
 
-```
-knitr::include_graphics("images/categorical-inference-ch3v3-chisq-curve.png")
-```
-
-
+![](images/categorical-inference-ch3v3-chisq-curve.png)
 
 Like the normal distribution, the chi-squared distribution only becomes a good approximation when the sample size is large. A good rule of thumb is that the expected counts in each cell should be five or greater. Another recommendation is to only use this distribution when the degrees of freedom is two or greater. If you have one degree of freedom, you're looking at a two by two table, which means you can just compare proportions using the normal distribution.
 
@@ -978,10 +953,7 @@ At this point you should be familiar with this diagram
 
 ### Classic inference
 
-```
-knitr::include_graphics("images/3-4-2.png")
-```
-
+![](images/3-4-2.png)
 
 which shows how we formulate the null distribution as the distribution of test statistics for data generated in a world where the null hypothesis is true. The procedure is the same when were testing independence using the chi squared statistic its just the shape of the null distribution that changes. To formulate a confidence interval for the chi squared, it makes sense to simply remove the step where we propose a null hypothesis and instead generate data simply through bootstrap resampling.
 
@@ -989,51 +961,27 @@ which shows how we formulate the null distribution as the distribution of test s
 
 that give us a sampling distribution
 
-```
-knitr::include_graphics("images/3-4-3.png")
-```
-
-
-### 
+![](images/3-4-3.png)
 
 of the chi squared statistic
 
-```
-knitr::include_graphics("images/3-4-4.png")
-```
-
-### 
+![](images/3-4-4.png)
 
 so that we can formulate an interval
 
-```
-knitr::include_graphics("images/3-4-5.png")
-```
-
-
-### 
+![](images/3-4-5.png)
 
 to capture the true chi squared parameter but hold on
 
-```
-knitr::include_graphics("images/3-4-6.png")
-```
-
-### 
+![](images/3-4-6.png)
 
 True chi squared parameter? What would that even mean? We know how to think about a difference in two parameters as being a meaningful parameter, but a chi squared? It turns out that the chi squared is only really a useful statistic in the context of a hypothesis test. You're unlikely to ever see a confidence interval here.
 
-```
-knitr::include_graphics("images/4-3-6-2.png")
-```
-
-### 
+![](images/4-3-6-2.png)
 
 So we can just scratch this approach. There you have it. The shortest lesson ever!
 
-```
-knitr::include_graphics("images/3-4-7.png")
-```
+![](images/3-4-7.png)
 
 
 ## Congratulations!
