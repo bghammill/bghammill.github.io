@@ -1,1013 +1,1036 @@
-## Exploring numerical data
+## Measures of center
 
-In this lesson, we'll broaden our tool box of exploratory techniques to encompass numerical data. Numerical data are data that take the form of number, where those numbers actually represent a value on the number line (in contrast to a number like zip code that can't be ordered on a number line).
+What do we mean by a typical observation? For example, it sounds perfectly fine to state a statistic like: the typical life expectancy in the US is 77.6 years, but where does that number come from? Before we answer that question, let's make this more concrete by introducing a dataset that we'll be working with throughout the lesson.
 
-The dataset that we'll be working with is one that has information on the cars that were for sale in the US in a certain year.
+### County demographics
 
-### Cars dataset
+Researchers in public health have compiled data on the demographics of every county in the US. We see here that we have 4 variables: the state name, the county name, then the average life expectancy, and the median income. 
 
-In this lesson, you'll be working with the `cars` dataset, which records characteristics on all of the new models of cars for sale in the US in a certain year.
-We can learn more about each variable using the `glimpse()` function.
-
-```
-glimpse(cars)
+```{r life}
+life
 ```
 
-We learn that we have 428 observations, or cases, and 19 variables. 
-Unlike most displays of data, the glimpse function puts each of the variables as a row, with its name followed by its data type, followed by the first several values.
+### Massachusetts
 
-The car names are character strings, which are like factors, except its common for every case to take a unique value. **`lgl`**, stands for logical variables, another simple case of a categorical variable where there are only two levels. 
-For example, each car will take either TRUE or FALSE depending on if it is a sports car or not. 
-We can see that the last set of variables are all either **`int`** for integer or **`dbl`** for double.  
-They are actually both numerical variables, but the integers are discrete and the double are continuous (and are allocated more computer memory). 
-If you look at `ncyl`, the number of cylinders, it's listed as an integer, but there are only a few different values that it can take. 
-So, it actually behaves a bit like categorical variable.
+We're going to focus on the state of Massachusetts, which happens to have 14 counties. Let's filter the data for counties from that state, and name the resulting data frame `life_ma`. To make the rest of the conversation simpler we'll also round the life expectancy values to whole numbers for this state.
 
-Let's construct some plots to help us explore this data.
-
-
-
-## Dotplot
-
-The most direct way to represent numerical data is with a *dotplot*, where each case is a dot that's placed at it's appropriate value on the x-axis. 
-The dots are then stacked on top of other cases with similar values. 
-You can think of a dotplot as a sibling to the histogram, except you know *exactly* how many observations are in each "bin," because you can count the dots. 
-Importantly, the plot has much less information loss than a histogram, as you could almost rebuild the dataset if you were only given this plot. 
-As you can imagine, these plots start to get difficult to read as the number of cases gets very large.
-
-The code below produces a dotplot of the weight of the 428 cars in the dataset. 
-Notice, since we are only interested in one numerical variable (`weight`), there is only one variable specified in the `aes`thetics. 
-Additionally, this variable is specified as the `x` aesthetic, as it is "standard" to plot a numerical variable on the x-axis. 
-Finally, we notice the `geom_dotplot()` function is used to add dots to the plot. 
-This function has an optional argument (input) of `dotsize`, which specifies how large the dots should be (values closer to 0 are smaller, values closer to 1 are larger). 
-
-
-```
-ggplot(data = cars, aes(x = weight)) +
-  geom_dotplot(dotsize = 0.4)
+```{r life-ma-filter, echo = TRUE}
+life_ma <- life %>%
+  filter(state == "Massachusetts") %>%
+  mutate(expectancy = round(expectancy)) %>%
+  select(county, expectancy)
 ```
 
-We notice in the dotplot, the y-axis is a bit confusing, as it is unclear what the 0.0 and 1.0 refer to. 
-This is an unfortunate limitation of ggplot2, where binning along the x axis and stacking along the y axis results in a non-meaningful y axis. 
-As we progress in our plotting abilities, we could choose to hide the y axis or manually scale it to match the number of dots. 
+Here is a look at those counties.
 
-## Histogram
-
-One of the most common plots to use is a *histogram*, which solves this problem by aggregating the dots into bins on the x axis, then mapping the height of the bar to the number of cases that fall into that bin. 
-Because of the binning, it's not possible to perfectly reconstruct the dataset, but it allows us to gain a bigger picture of the shape of the distribution.
-
-Notice, the only aspect of the code that changes is the transition from `geom_dotplot()` to `geom_histogram()`. 
-
-```
-ggplot(data = cars, aes(x = weight)) +
-  geom_histogram()
+```{r life-ma-view}
+life_ma
 ```
 
-*Note*: When we run the code above, we get a message. 
-The message lets us know that it has picked a `binwidth` for us and a warning that there were 14 missing values. 
-This is **not** an error, it is a message that `ggplot()` is providing you! 
-
-### Histogram bins 
-
-If the stepwise (not continuous) nature of the histogram irks you, then you have a few options. 
-First, you can play around with the `bins` or `binwidth` arguments to find the number of bins to make the histogram as continuous as possible. 
-Or, second, you could use a density plot, which is up next!
-
-**ggplot2** does its best to select a sensible bin width by default, but you can override that option by specifying it yourself.
-The `bins` and `binwidth` arguments to `geom_histogram()` is similar to the `dotsize` argument to `geom_dotplot()`, as it is optional and controls one aspect of the histogram. 
-If we use a binwidth of 5, the result is a histogram that's much smoother.
-Alternatively, we could choose to specify the number of bins we would like, instead of the 30 bins `geom_histogram()` defaults to. 
-
-```
-ggplot(data = cars, aes(x = hwy_mpg)) +
-  geom_histogram(binwidth = 5)
-
-ggplot(data = cars, aes(x = hwy_mpg)) +
-  geom_histogram(bins = 15)
-```
-
-One thing that's important to know about histograms like this one is that your sense of the shape of the distribution can change depending on the bin width that is selected. 
-
-### Your turn! 
-
-Create the following three plots:
-
-- A histogram of horsepower (i.e. `horsepwr`) with a binwidth of 3.
-- A second histogram of horsepower with a binwidth of 30.
-- A third histogram of horsepower with a binwidth of 60.
-
-```
-# Create hist of horsepwr with binwidth of 3
-ggplot(data = cars, aes(___)) +
-  geom_histogram(binwidth = ___) 
-
-# Create hist of horsepwr with binwidth of 30
-
-
-# Create hist of horsepwr with binwidth of 60
-
-
-```
-
-```
-ggplot(data = cars, aes(horsepwr)) +
-  geom_histogram(binwidth = 3)
-```
-
-```
-# Create hist of horsepwr with binwidth of 3
-ggplot(data = cars, aes(horsepwr)) +
-  geom_histogram(binwidth = 3) +
-  ## adds on a title to the plot
-  labs(title = "binwidth = 3")
-
-# Create hist of horsepwr with binwidth of 30
-ggplot(data = cars, aes(horsepwr)) +
-  geom_histogram(binwidth = 30) +
-  ## adds on a title to the plot
-  labs(title = "binwidth = 30")
-
-# Create hist of horsepwr with binwidth of 60
-ggplot(data = cars, aes(horsepwr)) +
-  geom_histogram(binwidth = 60) +
-  ## adds on a title to the plot
-  labs(title = "binwidth = 60")
-```
-
-### Three binwidths interpretation
-
-Answer the following question based on the plots below.
-
-```
-# Create hist of horsepwr with bw of 3
-p1 <- cars %>%
-  ggplot(aes(horsepwr)) +
-  geom_histogram(binwidth = 3) +
-  labs(title = "Plot A, bw = 3")
-
-# Create hist of horsepwr with bw of 30
-p2 <- cars %>%
-  ggplot(aes(horsepwr)) +
-  geom_histogram(binwidth = 30) +
-  labs(title = "Plot B, bw = 30")
-
-# Create hist of horsepwr with bw of 60
-p3 <- cars %>%
-  ggplot(aes(horsepwr)) +
-  geom_histogram(binwidth = 60) +
-  labs(title = "Plot C, bw = 60")
-
-grid.arrange(p1, p2, p3, nrow = 1, widths = c(0.3, 0.35, 0.35)) 
-```
-
-```
-question("What feature is present in Plot A that's not found in B or C?",
-  answer("The most common horsepower is around 200.", message = "It seems like Plot B and Plot C have peaks around 200."),
-  answer("There is a tendency for cars to have horsepower right at 200 or 300 horsepower.", correct = TRUE, message = "Nice one! Plot A is the only histogram that shows the count for cars with exactly 200 and 300 horsepower."),
-  answer("There is a second mode around 300 horsepower.", message = "It looks like Plot B and Plot C have a second mode around 300 horsepower, too."),
-  allow_retry = TRUE
-)
-```
-
-## Density plot
-
-The *density plot* represents the shape of the histogram using a smooth line. 
-You can think of the density plot as drawing a smoothed line over the top of a histogram, providing a smoother representation of the shape of the distribution. 
-A density plot is fairly sensitive to spikiness in the data, so you'll only want to use it when you have a large number of observations.
-
-Notice, the only line in our code that has changed switches to `geom_density()`. 
-
-```
-ggplot(data = cars, aes(x = weight)) +
-  geom_density()
-```
-
-### Bandwidth 
-
-If we wanted to make our density plot appear a bit smoother, we can increase what's known as the **bandwidth** of the plot.
-When we increase the bandwidth, we get a smoother plot, and smaller bandwidths create more volatile looking plots.
-
-But how do we decide what the "best" binwidth or bandwidth is for our plots?
-Usually the defaults are sensible, but it's good practice to tinker with both smoother and less-smooth versions of the plots to focus on different scales of structure in the data.
-Similar to the `bins` argument for histograms, the bandwidth specifies the number of bins `geom_density()` should use when making the plot.
-As you can imagine, it's easier to smooth over a smaller number of bins, so if you want a smoother density plot, you would choose larger values of `bw`. 
-
-Try a few other values for the bandwidth in the exercise below.
-
-```
-ggplot(data = cars, aes(x = weight)) +
-  geom_density(bw = 100)
-```
-
-## Boxplot
-
-Similar to a histogram, a *boxplot* does not plot the raw data.
-Instead, it plots summaries of the data. 
-A boxplot plots the center of the distribution (median), the values that mark off the middle half of the data (first and third quartiles), and the values that mark off the vast majority of the data (ends of the whiskers).
-
-Notice, we have only changed one line in our `R` code, switching to `geom_boxplot()`. 
-
-```
-ggplot(data = cars, aes(x = weight)) +
-  geom_boxplot()
-```
-
-The box represents the central bulk of the data,
-
-```
-ggplot(data = cars, aes(x = weight)) +
-  geom_boxplot(fill = COL[1,1])
-```
-
-the whiskers contain almost all the data,
-
-```
-ggplot(data = cars, aes(x = weight)) +
-  geom_boxplot() +
-  annotate("segment",
-           y = 0.4,
-           yend = 0.4,
-           x = 1900,
-           xend = 5500,
-           colour = COL[1,1],
-           size=1,
-           alpha=1,
-           arrow=arrow(length = unit(0.1, "inches"),
-                         ends = "both", type = "closed"))
-```
-
-and the extreme values are represented as points. You'll see the syntax for this is a bit different: we'll discuss why later on in the lesson.
-
-```
-ggplot(data = cars, aes(x = weight)) +
-  geom_boxplot() +
-  annotate("segment",
-           y = 0,
-           yend = 0,
-           x = 5200,
-           xend = 7500,
-           colour = COL[1,3],
-           size=7,
-           alpha=0.5)
-```
-
-
-## Boxplots & Dotplots
-
-Let's dig deeper to understand how exactly boxplots are constructed by starting with a dotplot.
-
-The boxplot is based around three summary statistics:
-
-- The first quartile of the data -- 25% of the data falls below this number
-
-```
-set.seed(234)
-
-common_cyl <- cars %>%
-  filter(ncyl %in% c("4", "6", "8")) %>%
-  sample_n(100)
-
-split_dotplot <- function(split_val) {
-  common_cyl <- common_cyl %>%
-    mutate(col = city_mpg <= split_val)
-
-  ggplot(data = common_cyl, 
-       aes(x = city_mpg, fill = col)) +
-    geom_dotplot(binwidth = 1) +
-    scale_fill_manual(values = c(COL[2,1], COL[3,1])) +
-    theme(
-      legend.position = "none",
-      axis.text.y = element_blank(),
-      axis.title.y = element_blank()
-    ) +
-    geom_vline(aes(xintercept = split_val))
-}
-
-
-stats <- quantile(common_cyl$city_mpg, na.rm = TRUE)
-g1 <- split_dotplot(stats[2])
-
-box <- ggplot(
-  data = common_cyl,
-  aes(x = 1, y = city_mpg)
-) +
-  geom_boxplot() +
-  coord_flip() +
-  theme(
-    axis.text.y = element_blank(),
-    axis.title.y = element_blank()
+```{r life-exp-mean}
+life_ma_summary <- life_ma %>%
+  summarise(
+    mean = round(mean(expectancy), 1),
+    med = round(median(expectancy), 1),
+    mode = 80,
+    var = round(var(expectancy), 2),
+    sd = round(sd(expectancy), 2),
+    iqr = round(IQR(expectancy), 2)
   )
-
-plot_grid(g1, box,
-  align = "h", nrow = 2, rel_heights = c(6, 3),
-  scale = 0.85
-)
-
-grid.text("1st quartile", x = unit(c(0.2), "npc"), y = unit(c(0.9), "npc"), gp = gpar(fontsize = 15, col = COL[1, 1]))
-
-grid.lines(
-  x = unit(c(0.35, 0.35), "npc"),
-  y = unit(c(0.11, 0.94), "npc"),
-  gp = gpar(col = COL[1, 1], lwd = 5)
-)
 ```
 
-- The second quartile -- 50% of the data falls below this number
+### Mean
 
+Let's take a closer look at the life expectancies for counties in Massachusetts. We'll arrange them in ascending order to make it a bit easier to to answer the question "What is a typical value for life expectancies in Massachusetts counties?"
+
+```{r life-ma-view2}
+life_ma %>%
+  arrange(expectancy) %>%
+  print(n = 14)
 ```
 
-g2 <- split_dotplot(stats[3])
+Here is another look at these values, as a dot plot.
 
-box <- ggplot(data = common_cyl, aes(x = 1, y = city_mpg)) +
-  geom_boxplot() +
-  coord_flip() +
-  theme(
-    axis.text.y = element_blank(),
-    axis.title.y = element_blank()
-  )
-
-plot_grid(g2, box,
-  align = "h", nrow = 2, rel_heights = c(6, 3),
-  scale = 0.85
-)
-
-grid.text("2nd quartile", x = unit(c(0.2), "npc"), y = unit(c(0.9), "npc"), gp = gpar(fontsize = 15, col = "aquamarine4"))
-
-grid.lines(
-  x = unit(c(0.43, 0.43), "npc"),
-  y = unit(c(0.11, 0.94), "npc"),
-  gp = gpar(col = COL[1, 1], lwd = 5)
-)
-```
-
-- The third quartile -- 75% of the data falls below this number
-
-```
-
-g3 <- split_dotplot(stats[4])
-
-box <- ggplot(data = common_cyl, aes(x = 1, y = city_mpg)) +
-  geom_boxplot() +
-  coord_flip() +
-  theme(
-    axis.text.y = element_blank(),
-    axis.title.y = element_blank()
-  )
-
-plot_grid(g3, box,
-  align = "h", nrow = 2, rel_heights = c(6, 3),
-  scale = 0.85
-)
-
-grid.text("3rd quartile", x = unit(c(0.2), "npc"), y = unit(c(0.9), "npc"), gp = gpar(fontsize = 15, col = COL[1, 1]))
-
-grid.lines(
-  x = unit(c(0.49, 0.49), "npc"),
-  y = unit(c(0.11, 0.94), "npc"),
-  gp = gpar(col = COL[1, 1], lwd = 5)
-)
-```
-
-You might be more familiar with the second quartile as the median, the value that's in the middle of the dataset. 
-It's the second quartile because two quarters, or half, of the data is below it, and half is above it.
-The first quartile, then, has only one quarter (25%) of the data below it and the third quartile has three quarters (75%) of the data below it.
-
-These three numbers form the box in the boxplot, with the median in the middle and the first and third quartiles as the edges. 
-One thing you always know when looking at a boxplot is that the middle half of the data is inside this box. 
-There are various rules for where to draw the whiskers, the lines that extend out from the box.
-
-```
-plot <- ggplot(data = common_cyl, aes(x = city_mpg)) +
-  geom_dotplot(binwidth = 1) +
-  theme(
-    legend.position = "none",
-    axis.text.y = element_blank(),
-    axis.title.y = element_blank()
-  )
-
-box <- ggplot(data = common_cyl, aes(x = 1, y = city_mpg)) +
-  geom_boxplot(fill = COL[1,1]) +
-  coord_flip() +
-  theme(
-    axis.text.y = element_blank(),
-    axis.title.y = element_blank()
-  )
-
-plot_grid(plot, box,
-  align = "h", nrow = 2, rel_heights = c(6, 3),
-  scale = 0.85
-)
-```
-
-The rule used by **ggplot2** to determine if an observation is an "outlier" is
-calculate 1.5 times the length of the box (IQR) and use that to determine the upper and lower "fence" for observations. 
-This is calculated as $Q_1 - 1.5 \times \text{IQR}$ and $Q_3 + 1.5 \times \text{IQR}$.
-These numbers are the furthest that the whiskers are allowed to extend.
-If an observation is outside of these numbers, it is plotted as a point. 
-This is one of the handy features of a boxplot: it flags for you points that are far away from the bulk of the data, a form of automated *potential* outlier detection.
-
-
-```
-plot <- ggplot(data = common_cyl, aes(x = city_mpg)) +
-  geom_dotplot(binwidth = 1) +
-  theme(
-    legend.position = "none",
-    axis.text.y = element_blank(),
-    axis.title.y = element_blank()
-  )
-
-box <- ggplot(data = common_cyl, aes(x = 1, y = city_mpg)) +
-  geom_boxplot() +
-  coord_flip() +
-  theme(
-    axis.text.y = element_blank(),
-    axis.title.y = element_blank()
-  ) +
-  annotate("segment",
-    x = 1,
-    xend = 1,
-    y = 22,
-    yend = 29,
-    colour = COL[1, 3],
-    size = 7,
-    alpha = 0.5
-  ) +
-  annotate("segment",
-    x = 1,
-    xend = 1,
-    y = 12,
-    yend = 17.25,
-    colour = COL[1, 3],
-    size = 7,
-    alpha = 0.5
-  )
-
-plot_grid(plot, box,
-  align = "h", nrow = 2, rel_heights = c(6, 3),
-  scale = 0.85
-)
-```
-
-
-```
-plot <- ggplot(data = common_cyl, aes(x = city_mpg)) +
-  geom_dotplot(binwidth = 1) +
-  theme(legend.position = "none",
-        axis.text.y = element_blank(),
+```{r life-ma-plot}
+ggplot(data = life_ma, aes(x = expectancy)) +
+  geom_dotplot() +
+  theme(axis.text.y = element_blank(),
         axis.title.y = element_blank())
+```
 
-box <- ggplot(data = common_cyl, aes(x = 1, y = city_mpg)) +
-  geom_boxplot() +
-  coord_flip() +
+To answer this question, we need to think about what "typical" means. One statistic we commonly use to describe a typical observation is the **mean**, or in other words, the arithmetic average. The average life expectancy for counties in Massachusetts is `r life_ma_summary$mean` years.
+
+```{r mean, echo = TRUE}
+life_ma %>%
+  summarise(mean = mean(expectancy))
+```
+
+Let's add that value as a red, dashed line to our dot plot.
+
+```{r life-ma-plot-mean}
+ggplot(data = life_ma, aes(x = expectancy)) +
+  geom_dotplot() +
   theme(axis.text.y = element_blank(),
         axis.title.y = element_blank()) +
-  annotate("segment",
-           x = 1,
-           xend = 1,
-           y = 9.5,
-           yend = 10.5,
-           colour = COL[1,3],
-           size=7,
-           alpha=0.5) +
-  annotate("segment",
-           x = 1,
-           xend = 1,
-           y = 31.5,
-           yend = 32.5,
-           colour = COL[1,3],
-           size=7,
-           alpha=0.5) +
-  annotate("segment",
-           x = 1,
-           xend = 1,
-           y = 34.5,
-           yend = 35.5,
-           colour = COL[1,3],
-           size=7,
-           alpha=0.5)
-
-plot_grid(plot, box, align = "h", nrow = 2, rel_heights = c(6, 3),
-          scale = 0.85)
-
+  geom_vline(xintercept = life_ma_summary$mean, color = COL[4,1], linetype = "longdash", size = 1)
 ```
 
-## Density plots vs. boxplots 
+### Median
 
-Boxplots really shine in situations where you need to compare several distributions at once and also as a means to detect outliers.
-One of their weaknesses, however, is their inability to indicate when a distribution has more than one hump or "mode".
+Another measure of "typical" or "center" is the **median**. 
+The median is the 50th percentile, i.e. the middle value in the sorted data. Let's take another look at the sorted life expectancies.
 
-Consider the density plot here, there are two distinct modes. If we construct a boxplot of the same distribution, it sweeps this important structure under the rug and will always only provide a single box. 
-
-```
-bimodal_df <- tibble(x = c(rnorm(100, 10, 2), rnorm(100, 22, 3)))
-p1 <- ggplot(bimodal_df, aes(x = x)) + geom_density()
-p2 <- ggplot(bimodal_df, aes(x = x)) + geom_boxplot()
-p1 / p2
+```{r}
+life_ma %>%
+  arrange(expectancy) %>%
+  pull(expectancy)
 ```
 
-### Your turn! 
+The value that cuts the data in half is `r life_ma_summary$med`. We can also calculate this using the `median()` function.
 
-Consider two other columns in the `cars` dataset: `city_mpg` and `width`. Which is the most appropriate plot for displaying the important features of their distributions?
-Remember, both density plots and boxplots display the central tendency and spread of the data. 
-A boxplot is more robust to outliers, but hides multiple modes in a distribution.
-
-Use density plots or boxplots to construct the following visualizations.
-For each variable, try both plots and submit the one that is better at capturing the important structure.
-
-- Display the distribution of `city_mpg`.
-- Display the distribution of `width`.
-
-```
-# Create plot of city_mpg
-ggplot(data = cars, ___) +
-  ___
-
-# Create plot of width
-ggplot(data = cars, ___) +
-  ___
+```{r median, echo = TRUE}
+life_ma %>%
+  summarise(median = median(expectancy))
 ```
 
-<div id="ex6-hint">
-**Hint:** Does a distribution appear to have outliers? If so, a boxplot is more appropriate. Does a distribution have multiple modes? If so, a density plot is more appropriate.  
-</div>
+Let's add that value as a blue, solid line to our dot plot.
 
-```
-# Create plot of city_mpg
-ggplot(data = cars, aes(x = city_mpg)) +
-  geom_boxplot()
-
-# Create plot of width
-ggplot(data = cars, aes(x = width)) +
-  geom_density()
+```{r life-ma-plot-mean-med}
+ggplot(data = life_ma, aes(x = expectancy)) +
+  geom_dotplot() +
+  theme(axis.text.y = element_blank(),
+        axis.title.y = element_blank()) +
+  geom_vline(xintercept = life_ma_summary$mean, color = COL[4,1], linetype = "longdash", size = 1) +
+  geom_vline(xintercept = life_ma_summary$med, color = COL[1,1], size = 1)
 ```
 
-### Boxplots for outlier detection
+The mean can be thought of as the balance point of the data and it tends to be drawn towards the longer tail of a distribution. This highlights an important feature of the mean: its sensitivity to extreme values. For this reason, when working with skewed distributions, the median is often a more appropriate measure of center.
 
-In addition to indicating the center and spread of a distribution, a boxplot
-provides a graphical means to detect outliers. You can apply this method to the
-`msrp` column (manufacturer's suggested retail price) to detect if there are unusually expensive or cheap cars. 
+### Mode
 
-To do this, let's carry out the following steps:  
+The **mode** is yet another measure of center. The mode is the number that occurs the most frequently in the dataset. To find the mode, we can `count()` the life expectancy values, and identify the most frequent one.
 
-1. Construct a boxplot of `msrp`.  
-2. Create a new dataset named `cars_no_out` that excludes the largest 3-5 outliers, by filtering the rows to retain cars less than $100,000.  
-3. Construct a new boxplot of `msrp` using this reduced dataset. 
-4. Compare the two plots.
-
-
-```
-# Construct boxplot of msrp
-ggplot(data = cars, aes(x = ___)) +
-  ___
-
-# Exclude outliers from data
-cars_no_out <- cars %>%
-  filter(___)
-
-# Construct boxplot of msrp using the reduced dataset
-ggplot(data = ___, aes(___)) + 
-  ___ 
+```{r mode}
+life_ma %>%
+  count(expectancy, sort = TRUE)
 ```
 
-```
-# Construct boxplot of msrp
-cars %>%
-  ggplot(aes(x = msrp)) +
-  geom_boxplot()
+In this case, the median and the mode are the same (both `r life_ma_summary$mode`), but that is often not the case.
 
-# Exclude outliers from data
-cars_no_out <- cars %>%
-  filter(msrp < ___)
-  
-# Construct boxplot of msrp using the reduced dataset
-ggplot(data = ___, aes(___)) + 
-  ___ 
-```
+Let's plot the mode right on top of the median as a yellow, dotted line.
 
-```
-# Construct boxplot of msrp
-cars %>%
-  ggplot(aes(x = msrp)) +
-  geom_boxplot()
-
-# Exclude outliers from data
-cars_no_out <- cars %>%
-  filter(msrp < 100000)
-  
-# Construct boxplot of msrp using the reduced dataset
-ggplot(data = ___, aes(___)) + 
-  ___ 
+```{r life-ma-plot-mean-med-mod}
+ggplot(data = life_ma, aes(x = expectancy)) +
+  geom_dotplot() +
+  theme(axis.text.y = element_blank(),
+        axis.title.y = element_blank()) +
+  geom_vline(xintercept = life_ma_summary$mean, color = COL[4,1], linetype = "longdash", size = 1) +
+  geom_vline(xintercept = life_ma_summary$med, color = COL[1,1], size = 1) +
+  geom_vline(xintercept = life_ma_summary$mode, color = COL[3,1], linetype = "dashed")
 ```
 
-``
-# Construct boxplot of msrp
-cars %>%
-  ggplot(aes(x = msrp)) +
-  geom_boxplot()
+Now that we have some sensible measures of center, we can answer questions like: Is the typical county life expectancy in Massachusets similar to the typical life expectancy in the rest of the country?
 
-# Exclude outliers from data
-cars_no_out <- cars %>%
-  filter(msrp < 100000)
-  
-# Construct boxplot of msrp using the reduced dataset
-ggplot(data = cars_no_out, aes(___)) + 
-  ___ 
+## Group means
+
+To answer this question we start by using `mutate()` to create a new variable that will be TRUE if the state value is either "California", "Oregon", or "Washington", and FALSE otherwise. This process uses some of the tools we've seen before, namely the `if_else()` function and the `%in%` operator, and puts them together. 
+
+In the code below, we make a new variable named `coast` and specify how that variable is calculated. The condition we use inside of the `if_else()` function states that if the state associated with an observation is included in "California, Oregon, or Washington, the `coast` variable should have a value of `"west"`. If the state of an observation is not included in this list, then the `coast` variable should have a value of `"east"`. 
+
+Notice the `life <- life %>%` line in the code below. This line is telling R that we are updating the original `life` dataset with a new dataset that contains the `coast` variable. 
+
+```{r life-mutate, echo = TRUE}
+life <- life %>%
+  mutate(coast = if_else(state %in% c("California", "Oregon", "Washington"), 
+    "west",
+    "east"
+  ))
 ```
 
-```
-# Construct boxplot of msrp
-cars %>%
-  ggplot(aes(x = msrp)) +
-  geom_boxplot()
+To compute means for the two groups (west coast and the rest of the country), we pipe this updated dataset into the `group_by()` function, and indicate how we would like to make the groups. Then we can `summarize()` those groups, West Coast counties and non-West Coast counties, by taking the `mean()` and `median()` of their life expectancies. 
 
-# Exclude outliers from data
-cars_no_out <- cars %>%
-  filter(msrp < 100000)
-  
-# Construct boxplot of msrp using the reduced dataset
-ggplot(data = cars_no_out, aes(x = msrp)) + 
-  + geom_boxplot()
+```{r life-groupby, echo = TRUE}
+life %>%
+  group_by(coast) %>%
+  summarize(mean(expectancy),
+            median(expectancy))
 ```
 
-```
-# Construct boxplot of msrp
-cars %>%
-  ggplot(aes(x = msrp)) +
-  geom_boxplot()
+We learn that looking at both mean and median, the typical West Coast county has a slightly higher average life expectancy than counties not on the West Coast.
 
-# Exclude outliers from data
-cars_no_out <- cars %>%
-  filter(msrp < 100000)
-  
-# Construct boxplot of msrp using the reduced dataset
-ggplot(data = cars_no_out, aes(x = msrp)) +
-  geom_boxplot()
+### Without `group_by()`
+
+`group_by()` and `summarize()` form a powerful pair of functions, so let's look into how they work. Let's look at a slice of 8 rows in the middle of the dataset.
+
+```{r life-slice, eval = FALSE}
+life %>%
+  slice(240:247)
 ```
 
-
-## Visualizations of two variables 
-
-If you're interested in the distribution of a single numerical variable, there are three ways you can get there. 
-The first is to look at the marginal distribution, like, for example, the simple distribution of highway mileage. 
-
-```
-ggplot(data = cars, aes(x = hwy_mpg)) +
-  geom_histogram()
-```
-
-However, if we want to look at the distribution on a different subset of the data, say cars that are pickup trucks, we can add a second variable to the plot. 
-
-```
-ggplot(data = cars, aes(x = hwy_mpg)) +
-  geom_histogram() +
-  facet_wrap(vars(pickup))
+```{r life-slice-styled}
+life %>%
+  slice(240:247) %>%
+  gt() %>%
+  tab_style(
+    style = list(
+      cell_fill(color = COL[2,4]),
+      cell_text(weight = "bold")
+      ),
+    locations = cells_body(
+      columns = vars(expectancy))
+  )
 ```
 
-There are two main methods for incorporating a second variable into the plots we've explored, (1) adding a facet, or (2) adding colors.
+</br> 
 
-## Faceted histograms
+We can `summarize()` the expectancy of these 8 rows by finding the `mean()` expectancy.
 
-Let's use a histogram to look at the distribution of highway mileage, with separate plots for whether or not the car is a pickup truck. 
-We can make these separate plots by adding a `facet_wrap()` layer to our `ggplot()`. 
-The variable you want to facet by goes inside the `facet_wrap()` function, and needs to be specified with the `vars()` function.
-The `vars()` function selects variables from the dataset with the name provided. 
-
-```
-ggplot(data = cars, aes(x = hwy_mpg)) +
-  geom_histogram() +
-  facet_wrap(vars(pickup))
+```{r life-summarize}
+life %>%
+  slice(240:247) %>%
+  summarize(mean(expectancy))
 ```
 
-Based on the plot, it's clear that are many more non-pickups (values of `FALSE`) than pickups (values of `TRUE`).
-The plot also shows that the typical pickup gets much lower mileage than the typical non-pickup and that non-pickups have more variability than do the pickups.
+### With `group_by()`
 
-### Try it yourself!
+If we add a line to `group_by()` `coast`, it's effectively breaking the dataset into two groups and calculating the `mean()` of the expectancy variable for each one separately.
 
-Let's investigate the distribution of the fuel efficiency (`city_mpg`) faceted by whether the vehicle is classified as an `suv` (a logical variable indicating whether the car is an SUV or not).
-
-```
-# Create faceted histogram
-ggplot(data = cars, aes(x = ___)) +
-  geom_histogram() +
-  facet_wrap(vars(___))
-```
-
-```
-# Create faceted histogram
-ggplot(data = cars, aes(x = city_mpg)) +
-  geom_histogram() +
-  facet_wrap(vars(___))
-```
-
-```
-# Create faceted histogram
-ggplot(data = cars, aes(x = city_mpg)) +
-  geom_histogram() +
-  facet_wrap(vars(suv))
-```
-
-## Colored density plots
-
-It is a bit easier to compare the variability with density plots overlaid. 
-Notice, we have two new aspects to our plot, (1) the `fill` aesthetic, and (2) the `alpha` option.   
-
-The `fill` aesthetic maps a color to the categorical variable given to it. 
-You can think of this as a "filling" the density plots with different colors for trucks and non-trucks. 
-The `alpha` argument changes the transparency of the density plots. 
-Ordinarily, it would be impossible to see the area where these plots overlap. 
-However, by making them more transparent (an `alpha` less than 1), we can see the overlapping areas. 
-
-```
-ggplot(data = cars, aes(x = hwy_mpg, fill = pickup)) +
-  geom_density(alpha = 0.5)
+```{r life-gr-sum-gt}
+life %>%
+  slice(240:247) %>%
+  gt() %>%
+  tab_style(
+    style = list(
+      cell_fill(color = "lightyellow"),
+      cell_text(weight = "bold")
+      ),
+    locations = cells_body(
+      columns = vars(expectancy),
+      rows = coast == TRUE)
+  ) %>%
+    tab_style(
+    style = list(
+      cell_fill(color = "lightcyan"),
+      cell_text(weight = "bold")
+      ),
+    locations = cells_body(
+      columns = vars(expectancy),
+      rows = coast == FALSE)
+  )
 ```
 
-### Try it yourself! 
-
-The mileage of a car tends to be associated with the size of its engine (as measured by the number of cylinders). 
-To explore the relationship between these two variables, you could stick to using histograms, but in this exercise you'll try your hand at two alternatives: the boxplot and the density plot.
-
-First, let's see how many unique values number of cylinders there are in the dataset. 
-We can use the `count()` function to find the unique values for a variable and also see how many observations there are for each value. 
-
-```
-cars %>%
-  count(ncyl)
+```{r life-gr-sum}
+life %>%
+  slice(240:247) %>%
+  group_by(coast) %>%
+  summarize(mean(expectancy))
 ```
 
-That's probably more possible levels of `ncyl` than you might think! Particularly, the `ncly` of -1 should catch your eye! Here, we're going to make a new dataset that only contains the most common values of `ncyl`.
+As seen in the example above, `group_by()` and `summarize()` open up lots of possibilities for analysis, so let's get started.
 
-To do this, we are going to filter `cars` to include only cars with 4, 6, or 8 cylinders and save the result as `common_cyl`.
-When we wanted to filter our data to only include a particular level of a categorical variable, we used the `==` comparison, but here we want to include three different values.
-For this operation, we need to used the inclusion (`%in%`) operator!
+## Your turn! 
 
-The inclusion operator keeps any values of a variable that are *included* in the vector of values given (e.g. `letter %in% c("a", "b", "c")`).
-Thus, the `%in%` operator always comes with the `c()` function, which makes the vector of values we are interested in.  
+In the exercises for this lesson, you'll be working with similar data, but on a global scale, in the Gapminder data.
 
-Putting this all together, our code looks like: 
+### Choice of center
 
-```
-common_cyl <- cars %>%
-  filter(ncyl %in% c(4, 6, 8))
-```
+The choice of measure for center can have a dramatic impact on what we consider to be a typical observation, so it is important that you consider the shape of the distribution before deciding on the measure.
 
-Now, with the `common_cyl` dataset, create overlaid density plots of `city_mpg` colored by `ncyl`.
-Keep in mind that `ncyl` is a numerical variable, so you will need to convert it to a categorical variable to use it as the `fill`. 
+```{r mc1-pre}
+set.seed(38)
+rskew <- rexp(1000, 1)
+symm <- rnorm(1000)
+d <- data.frame(x = c(rskew, symm),
+                distribution = rep(c("A", "B"), c(1000, 1000)))
 
-```
-# Create overlaid density plots for same data
-ggplot(data = common_cyl, aes(x = ___, fill = ___)) +
+ggplot(d, aes(x = x, fill = distribution)) +
   geom_density(alpha = 0.3)
 ```
 
-```
-# Create overlaid density plots for same data
-ggplot(data = common_cyl, aes(x = city_mpg, fill = ___)) +
-  geom_density(alpha = 0.3)
-```
-
-```
-# Create overlaid density plots for same data
-ggplot(data = common_cyl, aes(x = city_mpg, fill = as.factor(ncyl))) +
-  geom_density(alpha = 0.3)
-```
-
-### Compare distribution via plots
-
-Let's take a more careful look at that plot you just made.
-
-```
-question("Which of the following interpretations of the plot **is not** valid?",
-  answer("The highest mileage cars have 4 cylinders.", message = "No. What color is the region on the right of the plot?"),
-  answer("The typical 4 cylinder car gets better mileage than the typical 6 cylinder car, which gets better mileage than the typical 8 cylinder car.", message = "No. Look at the midpoint of each region."),
-  answer("Most of the 4 cylinder cars get better mileage than even the most efficient 8 cylinder cars.", message = "No. Compare the position on the x-axis of the red region to the right of the blue region."),
-  answer("The variability in mileage of 8 cylinder cars is similar to the variability in mileage of 4 cylinder cars.", correct = TRUE, message = "Correct! The variability in mileage of 8 cylinder cars seem much smaller than that of 4 cylinder cars."),
+```{r mc1}
+question("Which set of measures of central tendency would be *worst* for describing the two distributions shown here?",
+  answer("A: mode, B: median", message = "Not quite, try again."),
+  answer("A: mean, B: mode", correct = TRUE, message = "Nice! Let's continue to the next exercise."),
+  answer("A: median, B: mean", message = "Incorrect, the median and mean look like they'd be good measures of central tendency."),
+  answer("A: median, B: median", message = "Hmm, I think there's a worse choice."),
   allow_retry = TRUE
 )
 ```
 
-## Building a data pipeline
+### Calculate centers
 
-In some of the previous exercises, you've been asked to filter the cars data in some way and save the filtered data as a new dataset.
-This workflow, however, is a bit inefficient, since we have no real interest in this intermediate dataset. 
+Throughout this lesson, you will use data from `gapminder`, which tracks demographic data in countries of the world over time. To learn more about it, you can bring up the help file with `?gapminder`.
 
-We can solve this by linking these two components into a continuous data pipeline, like the one below.
+For this exercise, focus on how the life expectancy differs from continent to continent. This requires that you conduct your analysis not at the country level, but aggregated up to the continent level. This is made possible by the one-two punch of `group_by()` and `summarize()`, a very powerful syntax for carrying out the same analysis on different subsets of the full dataset.
 
-```
-cars %>%
-  filter(eng_size < 2.0) %>%
-  ggplot(aes(x = hwy_mpg)) +
-  geom_histogram()
-```
+- Create a dataset called `gap2007` that contains only data from the year 2007.
+- Using `gap2007`, calculate the mean and median life expectancy for each continent. Don't worry about naming the new columns produced by `summarize()`.
+- Confirm the trends that you see in the medians by generating side-by-side boxplots of life expectancy for each continent.
 
-Our pipeline has six steps: 
+```{r ex1, exercise = TRUE}
+# Create dataset of 2007 data
+gap2007 <- filter(___, ___)
 
-1. we start with the raw data
-2. we pipe the data into the `filter()` function
-3. we filter out all of the cars that have engines smaller than 2 liters 
-4. we pipe the filtered data into the `ggplot()` function
-5. we specify the variables we are interested in plotting in the `ggplot()` function  
-6. we add a histogram layer to the plot 
+# Compute groupwise mean and median lifeExp
+gap2007 %>%
+  group_by(___) %>%
+  summarize(___,
+            ___)
 
-This is a powerful and very general paradigm: you can start with a raw dataset, process that dataset using the data wrangling verbs we've learned, and then visualize it!
-
-## (Optional) Ridge plots 
-
-Ridgeline plots are especially useful for staggering the layout of overlapping density plots.
-Essentially a ridge plot separates each density plot, creating the impression of a mountain range.
-To create a ridge plot, you use the **ggridges** package, and the `geom_density_ridges()` function.
-
-```
-common_cyl %>% 
-  ggplot(aes(x = city_mpg, y = as.factor(ncyl), fill = as.factor(ncyl))) +
-  geom_density_ridges()
+# Generate boxplots of lifeExp for each continent
+gap2007 %>%
+  ggplot(aes(x = ___, y = ___)) +
+  ___
 ```
 
-We notice that the code looks similar to before, with one notable difference: the use of a `y` aesthetic.
-The `y` aesthetic specifies how many different ridges should be made, based on the categorical variable that is specified. 
-
-### Cleaning up the titles & legend 
-
-The y-axis title of "as.factor(ncyl)" is rather unappealing, but there are ways 
-we can change it!
-The `labs()` function controls the labels of the different plot aesthetics. 
-To change the `y` axis label, we specify a new name inside quotations (`""`), like so: 
-
-```
-common_cyl %>% 
-  ggplot(aes(x = city_mpg, y = as.factor(ncyl), fill = as.factor(ncyl))) +
-  geom_density_ridges() + 
-  labs(y = "Number of Cylinders")
+```{r ex1-hint-1} 
+## The first step is to filter the gapminder to only have the year 2007
+gap2007 <- filter(gapminder, 
+                  year == 2007)
 ```
 
-We also notice that the name of the y axis is the same as the name of the legend. 
-This indicates that the legend isn't adding any new information to our plot, and can / should be removed. 
-To remove the legend, you add a `theme()` to the `ggplot()`. 
-The theme specifies the `legend.position` and sets it to `"hide"`. 
-
+```{r ex1-hint-2} 
+## Next we need to:
+## 1. Use the gap2007 data 
+## 2. Make groups based on the continent of the country
+## 3. Find the mean and median life expectancy of each continent 
+gap2007 %>%
+  group_by(continent) %>%
+  summarize(mean(lifeExp),
+            median(lifeExp))
 ```
-common_cyl %>% 
-  ggplot(aes(x = city_mpg, y = as.factor(ncyl), fill = as.factor(ncyl))) +
-  geom_density_ridges() + 
-  labs(y = "Number of Cylinders",
-       x = "City Mileage (mpg)") + 
+
+```{r ex1-hint-3} 
+## Finally we need to:
+## 1. Use the gap2007 data 
+## 2. Declare our x and y variables 
+## 3. Add boxplots to the plot
+gap2007 %>%
+  ggplot(aes(x = continent, y = lifeExp)) +
+  geom_boxplot()
+```
+
+
+```{r ex1-solution}
+# Create dataset of 2007 data
+gap2007 <- filter(gapminder, year == 2007)
+
+# Compute groupwise mean and median lifeExp
+gap2007 %>%
+  group_by(continent) %>%
+  summarize(mean(lifeExp),
+            median(lifeExp))
+
+# Generate boxplots of lifeExp for each continent
+gap2007 %>%
+  ggplot(aes(x = continent, y = lifeExp)) +
+  geom_boxplot()
+```
+
+
+## Measures of variability
+
+How do you summarize the variability that you see in a set of numbers?
+
+Let's consider the life expectancies in Massachusetts again. We think about variability in a dataset as the spread of the data around its center. 
+
+```{r ref.label = "life-ma-plot"}
+```
+
+### Variance and standard deviation
+
+We'll first define the center as the mean and quantify the distance from the mean by taking the difference between each observation and that mean. 
+
+```{r ref.label = "life-ma-plot-mean"}
+```
+
+That results in `r nrow(life_ma)` differences, some positive, some negative. 
+
+```{r ma-deviation}
+life_ma %>%
+  mutate(deviation = expectancy - life_ma_summary$mean)
+```
+
+We'd like to reduce all of these differences to a single measure of variability, and one option is to add them up. But if we do that the positives and negatives will cancel each other. To avoid that (and also to give higher weight to deviations from the mean that are larger), we square each difference.
+
+```{r ma-deviation-sq}
+life_ma %>%
+  mutate(
+    deviation = expectancy - life_ma_summary$mean,
+    deviation_sq = deviation^2
+    )
+```
+
+And then we sum them up.
+
+```{r ma-deviation-sq-sum}
+life_ma %>%
+  mutate(
+    deviation = expectancy - life_ma_summary$mean,
+    deviation_sq = deviation^2
+    ) %>%
+  summarise(sum_sq_deviation = sum(deviation_sq))
+```
+
+### 
+
+This new measure is better, but it has an undesirable property: it will just keep getting bigger the more data that you add. You can fix this unconstrained growth by dividing this measure by the number of observations, `r nrow(life_ma)`. Now, the quantity is a useful measure found by the following steps: 
+
+1. Find the center (mean) of the data
+2. Then find the squared distance between each observation and the mean
+3. Divide the total squared distance by the number of observations ($n$) in the dataset
+
+```{r ma-deviation-sq-mean-pop}
+life_ma %>%
+  mutate(
+    deviation = expectancy - life_ma_summary$mean,
+    deviation_sq = deviation^2
+    ) %>%
+  summarise(mean_sq_deviation = sum(deviation_sq) / nrow(life_ma))
+```
+
+If you change the $n$ to an $n - 1$, you get what's called the *sample variance*, one of the most useful measures of the spread of a distribution. 
+
+```{r ma-deviation-sq-mean-samp, echo = TRUE}
+life_ma %>%
+  mutate(
+    deviation = expectancy - life_ma_summary$mean,
+    deviation_sq = deviation^2
+    ) %>%
+  summarise(mean_sq_deviation = sum(deviation_sq) / (nrow(life_ma) - 1))
+```
+
+### 
+
+In R, you can use the built-in `var()` function to calculate the sample variance.
+
+```{r var, echo = TRUE}
+life_ma %>%
+  summarise(var = var(expectancy))
+```
+
+Another useful measure is the square root of the *sample variance*, which is called the *sample standard deviation* or just `sd()` in R. The convenient thing about the sample standard deviation is that, once computed, it is in the same units as the original data. In this case we can say that the standard deviation of the `r nrow(life_ma)` counties' life expectancies is `r life_ma_summary$sd` years. 
+
+```{r sd, echo = TRUE}
+life_ma %>%
+  summarise(sd = sd(expectancy))
+```
+
+By comparison, the variance of this sample is `r life_ma_summary$var` years squared, which is a unit that we have no real intuition about.
+
+### Innerquartile range
+
+There are two more measures of spread that are good to know about. The **interquartile range**, or **IQR**, is the distance between the two numbers that cut-off the middle 50% of your data. This should sound familiar from the discussion of boxplots: the height of the box is exactly the IQR. We can either calculate the first and third quartiles using the `quantile()` function and take their difference...
+
+```{r quartile, echo = TRUE}
+life_ma %>%
+  summarise(
+    q1 = quantile(expectancy, 0.25),
+    q3 = quantile(expectancy, 0.75),
+    iqr = q3 - q1
+  )
+```
+
+... or we can use the built-in `IQR()` function.
+
+```{r iqr, echo = TRUE}
+life_ma %>%
+  summarise(iqr = IQR(expectancy))
+```
+
+### Range 
+
+The final measure is simply the **range** of the data: the distance between the maximum and the minimum.
+
+```{r range, echo = TRUE}
+life_ma %>%
+  summarise(
+    min = min(expectancy),
+    max = max(expectancy),
+    range = max - min
+  )
+```
+
+### Choosing a measure of spread 
+
+For any dataset, you can compute all four of these statistics, but which ones are the most meaningful? The most commonly used in practice is the standard deviation, so that's often a good place to start. But what happens if the dataset has some extreme observations?
+
+Let's say that Hampden County, Massachusetts, the county with a life expectancy around 78, instead had a life expectancy of 97. We'll create a new dataset with that value and call it `life_ma_extreme`.
+
+```{r life-ma-extreme, echo = TRUE}
+life_ma_extreme <- life_ma %>%
+  mutate(expectancy = if_else(county == "Hampden County", 97, expectancy))
+```
+
+Below is a look at the data with such a made up extreme value.
+
+```{r life-ma-extreme-view}
+life_ma_extreme
+```
+
+And the following is a dot plot of the data with the made up extreme value.
+
+```{r life-ma-extreme-plot}
+ggplot(data = life_ma_extreme, aes(x = expectancy)) +
+  geom_dotplot() +
+  theme(axis.text.y = element_blank(),
+        axis.title.y = element_blank())
+```
+
+### 
+
+If you recompute the variance and the standard deviation, you see that they've both gone through the roof. These measures are sensitive to extreme values, because they both rely on the mean as their measure of center! 
+
+```{r sd-var-extreme, echo = TRUE}
+life_ma_extreme %>%
+  summarise(
+    var = var(expectancy),
+    sd  = sd(expectancy)
+  )
+```
+
+### 
+
+If you recompute the range, it will certainly increase because it is completely determined by the extreme values. For this reason, the range is not often used.
+
+```{r range-extreme, echo = TRUE}
+life_ma_extreme %>%
+  summarise(
+    min = min(expectancy),
+    max = max(expectancy),
+    range = max - min
+  )
+```
+
+### 
+
+However, if you recompute the IQR, you would see that it hasn't budged. Because that observation is still the highest life expectancy in the set, the quartiles didn't move. This reveals a good situation for using the IQR: when your dataset is heavily skewed or has extreme observations.
+
+```{r iqr-extreme, echo = TRUE}
+life_ma_extreme %>%
+  summarise(iqr = IQR(expectancy))
+```
+
+## Your turn! 
+
+The choice of measure for spread can dramatically impact how variable we consider our data to be, so it is important that you consider the shape of the distribution before deciding on the measure.
+
+```{r mc2-pre}
+rskew <- rexp(1000, 1)
+symm <- rnorm(1000)
+d <- data.frame(x = c(rskew, symm),
+                distribution = rep(c("A", "B"), c(1000, 1000)))
+
+ggplot(d, aes(x = x, fill = distribution)) +
+  geom_density(alpha = 0.3)
+```
+
+
+```{r mc2}
+question("Which set of measures of spread would be *worst* for describing the two distributions shown here?",
+  answer("A: IQR, B: IQR", message = "Given the two distributions, the IQR seems like it'd be okay."),
+  answer("A: SD, B: IQR", message = "Hm, not quite. Try again!"),
+  answer("A: Variance, B: Range", correct = TRUE, message = "Good job!" ), 
+  incorrect = "A has a high peak and its width is large. What does that tell you about its variance?",
+  allow_retry = TRUE
+)
+```
+
+### Calculate spread measures
+
+Let's extend the powerful `group_by()` and `summarize()` syntax to measures of spread. If you're unsure whether you're working with symmetric or skewed distributions, it's a good idea to consider a robust measure like IQR in addition to the usual measures of variance or standard deviation.
+
+The `gap2007` dataset that you created in an earlier exercise is available in your workspace.
+
+- For each continent in `gap2007`, summarize life expectancies using the `sd()`, the `IQR()`, and the count of countries, `n()`. No need to name the new columns produced here. Keep in mind the `n()` function does not take any arguments!
+- Graphically compare the spread of these distributions by constructing overlaid density plots of life expectancy broken down by continent.
+
+```{r ex2-setup}
+gap2007 <- filter(gapminder, year == 2007)
+```
+
+```{r ex2, exercise = TRUE}
+# Compute groupwise measures of spread
+gap2007 %>%
+  group_by(___) %>%
+  summarize(___,
+            ___,
+            ___)
+
+# Generate overlaid density plots
+gap2007 %>%
+  ggplot(aes(x = ___, fill = ___)) +
+  geom_density(alpha = 0.3)
+```
+
+```{r ex2-hint-1}
+## First group the data based on the continent of the observation
+gap2007 %>%
+  group_by(continent) %>%
+  summarize(__,
+            ___,
+            ___)
+```
+
+```{r ex2-hint-2}
+# Next, specify the statistics that should be calculated
+gap2007 %>%
+  group_by(continent) %>%
+  summarize(sd(___),
+            IQR(___),
+            n())
+```
+
+```{r ex2-hint-3}
+# Finally, specify what variable should be used in the calculations
+gap2007 %>%
+  group_by(continent) %>%
+  summarize(sd(lifeExp),
+            IQR(lifeExp),
+            n())
+```
+
+```{r ex2-hint-4}
+## Last step -- create density plots with the different continents overlaid 
+## To differentiate between the continents, we fill each one with a different color
+## We use an alpha of 0.3 to allow for us to see the shape of every density plot
+gap2007 %>%
+  ggplot(aes(x = lifeExp, fill = continent)) +
+  geom_density(alpha = 0.3)
+```
+
+```{r ex2-solution}
+# Compute groupwise measures of spread
+gap2007 %>%
+  group_by(continent) %>%
+  summarize(sd(lifeExp),
+            IQR(lifeExp),
+            n())
+
+# Generate overlaid density plots
+gap2007 %>%
+  ggplot(aes(x = lifeExp, fill = continent)) +
+  geom_density(alpha = 0.3)
+```
+
+Consider the density plots shown here. What are the most appropriate measures to describe their centers and spreads? In this exercise, you'll select the measures and then calculate them.
+
+Using the shapes of the density plots you created above, calculate the most appropriate measures of center and spread for the distribution of life expectancy in the countries of the Americas. Note you'll need to apply a filter here!
+
+```{r ex3, exercise = TRUE}
+# Compute stats for lifeExp in Americas
+gap2007 %>%
+  filter(___) %>%
+  summarize(___,
+            ___)
+```
+
+```{r ex3-hint-1}
+# First filter the data to only include the Americas
+gap2007 %>%
+  filter(continent == "Americas") %>%
+  summarize(mean(___),
+            sd(___))
+```
+
+```{r ex3-hint-2}
+# Next define the summary measures that will be used
+gap2007 %>%
+  filter(continent == "Americas") %>%
+  summarize(mean(___),
+            sd(___))
+```
+
+```{r ex3-hint-3}
+# Finally, specify what variables will be summarized
+gap2007 %>%
+  filter(continent == "Americas") %>%
+  summarize(mean(lifeExp),
+            sd(lifeExp))
+```
+
+```{r ex3-solution}
+gap2007 %>%
+  filter(continent == "Americas") %>%
+  summarize(mean(lifeExp),
+            sd(lifeExp))
+```
+
+## Shape and transformations
+
+There are generally four characteristics of distributions that are of interest. The first two we've covered already: the center and the spread or variability of the distribution. The third is the shape of the distribution, which can be described in terms of the modality and the skew.
+
+### Modality
+
+The modality of a distribution is the number of prominent humps that show up in the distribution. If there is a single mode, as in a bell-curve, it's called "unimodal." If there are two prominent modes, it's called "bimodal." If it has three modes or more, the convention is to refer to it as "multimodal." There is one last case: when there is no distinct mode. Because the distribution is flat across all values, it is referred to as "uniform."
+
+The other aspect to the shape of the distribution concerns its skew.
+
+```{r modalities, out.width=600}
+knitr::include_graphics("images/modalities.png")
+```
+
+### Skew
+
+If a distribution has a long tail that stretches out to the right, it's referred to as "right-skewed."
+
+If that long tail stretches out to the left, its referred to as "left-skewed." If you have trouble remembering which is which, just remember that the name of the skew is in the direction the long tail is.
+
+If neither tail is longer than the other, the distribution is called "symmetric."
+
+```{r skewness, out.width=600}
+knitr::include_graphics("images/skewness.png")
+```
+
+### Shape of income
+
+Let's compare the distributions of median personal income at the county level on the West Coast and in the rest of the country to see what shape these distributions take. There are several plot types that we could use here. Let's use an overlaid density plot by putting income along the x-axis, `fill`ing the two curves with color according to whether or not they're on the West Coast, then adding a density later and specifying an `alpha` level of 0.3. This allows the colors to be somewhat transparent so that we can see where they overlap.
+
+The plot that results shows two curves, the blue representing the West Coast distribution and the pink representing counties not on the West Coast. Each distribution has a single prominent mode, so we can say that each distribution is unimodal. You might argue that the little bump around 100,000 dollars is a second mode, but we're generally looking for larger-scale structure than that.
+
+It's difficult to compare these distributions because they are both heavily right-skewed, that is, there are a few counties in each group that have very high incomes. One way to remedy this is to construct a plot of a transformed version of this variable.
+
+
+```{r inc, echo = TRUE}
+ggplot(life, aes(x = income, fill = coast)) +
+  geom_density(alpha = 0.3)
+```
+
+### Variable Transformations 
+
+Since income has a heavy right skew, either the square-root or log-transform will do a good job of drawing in the right tail and spreading out the lower values so that we can see what's going on. We can perform the transformation by wrapping income in the `log()` function, which will take the natural log (ln). 
+
+```{r inc2, echo = TRUE}
+ggplot(life, aes(x = log(income), fill = coast)) +
+  geom_density(alpha = 0.3)
+```
+
+The result is a picture that's a bit easier to interpret: the typical income in West Coast counties is indeed greater than that in the rest of the country and the second very small mode of high income counties in the West Coast is not present in the other distribution.
+
+## Your turn! 
+
+Let's turn to some exercises to explore the shape of the Gapminder data.
+
+### Describe the shape
+
+To build some familiarity with distributions of different shapes, consider the four that are plotted here. 
+
+```{r mr3-pre}
+set.seed(12)
+x1 <- density(rnorm(30, 0.6, 0.2))
+x2 <- density(rnorm(30, 0.6, 0.2))
+x3 <- density(rexp(30, 1))
+x4 <- density(c(rnorm(15, 1, 0.1), rnorm(15, 1.7, 0.1)))
+y <- c(x1$y, x2$y, x3$y, x4$y)
+x <- c(x1$x, x2$x, x3$x, x4$x)
+
+d <- data.frame(x = x,
+                y = y,
+                group = rep(LETTERS[1:4], each = 512))
+ggplot(d, aes(x = x, y = y)) +
+  geom_line() +
+  facet_wrap(~group, scales = "free") +
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank())
+```
+
+
+
+
+```{r mc3}
+question("Which of the following options does the best job of describing their shape in terms of modality and skew/symmetry?",
+  answer("A: bimodal symmetric; B: unimodal symmetric; C: unimodal left-skewed, D: bimodal right-skewed."),
+  answer("A: unimodal symmetric; B: unimodal right-skewed; C: unimodal right-skewed, D: bimodal symmetric.", correct = TRUE),
+  answer("A: unimodal right-skewed; B: unimodal left-skewed; C: unimodal left-skewed; D: bimodal symmetric."),
+  answer("A: unimodal left-skewed; B: bimodal symmetric; C: unimodal right-skewed, D: unimodal symmetric."),
+  allow_retry = TRUE,
+  incorrect = "A useful mnemonic is the ' skew is where there is few'. That is, a left-skewed distribution has fewer values in its left tail."
+)
+```
+
+Highly skewed distributions can make it very difficult to learn anything from a visualization. Transformations can be helpful in revealing the more subtle structure. 
+
+Here you'll focus on the population variable, which exhibits strong right skew, and transform it with the natural logarithm function (`log()` in R).
+
+Using the `gap2007` data:
+
+- Create a density plot of the population variable (`pop`).
+- Use `mutate()` to create a new variable called `log_pop` that is the natural log of the population, and
+save this new variable back into `gap2007`.
+- Create the same density plot as before with your transformed variable.
+
+```{r ex4-setup}
+gap2007 <- filter(gapminder, year == 2007)
+```
+
+
+
+```{r ex4, exercise = TRUE}
+# Create density plot of population variable
+gap2007 %>%
+  ggplot(aes(x = ___)) +
+  ___
+
+# Transform the skewed pop variable
+gap2007 <- gap2007 %>%
+  mutate(___)
+
+# Create density plot of transformed population variable
+gap2007 %>%
+  ggplot(aes(x = ___)) +
+  ___
+```
+
+
+
+```{r ex4-hint-1}
+# First, create a density plot of population variable
+gap2007 %>%
+  ggplot(aes(x = pop)) +
+  geom_density()
+```
+
+
+
+```{r ex4-hint-2}
+# Next, create a new variable that transforms the skewed pop variable
+gap2007 <- gap2007 %>%
+  mutate(log_pop = log(pop))
+```
+
+
+
+```{r ex4-hint-3}
+# Finally, create density plot of the transformed population variable
+gap2007 %>%
+  ggplot(aes(x = log_pop)) +
+  geom_density()
+```
+
+
+
+```{r ex4-solution}
+# Create density plot of old variable
+gap2007 %>%
+  ggplot(aes(x = pop)) +
+  geom_density()
+
+# Transform the skewed pop variable
+gap2007 <- gap2007 %>%
+  mutate(log_pop = log(pop))
+
+# Create density plot of new variable
+gap2007 %>%
+  ggplot(aes(x = log_pop)) +
+  geom_density()
+```
+
+
+## Outliers
+
+We've discussed three different aspects of a distribution that are important to note
+
+### Characteristics of a distribution
+
+- Center
+
+- Variability
+
+- Shape
+
+- Outliers
+
+
+When conducting an exploratory data analysis: center, variability, and shape. A fourth and final thing to look for are outliers. These are observations that have extreme values far from the bulk of the distribution. They're often very interesting cases, but they're also good to know about before proceeding with more formal analysis.
+
+We saw some extreme values when we plotted the distribution of income for counties on the West Coast. What are we to make of this blip of counties? One thing we can do is display the data using a boxplot. To make the boxplot a bit easier to compare with a density plot, you can specify the categorical variable (`coast`) as the y-variable. This option creates vertically stacked boxplots rather than horizontally stacked boxplots. 
+
+```{r, echo = TRUE, eval = FALSE}
+ggplot(life, aes(x = income, fill = coast)) +
+  geom_density(alpha = 0.5)
+
+ggplot(life, aes(x = income, y = coast, color = coast)) +
+  geom_boxplot(alpha = 0.5) + 
   theme(legend.position = "hide")
 ```
 
 
-## Visualization in higher dimensions
-
-In this tutorial, we've been encouraging you to think about the question of "what is the association between this variable and that one" and "if you condition on one level of this variable, how does the distribution of another change".
-The answers to these questions require multivariate thinking and it is an essential skill in reasoning about the structure of real data.
-But why stop at only two variables?
-
-### Plots for 3 variables
-
-One simple extension that allows you to plot the association between three variables is the `facet_grid()` function.
-Similar to its `facet_wrap()` counterpart, the `facet_grid()` function creates subplots based on the levels of the variable(s) input.
-However, unlike the `facet_wrap()` function, `facet_grid()` can facet by more than one variable, creating a matrix of subplots.
-
-Let's see how this works by building a plot that explores `msrp`, the manufacturer's suggested retail price. Since that variable is numerical, there are several plots we could use, but let's go with a density plot.
-By adding a `facet_grid()` layer, we can break that distribution down by two categorical variables, each specified with the `vars()` function.
-In the end, we will have multiple density plots of the `msrp` variable!
-
-The code for this would look something like:
 
 
-```
-cars %>% 
-  ggplot(aes(x = msrp)) +
-  geom_density() +
-  facet_grid(vars(pickup), vars(rear_wheel))
+```{r coast-income, fig.width = 7}
+p1 <- ggplot(life, aes(x = income, fill = coast)) +
+  geom_density(alpha = 0.5)
+
+p2 <- ggplot(life, aes(x = income, y = coast, color = coast)) +
+  geom_boxplot(alpha = 0.5) + 
+  theme(legend.position = "hide")
+
+p1 + p2
 ```
 
-Within the `facet_wrap()` function, whichever variable you put first will go in the rows of the grid and the the one that you put last form the columns.
-Unfortunately, this plot is difficult to interpret since it doesn't remind us which variable is on the rows versus columns. We can solve this by adding an option to the facet grid layer: labeller is equal to `label_both`.
+What we see is interesting: the boxplot flags many counties as outliers, both along the West Coast but also in the rest of the country as well. So why was the blip more apparent on the West Coast? It has to do with sample size. There are far fewer counties in the West Coast group, so these few outliers have an oversized effect on the density plot. In the case of the non-West Coast group, there are many more counties that ended up washing out the effect of the outliers in the density plot.
 
-```
-cars %>% 
-  ggplot(aes(x = msrp)) +
-  geom_density() +
-  facet_grid(pickup ~ rear_wheel, labeller = label_both)
-```
+## Indicating outliers
 
-Alright, now we can learn something. If we look at rear wheel drive pickups, there appear to actually be two modes, but in general, they're a bit cheaper than front wheel drive pickups. In non-pickups, however, its the rear-wheel drive ones that are generally a bit pricier.
+It is often useful to consider outliers separately from the rest of the data, so lets create a new column to store whether or not a given county is an outlier. This requires that we `mutate()` a new column called `is_outlier` that is TRUE if the income is greater than some threshold and FALSE otherwise. In this case, we've picked a threshold for outliers as counties with incomes greater than $75,000.
 
-An important investigation when making these comparisons is the number of observations at each level.
-We can use the `count()` function to do this!
-The code below should look familiar, with one addition: a second variable as an input to the `count()` function.
-When we add a second variable, the `count()` function will count the number of observations at the intersection of each of the two variables (e.g. non-rear wheel drive pickups). 
-
-```
-cars %>% 
-  count(rear_wheel, pickup)
+```{r io, echo = TRUE}
+life <- life %>%
+  mutate(is_outlier = income > 75000)
 ```
 
-Based on the table, we learn that there are relatively few rear wheel drive cars in this dataset. While this would be plainly obvious had we used histograms, density plots normalize each distribution so that they have the same area. The take home message is that our interpretation is still valid, but when we're making comparisons across the rear wheel variable, there are fewer cases to compare.
+A useful tool when inspecting outliers is to filtering the dataset to only include outliers, and then arranging them in decreasing order. Let's do that next.
 
-### Higher dimension plots
-
-This is just the tip of the iceberg of high dimensional data graphics. Anything you can discern visually, things like shape, size, color, pattern, movement, in addition to relative location, can be mapped to a variable and plotted alongside other variables.
-
-- Shape
-
-- Size
-
-- Color
-
-- Pattern
-
-- Movement
-
-- x-coordinate
-
-- y-coordinate
-
-### Your turn! 
-
-For our final exercise, let's explore the relationship between highway mileage, the number of cylinders a car has, and whether it is an SUV or not. 
-
-
-The `common_cyl` dataset you created before, containing only cars with 4, 6, or 8 cylinders, is available in your workspace.
-
-- To begin, using the `common_cyl` data, create a histogram of `hwy_mpg`.
-
-- Next, add a `facet_grid()` to the plot, with `ncyl` on the rows and `suv` on the columns. 
-
-- Finally, add facet labels to your plot to indicate what variables are being faceted on.
-
-```
-common_cyl <- filter(cars, ncyl %in% c(4, 6, 8))
+```{r, echo = TRUE}
+life %>%
+  filter(is_outlier) %>%
+  arrange(desc(income))
 ```
 
+Based on the output, we learn that the top income county is actually Teton County, in the Grand Tetons of Wyoming, and that three of the other top ten counties are in Texas and two are in Nebraska. Note that we didn't save this result to a new object, we're only viewing the output to investigate the outliers, but we're not removing them from the dataset (at least not yet).
+
+### Plotting without outliers
+
+We can also try rebuilding the density plots without the outliers.
+
+To do this, we form a pipeline where the first step is to filter on those counties that are not outliers. Recall that `is_outlier` is a vector of `TRUE`s and `FALSE`s. We can simply state that we are not interested in any of the values that are `TRUE` by adding an exclamation point (`!`) before the name of the variable. We can then pipe this filtered dataset into the same `ggplot()` code we used for the original overlaid density plots.
+
+```{r, echo = TRUE, eval = FALSE}
+life %>%
+  filter(!is_outlier) %>%  
+  ggplot(aes(x = income, fill = coast)) +
+  geom_density(alpha = 0.3)
+
+ggplot(life, aes(x = income, fill = coast)) +
+  geom_density(alpha = 0.3)
 ```
-# Facet histograms using hwy mileage and ncyl
-common_cyl %>%
+
+
+
+```{r, fig.width = 8}
+p1 <- life %>%
+  filter(!is_outlier) %>%  
+  ggplot(aes(x = income, fill = coast)) +
+  geom_density(alpha = 0.3)
+
+p2 <- ggplot(life, aes(x = income, fill = coast)) +
+  geom_density(alpha = 0.3)
+
+p1 + p2
+```
+
+The result is a plot that focuses much more on the body of the distribution. You can contrast that with the original plot, which was dominated by the strong right skew caused by the extreme values. Note that neither of these plots is right or wrong, but they tell different stories of the structure in this data, both of which are valuable.
+
+
+## Your turn! 
+
+Consider the distribution, shown here, of the life expectancies of the countries in Asia. The boxplot identifies one clear outlier: a country with a notably low life expectancy. 
+
+```{r}
+gap2007 <- filter(gapminder, year == 2007)
+
+gap2007 %>%
+  filter(continent == "Asia") %>%
+  ggplot(aes(x = lifeExp)) +
+  geom_boxplot()
+
+```
+
+Next, we'll build a plot with that country removed. The `gap2007` is still available in your workspace. To carry out this process we need to use the following steps: 
+
+1. Use `filter()` to retain only observations from Asia
+2. Use `mutate()` to create a new variable called `is_outlier`
+3. Use `if_else()` to specify how the `is_outlier` variable should be made, where countries with a life expectancy less than 50 should get a value of `TRUE` and everyone else should get a value of `FALSE`
+4. Create a boxplot of the life expectancies of the non-outlier countries
+
+```{r ex5-setup}
+gap2007 <- filter(gapminder, year == 2007)
+```
+
+
+
+```{r ex5, exercise = TRUE}
+# Create a boxplot of the distribution of life expectancy with the outlier removed 
+gap2007 %>% 
+  filter(___) %>%
+  mutate(is_outlier = ___) %>% 
+  filter(___) %>%
   ggplot(aes(x = ___)) +
-  geom_histogram() +
-  facet_grid(vars(___), vars(___), labeller = ___)
+  geom_boxplot()
 ```
 
-```
-common_cyl %>%
-  ggplot(aes(x = hwy_mpg)) +
-  geom_histogram() +
-  facet_grid(vars(___), vars(___), labeller = ___)
 
-```
 
-```
-common_cyl %>% 
-  ggplot(aes(x = hwy_mpg)) +
-  geom_histogram() +
-  facet_grid(vars(ncyl), vars(___), labeller = ___)
-
+```{r ex5-hint-1}
+## First filter out observations from countries other than Asia
+gap2007 %>% 
+  filter(continent == "Asia") %>%
+  mutate(is_outlier = ___) %>% 
+  filter(___) %>%
+  ggplot(aes(x = ___)) +
+  geom_boxplot()
 ```
 
-```
-common_cyl %>% 
-  ggplot(aes(x = hwy_mpg)) +
-  geom_histogram() +
-  facet_grid(vars(ncyl), vars(suv), labeller = ___)
 
-```
 
-```
-# Facet histograms using hwy mileage and ncyl
-common_cyl %>% 
-  ggplot(aes(x = hwy_mpg)) +
-  geom_histogram() +
-  facet_grid(vars(ncyl), vars(suv), labeller = label_both)
+```{r ex5-hint-2}
+## Next, create a new variable named is_outlier using the if_else function
+gap2007 %>% 
+  filter(continent == "Asia") %>%
+  mutate(is_outlier = if_else(lifeExp < 50, TRUE, FALSE)) %>% 
+  filter(___) %>%
+  ggplot(aes(x = ___)) +
+  geom_boxplot()
 ```
 
-### Interpreting plots with three variables
 
+
+```{r ex5-hint-3}
+## Next, use the is_outlier variable to filter out the observations flagged as outliers
+gap2007 %>% 
+  filter(continent == "Asia") %>%
+  mutate(is_outlier = if_else(lifeExp < 50, TRUE, FALSE)) %>% 
+  filter(!is_outlier) %>%
+  ggplot(aes(x = ___)) +
+  geom_boxplot()
 ```
-question("Which of the following interpretations of the plot **is** valid?",
-  answer("Across both SUVs and non-SUVs, mileage tends to decrease as the number of cylinders
-increases.", correct = TRUE, message = "Good job! Continue to the next exercise."),
-  answer("There are more SUVs than non-SUVs across all cylinder types.", message = "Hm, not quite. Looks like there are more non-SUVs across the board."),
-  answer("There is more variability in 6-cylinder non-SUVs than in any other type of car.", message = "Looks like the 4-cylinder non-SUVs have comparable variability to me."), 
-allow_retry = TRUE
-)
+
+
+
+```{r ex5-solution}
+# Create a boxplot of the distribution of life expectancy with the outlier removed 
+gap2007 %>%
+  filter(continent == "Asia") %>%
+  mutate(is_outlier = if_else(lifeExp < 50, TRUE, FALSE)) %>% 
+  filter(!is_outlier) %>%
+  ggplot(aes(x = lifeExp)) +
+  geom_boxplot()
 ```
 
 ## Congratulations!
 
-You have successfully completed Lesson 2 in Tutorial 2: Summarizing and visualizing data.
+You have successfully completed Lesson 3 in Tutorial 2: Summarizing and visualizing data.
 
 What's next?
 
-`r emo::ji("ledger")` [Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://openintrostat.github.io/ims-tutorials/)
+[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
 
-`r emo::ji("spiral_notepad")` [Tutorial 2: Getting Started with Data](https://openintrostat.github.io/ims-tutorials/02-summarizing-and-visualizing-data/)
+[Tutorial 2: Getting Started with Data](https://bghammill.github.io/ims-02-explore/)
 
-`r emo::ji("one")` [Tutorial 2 - Lesson 1: Visualizing categorical data](https://openintro.shinyapps.io/ims-02-summarizing-and-visualizing-data-01/)
+- [Tutorial 2 - Lesson 1: Visualizing categorical data](https://bghammill.github.io/ims-02-explore/ims-02-lesson-01/)
+- [Tutorial 2 - Lesson 2: Visualizing numerical data](https://bghammill.github.io/ims-02-explore/ims-02-lesson-02/)
+- [Tutorial 2 - Lesson 3: Summarizing with statistics](https://bghammill.github.io/ims-02-explore/ims-02-lesson-03/)
+- [Tutorial 2 - Lesson 4: Case study](https://bghammill.github.io/ims-02-explore/ims-02-lesson-04/)
 
-`r emo::ji("one")` [Tutorial 2 - Lesson 2: Visualizing numerical data](https://openintro.shinyapps.io/ims-02-summarizing-and-visualizing-data-02/)
+[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
-`r emo::ji("one")` [Tutorial 2 - Lesson 3: Summarizing with statistics](https://openintro.shinyapps.io/ims-02-summarizing-and-visualizing-data-03/)
+<!-- MathJax -->
 
-`r emo::ji("one")` [Tutorial 2 - Lesson 4: Case study](https://openintro.shinyapps.io/ims-02-summarizing-and-visualizing-data-04/)
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
-`r emo::ji("open_book")` [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
+
+
