@@ -1,3 +1,5 @@
+## Language of Data
+
 Hello, and welcome to **Getting Started with Data**!
 
 In this tutorial we will take you through concepts and R code that are essential for getting started with data analysis.
@@ -504,12 +506,16 @@ number_cat = if_else(number == "none",
                      "[VALUE IF FALSE]") 
 ```
 
+
+
 ```
 number_cat = if_else(number == "none", 
                      "no", 
                      "yes") 
 
 ```
+
+
 
 ```
 # Create number_cat column in email50

@@ -881,16 +881,20 @@ You have successfully completed Lesson 1 in Tutorial 2: Summarizing and visualiz
 
 What's next?
 
-`r emo::ji("ledger")` [Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://openintrostat.github.io/ims-tutorials/)
+[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
 
-`r emo::ji("spiral_notepad")` [Tutorial 2: Getting Started with Data](https://openintrostat.github.io/ims-tutorials/02-summarizing-and-visualizing-data/)
+[Tutorial 2: Getting Started with Data](https://bghammill.github.io/ims-02-explore/)
 
-`r emo::ji("one")` [Tutorial 2 - Lesson 1: Visualizing categorical data](https://openintro.shinyapps.io/ims-02-summarizing-and-visualizing-data-01/)
+- [Tutorial 2 - Lesson 1: Visualizing categorical data](https://bghammill.github.io/ims-02-explore/ims-02-lesson-01/)
+- [Tutorial 2 - Lesson 2: Visualizing numerical data](https://bghammill.github.io/ims-02-explore/ims-02-lesson-02/)
+- [Tutorial 2 - Lesson 3: Summarizing with statistics](https://bghammill.github.io/ims-02-explore/ims-02-lesson-03/)
+- [Tutorial 2 - Lesson 4: Case study](https://bghammill.github.io/ims-02-explore/ims-02-lesson-04/)
 
-`r emo::ji("one")` [Tutorial 2 - Lesson 2: Visualizing numerical data](https://openintro.shinyapps.io/ims-02-summarizing-and-visualizing-data-02/)
+[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
-`r emo::ji("one")` [Tutorial 2 - Lesson 3: Summarizing with statistics](https://openintro.shinyapps.io/ims-02-summarizing-and-visualizing-data-03/)
+<!-- MathJax -->
 
-`r emo::ji("one")` [Tutorial 2 - Lesson 4: Case study](https://openintro.shinyapps.io/ims-02-summarizing-and-visualizing-data-04/)
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
-`r emo::ji("open_book")` [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
+
+
