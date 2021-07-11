@@ -68,7 +68,7 @@ We'll focus on the `happy` variable, which is categorical, so we'll visualize it
 ```
 ggplot(gss2016, aes(x = happy)) +
   geom_bar()
-``` 
+```
 
 ### 
 
@@ -82,7 +82,7 @@ p_hat_happy <- gss2016 %>%
   pull()
 
 p_hat_happy
-``` 
+```
 
 We learn that around 77% of our sample is "happy". This should be a good estimate of the percent of all Americans that are very happy, but it's not a sure thing since we only asked a small proportion of them.
 
@@ -196,7 +196,7 @@ boot_dist_happy <- gss2016 %>%
   calculate(stat = "prop")
 
 boot_dist_happy
-``` 
+```
 
 ### 
 
@@ -205,7 +205,7 @@ If we create a density plot of these statistics we see that it's unimodal and sy
 ```
 ggplot(boot_dist_happy, aes(x = stat)) +
   geom_density()
-``` 
+```
 
 ### 
 
@@ -227,7 +227,7 @@ $$(\hat{p} - 2 \times SE, \hat{p} + 2 \times SE)$$
 
 ```
 c(p_hat_happy - 2 * SE_happy, p_hat_happy + 2 * SE_happy)
-``` 
+```
 
 ### Exploring confidence in science
 
@@ -1076,14 +1076,14 @@ p_hat_happy <- gss2016 %>%
 n <- nrow(gss2016)
 
 c(n * p_hat_happy, n * (1 - p_hat_happy))
-``` 
+```
 
 This all means that the shortcut to calculate the standard error should be a reasonably good approximation. This method gives a value of about 0.034.
 
 ```
 SE_happy_approx <- sqrt(p_hat_happy * (1 - p_hat_happy) / n)
 SE_happy_approx
-``` 
+```
 
 ### Calculating standard error: computation
 
@@ -1098,7 +1098,7 @@ SE_happy_boot <- boot_dist_happy %>%
   summarize(sd(stat)) %>%
   pull()
 SE_happy_boot
-``` 
+```
 
 ### Shape of sampling distributions
 
@@ -1107,7 +1107,7 @@ Let's also take a look at the shape of this bootstrap distribution. A density pl
 ```
 ggplot(boot_dist_happy, aes(x = stat)) +
   geom_density()
-``` 
+```
 
 We see that the normal approximation looks fairly similar to the density curve of our bootstrap distribution. This will be a recurring theme: that when an approximation method exists, it will tend to give very similar results to the computational method when the assumptions of that approximation are reasonable.
 
@@ -1249,20 +1249,26 @@ question(
 
 ## Congratulations!
 
-You have successfully completed Lesson 1 in Tutorial 6: Inference for Categorical Responses.  
+You have successfully completed Lesson 1 in Tutorial 5: Statistical Inference.  
 
 What's next?
 
-`r emo::ji("ledger")` [Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://openintrostat.github.io/ims-tutorials/)
+[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
 
-`r emo::ji("spiral_notepad")` [Tutorial 6: Inference for Categorical Responses](https://openintrostat.github.io/ims-tutorials/06-inference-for-categorical-responses/)
+[Tutorial 5: Statistical Inference](https://bghammill.github.io/ims-05-infer/)
 
-`r emo::ji("one")` [Tutorial 6 - Lesson 1: Inference for a single proportion](https://openintro.shinyapps.io/ims-06-inference-for-categorical-responses-01/)
+- [Tutorial 5 - Lesson 1: Inference for a single proportion](https://bghammill.github.io/ims-05-infer/ims-05-lesson-01/)
+- [Tutorial 5 - Lesson 2: Hypothesis tests to compare proportions](https://bghammill.github.io/ims-05-infer/ims-05-lesson-02/)
+- [Tutorial 5 - Lesson 3: Chi-square test of independence](https://bghammill.github.io/ims-05-infer/ims-05-lesson-03/)
+- [Tutorial 5 - Lesson 4: Chi-square test for goodness of fit](https://bghammill.github.io/ims-05-infer/ims-05-lesson-04/)
+- [Tutorial 5 - Lesson 5: Bootstrapping to estimate a parameter](https://bghammill.github.io/ims-05-infer/ims-05-lesson-05/)
+- [Tutorial 5 - Lesson 6: T-distribution](https://bghammill.github.io/ims-05-infer/ims-05-lesson-06/)
+- [Tutorial 5 - Lesson 7: Inference for difference in two means](https://bghammill.github.io/ims-05-infer/ims-05-lesson-07/)
+- [Tutorial 5 - Lesson 8: Comparing many means](https://bghammill.github.io/ims-05-infer/ims-05-lesson-08/)
 
-`r emo::ji("one")` [Tutorial 6 - Lesson 2: Hypothesis Tests to Compare Proportions](https://openintro.shinyapps.io/ims-06-inference-for-categorical-responses-02/)
+[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
-`r emo::ji("one")` [Tutorial 6 - Lesson 3: Chi-squared Test of Independence](https://openintro.shinyapps.io/ims-06-inference-for-categorical-responses-03/)
+<!-- MathJax -->
 
-`r emo::ji("one")` [Tutorial 6 - Lesson 4: Chi-squared Goodness of Fit Test](https://openintro.shinyapps.io/ims-06-inference-for-categorical-responses-04/)
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
-`r emo::ji("open_book")` [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)

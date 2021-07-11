@@ -66,7 +66,7 @@ p_hat <- gss2016 %>%
   summarize(mean(cappun == "FAVOR")) %>%
   pull()
 p_hat
-``` 
+```
 
 ### 
 
@@ -90,7 +90,7 @@ null <- gss2016 %>%
   calculate(stat = "prop")
 
 null
-``` 
+```
 
 ### 
 
@@ -550,12 +550,12 @@ p_hats <- gss2016 %>%
   group_by(sex) %>%
   summarize(mean(postlife == "YES", na.rm = TRUE)) %>%
   pull()
-``` 
+```
 
 ```
 d_hat <- diff(p_hats)
 d_hat
-``` 
+```
 
 ```{out}
 0.1472851
@@ -632,7 +632,7 @@ Null Hypothesis:  independence
  5 YES      MALE           1
  6 YES      FEMALE         1
  7 NO       FEMALE         1
-``` 
+```
 
 
 and that is to specify the variables via the formula notation like this. It can be read as, "I'd like to explain postlife as a function of sex".
@@ -671,7 +671,7 @@ Null Hypothesis:  independence
  5 YES      MALE           1
  6 YES      FEMALE         1
  7 YES      FEMALE         1
- ``` 
+```
 
 
 So if we run this code again we'll get a different permutation. 
@@ -685,7 +685,7 @@ Let's use this method to build up a full null distribution.
 ### 
 
 
- 
+
 ```
 gss2016 %>%
   specify(postlife ~ sex, success = "YES") %>%
@@ -697,7 +697,7 @@ gss2016 %>%
 ```
 Warning message:
 Removed 13 rows containing missing values. 
-``` 
+```
 
 The inference chain should look familiar but now we're going to generate 500 data sets and calculate a difference in proportions for each one. We need to specify the order of that difference, so we'll look at proportion of female minus proportion of male so that it's in the same order as the d-hat that we calculated from our data. 
 
@@ -1584,20 +1584,26 @@ ggplot(null, aes(x = stat)) +
 
 ## Congratulations!
 
-You have successfully completed Lesson 2 in Tutorial 6: Inference for Categorical Responses.  
+You have successfully completed Lesson 2 in Tutorial 5: Statistical Inference.  
 
 What's next?
 
-`r emo::ji("ledger")` [Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://openintrostat.github.io/ims-tutorials/)
+[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
 
-`r emo::ji("spiral_notepad")` [Tutorial 6: Inference for Categorical Responses](https://openintrostat.github.io/ims-tutorials/06-inference-for-categorical-responses/)
+[Tutorial 5: Statistical Inference](https://bghammill.github.io/ims-05-infer/)
 
-`r emo::ji("one")` [Tutorial 6 - Lesson 1: Inference for a single proportion](https://openintro.shinyapps.io/ims-06-inference-for-categorical-responses-01/)
+- [Tutorial 5 - Lesson 1: Inference for a single proportion](https://bghammill.github.io/ims-05-infer/ims-05-lesson-01/)
+- [Tutorial 5 - Lesson 2: Hypothesis tests to compare proportions](https://bghammill.github.io/ims-05-infer/ims-05-lesson-02/)
+- [Tutorial 5 - Lesson 3: Chi-square test of independence](https://bghammill.github.io/ims-05-infer/ims-05-lesson-03/)
+- [Tutorial 5 - Lesson 4: Chi-square test for goodness of fit](https://bghammill.github.io/ims-05-infer/ims-05-lesson-04/)
+- [Tutorial 5 - Lesson 5: Bootstrapping to estimate a parameter](https://bghammill.github.io/ims-05-infer/ims-05-lesson-05/)
+- [Tutorial 5 - Lesson 6: T-distribution](https://bghammill.github.io/ims-05-infer/ims-05-lesson-06/)
+- [Tutorial 5 - Lesson 7: Inference for difference in two means](https://bghammill.github.io/ims-05-infer/ims-05-lesson-07/)
+- [Tutorial 5 - Lesson 8: Comparing many means](https://bghammill.github.io/ims-05-infer/ims-05-lesson-08/)
 
-`r emo::ji("one")` [Tutorial 6 - Lesson 2: Hypothesis Tests to Compare Proportions](https://openintro.shinyapps.io/ims-06-inference-for-categorical-responses-02/)
+[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
-`r emo::ji("one")` [Tutorial 6 - Lesson 3: Chi-squared Test of Independence](https://openintro.shinyapps.io/ims-06-inference-for-categorical-responses-03/)
+<!-- MathJax -->
 
-`r emo::ji("one")` [Tutorial 6 - Lesson 4: Chi-squared Goodness of Fit Test](https://openintro.shinyapps.io/ims-06-inference-for-categorical-responses-04/)
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
-`r emo::ji("open_book")` [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)

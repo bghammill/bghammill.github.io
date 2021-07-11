@@ -1025,20 +1025,26 @@ test_results
 
 ## Congratulations!
 
-You have successfully completed Lesson 3 in Tutorial 7: Inference for Numerical Responses.  
+You have successfully completed Lesson 5 in Tutorial 5: Statistical Inference.  
 
 What's next?
 
-`r emo::ji("ledger")` [Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://openintrostat.github.io/ims-tutorials/)
+[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
 
-`r emo::ji("spiral_notepad")` [Tutorial 7: Inference for Numerical Responses](https://openintrostat.github.io/ims-tutorials/07-inference-for-numerical-responses/)
+[Tutorial 5: Statistical Inference](https://bghammill.github.io/ims-05-infer/)
 
-`r emo::ji("one")` [Tutorial 7 - Lesson 1: Bootstrapping for estimating a parameter](https://openintro.shinyapps.io/ims-07-inference-for-numerical-responses-01/)
+- [Tutorial 5 - Lesson 1: Inference for a single proportion](https://bghammill.github.io/ims-05-infer/ims-05-lesson-01/)
+- [Tutorial 5 - Lesson 2: Hypothesis tests to compare proportions](https://bghammill.github.io/ims-05-infer/ims-05-lesson-02/)
+- [Tutorial 5 - Lesson 3: Chi-square test of independence](https://bghammill.github.io/ims-05-infer/ims-05-lesson-03/)
+- [Tutorial 5 - Lesson 4: Chi-square test for goodness of fit](https://bghammill.github.io/ims-05-infer/ims-05-lesson-04/)
+- [Tutorial 5 - Lesson 5: Bootstrapping to estimate a parameter](https://bghammill.github.io/ims-05-infer/ims-05-lesson-05/)
+- [Tutorial 5 - Lesson 6: T-distribution](https://bghammill.github.io/ims-05-infer/ims-05-lesson-06/)
+- [Tutorial 5 - Lesson 7: Inference for difference in two means](https://bghammill.github.io/ims-05-infer/ims-05-lesson-07/)
+- [Tutorial 5 - Lesson 8: Comparing many means](https://bghammill.github.io/ims-05-infer/ims-05-lesson-08/)
 
-`r emo::ji("one")` [Tutorial 7 - Lesson 2: Introducing the t-distribution](https://openintro.shinyapps.io/ims-07-inference-for-numerical-responses-02/)
+[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
-`r emo::ji("one")` [Tutorial 7 - Lesson 3: Inference for difference in two parameters](https://openintro.shinyapps.io/ims-07-inference-for-numerical-responses-03/)
+<!-- MathJax -->
 
-`r emo::ji("one")` [Tutorial 7 - Lesson 4: Comparing many means](https://openintro.shinyapps.io/ims-07-inference-for-numerical-responses-04/)
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
-`r emo::ji("open_book")` [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
