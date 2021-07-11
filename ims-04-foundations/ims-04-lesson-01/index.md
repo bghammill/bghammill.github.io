@@ -1,5 +1,3 @@
-*Why isn't this page updating?????*
-
 ## Welcome!
 
 Hi and welcome to inference!
@@ -22,7 +20,7 @@ Consider a situation where you are trying to convince your marketing director th
 
 To make the argument, the first step is to assume that the two populations, East Coast people and West Coast people, prefer cola to orange soda at the same rate. Here, about 60% of all people prefer cola and 40% prefer orange soda.
 
-![](images/lesson1_img2.png){: width=50% }
+![](images/lesson1_img2.png){ width=50% }
 
 The second step in the process is to investigate the sample data and attempt to argue that the data at hand are nothing like that which would be collected had the populations really been identical with respect to soda preference. Here, soda preference is equal in the samples and the population.
 
@@ -96,9 +94,14 @@ The idea behind statistical inference is to understand samples from a hypothetic
 
 ![](images/lesson1_img3.png){ width=80% }
 
+
+
 $$\hat{p}_W - \hat{p}_E = \frac{2}{3} - \frac{2}{3} = 0$$
 
 ![](images/lesson1_img5.png){ width=80% }
+
+
+
 $$\hat{p}_W - \hat{p}_E = \frac{1}{3} - \frac{2}{3} = -\frac{1}{3}$$
 
 As a way of summarizing each of the null samples, we calculate one statistic from each sample. Here, the statistic is the difference in the proportion of West Coast people who prefer cola as compared with the proportion of East Coast people who prefer cola, where each of the sample proportions is denoted “$\hat{p}$”. The difference in $\hat{p}$s changes with each sample. First it is 0, then it is negative one third, and it will keep changing.
@@ -1171,6 +1174,10 @@ What's next?
 `r emo::ji("open_book")` [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
 
+
+<!-- MathJax -->
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
 
 
