@@ -1,6 +1,4 @@
-## Completing a randomization test: gender discrimination
-
-### Example: gender discrimination
+## Randomization test
 
 The example in this lesson is taken from a paper on the _“Influence of sex role stereotypes on personnel decisions”_ by Rosen and Jerdee, 1974. 
 
@@ -754,7 +752,7 @@ We should understand that a 5% cutoff level is historical and arbitrary. However
 
 As it turns out, the 5% cutoff value is consistent with what many of us consider to be unusual. Consider a situation where you as the researcher are trying to decide whether a coin is fair or not.
 
-![](images/lesson2_img8.png){ width=80% }
+![](images/lesson2_img8.png)
 
 Would you think that flipping one head is evidence that the coin is unfair? Probably not.
 
@@ -766,7 +764,7 @@ For many of you, four or five heads in a row would seem unusual. Interestingly, 
 
 If you are curious to test your own personal level of significance, try this assessment at [https://www.openintro.org/book/stat/why05/](https://www.openintro.org/book/stat/why05/). It may give you a sense for why we so often use 0.05 for hypothesis testing.
 
-![Why do we so often use 0.05 for hypothesis testing? https://www.openintro.org/book/stat/why05/](images/lesson2_img8b.png){ width=100% }
+![Why do we so often use 0.05 for hypothesis testing? https://www.openintro.org/book/stat/why05/](images/lesson2_img8b.png)
 
 
 ### How does sample size affect results?
@@ -1203,7 +1201,7 @@ ggplot(gender_discrimination_perm) +
   geom_histogram(aes(x = stat)) + 
   geom_vline(xintercept = diff_orig, color = openintro::COL[4,1])
 ```
-  
+
 
 Pay special attention to how the p-value is computed here. First we identify permuted differences that are larger than or equal to the observed statistic and label those situations TRUE (or a value of 1), all other permutations FALSE (or a value of 0). By averaging the 0s and 1s, we can use the `mean()` to find the proportion of times the permuted difference is larger than or equal to the observed difference. 
 
@@ -1217,23 +1215,25 @@ Therefore, we can conclude that *any difference in promotion rates is due to the
 
 The 35 individuals in the sample were not randomly sampled from all possible American bank managers; they were at a management training session. In order to generalize the results of the study to a larger population, we would need more information about the study and careful thinking about who the study participants might represent.
 
-    
+
 ## Congratulations!
 
-You have successfully completed Lesson 2 in Tutorial 5: Introduction to Statistical Inference. 
+You have successfully completed Lesson 2 in Tutorial 4: Foundations of Inference.  
 
 What's next?
 
-`r emo::ji("ledger")` [Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://openintrostat.github.io/ims-tutorials/)
+[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
 
-`r emo::ji("spiral_notepad")` [Tutorial 5: Introduction to Statistical Inference](https://openintrostat.github.io/ims-tutorials/05-introduction-to-statistical-inference/)
+[Tutorial 4: Introduction to Statistical Inference](https://bghammill.github.io/ims-04-foundations/)
 
-`r emo::ji("one")` [Tutorial 5 - Lesson 1: Sampling variability](https://openintro.shinyapps.io/ims-05-introduction-to-statistical-inference-01/)
+- [Tutorial 4 - Lesson 1: Sampling variability](https://bghammill.github.io/ims-04-foundations/ims-04-lesson-01/)
+- [Tutorial 4 - Lesson 2: Randomization test](https://bghammill.github.io/ims-04-foundations/ims-04-lesson-02/)
+- [Tutorial 4 - Lesson 3: Errors in hypothesis testing](https://bghammill.github.io/ims-04-foundations/ims-04-lesson-03/)
+- [Tutorial 4 - Lesson 4: Parmeters and confidence intervals](https://bghammill.github.io/ims-04-foundations/ims-04-lesson-04/)
 
-`r emo::ji("one")` [Tutorial 5 - Lesson 2: Randomization test](https://openintro.shinyapps.io/ims-05-introduction-to-statistical-inference-02/)
+[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
-`r emo::ji("one")` [Tutorial 5 - Lesson 3: Errors in hypothesis testing](https://openintro.shinyapps.io/ims-05-introduction-to-statistical-inference-03/)
+<!-- MathJax -->
 
-`r emo::ji("one")` [Tutorial 5 - Lesson 4: Parameters and confidence intervals](https://openintro.shinyapps.io/ims-05-introduction-to-statistical-inference-04/)
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
-`r emo::ji("open_book")` [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)

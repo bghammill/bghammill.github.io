@@ -5,7 +5,7 @@
 
 Until now, the research question at hand has been a question of comparison. What if, instead, the research question is one of estimation?
 
-![](images/lesson4_img1.png){ width=80% }
+![](images/lesson4_img1.png)
 
 For example, “under which diet plan will participants lose more weight on average” is a comparative question and we use a hypothesis test. “How much should participants expect to lose on average” is an estimation question for which we use confidence intervals.
 
@@ -80,7 +80,7 @@ In contrast, with confidence intervals, there is no null population. Instead, we
 
 We expect the sample statistic to vary around the parameter, but how far is the statistic from the parameter? Bootstrapping is a method that allows us to estimate the distance from a statistic to the parameter. Let's see how it works.
 
-![](images/lesson4_img2.png){ width=80% }
+![](images/lesson4_img2.png)
 
 Bootstrapping repeatedly samples from the sample in order to estimate the variability of the statistic. Each time we resample, the data are sampled from the original data with replacement. It turns out that the process of resampling from the original sample is an excellent approximation for sampling from a population!
 
@@ -100,7 +100,7 @@ The original sample showed 4 of 7 who plan to vote for candidate X, or 57.1%. Wh
 
 
 
-![](images/lesson4_img3.png){ width=80% }
+![](images/lesson4_img3.png)
 
 By repeating the resampling process many times, the resampled proportions give a measure of how $\hat{p}$ varies. 
 
@@ -1239,7 +1239,7 @@ Amazing! Congratulations on finishing the tutorial!
 
 Throughout the entire tutorial, we have focused on making claims about a population using information from a sample of data.
 
-![](images/lesson4_img8.png){ width=80% }
+![](images/lesson4_img8.png)
 
 ### Testing
 
@@ -1252,7 +1252,7 @@ These ideas are important to remember because the entire process of hypothesis t
 * **$H_0$**: There is no gender discrimination in hiring  
 * **$H_A$**: Men are more likely to be promoted than women
 
-![](images/lesson4_img9.png){ width=80% }
+![](images/lesson4_img9.png)
 
 ### Estimation
 
@@ -1262,7 +1262,7 @@ Estimation is used to understand the value of a population parameter.
 
 Using measures of variability of the statistic, we can estimate how far $\hat{p}$ is from the true proportion. In particular, the variability of $\hat{p}$ can be measured using resamples from the original data. This process is called bootstrapping.
 
-![](images/lesson4_img10.png){ width=80% }
+![](images/lesson4_img10.png)
 
 As with hypothesis testing, the entire bootstrap process will be repeated with different data structures and research questions in later tutorials.
 

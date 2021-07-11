@@ -1,5 +1,4 @@
-
-## Example: opportunity cost
+## Errors in hypothesis testing
 
 In this lesson, we'll look at data from a study on opportunity cost from Frederick et al. The researchers investigated whether reminding students about saving money would make it less likely for them to spend money on a DVD. The students were randomly assigned to a control or treatment group with different instructions.
 
@@ -419,7 +418,7 @@ But what is the consequence of concluding that a reminder causes students to be 
 
 Notice that there are two possible decisions to make in hypothesis testing. Either the observed data are inconsistent with the null hypothesis, in which case the null hypothesis is rejected. Or the observed data are consistent with the null hypothesis, in which case the null hypothesis is not rejected and no conclusion is made about a larger population.
 
-![](images/lesson3_img1.png){ width=80% }
+![](images/lesson3_img1.png)
 
 There are also two possible “truth” states: either the null hypothesis is true or the alternative hypothesis is true. Keep in mind, however, that we can't ever know the true state of the population.
 
@@ -431,7 +430,9 @@ Recall that the decision being made controls the Type I error rate, that is the 
 
 ### Errors in US judicial system
 
-![](images/lesson3_img2.png){ width=80% }
+![](images/lesson3_img2.png)
+
+
 
 The logic of hypothesis testing shares many key elements with the US judicial system. The jury does not know whether the defendant committed the crime, but they must decide whether or not to convict the individual. The jury is presented with evidence, akin to data, and asked whether the evidence is consistent with innocence. If the evidence is outside of what would be expected, the defendant is charged with a crime.
 
@@ -553,23 +554,25 @@ In order to generalize to a larger population, we would need more information ab
 
 OK, now that you have the hang of testing, let's move on to inferential estimation.
 
-    
+
 ## Congratulations!
 
-You have successfully completed Lesson 3 in Tutorial 5: Introduction to Statistical Inference.  
+You have successfully completed Lesson 3 in Tutorial 4: Foundations of Inference.  
 
 What's next?
 
-`r emo::ji("ledger")` [Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://openintrostat.github.io/ims-tutorials/)
+[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
 
-`r emo::ji("spiral_notepad")` [Tutorial 5: Introduction to Statistical Inference](https://openintrostat.github.io/ims-tutorials/05-introduction-to-statistical-inference/)
+[Tutorial 4: Introduction to Statistical Inference](https://bghammill.github.io/ims-04-foundations/)
 
-`r emo::ji("one")` [Tutorial 5 - Lesson 1: Sampling variability](https://openintro.shinyapps.io/ims-05-introduction-to-statistical-inference-01/)
+- [Tutorial 4 - Lesson 1: Sampling variability](https://bghammill.github.io/ims-04-foundations/ims-04-lesson-01/)
+- [Tutorial 4 - Lesson 2: Randomization test](https://bghammill.github.io/ims-04-foundations/ims-04-lesson-02/)
+- [Tutorial 4 - Lesson 3: Errors in hypothesis testing](https://bghammill.github.io/ims-04-foundations/ims-04-lesson-03/)
+- [Tutorial 4 - Lesson 4: Parmeters and confidence intervals](https://bghammill.github.io/ims-04-foundations/ims-04-lesson-04/)
 
-`r emo::ji("one")` [Tutorial 5 - Lesson 2: Randomization test](https://openintro.shinyapps.io/ims-05-introduction-to-statistical-inference-02/)
+[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
-`r emo::ji("one")` [Tutorial 5 - Lesson 3: Errors in hypothesis testing](https://openintro.shinyapps.io/ims-05-introduction-to-statistical-inference-03/)
+<!-- MathJax -->
 
-`r emo::ji("one")` [Tutorial 5 - Lesson 4: Parameters and confidence intervals](https://openintro.shinyapps.io/ims-05-introduction-to-statistical-inference-04/)
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
-`r emo::ji("open_book")` [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)

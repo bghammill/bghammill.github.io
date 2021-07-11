@@ -1,10 +1,8 @@
-## Welcome!
+## Sampling variability
 
-Hi and welcome to inference!
+Welcome to inference!
 
 We are assuming that you've already worked through the first few tutorials in this intro stats series. In this tutorial, you will be building on your previous work to now make inferential, instead of descriptive, claims based on the data at hand.
-
-## Statistical Inference
 
 ### What is statistical inference?
 
@@ -14,22 +12,22 @@ Typically, the data represent only a small portion of the larger group which you
 
 At first glance, the logic of statistical inference seems to be backwards, but as you become more familiar with the steps in the process, the logic will make much more sense.
 
-<img src="images/lesson1_img1.png" style="zoom:30%;" />
+![](images/lesson1_img1.png)
 
 Consider a situation where you are trying to convince your marketing director that people on the East Coast prefer cola versus orange soda at a higher rate than people on the West Coast. 
 
 To make the argument, the first step is to assume that the two populations, East Coast people and West Coast people, prefer cola to orange soda at the same rate. Here, about 60% of all people prefer cola and 40% prefer orange soda.
 
-![](images/lesson1_img2.png){ width=50% }
+![](images/lesson1_img2.png)
 
 The second step in the process is to investigate the sample data and attempt to argue that the data at hand are nothing like that which would be collected had the populations really been identical with respect to soda preference. Here, soda preference is equal in the samples and the population.
 
 
-![](images/lesson1_img3.png){ width=80% }
+![](images/lesson1_img3.png)
 
 Here, however, the sample from the East Coast prefers cola *at a rate which is twice as high as that from the West Coast*. With large samples, if the data are extremely different from the equal populations model, we can assume that the equal populations assumption is invalid.
 
-![](images/lesson1_img4.png){ width=80% }
+![](images/lesson1_img4.png)
 
 ### Vocabulary
 
@@ -92,13 +90,13 @@ question("Which would be a good *alternative* hypothesis?",
 
 The idea behind statistical inference is to understand samples from a hypothetical population where the null hypothesis is true. For example, from East and West Coasts, where cola preference is the same. 
 
-![](images/lesson1_img3.png){ width=80% }
+![](images/lesson1_img3.png)
 
 
 
 $$\hat{p}_W - \hat{p}_E = \frac{2}{3} - \frac{2}{3} = 0$$
 
-![](images/lesson1_img5.png){ width=80% }
+![](images/lesson1_img5.png)
 
 
 
@@ -1155,29 +1153,22 @@ OK, now that we've covered the basics, let's move on to completing a full hypoth
     
 ## Congratulations!
 
-You have successfully completed Lesson 1 in Tutorial 5: Introduction to Statistical Inference.  
+You have successfully completed Lesson 1 in Tutorial 4: Foundations of Inference.  
 
 What's next?
 
-`r emo::ji("ledger")` [Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://openintrostat.github.io/ims-tutorials/)
+[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
 
-`r emo::ji("spiral_notepad")` [Tutorial 5: Introduction to Statistical Inference](https://openintrostat.github.io/ims-tutorials/05-introduction-to-statistical-inference/)
+[Tutorial 4: Introduction to Statistical Inference](https://bghammill.github.io/ims-04-foundations/)
 
-`r emo::ji("one")` [Tutorial 5 - Lesson 1: Sampling variability](https://openintro.shinyapps.io/ims-05-introduction-to-statistical-inference-01/)
+- [Tutorial 4 - Lesson 1: Sampling variability](https://bghammill.github.io/ims-04-foundations/ims-04-lesson-01/)
+- [Tutorial 4 - Lesson 2: Randomization test](https://bghammill.github.io/ims-04-foundations/ims-04-lesson-02/)
+- [Tutorial 4 - Lesson 3: Errors in hypothesis testing](https://bghammill.github.io/ims-04-foundations/ims-04-lesson-03/)
+- [Tutorial 4 - Lesson 4: Parmeters and confidence intervals](https://bghammill.github.io/ims-04-foundations/ims-04-lesson-04/)
 
-`r emo::ji("one")` [Tutorial 5 - Lesson 2: Randomization test](https://openintro.shinyapps.io/ims-05-introduction-to-statistical-inference-02/)
-
-`r emo::ji("one")` [Tutorial 5 - Lesson 3: Errors in hypothesis testing](https://openintro.shinyapps.io/ims-05-introduction-to-statistical-inference-03/)
-
-`r emo::ji("one")` [Tutorial 5 - Lesson 4: Parameters and confidence intervals](https://openintro.shinyapps.io/ims-05-introduction-to-statistical-inference-04/)
-
-`r emo::ji("open_book")` [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
-
-
+[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
 <!-- MathJax -->
 
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-
-
 
