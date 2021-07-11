@@ -2,5 +2,4 @@ title: PHS 701 SAS Tutorials
 description: Interactive SAS tutorials supporting the OpenIntro Introduction to Modern Statistics textbook. 
 theme: jekyll-theme-leap-day
 show_downloads: true
-markdown: kramdown
 logo: logos/DUSOM_PopHealth_stacked.jpg

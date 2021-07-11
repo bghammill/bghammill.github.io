@@ -22,7 +22,7 @@ Consider a situation where you are trying to convince your marketing director th
 
 To make the argument, the first step is to assume that the two populations, East Coast people and West Coast people, prefer cola to orange soda at the same rate. Here, about 60% of all people prefer cola and 40% prefer orange soda.
 
-![](images/lesson1_img2.png){ width=80% }
+![](images/lesson1_img2.png){: width=50% }
 
 The second step in the process is to investigate the sample data and attempt to argue that the data at hand are nothing like that which would be collected had the populations really been identical with respect to soda preference. Here, soda preference is equal in the samples and the population.
 
