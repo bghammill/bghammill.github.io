@@ -1,5 +1,5 @@
 
-## Simulation-based Inference
+## Randomization Test for Slope
 
 In this lesson, we'll be working with twin data collected in the mid 20th century by Cyril Burt. He provides interesting data with which to work, but his research is the subject of some controversy, including the possibility that the data were falsified. But let's work with the data anyway.
 
@@ -927,12 +927,12 @@ What's next?
 
 [Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
 
-[Tutorial 6: Statistical Inference](https://bghammill.github.io/ims-05-infer/)
+[Tutorial 6: Inferential Modeling](https://bghammill.github.io/ims-06-model-infer/)
 
 - [Tutorial 6 - Lesson 1: Inference in regression](https://bghammill.github.io/ims-06-model-infer/ims-06-lesson-01/)
 - [Tutorial 6 - Lesson 2: Randomization test for slope](https://bghammill.github.io/ims-06-model-infer/ims-06-lesson-02/)
 - [Tutorial 6 - Lesson 3: t-test for slope](https://bghammill.github.io/ims-06-model-infer/ims-06-lesson-03/)
-- [Tutorial 6 - Lesson 4: Checking techinical conditions for slope inference](https://bghammill.github.io/ims-06-model-infer/ims-06-lesson-04/)
+- [Tutorial 6 - Lesson 4: Checking technical conditions for slope inference](https://bghammill.github.io/ims-06-model-infer/ims-06-lesson-04/)
 - [Tutorial 6 - Lesson 5: Inference beyond the simple linear regression model](https://bghammill.github.io/ims-06-model-infer/ims-06-lesson-05/)
 
 [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)

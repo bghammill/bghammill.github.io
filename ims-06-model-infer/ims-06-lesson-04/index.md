@@ -1,9 +1,7 @@
 
-## Technical Conditions in linear regression
+## Checking technical conditions for slope inference
 
 Additionally, you will consider the technical conditions that are important when using linear models to make claims about a larger population.
-
-## Technical conditions for linear regression
 
 In the previous lesson you saw that sometimes the mathematical model was not appropriate for inferential analysis (that is, for calculating p-values and confidence intervals).  In this lesson, we'll provide details for when the mathematical model is appropriate.
 
@@ -1343,12 +1341,12 @@ What's next?
 
 [Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
 
-[Tutorial 6: Statistical Inference](https://bghammill.github.io/ims-05-infer/)
+[Tutorial 6: Inferential Modeling](https://bghammill.github.io/ims-06-model-infer/)
 
 - [Tutorial 6 - Lesson 1: Inference in regression](https://bghammill.github.io/ims-06-model-infer/ims-06-lesson-01/)
 - [Tutorial 6 - Lesson 2: Randomization test for slope](https://bghammill.github.io/ims-06-model-infer/ims-06-lesson-02/)
 - [Tutorial 6 - Lesson 3: t-test for slope](https://bghammill.github.io/ims-06-model-infer/ims-06-lesson-03/)
-- [Tutorial 6 - Lesson 4: Checking techinical conditions for slope inference](https://bghammill.github.io/ims-06-model-infer/ims-06-lesson-04/)
+- [Tutorial 6 - Lesson 4: Checking technical conditions for slope inference](https://bghammill.github.io/ims-06-model-infer/ims-06-lesson-04/)
 - [Tutorial 6 - Lesson 5: Inference beyond the simple linear regression model](https://bghammill.github.io/ims-06-model-infer/ims-06-lesson-05/)
 
 [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
