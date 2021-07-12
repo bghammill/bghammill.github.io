@@ -1021,23 +1021,25 @@ Recall the more variability in the response and less variability in the explanat
 
 ## Congratulations!
 
-You have successfully completed Lesson 1 in Tutorial 8: Inference for Regression.  
+You have successfully completed Lesson 1 in Tutorial 6: Inferential Modeling.
 
 What's next?
 
-`r emo::ji("ledger")` [Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://openintrostat.github.io/ims-tutorials/)
+[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
 
-`r emo::ji("spiral_notepad")` [Tutorial 8: Inference for Regression](https://openintrostat.github.io/ims-tutorials/08-inference-for-regression/)
+[Tutorial 6: Statistical Inference](https://bghammill.github.io/ims-05-infer/)
 
-`r emo::ji("one")` [Tutorial 8 - Lesson 1: Inference in regression](https://openintro.shinyapps.io/ims-08-inference-for-regression-01/)
+- [Tutorial 6 - Lesson 1: Inference in regression](https://bghammill.github.io/ims-06-model-infer/ims-06-lesson-01/)
+- [Tutorial 6 - Lesson 2: Randomization test for slope](https://bghammill.github.io/ims-06-model-infer/ims-06-lesson-02/)
+- [Tutorial 6 - Lesson 3: t-test for slope](https://bghammill.github.io/ims-06-model-infer/ims-06-lesson-03/)
+- [Tutorial 6 - Lesson 4: Checking techinical conditions for slope inference](https://bghammill.github.io/ims-06-model-infer/ims-06-lesson-04/)
+- [Tutorial 6 - Lesson 5: Inference beyond the simple linear regression model](https://bghammill.github.io/ims-06-model-infer/ims-06-lesson-05/)
 
-`r emo::ji("one")` [Tutorial 8 - Lesson 2: Randomization test for slope](https://openintro.shinyapps.io/ims-08-inference-for-regression-02/)
+[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
-`r emo::ji("one")` [Tutorial 8 - Lesson 3: t-test for slope](https://openintro.shinyapps.io/ims-08-inference-for-regression-03/)
+<!-- MathJax -->
 
-`r emo::ji("one")` [Tutorial 8 - Lesson 4: Checking technical conditions for slope inference](https://openintro.shinyapps.io/ims-08-inference-for-regression-04/)
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
-`r emo::ji("one")` [Tutorial 8 - Lesson 5: Inference beyond the simple linear regression model](https://openintro.shinyapps.io/ims-08-inference-for-regression-05/)
 
-`r emo::ji("open_book")` [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 

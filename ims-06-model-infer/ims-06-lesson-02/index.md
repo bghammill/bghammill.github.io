@@ -19,10 +19,7 @@ The resulting data is given for the IQs of the foster twins (`Foster` is the res
 
 ### Pairs of twins
 
-
-```
-knitr::include_graphics("images/inf_regresssion_figures.001-colored.png")
-```
+![](images/inf_regresssion_figures.001-colored.png)
 
 Note that the Biological twin with the highest IQ is paired with the Foster twin with the highest IQ. Also, the Biological twin with the lowest IQ is paired with the Foster twin with the lowest IQ. If "nature" is playing a strong role here, then we would expect to see such a pattern. If "nature" is not playing a strong role, we would think that the observed pattern is simply due to chance.  
 
@@ -30,17 +27,13 @@ What if we permuted the Foster twins such that they were randomly matched-up wit
 
 ### Twin data
 
-```
-knitr::include_graphics("images/inf_regresssion_figures.002-colored.png")
-```
+![](images/inf_regresssion_figures.002-colored.png)
 
 The dataset itself can be thought of as two columns. Note that the two columns represent the IQ value of the biological twin and the IQ value of the foster twin.  As evidenced by the graphic, the IQ values are *paired*.  That is, each of the two IQ values come from one pair of twins.
 
 ### Permuted twin data
 
-```
-knitr::include_graphics("images/inf_regresssion_figures.003-colored.png")
-```
+![](images/inf_regresssion_figures.003-colored.png)
 
 This figure now demonstrates the act of permuting the foster twins so that the IQ values are the same numbers but they are not matched to their biological twins.
 
@@ -628,11 +621,7 @@ Bootstrapping is another resampling method that allows for estimation of the sam
 
 ### Bootstrap resampling
 
-
-```
-knitr::include_graphics("images/inf_regresssion_figures.004.png")
-```
-
+![](images/inf_regresssion_figures.004.png)
 
 Recall that the idea behind bootstrap sampling is to resample from the original dataset *with* replacement.  That means, for each bootstrap sample, some of the observations will be replicated and others will be left out.  In the linear model setting, each resample is taken of a pair of observations one at a time.  That is, a set of twins is resampled with replacement.  The slope will be calculated based on the bootstrap resample of the original observations.
 
@@ -932,22 +921,23 @@ Remember the difference between the population slope and the estimated slope. Wh
 
 ## Congratulations!
 
-You have successfully completed Lesson 2 in Tutorial 8: Inference for Regression.  
+You have successfully completed Lesson 2 in Tutorial 6: Inferential Modeling.
 
 What's next?
 
-`r emo::ji("ledger")` [Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://openintrostat.github.io/ims-tutorials/)
+[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
 
-`r emo::ji("spiral_notepad")` [Tutorial 8: Inference for Regression](https://openintrostat.github.io/ims-tutorials/08-inference-for-regression/)
+[Tutorial 6: Statistical Inference](https://bghammill.github.io/ims-05-infer/)
 
-`r emo::ji("one")` [Tutorial 8 - Lesson 1: Inference in regression](https://openintro.shinyapps.io/ims-08-inference-for-regression-01/)
+- [Tutorial 6 - Lesson 1: Inference in regression](https://bghammill.github.io/ims-06-model-infer/ims-06-lesson-01/)
+- [Tutorial 6 - Lesson 2: Randomization test for slope](https://bghammill.github.io/ims-06-model-infer/ims-06-lesson-02/)
+- [Tutorial 6 - Lesson 3: t-test for slope](https://bghammill.github.io/ims-06-model-infer/ims-06-lesson-03/)
+- [Tutorial 6 - Lesson 4: Checking techinical conditions for slope inference](https://bghammill.github.io/ims-06-model-infer/ims-06-lesson-04/)
+- [Tutorial 6 - Lesson 5: Inference beyond the simple linear regression model](https://bghammill.github.io/ims-06-model-infer/ims-06-lesson-05/)
 
-`r emo::ji("one")` [Tutorial 8 - Lesson 2: Randomization test for slope](https://openintro.shinyapps.io/ims-08-inference-for-regression-02/)
+[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
-`r emo::ji("one")` [Tutorial 8 - Lesson 3: t-test for slope](https://openintro.shinyapps.io/ims-08-inference-for-regression-03/)
+<!-- MathJax -->
 
-`r emo::ji("one")` [Tutorial 8 - Lesson 4: Checking technical conditions for slope inference](https://openintro.shinyapps.io/ims-08-inference-for-regression-04/)
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
-`r emo::ji("one")` [Tutorial 8 - Lesson 5: Inference beyond the simple linear regression model](https://openintro.shinyapps.io/ims-08-inference-for-regression-05/)
-
-`r emo::ji("open_book")` [Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
