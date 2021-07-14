@@ -137,8 +137,6 @@ ggplot(nonnormaldata, aes(x=explanatory, y=response)) +
 
 The violation here is not as obvious as the non-linear violation.  In this plot, the points are not normally distributed around the line.  That is, although the residuals are centered at zero, the points under the line are closer to the line and the points above the line are scattered farther from the line.
 
-
-
 ### Not normal: residuals
 
 
@@ -153,10 +151,10 @@ ggplot(nonnormal_lm,
   geom_hline(yintercept = 0) 
 ```
 fitted value: 
-$\hat{Y}_i = b_0 + b_1 X_i$
+$$\hat{Y}_i = b_0 + b_1 X_i$$
 
 residual:
-$e_i= Y_i - \hat{Y}_i$
+$$e_i= Y_i - \hat{Y}_i$$
 
 
 The residual plot makes it even easier to see the violation of the technical condition related to normality.  If the residuals were normally distributed around the line, they would be equally far from the line in the positive and negative direction.  Here, the points below the line do not spread out nearly as far as the points above the line.
