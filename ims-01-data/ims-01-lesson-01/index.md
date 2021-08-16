@@ -318,7 +318,7 @@ run;
 Let's pause for a moment and review what's going on in the code above.
 
 - We use the `SGPLOT` procedure to create plots using the `HSB2` dataset.
-- We are requesting a scatterplot with to plot science test scores on the $x$-axis and math test scores on the $y$-axis.
+- We are requesting a scatterplot with to plot science test scores on the x-axis and math test scores on the y-axis.
 - The `markerattrs` option isn't necessary, but using a different symbol helps us see the data points more clearly.
 
 Now that you've learned how to make the plot, let's talk about what the plot says.

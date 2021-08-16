@@ -22,11 +22,7 @@ At the end, we compare the attention spans of the two groups.
 
 Based on the observational study, even if we find a difference between the average attention span of these two groups of people, we can't attribute this difference solely to using screens because there may be other variables that we didn't control for in this study that contribute to the observed difference. For example, people who use screens at night might also be using screens for longer time periods during the day and their attention span might be affected by the daytime usage as well.
 
-![](images/design-observational-association.png)
-
 However, in the experiment, such variables that might also contribute to the outcome, called confounding variables, are most likely represented equally in the two groups due to random assignment. Therefore, if we find a difference between the two averages, we can indeed make a causal statement attributing this difference to bedtime screen usage.
-
-![](images/design-experiment-causation.png)
 
 Let's put these ideas into practice.
 
@@ -34,38 +30,24 @@ Let's put these ideas into practice.
 
 A study is designed to evaluate whether people read text faster in Arial or Helvetica font. A group of volunteers who agreed to be a part of the study are randomly assigned to two groups: one where they read some text in Arial, and another where they read the same text in Helvetica. At the end, average reading speeds from the two groups are compared. 
 
-```
-quiz(
-  question("What type of study is this?", correct = "Awesome! Even though participants are volunteers, this is still an experiment!", allow_retry = TRUE,
-    answer("Observational study", message = "Not quite, this is not an observational study."),
-    answer("Experiment", correct = TRUE),
-    answer("Neither, since the sample consists of volunteers", message = "Try again!")
-), caption = "")
-```
+*What type of study is this? An observational study, an experiment, or neither? Why did you answer that way?*
 
 Next, let's take a look at data from a different study on country characteristics. First, load the data and view it, then identify the type of study. Remember, an experiment requires random assignment.
 
 ### Recap: Types of studies
 
-Let's take a look at data from a different study on country characteristics. The data come from the **gapminder** package. 
-
-To view the top 10 rows of the data, simply type `gapminder`. You are welcome to view the data using functions from the **tidyverse** package you have learned previously to inspect it.
+Let's load and take a look at data from a different study on country characteristics. The data can be found in the **gapminder** dataset. 
 
 ```
-library(gapminder)
-gapminder
+* Initialize things if you have not done this already during this SAS session;
+%include "~/my_shared_file_links/hammi002/sasprog/run_first.sas";
+
+* Makes a working copy of GAPMINDER data and glimpse;
+%use_data(gapminder);
+%glimpse(gapminder);
 ```
 
-Then, identify the type of study this data come from.
-
-```
-quiz(
-  question("What type of study is this?", correct = "Awesome!", allow_retry = TRUE,
-    answer("Observational study", correct = TRUE),
-    answer("Experiment", message = "Not quite, this is not an experiment since it's not possible to randomly assign countries to attributes in the dataset."),
-    answer("Neither, since we don't have data on all countries.", message = "Try again!")
-), caption = "")
-```
+*What type of study do you think these data came from? An observational study, an experiment, or neither? Why did you answer that way?*
 
 ## Random sampling assignment
 
@@ -95,15 +77,9 @@ You'll get some more practice with these concepts now.
 
 One of the early studies linking smoking and lung cancer compared patients who are already hospitalized with lung cancer to similar patients without lung cancer (hospitalized for other reasons), and recorded whether each patient smoked. Then, proportions of smokers for patients with and without lung cancer were compared.
 
-```
-quiz(
-  question("Does this study employ random sampling and/or random assignment?", correct = "Right! Random assignment is not employed because the conditions are not imposed on the patients by the people conducting the study; random sampling is not employed because the study records the patients who are already hospitalized, so it wouldn't be appropriate to apply the findings back to the population as a whole.", allow_retry = TRUE,
-    answer("Random sampling, but not random assignment", message = "Hm, not quite!"),
-    answer("Random assignment, but not random sampling", message = "Try again!"),
-    answer("Neither random sampling nor random assignment", correct = TRUE),
-    answer("Both random sampling and random assignment")
-), caption = "")
-```
+*Did this study employ random sampling and/or random assignment?*
+
+No. Neither.  Random assignment is not employed because the conditions are not imposed on the patients by the people conducting the study; random sampling is not employed because the study records the patients who are already hospitalized, so it wouldn't be appropriate to apply the findings back to the population as a whole.
 
 ### Identify the scope of inference of study
 
@@ -111,19 +87,17 @@ Volunteers were recruited to participate in a study where they were asked to typ
 
 Then, the subjects were asked to remember these bits of trivia, and the number of bits of trivia each subject could correctly recall were recorded. It was found that the subjects were significantly more likely to remember information if they thought they would not be able to find it later.
 
-```
-quiz(
-  question("The results of the study ______ be generalized to all people and a causal link between believing information is stored and memory ______ be inferred based on these results.", correct = "Correct! There is no random sampling since the subjects of the study were volunteers, so the results cannot be generalized to all people. However, due to random assignment, we are able to infer a causal link between the belief information is stored and the ability to recall that same information.", allow_retry = TRUE,
-    answer("cannot, cannot", message = "Nope, try again!"),
-    answer("cannot, can", correct = TRUE),
-    answer("can, cannot", message = "Not quite!"),
-    answer("can, can")
-), caption = "")
-```
+*Can the results of this study be generalized to all people?*
+
+No. There is no random sampling since the subjects of the study were volunteers, so the results cannot be generalized to all people.
+
+*Do the results of this study infer a causal link between believing information is stored and memory?*
+
+Yes, due to random assignment, we are able to infer a causal link between the belief information is stored and the ability to recall that same information.
 
 ## Simpson's paradox
 
-Often when one mentions "a relationship between variables" we think of a relationship between just two variables, say a so called explanatory variable, x, and response variable, y. However, truly understanding the relationship between two variables might require considering other potentially related variables as well. If we don't, we might find ourselves in a *Simpson's paradox*. So, what is Simpson's paradox?
+Often when one mentions "a relationship between variables" we think of a relationship between just two variables, say a so called explanatory variable, $$x$$, and response variable, $$y$$. However, truly understanding the relationship between two variables might require considering other potentially related variables as well. If we don't, we might find ourselves in a *Simpson's paradox*. So, what is Simpson's paradox?
 
 First, let's clarify what we mean when we say explanatory and response variables. Labeling variables as explanatory and response does not guarantee the relationship between the two is actually causal, even if there is an association identified. We use these labels only to keep track of which variable we suspect affects the other.
 
@@ -151,262 +125,72 @@ We'll explore Simpson's paradox further with another dataset, which comes from a
 
 ### Berkeley admission data
 
-| .      | Admitted | Rejected |
+|        | Admitted | Rejected |
 | ------ | -------- | -------- |
 | Male   | 1198     | 1493     |
 | Female | 557      | 1278     |
 
 > Note: At the time of this study, gender and sexual identities were not given distinct names. Instead, it
-> was common for a survey to ask for your "gender" and then provide you with the options of "male" and 
-> "female." Today, we better understand how an individual's gender and sexual identities are different 
-> pieces of who they are. To learn more about inclusive language surrounding gender and sexual identities 
-> see the [gender unicorn](https://transstudent.org/gender/). 
+> was common for a survey to ask for your "gender" and then provide you with the options of "male" and "female." Today, we better understand how an individual's gender and sexual identities are different pieces of who they are. To learn more about inclusive language surrounding gender and sexual identities see the [gender unicorn](https://transstudent.org/gender/). 
 
 Let's get started.
 
 ### Number of males and females admitted
 
-The goal of this exercise is to determine the numbers of male and female applicants who got admitted and rejected. Specifically, we want to find out how many males are admitted and how many are rejected. And similarly we want to find how many females are admitted and how many are rejected.
+The goal of this exercise is to determine the numbers and proportions of male and female applicants who got admitted and rejected. Specifically, we want to find out how many males are admitted and how many are rejected. And similarly we want to find how many females are admitted and how many are rejected.
 
-To do so we will use the `count()` function. In one step, `count()` groups the data and then tallies the number of observations in each level of the grouping variable. These counts are available under a new variable called `n`.
-
-Pass the `Gender` and `Admit` columns from the `ucb_admit` dataset (which is already pre-loaded) into the `count()` function, to count how many students of each gender are admitted and how many are rejected.
+Let's first load and check the **ucb_admit** dataset:
 
 ```
-# Count number of male and female applicants admitted
-___ %>%
-  count(___, ___)
+* Makes a working copy of UCB_ADMIT data and glimpse;
+%use_data(ucb_admit);
+%glimpse(ucb_admit);
 ```
 
-```
-# Count number of male and female applicants admitted
-ucb_admit %>%
-  count(Gender, Admit)
-```
-
-### Proportion of males admitted overall
-
-Next we'll calculate the proportion of males and proportion of females admitted, by creating a new variable, called `prop` (short for proportion) based on the counts calculated in the previous exercise and using the `mutate()` function.
-
-Proportions for each row of the data frame we created in the previous exercise can be calculated as `n / sum(n)`. However, it is important to note that since we are interested in the proportion of students admitted within each gender, we need for the data to be grouped by gender, so that `sum(n)` will be calculated for males and females separately. Luckily, the `group_by()` function can do this grouping for us! 
-
-The `group_by()` function takes as arguments the column names of the **categorical** variables for which you want to perform grouped operations. We add this grouping into our data wrangling pipeline, by inserting a `group_by()` statement before we perform our subsequent tasks. For example, we could have found the same admission table as before, if we first grouped the data based on `Gender`, and then counted how many students were admitted and rejected. This process would look like this:  
+To count admissions and see admission rates by group, we will use `PROC FREQ`:
 
 ```
-ucb_admit %>% 
-  group_by(Gender) %>% 
-  count(Admit)
+* Count admissions by male/female;
+proc freq data=ucb_admit;
+	tables gender * admitted / nocol nopct;
+run;
 ```
 
-Now, use this new function and your knowledge of creating new variables and filtering observations to calculate the proportion of males and proportion of females admitted. Note, the table of counts of gender and admission status you found earlier is available as `ucb_admission_counts`. 
+The `nocol` and `nopct` options above suppress the column and overall percentages from being shown, so we are left with just the counts and the row percentages (i.e., % of each group that is admitted). This is what we're after since the first variable (`gender`) in a 2-variable tables statement defines the row variable, while the second variable (`admitted`) defines the column variable.
 
-To accomplish this task you will need to take the following steps: 
-
-1. Use `group_by()` to group the data by gender.
-2. Use `mutate()` to create the a new variable named`prop`, calculated as the proportion of males and females admitted. Remember, proportions for each row of the data frame we create can be calculated as `n / sum(n)`! 
-3. Use `filter()` to keep the data only for those who were admitted so that the resulting data frame only contains the proportions of males and females who were admitted.
-
-Then answer the following question: *Which gender had a higher admission rate, male or female?*
-
-```
-ucb_admission_counts %>%
-  # Group by gender
-  ___(___) %>%
-  # Create new variable
-  mutate(prop = ___ / ___) %>%
-  # Filter for admitted
-  ___(___ == "___")
-```
-
-```
-ucb_admission_counts %>%
-  # Group by gender
-  group_by(Gender) %>%
-  # Create new variable
-  mutate(prop = ___ / ___) %>%
-  # Filter for admitted
-  ___(___ == "___")
-```
-
-```
-ucb_admission_counts %>%
-  # Group by gender
-  group_by(Gender) %>%
-  # Create new variable
-  mutate(prop = n / sum(n)) %>%
-  # Filter for admitted
-  ___(___ == "___")
-```
-
-```
-ucb_admission_counts %>%
-  # Group by gender
-  group_by(Gender) %>%
-  # Create new variable
-  mutate(prop = n / sum(n)) %>%
-  # Filter for admitted
-  filter(Admit == "Admitted")
-```
-
-```
-ucb_admission_counts %>%
-  # Group by gender
-  group_by(Gender) %>%
-  # Create new variable
-  mutate(prop = n / sum(n)) %>%
-  # Filter for admitted
-  filter(Admit == "Admitted")
-```
+Based on the resulting table, answer the following question: *Which gender had a higher admission rate, male or female?*
 
 ### Proportion of males admitted for each department
 
 Finally we'll make a table similar to the one we constructed earlier, except we'll first group the data by department. The goal is to compare the proportions of male students admitted across departments.
 
-Proportions for each row of the data frame we create can be calculated as `n / sum(n)`. Note that since the data are grouped by department **and**  gender, `sum(n)` will be calculated for males and females separately **for each department**.
+We can do this easily by adding a third variable in the `PROC FREQ` `tables` statement, prior to the variable that are there already, as:
 
 ```
-ucb_admission_counts <- ucb_admit %>%
-  # Counts by department, then gender, then admission status
-  count(Dept, Gender, Admit)
+* Count admissions by male/female, by department;
+proc freq data=ucb_admit;
+	tables dept * gender * admitted / nocol nopct;
+run;
 ```
 
-First, let's make a new object named `ucb_admission_counts` to store the `count()`s of `ucb_admit` by department, gender, and admission status. In this case, it doesn't matter what order you place `Dept`, `Gender`, or `Admit` inside of `count()`! 
+Now the percentages shown reflect the male/female-specific admission rates separately **for each department**.
 
-```
-ucb_admission_counts <- ucb_admit %>%
-  # Counts by department, gender, and admission status
-  ___(___, ___, ___)
+Based on these results, *which of the following statements best describes the relationship between admission status and gender*?
 
-# See the result
-ucb_admission_counts
-```
+1. Within most departments, female applicants are more likely to be admitted.
+2. Within most departments, male applicants are more likely to be admitted.
+3. Within most departments, male and female applicants are equally likely to be admitted.
 
-```
-ucb_admission_counts <- ucb_admit %>%
-  # Counts by department, then gender, then admission status
-  count(Dept, Gender, Admit)
-
-# See the result
-ucb_admission_counts
-```
-
-Next, create a table with the proportions of male students admitted across departments, using the following steps: 
-
-1. Use `group_by()` to group the `ucb_admission_counts` first by department then by gender.
-2. Use `mutate()` to add a new column named `prop`, which is the ratio of those admitted or rejected by department and gender. Remember the calculation you used previously for row proportions! 
-3. Use `filter()` to filter the rows for those who are males **and** those who who were admitted. To "join" our filters we insert a comma between the filters we are interested (e.g. `filter(grade == "middle school", class == "Music"))`). 
-
-```
- ucb_admission_counts  %>%
-  # Group by department, then gender
-  ___(___, ___) %>%
-  # Create new variable
-  ___(prop = ___) %>%
-  # Filter for male and admitted
-  ___(___, ___)
-```
-
-```
- ucb_admission_counts  %>%
-  # Group by department, then gender
-  group_by(Dept, Gender) %>%
-  # Create new variable
-  ___(prop = ___) %>%
-  # Filter for male and admitted
-  ___(___, ___)
-```
-
-```
- ucb_admission_counts  %>%
-  # Group by department, then gender
-  group_by(Dept, Gender) %>%
-  # Create new variable
-  mutate(prop = n / sum(n)) %>%
-  # Filter for male and admitted
-  ___(___, ___)
-```
-
-```
- ucb_admission_counts  %>%
-  # Group by department, then gender
-  group_by(Dept, Gender) %>%
-  # Create new variable
-  mutate(prop = n / sum(n)) %>%
-  # Filter for male and admitted
-  filter(Gender == "Male", ___)
-```
-
-```
- ucb_admission_counts  %>%
-  # Group by department, then gender
-  group_by(Dept, Gender) %>%
-  # Create new variable
-  mutate(prop = n / sum(n)) %>%
-  # Filter for male and admitted
-  filter(Gender == "Male", Admit == "Admitted")
-```
-
-```
-ucb_admission_counts  %>%
-  # Group by department, then gender
-  group_by(Dept, Gender) %>%
-  # Create new variable
-  mutate(prop = n / sum(n)) %>%
-  # Filter for male and admitted
-  filter(Gender == "Male", Admit == "Admitted")
-```
-
-### Admission rates for males across departments
-
-```
-perc_admit_by_dept <- ucb_admit %>%
-  # Group by department, then gender
-  group_by(Dept, Gender) %>%
-  # Table of counts of admission status and gender and department
-  count(Admit) %>%
-  # Create new variable
-  mutate(prop = n / sum(n)) %>%
-  # Filter for male and admitted
-  filter(Gender == "Male", Admit == "Admitted")
-```
-
-```
-quiz(
-  question("Which of the following best describes the relationship between admission status and gender?", correct = "Correct! Let's recap what we've learned in the next section.", allow_retry = TRUE,
-    answer("Within most departments, female applicants are more likely to be admitted.", correct = TRUE),
-    answer("Within most departments, male applicants are more likely to be admitted.", message = "That doesn't seem right."),
-    answer("Within most departments, male and female applicants are equally likely to be admitted.", message = "Try again!")
-), caption = "")
-```
-
-The final result from the previous exercise is available in your workspace as `perc_admit_by_dept`. Feel free to inspect the table to address the question above.  
-
-```
-
-
-
-```
+Surprising given the overall results, no?
 
 ### Recap: Simpson's paradox
 
 
 We'll wrap up the lesson with a recap of our findings.
 
-Overall: males were more likely to be admitted
+Overall, males were more likely to be admitted. Within most department, however, females were more likely to be admitted. Meaning, when controlling for department, the relationship between gender and admission status was reversed. This is Simpson's paradox.
 
-* Within most departments: females were more likely
-* When controlling for department, relationship between gender and admission status was reversed
-* Potential reason:
-  + Women tended to apply to competitive departments with lower admission rates
-  + Men tended to apply to less competitive departments with higher admission rates
-
-We saw that overall males were more likely to be admitted.
-
-But when we consider the department information, within most departments actually females are more likely to be admitted.
-
-So when we control for department, the relationship between gender and admission status was reversed, which is what we call Simpson's paradox.
-
-One potential reason for this paradox is that women tended to apply to competitive departments with lower rates of admission even among qualified applicants, such as in the English Department. Whereas, men tended to apply to less competitive departments with higher rates of admission among the qualified applicants, such as in engineering and chemistry.
+We would have to know about the data to tease out the reasons for this, but one potential explanation for this paradox is that women tended to apply to competitive departments with lower rates of admission even among qualified applicants, such as in the English Department. Whereas, men tended to apply to less competitive departments with higher rates of admission among the qualified applicants, such as in engineering and chemistry.
 
 Note that we were only able to discover the contradictory finding once we incorporated information about the department of the application. Examples like this highlight the importance of a good study design that considers and collects information on extraneous, but potentially confounding variables in a study.
 
