@@ -9,12 +9,12 @@ Scientists seek to answer questions using rigorous methods and careful observati
 3. Analyze the data.
 4. Form a conclusion.
 
-In this tutorial, we focus on steps 1 and 2 of this process.
+In this tutorial, we focus on steps 1 and 2 of this process. In future tutorials, we will focus on steps 3 and 4 of this process.
 
 ## Learning objectives
 
 - Internalize the language of data.
-- Load and view a dataset in R and distinguish between various variable types.
+- Load and view a dataset in SAS and distinguish between various variable types and data representations.
 - Classify a study as observational or experimental, and determine whether the study’s results can be generalized to the population and whether they suggest correlation or causation between the variables studied.
 - Distinguish between various sampling strategies and recognize the benefits and drawbacks of choosing one strategy over another.
 - Identify the principles of experimental design and recognize their purposes.
