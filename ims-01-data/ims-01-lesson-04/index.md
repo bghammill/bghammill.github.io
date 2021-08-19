@@ -8,7 +8,7 @@ As you might know, many college courses conclude by giving students the opportun
 
 The data that we will be working with, which includes information on course evaluations as well as students' scoring of professors' physical attractiveness, was collected as part of a study conducted at University of Texas, Austin.
 
-In the following exercises, you will be asked to analyze these data with the eventual goal of investigating whether instructors who are viewed to be better looking receive higher instructional ratings. These exercises are designed to help you review the concepts and R syntax that you've learned in previous lessons of this tutorial.
+In the following exercises, you will be asked to analyze these data with the eventual goal of investigating whether instructors who are viewed to be better looking receive higher instructional ratings. These exercises are designed to help you review the concepts and SAS syntax that you've learned in previous lessons of this tutorial.
 
 ## Exercise: Beauty in the classroom
 
@@ -16,83 +16,48 @@ In the following exercises, you will be asked to analyze these data with the eve
 
 The purpose of this lesson is to give you an opportunity to apply and practice what you've learned on a real world dataset. For this reason, we'll provide a little less guidance than usual.
 
-Inspect the `evals` data frame using techniques you learned in previous lessons. Use an approach that shows you how many observations and variables are included in the dataset. This data is in the **openintro** package and we will use functions from the **tidyverse** for our analysis. You can read more about the data [here](http://openintrostat.github.io/openintro/reference/evals.html). 
+Make a working copy of the `evals` dataset and take a look at the data, using techniques you learned in previous lessons. Use an approach that shows you how many observations and variables are included in the dataset.  
 
-Note that for the purposes of this analysis we have added an additional variable to the dataset, `cls_type`. This variable classifies classes as small, midsize, or large, depending on the number of students in the class. This was done using the following.
-
-```
-evals <- evals %>%
-  mutate(cls_type = case_when(
-    cls_students <= 18                      ~ "small",
-    cls_students >= 19 & cls_students <= 59 ~ "midsize",
-    cls_students >= 60                      ~ "large"
-    )
-  )
-```
-
+For this analysis, we have added an additional variable to the dataset, `cls_size`. This variable classifies classes as small, midsize, or large, depending on the number of students in the class (`cls_students`). Just for your information, this was done using the following code:
 
 ```
-# Inspect evals
+* Create class size based on number of students;	
+select;
+	when (cls_students <= 18) cls_size = 1;
+	when (cls_students <= 59) cls_size = 2;
+	otherwise cls_size = 3;
+end;
 ```
 
-```
-# Inspect evals
-glimpse(evals)
-
-# Alternative solution
-dim(evals)
-```
+Note that many variables in this dataset, including `cls_size`, are formatted.
 
 ### Identify type of study
 
-```
-quiz(
-  question("What type of study is this?", correct = "How observant! It was an observational study.", allow_retry = TRUE,
-    answer("Observational study", correct = TRUE),
-    answer("Experiment", message = "Try again!")
-    ), caption = "")
-```
-
-### Sampling / experimental attributes
-
-```
-quiz(
-  question("The data from this study were gathered by ___.", correct = "Good!", allow_retry = TRUE,
-    answer("randomly sampling classes", correct = TRUE),
-    answer("randomly sampling students", message = "Try again!"),
-    answer("randomly assigning students to classes", message = "Nope!"),
-    answer("randomly assigning professors to students", message = "Incorrect!")
-    ), caption = "")
-```
+*Based on the description of this dataset above, what type of study would you say generated these data? An observational study or an experimental study? Why?*
 
 ## Variables in the data
 
 Let's take a closer look at each of the variables in the course evaluations dataset.
 
-Remember that using the `glimpse()` function we can obtain a list of the variables and take a peek at the first few observations from each.
+Remember that  the `%glimpse()` macro will output dataset contents, which includes a list of the variables, and will print out the first few observations of the dataset.
 
-```
-# Glimpse the data
-glimpse(evals)
-```
-
-The first variable is the average evaluation score of the professor for a given course. Scores range between 1 and 5 with 1 being a poor evaluation and 5 being an excellent evaluation.
+The main response variable is the average evaluation score (`score`) of the professor for a given course. Scores range between 1 and 5 with 1 being a poor evaluation and 5 being an excellent evaluation.
 
 We are also given the following additional information:
 
-* Whether the professor is a teaching faculty, tenure track faculty, or tenured faculty,
-* Whether they are from a minority group or not.
-* Whether they are male or female.
-* Whether the language of instruction at the university where they received their education was English or not.
-* The age of the professor.
+* Whether the professor is a teaching faculty, tenure track faculty, or tenured faculty (`rank`)
+* Whether they are from a minority group or not (`ethnicity`)
+* Whether they are male or female (`gender`)
+* Whether the language of instruction at the university where they received their education was English or not (`language`)
+* The age of the professor (`age`)
 
-Additionally, we also have a series of variables on the attributes of the class the evaluations came from, such as, percent of students who completed the evaluations, number of students who completed the evaluations, and the total number of students in the class, as well as the level of the course, whether a single professor or multiple professors taught it, and whether the course was a single credit or multi-credit course
+Additionally, we also have a series of variables on the attributes of the class the evaluations came from, such as, percent of students who completed the evaluations (`cls_perc_eval`), number of students who completed the evaluations (`cls_did_eval`), and the total number of students in the class (`cls_students`), as well as the level of the course (`cls_level`), whether a single professor or multiple professors taught it (`cls_profs`), and whether the course was a single credit or multi-credit course  (`cls_credits`).
 
-The attractiveness score of the professors in the sample were determined by six students who were provided photos of the professors to rate. These students were comprised of 1 female student who is lower level, that is first year or sophomore, indicated with f1lower, two female students who are upper level, that is junior or senior, 1 male student who is lower level, and two male students who are upper level. In their scoring 1 indicates a low attractiveness score and 10 a high attractiveness score.
+The attractiveness score (`bty_<various>`) of the professors in the sample were determined by six students who were provided photos of the professors to rate. These students were comprised of 1 female student who is lower level, that is first year or sophomore, indicated with f1lower, two female students who are upper level, that is junior or senior, 1 male student who is lower level, and two male students who are upper level. In their scoring 1 indicates a low attractiveness score and 10 a high attractiveness score.
 
-The average of these scores for each professor is also given.
+The average of these scores (`bty_avg`) for each professor is also given.
 
-These last two variables in the dataset are about the professors' photos: whether the professor was wearing a formal outfit and whether the picture was black and white or in color.
+These last two variables in the dataset are about the professors' photos: whether the professor was wearing a formal outfit (`pic_outfit`) and whether the picture was black and white or in color (`pic_color`).
 
 Now that you are more familiar with the variables in the dataset, you will be asked to determine their types.
 
@@ -100,113 +65,29 @@ Now that you are more familiar with the variables in the dataset, you will be as
 
 It's always useful to start your exploration of a dataset by identifying variable types. The results from this exercise will help you design appropriate visualizations and calculate useful summary statistics later in your analysis.
 
-#### Instruction
-
 - Explore the `evals` data once again with the following goals in mind: (1) Identify each variable as numerical or categorical. (2) If numerical, determine if it is discrete or continuous. (3) If categorical, determine if it is ordinal or not.
-
-- We've created a vector of variable names in the editor called `cat_vars`. To test your understanding of the data, remove the names of any variables that are *not* categorical.
-
-```
-# Inspect variable types
-
-
-# Remove non-factor variables from the vector below
-cat_vars <- c("score", "rank", "ethnicity", "gender", "language", "age",
-              "cls_students", "cls_level", "cls_profs", "cls_credits",
-              "bty_avg", "pic_outfit", "pic_color")
-```
-
-```
-# Inspect variable types
-glimpse(evals)
-
-# Remove non-factor variables from the vector below
-cat_vars <- c("rank", "ethnicity", "gender", "language",
-              "cls_level", "cls_profs", "cls_credits",
-              "pic_outfit", "pic_color")
-```
-
-### Recode a variable
-
-The `cls_students` variable in `evals` tells you the number of students in the class. Suppose instead of the exact number of students, you're interested in whether the class is 
-
-* `"small"` (18 students or fewer), 
-* `"midsize"` (19 - 59 students), or 
-* `"large"` (60 students or more).
-
-- Recode the `cls_students` variable into a new variable, `cls_type`, using `case_when()`. This new variable should have three levels  as  described above. Save the resulting data frame (with the new variable) as `evals`. 
-
-- *What type of variable is `cls_type`?*
-
-```
-# Recode cls_students as cls_type
-evals <- evals %>%
-  mutate(
-    ___ = case_when(
-      ___ ~ "small",
-      ___ ~ "midsize",
-      ___ ~ "large"
-    )
-  )
-```
-
-```
-# Recode cls_students as cls_type
-evals <- evals %>%
-  mutate(
-    cls_type = case_when(
-      cls_students <= 18                      ~ "small",
-      cls_students >= 19 & cls_students <= 59 ~ "midsize",
-      cls_students >= 60                      ~ "large"
-    )
-  )
-```
 
 ### Create a scatterplot
 
 The `bty_avg` variable shows the average beauty rating of the professor by the six students who were asked to rate the attractiveness of these faculty. The `score` variable shows the average professor evaluation score, with 1 being *very unsatisfactory* and 5 being *excellent*.
 
-- Use `ggplot()` to create a scatterplot displaying the relationship between these two variables. 
+Use `PROC SGPLOT` to create a scatterplot displaying the relationship between these two variables. 
 
 - *How would you describe the relationship apparent in this visualization?*
-
-```
-# Scatterplot of score vs. bty_avg
-___(evals, ___) +
-  ___
-```
-
-```
-# Scatterplot of score vs. bty_avg
-ggplot(evals, aes(x = bty_avg, y = score)) +
-  geom_point()
-```
 
 ### Create a scatterplot, with an added layer
 
 Suppose you are interested in evaluating how the relationship between a professor's attractiveness and their evaluation score varies across different class types (small, midsize, and large).
 
-- Recreate your visualization from the previous exercise, but this time color the points by class type.
+Recreate your visualization from the previous exercise, but this time color the points by class type.
 
 - *How would you describe the relationship apparent in this visualization?*
-
-```
-# Scatterplot of score vs. bty_avg colored by cls_type
-___(evals, ___) +
-  ___
-```
-
-```
-# Scatterplot of score vs. bty_avg colored by cls_type
-ggplot(evals, aes(x = bty_avg, y = score, color = cls_type)) +
-  geom_point()
-```
 
 ## Congratulations!
 
 You have successfully completed all of the lessons in Tutorial 1: Getting Started with Data.
 
-You now know how to get started with data analysis! In this tutorial you have learned concepts and terminology related to study design and the first steps of working with a dataset. We have also laid the foundation for using certain R packages, like dplyr for data wrangling and ggplot2 for data visualization.
+You now know how to get started with data analysis! In this tutorial you have learned concepts and terminology related to study design and the first steps of working with a dataset. We have also laid some SAS foundations.
 
 We hope you enjoyed the tutorial and that the topics we discussed in this tutorial motivated you to learn more data analysis and statistics. What we covered in this tutorial is just the tip of the iceberg, so we hope you decide to dive deeper to learn more.
 

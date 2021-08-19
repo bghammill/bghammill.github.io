@@ -24,35 +24,26 @@ In this tutorial, we focus on steps 1 and 2 of this process. In future tutorials
 
 ### 1 - [Language of data](https://bghammill.github.io/ims-01-data/ims-01-lesson-01/)
 
-- Load data from the textbook companion package
-- Introduce data frames and tidy data
-- Discuss variable types connecting terminology from textbook to R
-- Mutate data frames to convert data types
-  - Numerical to categorical conversion
-  - Filtering and then drop levels
-  - Combine levels of categorical
-  - Create new variable based on two existing variables (e.g. BMI)
+- Load data from the course library within the [SAS On-Demand](https://welcome.oda.sas.com/home) environment
+- Introduce datasets
+- Discuss variable types connecting terminology from textbook to SAS
+- Perform basic data manipulation
 
 ### 2 - [Types of studies](https://bghammill.github.io/ims-01-data/ims-01-lesson-02/)
 
 - Define observational studies and experiments
 - Discuss scope of inference 2x2 grid with random assignment and sampling
-- Define Simpson’s paradox in a 2 cat var case
-  - Use R to make a contingency table
-  - `group_by()` third variable and make table again to demonstrate Simpson’s paradox
+- Define Simpson’s paradox in a case with 2 categorical variables
+  - Use SAS to make a 2-way contingency table
+  - Use SAS to make a 3-way contingency table to demonstrate Simpson’s paradox
 
 ### 3 - [Sampling strategies and experimental design](https://bghammill.github.io/ims-01-data/ims-01-lesson-03/)
 
-- Define simple random sample, stratified sample, cluster sample, multistage sample
-- Use R to obtain SRS and stratified sample
-  - `slice_sample()`
-  - `group_by()` %>% `slice_sample()`
+- Define simple random sampling, stratified sampling, cluster sampling, multistage sampling
+- Use SAS to obtain different types of samples
 - Discuss benefits and drawbacks of choosing one sampling scheme over another
-- Identify the principles of experimental design
+- Identify and discuss the purpose of each principle of experimental design
 - Discuss the purpose of each principle
-- Use R to do random assignment and random assignment after blocking
-  - `slice_sample()`
-  - `group_by()` %>% `slice_sample()`
 
 ### 4 - [Case study](https://bghammill.github.io/ims-01-data/ims-01-lesson-04/)
 

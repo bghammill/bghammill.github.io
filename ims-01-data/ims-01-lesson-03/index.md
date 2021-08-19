@@ -16,19 +16,13 @@ If you think about it, sampling is actually quite natural.
 
 ### Sampling is natural
 
-Think about something you are cooking we taste or in other words examine a small part of what we're cooking to get an idea about the dish as a whole. After all, we would never eat a whole pot of soup just to check its taste.
+Think about cooking, you might taste the dish to see if it's properly seasons. In other words, you examine a small part of what we're cooking in order to get an idea about the dish as a whole. After all, we would never eat a whole pot of soup just to check its taste.
 
-When you taste a spoonful of soup and decide the spoonful you tasted isn't salty enough, what you're doing is simply exploratory analysis for the sample at hand.
+When you taste a spoonful of soup and decide the spoonful you tasted isn't salty enough, what you're doing is, essentially, exploratory analysis on a sample. If you then generalize and conclude that your entire soup needs salt, that's making an inference.
 
-If you then generalize and conclude that your entire soup needs salt, that's making an inference.
+For any inference to be valid, the sample that is analyzed (the spoonful you tasted) needs to be representative of the entire population (the whole pot of soup). If your spoonful comes only from the surface and the salt is collected at the bottom of the pot, what you tasted is probably not going to be representative of the whole pot. On the other hand, if you first stir the soup thoroughly before you taste, your spoonful will more likely be representative of the whole pot.
 
-For your inference to be valid, the spoonful you tasted, your sample, needs to be representative of the entire pot, your population.
-
-If your spoonful comes only from the surface and the salt is collected at the bottom of the pot, what you tasted is probably not going to be representative of the whole pot.
-
-On the other hand, if you first stir the soup thoroughly before you taste, your spoonful will more likely be representative of the whole pot.
-
-Sampling data is a bit different than sampling soup though. So next, we'll introduce a few commonly used sampling methods: simple random sampling, stratified sampling, cluster sampling, and multistage sampling.
+Sampling data is a bit different than sampling soup, though. So next, we'll introduce a few commonly used sampling methods: simple random sampling, stratified sampling, cluster sampling, and multistage sampling.
 
 ### Simple random sample
 
@@ -62,195 +56,142 @@ Time to put these concepts into practice!
 
 ### Sampling strategies, determine which
 
-A consulting company is planning a pilot study on marketing in Boston. They identify the zip codes that make up the greater Boston area, then sample 50 randomly selected addresses from each zip code and mail a coupon to these addresses. They then track whether the coupon was used in the following month.
+A consulting company is planning a pilot study on marketing in Boston. They identify all the zip codes that make up the greater Boston area, then sample 50 randomly selected addresses from each zip code and mail a coupon to these addresses. They then track whether the coupon was used in the following month.
 
-```
-quiz(
-  question("What sampling strategy has this company used?", correct = "Nice! Let's continue to the next exercise.", allow_retry = TRUE,
-    answer("Simple random sample", message = "Try again. The company is dividing the Boston area by zip code."),
-    answer("Stratified sample", correct = TRUE),
-    answer("Cluster sample", message = "Hmm, not quite. The company isn't sampling all the houses in each zip code."), 
-    answer("Multistage sample", message = "Not quite! The company is sampling 50 addresses from each zip code.") ), 
-  caption = "")
-```
+*What sampling strategy has this company used?* 
 
 ### Sampling strategies, choose worst
 
-A school district has requested a survey be conducted on the socioeconomic status of their students. Their budget only allows them to conduct the survey in some of the schools, hence they need to first sample a few schools. 
+A school district has requested a survey be conducted on the socioeconomic status of their students. Their budget does not allow for a census, so they need to sample students within the school district. 
 
-Students living in this district generally attend a school in their neighbourhood. The district is broken into many distinct and unique neighbourhoods, some including large single-family homes and others with only low-income housing. 
+Students living in this district generally attend a school in their neighborhood. The district is broken into many distinct and unique neighborhoods, some including large single-family homes and others with only low-income housing. 
 
-```
-quiz(
-  question("Which approach would likely be the **least effective** for selecting the schools where the survey will be conducted?", correct = "Nice job! This sampling strategy would be a bad idea because each neighborhood has a unique socioeconomic status. A good study would collect information about every neighborhood.", allow_retry = TRUE,
-    answer("Simple random sample", message = "Incorrect!"),
-    answer("Stratified sampling, where each stratum is a neighborhood", message = "Try again. Remember, the socioeconomic status of each neighborhood is unique."), 
-    answer("Cluster sampling, where each cluster is a neighborhood", correct = TRUE) ), 
-  caption = "")
-```
+*Which sample strategy would likely be the most effective for selecting the students to sample? If a cluster-based or stratified strategy is best, what is the cluster/strata they should use?*
 
-## Sampling in R
+## Sampling in SAS
 
-In this section, we'll practice sampling in R.
+In this section, we'll practice sampling in SAS.
 
-Suppose we want to collect data from counties in the United States, but we do not have the resources to obtain these data from all counties. Conveniently, however, we do have a list of all counties. This is publicly available information and is contained in the `county` dataset in the **usdata** package. You can read more about the data [here](https://openintrostat.github.io/usdata/reference/county.html). 
+Suppose we want to collect data from counties in the United States, but we do not have the resources to obtain these data from all counties. Conveniently, however, we do have a list of all counties. This is publicly available information and is contained in the `county` dataset. 
 
 ### Setup
 
-So, let's start by loading the necessary packages with the `library()` function. We need the **usdata** package for the relevant data frame and the **tidyverse** package for the sampling and grouping functions we'll introduce shortly.
+Let's start by initializing the SAS environment and loading/checking  the `county` dataset. 
 
 ```
-library(usdata)
-library(tidyverse)
+* Initialize things if you have not done this already during this SAS session;
+%include "~/my_shared_file_links/hammi002/sasprog/run_first.sas";
+
+* Makes and checks a working copy of COUNTY data;
+%use_data(county);
+%glimpse(county);
 ```
 
-Next we'll work with the `county` data from the usdata package.
+This dataset contains data from counties in all 50 states plus the District of Columbia (DC). Since DC is not a state by definition, we'll first remove it from the dataset. We can do this by useing a `where` statement to the input dataset while creating a new dataset.
 
-This data frame contains data from counties in all 50 states plus the District of Columbia, or DC, as it's commonly referred to. Since DC is not a state by definition, we'll first remove it from the dataset. We can do this with the `filter()` function that you learned about earlier in these tutorials.
-
-That is, we will create a new data frame, called `county_noDC` that `filter()`s out the observation where state is DC. Notice that to filter DC out of the data frame we are using `!=`. You can think of the `!` as negating what comes after it. Here, the `!` negates the `=` sign, meaning we want the `state` to **not** be equal to the District of Columbia. 
-
-We'll also `droplevels()` for good measure, so that the level District of Columbia is removed completely from the data frame.
+But first, did you notice in the `PROC CONTENTS` output that the `state` variable is formatted? That means we need to know the code that is associated with DC in the data. The best way to do that is to do a `PROC FREQ` on the `state` variable, as:
 
 ```
-county_noDC <- county %>%
-  filter(state != "District of Columbia") %>%
-  droplevels()
+* Check distribution of STATE in these data;
+proc freq data=county;
+	tables state / missing;
+run;
+```
+
+What code is associated with DC? Now let's use that code when creating a new dataset, `county_nodc`. We'll also check the new dataset to ensure this worked.
+
+```
+* Create new datset without DC;
+data county_nodc;
+	set county;
+	where state ne 9;
+run;
+
+* Check new dataset and confirm DC was dropped;
+%glimpse(county_nodc);
+
+proc freq data=county_nodc;
+	tables state / missing;
+run;
 ```
 
 ### Simple random sample
 
-Suppose our limited resources require that we collect data from only _150_ of the over _3000_ counties in the United States.
+Suppose our limited resources require that we collect data from only _150_ of the over _3000_ counties in the United States. One option is to take a simple random sample. We will use  `PROC SURVEYSELECT` to do this.
 
-One option is to take a simple random sample. We will use the `slice_sample()` function in dplyr (a package included in the tidyverse) to do this.
-
-We start with the `county_noDC` data frame and pipe it into the `slice_sample()` function, setting the size (`n`) argument to 150. We will call the data frame containing this simple random sample *`county_srs`*.
+We start with the `county_nodc` dataset, use simple random sampling (`method=srs`), take one sample (`reps=1`) with 150 counties (`sampsize=150`), and save it in the new `county_srs`  dataset. 
 
 ```
-# Simple random sample of 150 counties
-county_srs <- county_noDC %>%
-  slice_sample(n = 150)
+* Get simple random sample of 150 counties and check output;
+proc surveyselect data=county_nodc method=srs reps=1 sampsize=150 out=county_srs;
+	id _all_;
+run;
 
-# Glimpse
-glimpse(county_srs)
+%glimpse(county_srs)
 ```
 
-A quick `glimpse()` shows that there are indeed _150_ observations in this data frame. Note that your sample will look different than someone else's sample, even though you're running the exact same code. We are taking a random sample here, so your sample will be different than mine, just by random chance. However, the sample size should be the same since that is something we specified in the `slice_sample()` function.
+We can see that there are indeed 150 observations in this data frame. Note that your sample will look different than someone else's sample, even though you're running the exact same code. We are taking a random sample here, so your sample will be different than others, just by random chance. However, the sample size should be the same, since that is something we specified.
 
 ### SRS state distribution
 
 If our goal was to take a sample of any 150 counties, we have accomplished this goal. However, if we wanted to obtain equal numbers of counties from each state (that is, three counties per state) a simple random sample won't ensure that.
 
-We can confirm this by counting the number of counties per state. 
-
-To do so we will start with the `county_srs` data frame: first group these data by state, then count the number of observations per state.
+We can confirm this by checking how many records from each state appear in the `county_srs` dataset: 
 
 ```
-# State distribution of SRS counties
-county_srs %>%
-  group_by(state) %>%
-  count()
+* Check distribution of STATE in these data;
+proc freq data=county_srs;
+	tables state / missing;
+run;
 ```
 
-The resulting output shows that this sampling approach yielded data from less than _50_ states and the number of counties sampled varies from state to state.
-
-If we instead want to sample three counties per state to make up our sample of 150 counties, we should use stratified sampling.
+The resulting output shows that this sampling approach yields a variable number of counties in each state, and even that some states were not sampled at all. If we instead want to sample three counties per state to make up our sample of 150 counties, we should use stratified sampling.
 
 ### Stratified sample
 
-The code looks very similar to how we selected the simple random sample, except that *before* sampling we __first__ group by state and __then sample__ three observations per group.
+The code looks very similar to how we selected the simple random sample, except we have indicated a strata within which to sample, and changed requested *within-strata* sample size to 3 (`n=3`). With 50 states, this should give us 150 total sampled counties. 
 
-A quick glimpse at the resulting data frame confirms that we indeed have _150_ observations in this sample.
-
-```
-# Stratified sample of 150 counties, each state is a stratum
-county_str <- county_noDC %>%
-  group_by(state) %>%
-  slice_sample(n = 3)
-
-# Glimpse
-glimpse(county_str)
-```
-
-Now it's your turn to take a sample!
-
-### Exercise: Simple random sample in R
-
-Suppose we want to collect some data from a sample of eight states. A list of all states and the region they belong to (Northeast, Midwest, South, West) are given in the `us_regions` data frame.
-
-The dplyr package and `us_regions` data frame have been loaded.
-
-- Use simple random sampling to select eight states from `us_regions`. Save this sample in a data frame called `states_srs`.
-
-- Count the number of states from each region in your sample.
+Let's run this sampling and check the state distribution:
 
 ```
-# Simple random sample: states_srs
-states_srs <- ___ %>%
-  ___
+*  Get stratified random sample of 150 counties and check output;
+proc surveyselect data=county_nodc method=srs reps=1 n=3 out=county_strat;
+	strata state;
+	id _all_;
+run;
 
-# Count states by region
-states_srs %>%
-  ___(___)
+%glimpse(county_strat);
+
+* Check distribution of STATE in these data;
+proc freq data=county_strat;
+	tables state / missing;
+run;
 ```
 
-```
-# Simple random sample
-states_srs <- us_regions %>%
-  slice_sample(n = 8)
+The resulting output shows that this sampling approach yields 150 counties, with 3 counties coming from each state.
 
-# Count states by region
-states_srs %>%
-  count(region)
-```
+### Cluster sample
 
-### Exercise: Stratified sample in R
+Just to give you a sense about what cluster sampling looks like, let's change the scenario by requesting a sample of all counties within 5 random states. This code, again, looks similar to above, except instead of a `strata state` statement, we have used a `cluster state` statement. This minor change requests SAS to sample states, not counties. It will, in fact, select all counties within `n=5` states. 
 
-In the previous exercise, we took a simple random sample of eight states. However, we did not have any control over how many states from each region got sampled. The goal of stratified sampling in this context is to have control over the number of states sampled from each region. Our goal for this exercise is to sample an equal number of states from each region.
-
-The dplyr package has been loaded and `us_regions` is still available in your workspace.
-
-For this exercise you should use stratified sampling to select a total of eight states, two from each stratum, where each stratum is a region of the country. We can break this down into three steps: 
-
-1. group the dataset by region (using `group_by()`) 
-2. sample two states from each region (using `slice_sample()`)
-3. save the sample in a new data frame called `states_str` (using `<-` -- the assignment arrow).
-
-
-Once you've collected your sample, count the number of states from each region 
-in your sample to confirm that each region is represented equally in your sample.
+Let's run this sampling and check the state distribution:
 
 ```
-# Stratified sample
-states_str <- ___ %>%
-  group_by(___) %>%
-  slice_sample(___)
+* Get cluster sample of 5 states and check output;
+proc surveyselect data=county_nodc method=srs reps=1 n=5 out=county_clus;
+	cluster state;
+	id _all_;
+run;
 
-# Use the states_str data to count states by region
-___ %>%
-  ___
+%glimpse(county_clus);
+
+* Check distribution of STATE in these data;
+proc freq data=county_clus;
+	tables state / missing;
+run;
 ```
 
-```
-# Stratified sample
-states_str <- us_regions %>%
-  group_by(region) %>%
-  slice_sample(n = 2)
-
-# Count states by region
-states_str %>%
-  count(region)
-```
-
-### Exercise: Compare SRS vs. stratified sample
-
-
-```
-quiz(
-  question("Which method you implemented, simple random sampling or stratified sampling, ensured an equal number of states from each region?", correct = "Super! Simple random sampling would result in different amounts of data being sampled from each state.", allow_retry = TRUE,
-    answer("Simple random sampling", message = "Try again!"),
-    answer("Stratified sampling", correct = TRUE)), caption = "")
-```
+For me, the resulting output shows that this sampling approach yielded 277 counties from 5 states. The number of counties in your sample will differ because the 5 selected states will differ. What we can be pretty sure of, however, is that we will most likely not end up with 150 counties. To do this would require multistage sampling, the code for which is beyond the scope of this tutorial.
 
 ## Principles of experimental design
 
@@ -262,14 +203,14 @@ To **randomize** means to randomly assign subjects to treatments.
 
 To **replicate** means to collect a sufficiently large sample within a study or to replicate the entire study.
 
-And the last principle of experimental design is **blocking**. The goal of blocking is to account for the potential effect of known or suspected confounding variables. We do this by first grouping subjects into blocks based on these variables and then randomizing them within each block to treatment groups.
+To **block** means to to account for the potential effect of known or suspected confounding variables by first grouping subjects into blocks based on these variables, then randomizing subjects within each block to treatment groups.
 
 Let's discuss blocking a bit more.
 
 ### Design a study, with blocking
 
 
-We would like to design an experiment to investigate whether students learn the R language better in a traditional lecture based course or using an interactive online learning platform. Two courses that teach the exact same material are designed and the only difference between these courses is the method of delivery: traditional lecture or interactive online.
+We would like to design an experiment to investigate whether students learn the SAS language better in a traditional lecture based course or using an interactive online learning platform. Two courses that teach the exact same material are designed and the only difference between these courses is the method of delivery: traditional lecture or interactive online.
 
 We sample a group of students for our study that we will randomly assign to these two courses.
 
@@ -291,40 +232,26 @@ Now it's time to practice these experimental design concepts.
 
 A researcher designs a study to test the effect of light and noise levels on exam performance of students. The researcher also believes that light and noise levels might have different effects on males and females, so she wants to make sure both sexes are represented equally under different conditions.
 
-```
-quiz(
-  question("Which of the below is correct?", correct = "Nice job!", allow_retry = TRUE,
-    answer("There are 3 explanatory variables (light, noise, sex) and 1 response variable (exam performance).", message = "Close, but sex is thought to be a confounding variable, not an explanatory one!"),
-    answer("There is 1 explanatory variable (sex) and 3 response variables (light, noise, exam performance).", message = "Not quite!"),
-    answer("There are 2 blocking variables (light and noise), 1 explanatory variable (sex), and 1 response variable (exam performance).", message = "Incorrect!"),
-    answer("There are 2 explanatory variables (light and noise), 1 blocking variable (sex), and 1 response variable (exam performance).", correct = TRUE)), caption = "")
-```
+*Which of the statements below is correct?*
+
+* There are 3 explanatory variables (light, noise, sex) and 1 response variable (exam performance).
+* There is 1 explanatory variable (sex) and 3 response variables (light, noise, exam performance).
+* There are 2 blocking variables (light and noise), 1 explanatory variable (sex), and 1 response variable (exam performance).
+* There are 2 explanatory variables (light and noise), 1 blocking variable (sex), and 1 response variable (exam performance).
 
 ### Experimental design terminology
 
-___ variables are conditions you can impose on the experimental units, while ___ variables are characteristics that the experimental units come with that you would like to control for.
+As a check of understanding...
 
-```
-quiz(
-  question("", correct = "Nice job!", allow_retry = TRUE,
-    answer("Blocking, explanatory", message = "Not quite!"),
-    answer("Explanatory, blocking", correct = TRUE),
-    answer("Control, treatment", message = "Nope, try again!"),
-    answer("Treatment, control", message = "Try again!")), caption = "")
-```
+*What type of variables represent conditions you can impose on the experimental unites? Explanatory variables, response variables, or blocking variables.*
 
-### Connect blocking and stratifying
+*What type of variables represent characteristics of experimental units that you would like to control for? Explanatory variables, response variables, or blocking variables.*
 
-In random sampling, we use ___ to control for a variable. In random assignment, we use ___ to achieve the same goal.
+And to connect the concepts of stratification and blocking...
 
-```
-quiz(
-  question("", correct = "Correct!", allow_retry = TRUE,
-    answer("stratifying, blocking", correct = TRUE),
-    answer("blocking, stratifying", message = "Incorrect!"),
-    answer("confounding, stratifying", message = "Not quite!"),
-    answer("confounding, blocking", message = "Try again!")), caption = "")
-```
+*Which strategy do we use to control for a variable in random sampling? Stratification or blocking?*
+
+*Which strategy do we use to control for a variable in random assignment? Stratification or blocking?*
 
 
 ## Congratulations!
