@@ -16,7 +16,7 @@ When your dataset is represented as a table or a database, it’s difficult to o
 
 ### 1 - [Visualizing categorical data](https://bghammill.github.io/ims-02-explore/ims-02-lesson-01/)
 
-Creating graphical and numerical summaries of two categorical variables, primarily using two R packages: ggplot2 and dplyr.
+Creating graphical and numerical summaries of two categorical variables, primarily using two SAS procedures: `PROC FREQ` and `PROC  SGPLOT`.
 
 - Graphical representation two categorical variables
   - Side-by-side bar charts
@@ -35,13 +35,13 @@ Creating graphical and numerical summaries of two categorical variables, primari
 
 ### 2 - [Visualizing numerical data](https://bghammill.github.io/ims-02-explore/ims-02-lesson-02/)
 
-Learn useful statistics for describing distributions of data.
+Learn useful statistics for describing distributions of numerical data.
 
 - Graphical representation of one categorical and one numerical variable
 - Side-by-side boxplots
 - Faceted histograms
 - Colored density curves
-- Graphical representation of one numerical var
+- Graphical representation of one numerical variable
 - Marginal vs conditioning
 - Histogram
 - binwidth

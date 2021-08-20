@@ -4,9 +4,9 @@ In this tutorial we'll learn about summarizing and visualizing data.  Sometimes,
 
 EDA is all about learning the structure of a dataset through a series of numerical and graphical techniques. When you do EDA, you'll look for both general trends and interesting outliers in your data. You'll also generate questions that will help inform subsequent analysis.
 
-The emphasis of the first two lessons is on visualization: how to create and interpret graphical displays of your data. The third lesson focuses on numerical summaries of distributions and utilizes a simple, but powerful coding paradigm in R. We end with a case study that will allow you to synthesize these concepts and apply them to a more complex dataset that contains information on the characteristics of email that are associated with it being spam.
+The emphasis of the first two lessons is on visualization: how to create and interpret graphical displays of your data. The third lesson focuses on numerical summaries of distributions. We end with a case study that will allow you to synthesize these concepts and apply them to a more complex dataset that contains information on the characteristics of email that are associated with it being spam.
 
-Before beginning the tutorial, we recommend you have some exposure to the R language and that you've taken the Getting Started with Data tutorial in this series.
+Before beginning the tutorial, we recommend you have some exposure to the SAS language and that you've taken the Getting Started with Data tutorial in this series.
 
 Let's get started.
 
@@ -14,416 +14,201 @@ Let's get started.
 
 In this tutorial, you'll be exploring data from a wide range of contexts. The first dataset comes from comic books. Two publishers, Marvel and DC, have created a host of superheroes that have made their way into popular culture. You're probably familiar with Batman and Spiderman, but what about Mor the Mighty?
 
-The comics dataset has information on all comic characters that have been introduced by DC and Marvel. If we type the name of the dataset at the console, we get the first few rows and columns. Here we see that each row, or case, is a different character and each column, or variable, is a different observation made about that character. At the top the output tell us the dimensions of this dataset: over 23,000 cases and 11 variables. Right under the variable names, we see that the first three variables are characters, or the `chr` data type. These are variables that we could potentially consider categorical, as they all have a finite number of levels. The first case in the dataset is Peter Parker, alias: Spiderman, where his alias and character name are included in the first variable `name`. The second column, `id`, shows that Peter Parker's personal identity is kept secret, and the third column tell us that his `align`ment is good; that he's a superhero, not a super villain. If you scroll the table to the right side, you will see several additional variables, including eye color and hair color, almost all of which are also characters.
+The comics dataset has information on all comic characters that have been introduced by DC and Marvel. Let's make a working copy of that dataset and check it out:
 
 ```
-comics 
+* Initialize things if you have not done this already during this SAS session;
+%include "~/my_shared_file_links/hammi002/sasprog/run_first.sas";
+
+* Makes and checks a working copy of COMICS data;
+%use_data(comics);
+%glimpse(comics);
 ```
 
-We can learn the different values of a particular character variable by using the `distinct()` function. It's clear that the alignment variable can be "good" or "neutral", but what other values are possible? Here, we pipe the `comics` data into the `distinct()` function, and then insert the `align` column into the `distinct()` function. Inspecting the resulting table, we learn that there are in fact four possible alignments, "Good", "Bad", "Neutral", and "Reformed criminals". 
+We see that each row, or observation, is a different character and each column, or variable, is a different piece of information about that character. The top the output tells us the dimensions of this dataset: over 23,000 observations and 11 variables. In the variable list, we see that many are character types, which may indicate that they are categorical variables.
+
+The first row in the dataset is Peter Parker, alias: Spiderman, where his alias and character name are included in the first variable `name`. The second column, `id`, shows that Peter Parker's personal identity is kept secret, and the third column tell us that his `align`ment is good; that he's a superhero, not a super villain. If you scroll the table to the right side, you will see several additional variables, including eye color and hair color.
+
+We can learn the different values of a particular character variable by using `PROC FREQ` to generate tables for each variable. It's clear that the alignment variable can be "good" or "neutral", but what other values are possible?  
 
 ```
-comics %>% 
-  distinct(align)
+* Check distribution of ALIGN variable;
+proc freq data=comics;
+	tables align / missing;
+run;
 ```
 
-Good thing we checked that! If we do the same for identity, we learn that there are four possible identities.
+Inspecting the resulting table, we learn that there are in fact four possible alignments, "Good", "Bad", "Neutral", and "Reformed criminals". Good thing we checked that! .
+
+If we do the same for identity, we learn that there are four possible identities.
 
 ```
-comics %>% 
-  distinct(id)
+* Check distribution of ID variable;
+proc freq data=comics;
+	tables id / missing;
+run;
 ```
 
-A common way to represent the number of cases that fall into each combination of levels of two categorical variables, such as these, is with what's called a "contingency table." Creating a contingency table requires three steps: 
+Also note, based on the output so far, that this is the first dataset we've worked with that has some missing data. For this tutorial, we will generally ignore missing data and just report percentages and generate figures for non-missing data. In practice, you'll want to consult a statistician about how best to handle missing data in analyses
 
-1. use the `count()` function to count the number of observations
-2. specify the variables you are interested in **inside** the `count()` function
-3. pivot the table from its current "long" format to a "wide" format using the `pivot_wider()` function 
-
-This is what the process looks like:
+A common way to represent the number of cases that fall into each combination of levels of two categorical variables, such as these, is with what's called a "contingency table." Creating a contingency table is a simple extension of the `PROC FREQ` code above: 
 
 ```
-# to get the long table
-comics %>% 
-  count(align, id)
-  
-# to get a wider table
-comics %>% 
-  count(align, id) %>% 
-  pivot_wider(names_from = id, values_from = n)
+* Check counts of ALIGN by ID variables;
+proc freq data=comics;
+	tables align * id / norow nopct nocol;
+run;
 ```
 
-The first two steps should look familiar to you, but the third step is a bit overwhelming. What we are trying to accomplish is to take the long table that is output from the `count()` function and make it into a format that is more familiar.
+Some things to notice about this code:
 
-We want for the values of `align` to be in the rows and the values of `id` to be in the columns. We can use the `pivot_wider()` function to "pivot" our table so that it has this form, by moving the `id` variable to the columns, and filling the values of the table with the count variable (`n`). The `names_from` argument tells R where the names of the new columns are coming from (i.e. what variable), and the `values_from` argument tells R where the values in the table are coming from. Here, the values we want in our table are stored as a variable labeled `n` in our table. 
+* We list `align` first because we want that variable to be our row variable
+* We list `id` second, because we want that variable to be our column variable
+* We added the `norow`, `nopct`, and `nocol` options here since we only wanted to look at counts for now (no percentages) 
+* We have removed the `missing` option, so we get the counts only for characters where information on both variables is known. In this case, SAS does tell us how many observations were excluded due to missing data, at the bottom of the table, but does not included those records in the cell counts above.
 
-```
-comics %>% 
-  count(align, id) %>% 
-  pivot_wider(names_from = id, values_from = n) %>% 
-  kable() %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")       
-```
+The output tells us that the most common category, at a count of 4492, was characters with "Bad" alignment with "Secret" identities.
 
-The output tells us that the most common category, at a count of 4493, was "Bad" characters with "Secret" identities.
+While tables of counts can be useful, you can get the bigger picture by translating these counts into a graphic. The graphics that you'll be making in this tutorial utilize `PROC SGPLOT`, which you saw in the previous tutorial. 
 
-While tables of counts can be useful, you can get the bigger picture by translating these counts into a graphic. The graphics that you'll be making in this tutorial utilize the **ggplot2** package, which you got a glimpse of in the previous tutorial. Every ggplot requires that you specify three elements: 
-
-1. the dataset
-2. how the variables you are interested in are plotted (aesthetically)
-3. layers that describe how the data are represented (e.g. points, lines, histograms)
-
-Generally, your `ggplot()` will look something like this, where the dataset is the first argument in the `ggplot()` function. Next, the variables we are interested in plotting are found inside the the `aes()` function, which stands for aesthetics. Finally, we specify the `geom` function to use when plotting the data. 
+Here, we're interested in the relationship between two categorical variables, which is represented well by a stacked bar chart. In a bar chart, we plot the counts or frequencies of different levels of a categorical variable, by specifying the categorical variable we want to be on the x-axis: 
 
 ```
-ggplot(data = [DATASET], aes(x = [X VARIABLE], 
-                             y = [Y VARIABLE], 
-                             fill = [COLOR VARIABLE])) +
-  geom_***()     
+* Simple bar chart of ID;
+proc sgplot data=comics;
+	vbar id;
+run;
 ```
 
-Here, we're interested in the relationship between two categorical variables, which is represented well by a stacked bar chart. In a bar chart, we plot the counts or frequencies of different levels of a categorical variable, by specifying the categorical variable we want to be on the x-axis, and adding a `geom_bar()` layer to the plot. 
+A stacked bar chart adds another layer to the plot, by dividing each bar into different levels of another variable. This coloring of the bars comes from adding a group variable to the `vbar` statement above: 
 
 ```
-ggplot(comics, aes(x = id)) +
-  geom_bar() 
-```
-
-A stacked bar chart adds another layer to the plot, by dividing each bar into different levels of another variable. This coloring of the bars comes from adding a second categorical variable into the `fill` argument of the `aes()` function. This looks something like this: 
-
-```
-ggplot(comics, aes(x = id, fill = align)) +
-  geom_bar() 
+* Stacked bar chart of ID, with categories of alignment;
+proc sgplot data=comics;
+	vbar id / group=align;
+run;
 ```
 
 Let's look carefully at how this is constructed: each colored bar segment actually corresponds to a count in our table, with the x-axis and the fill color indicating the category being plotted. Several things pop out, like the fact that there are very few characters whose identities are unknown (since it's nearly flat). The single largest bar segment corresponds to the most common category: characters with secret identities that are also bad. We can look across the identity types and realize that bad is not always the largest category. This indicates that there is indeed an association between alignment and identity.
-
-```
-ggplot(comics, aes(x = id, fill = align)) +
-    geom_bar()
-```
 
 That should be enough to get started. Now it's your turn to start exploring the data.
 
 ### Bar chart expectations
 
-Suppose you've asked 30 people, some young, some old, what their preferred flavor of pie is: apple or pumpkin. Your data could be summarized in a side-by-side barchart. Here are three possibilities for how it might look.
+Suppose you've asked 30 people, some young, some old, what their preferred flavor of pie is: apple or pumpkin. Your data could be summarized in a side-by-side bar chart. Here are three possibilities for how it might look.
 
-```
-d1 <- data.frame(age = rep(c("young", "old"), c(10, 20)),
-                 flavor = c(rep(c("apple", "pumpkin"), c(5, 5)), 
-                            rep(c("apple", "pumpkin"), c(10, 10))))
-d2 <- data.frame(age = rep(c("young", "old"), c(18, 18)),
-                 flavor = c(rep(c("apple", "pumpkin"), c(7, 11)),
-                            rep(c("apple", "pumpkin"), c(11, 7))))
-d3 <- data.frame(age = rep(c("young", "old"), c(12, 18)),
-                 flavor = c(rep(c("apple", "pumpkin"), c(2, 10)), 
-                            rep(c("apple", "pumpkin"), c(8, 10))))
-p1 <- ggplot(d1, aes(x = age, fill = flavor)) + 
-  geom_bar() + 
-  ggtitle("Plot 1")
-p2 <- ggplot(d2, aes(x = age, fill = flavor)) + 
-  geom_bar() + 
-  ggtitle("Plot 2")
-p3 <- ggplot(d3, aes(x = age, fill = flavor)) + 
-  geom_bar() + 
-  ggtitle("Plot 3")
-grid.arrange(p1, p2, p3, ncol = 3)
-```
+![](images/premch1-1.png)
 
+*Which one of the barcharts shows no relationship between `age` and `flavor`? In other words, which plot shows that pie preference is the same for both young and old?*
 
-```
-question("Which one of the barcharts shows no relationship between `age` and `flavor`? In other words, which plot shows that pie preference is the same for both young and old?",
-  answer("Plot 1", correct = TRUE, message = "Nice one!"),
-  answer("Plot 2", message = "Hmm, looks like the old prefer apple pies and the young prefer pumpkin pies in Plot 2."),
-  answer("Plot 3", message = "Looks like the young really prefer pumpkin pies over apple pies in Plot 3!"),
-  allow_retry = TRUE
-)
-```
-
-<div id="hsb2-mutate-num-char-cat-hint">
 **Hint:** Which plot shows a similar *proportion* of people who like apple (or pumpkin) pies in each of the two age groups?
-</div>
-
 
 ### Contingency table review
 
-In this lesson you'll continue working with the `comics` dataset introduced previously. This is a collection of characteristics on all of the superheroes created by Marvel and DC comics in the last 80 years.
-
-Let's start by creating a contingency table, which is a useful way to represent the total counts of observations that fall into each combination of the levels of categorical variables. Make sure the contingency table has the different levels of `gender` in the rows, and the different levels of `align` in the columns. 
+Let's continue working with the `comics` dataset to create a different contingency table, which is a useful way to represent the total counts of observations that fall into each combination of the levels of categorical variables. Make sure the contingency table has the different levels of `gender` in the rows, and the different levels of `align` in the columns. 
 
 ```
-# Print the first rows of the data
-# Check levels of align
-comics %>% 
-  distinct(___)
-# Check the levels of gender
-# Create a 2-way contingency table
-```
-
-```
-# Print the first rows of the data
-glimpse(comics)
-# Check levels of align
-comics %>% 
-  distinct(___)
-# Check the levels of gender
-# Create a 2-way contingency table
-```
-
-```
-# Print the first rows of the data
-glimpse(comics)
-# Check levels of align
-comics %>% 
-  distinct(align)
-# Check the levels of gender
-comics %>% 
-  distinct(gender)
-# Create a 2-way contingency table
-```
-
-```
-# Print the first rows of the data
-comics
-# Check levels of align
-comics %>% 
-  distinct(align)
-# Check the levels of gender
-comics %>% 
-  distinct(gender)
-# Create a 2-way contingency table
-comics %>%
-  count(align, gender) %>% 
-  pivot_wider(names_from = align, values_from = n)
+* Check counts of GENDER by ALIGN variables;
+proc freq data=comics;
+	tables gender * align / norow nopct nocol;
+run;
 ```
 
 ### Dropping levels
 
-The contingency table from the last exercise revealed that there are some levels that have very low counts. To simplify the analysis, it often helps to drop such levels from the dataframe.
-
-In R, this requires two steps: 
-
-1. filter out any rows with the levels that have very low counts
-2. remove these levels from the variable with `droplevels()`
-
-We are using the `droplevels()` function to eliminate any levels that have zero counts from a variable. 
-
-The contingency table from the last exercise is available in your workspace as `tab`. We'll use this table and the **dplyr** package to `filter()` levels with few observations from our dataframe, using the following steps:
-
-1. print `tab` to explore which level of `align` has the fewest total entries
-2. use `filter()` to filter out all rows of `comics` with that level
-3. use `droplevels()` to drop the unused levels from the dataframe 
-4. save the simplified dataset as `comics_filtered`
-
+This contingency table revealed that there are some levels that have very low counts. To simplify the analysis, it sometimes helps to ignore such levels from the dataset using a `where` statement. For example, let's create a new dataset that excludes the reformed criminals, then rerun this contingency table:
 
 ```
-tab <- comics %>%
-  count(align, gender) %>% 
-  pivot_wider(names_from = align, values_from = n)
+* Create new dataset without reformed criminals;
+data comics_no_rc;
+	set comics;
+	where align ne "Reformed Criminals";
+run;
+
+* Check counts of GENDER by ALIGN variables, ignoring reformed criminals;
+proc freq data=comics_no_rc;
+	tables gender * align / norow nopct nocol;
+run;
 ```
 
-```
-# Print tab
-___
-# Remove align level
-comics_filtered <- ___ %>%
-  ___(align != ___) %>%
-  ___()
-# See the result
- comics_filtered
-```
-
-```
-# Print tab
-tab
-# Remove align level
-comics_filtered <- comics %>%
-  filter(align != "Reformed Criminals") %>%
-  droplevels()
-# See the result
-comics_filtered
-```
-
-<div id="hsb2-mutate-num-char-cat-hint">
-**Hint:** Remember, to filter out observations, the not equal to (`!=`) comparison comes in handy!
-</div>
-
+We'll continue to use this filtered dataset below.
 
 ### Side-by-side barcharts
 
 While a contingency table represents the counts numerically, it's often more meaningful to represent them graphically. 
 
-Here you'll construct two side-by-side barcharts of the `comics` data. This exercise will show you that  often there can be two or more options for presenting the same data. Passing the argument `position = "dodge"` to `geom_bar()` tells the function that you want a side-by-side (i.e. not stacked) barchart.
+The code below creates two bar charts:
 
-To create these plots, let's carry out the following steps:
-
-1. load the **ggplot2** package.
-2. create a side-by-side barchart with `align` on the x-axis, and `fill` the bars with the `gender` of the character  
-3. create another side-by-side barchart with `gender` on the x-axis, and `fill` the bars with the `align`ment of the character 
+1. One with `align` on the x-axis, and bars sized & colored by the `gender` of the character
+2. One with `gender` on the x-axis, and bars sized & colored by the `align` of the character
 
 ```
-comics <- as_tibble(comics)
-comics <- comics %>%
-  filter(align != "Reformed Criminals") %>%
-  droplevels()
-```
+* Side-by-side bar chart of alignment, with categories of gender;
+proc sgplot data=comics_no_rc;
+	vbar align / group=gender groupdisplay=cluster;
+run;
 
-```
-# Load ggplot2
-# Create side-by-side barchart of alignment by gender
-ggplot(___, aes(x = ___, fill = ___)) + 
-  geom_bar(___) 
-# Create side-by-side barchart of gender by alignment
-ggplot(___, aes(x = ___, fill = ___)) + 
-  geom_bar(position = ___)
-```
-
-```
-# Load ggplot2
-library(ggplot2)
-# Create side-by-side barchart of alignment by gender
-ggplot(___, aes(x = ___, fill = ___)) + 
-  geom_bar(___) 
-# Create side-by-side barchart of gender by alignment
-ggplot(___, aes(x = ___, fill = ___)) + 
-  geom_bar(position = ___)
-```
-
-```
-# Load ggplot2
-library(ggplot2)
-# Create side-by-side barchart of alignment by gender
-ggplot(comics, aes(x = align, fill = gender)) + 
-  geom_bar(position = "dodge") 
-# Create side-by-side barchart of gender by alignment
-ggplot(___, aes(x = ___, fill = ___)) + 
-  geom_bar(position = ___)
-```
-
-```
-# Load ggplot2
-library(ggplot2)
-# Create side-by-side barchart of alignment by gender
-ggplot(comics, aes(x = align, fill = gender)) + 
-  geom_bar(position = "dodge") 
-# Create side-by-side barchart of gender by alignment
-ggplot(comics, aes(x = gender, fill = align)) + 
-  geom_bar(position = "dodge")
-```
-
-In many visualizations you make, you may be interested in changing the axis labels on the plot. Here, the axis labels of "gender" and "align" could use some spicing up, to be more descriptive. To change the labels of a `ggplot()`, you add (`+`) a `labs()` layer to the plot, where you can specify the `x`, `y`, and `fill` labels, as well as the plot's `title`. 
-
-```
-ggplot(comics, aes(x = gender, fill = align)) + 
-  geom_bar(position = "dodge") + 
-  labs(x = "Character's Sex", 
-       fill = "Alignment of Character", 
-       y = "Number of Characters") 
+* Side-by-side bar chart of gender, with categories of alignment;
+proc sgplot data=comics_no_rc;
+	vbar gender / group=align groupdisplay=cluster;
+run;
 ```
 
 ### Bar chart interpretation
 
-```
-comics <- comics %>%
-  filter(align != "Reformed Criminals") %>%
-  droplevels()
-# Create plot of gender by alignment
-p1 <- ggplot(comics, aes(x = align, fill = gender)) + 
-  geom_bar(position = "dodge")
-# Create plot of alignment by gender
-p2 <- ggplot(comics, aes(x = gender, fill = align)) + 
-  geom_bar(position = "dodge")
-grid.arrange(p1, p2, ncol = 2)
-```
+![](images/barchartex-1.png)
 
+*Which of the following interpretations of the bar charts above is **not** valid?*
 
-```
-question("Which of the following interpretations of the bar charts above is **not** valid?",
-  answer("Among characters with `Neutral` alignment, males are the most common.", message = "Nope, not quite!"),
-  answer("In general, there is an association between gender and alignment."),
-  answer("Across all genders, `Bad` is the most common alignment.", correct = TRUE),
-  answer("There are more male characters than female characters in this dataset.",  message = "Try again!"), 
-  allow_retry = TRUE
-)
-```
+* Among characters with `Neutral` alignment, males are the most common
+* In general, there is an association between gender and alignment
+* Across all genders, `Bad` is the most common alignment
+* There are more male characters than female characters in this dataset
 
 ## Counts vs. proportions
 
-You may have noticed in the last exercises that sometimes raw counts of cases can be useful, but often it's the proportions that are more interesting. We can do our best to compute these proportions in our head or we could do it explicitly in R.
+You may have noticed in the last exercises that sometimes raw counts of cases can be useful, but often it's the proportions that are more interesting. We can do our best to compute these proportions in our head or we could do it explicitly in SAS.
 
 ### From counts to proportions
 
-Let's return to our table of counts of cases by identity and alignment. If we wanted to instead get a sense of the proportion of all cases that fell into each category, we can modify our previous table. We will need to add a column that calculates the proportion of total observations that were observed in each combination of `id` and `align`. 
-
-After counting the number of observations at each level of `id` and `align`, we use the `mutate()` function to calculate the proportion of observations that fell in those levels. We save these proportions into a new variable named `prop`. Similar to before, we then pivot our table from long to wide, but here we need to specify what columns we are interested in pivoting. This is because we have one additional column in our dataframe which we are not interested in including in our table (`n`). To select variables, we specify a vector of column names to the `id_cols` argument.  
+Let's return to our table of counts of cases by identity and alignment. If we wanted to instead get a sense of the proportion of all cases that fell into each category, we can modify our previous table to add this information. `PROC FREQ` does this easily for us. Here, again, is the distribution of records for each combination of `id` and `align`. 
 
 ```
-comics %>% 
-  count(id, align) %>% 
-  mutate(prop = n / sum(n)) %>% 
-  pivot_wider(id_cols = c(id, align, prop), 
-              names_from = align, values_from = prop)
+* Check distribution of ALIGN by ID variables, include overall proportions;
+proc freq data=comics_no_rc;
+	tables align * id;
+run;
 ```
 
-```
-comics %>% 
-  count(id, align) %>% 
-  mutate(prop = n / sum(n)) %>% 
-  pivot_wider(id_cols = c(id, align, prop), 
-              names_from = align, values_from = prop) %>% 
-  mutate_if(is.numeric, format, digits = 2) %>% 
-  gt() %>%
-  tab_style(
-    style = cell_fill(color = "lightblue"),
-    locations = cells_body(
-      columns = vars(Bad),
-      rows = Bad >= .20)
-  )
-```
+Below each frequency count, we now see three proportions. And while this is a little busy, everything we might want to know about the distribution of these two characteristics is here.
 
-In the table, we see that the single largest category are characters that are bad and secret at about 29% of characters.
+Note the legend that appears to the top left of the table:
 
-Also note that because these are all proportions out of the whole dataset, the sum of all of these proportions is 1.
+![](images/freq-props.png)
+
+This tell us what each number in each table cell represents. Right below the frequency is the overall percent, or what proportion of all records fall into that particular cell. We see, for example, that the single largest category are characters that are bad + secret at about 29% of characters.
+
+But what about the row and column percents?
 
 
 ### Conditional proportions
 
-If we're curious about systematic associations between variables, we should look to conditional proportions. An example of a conditional proportion is the proportion of public identity characters that are good. To build a table of these conditional proportions, we need to specify a grouping variable **before** we calculate the proportions. We perform this grouping with the `group_by()` function you saw in the last tutorial. 
+If we're curious about systematic associations between variables, we should look to conditional proportions. Remember that conditional proportions change the denominator of the calculation to be the size of the specific group of interest, instead of the size of the total population.
 
-We see here that around 57% of all secret characters are bad. Because we're conditioning on identity (the value in the rows), every row now sums to 1, since 100% of the identities in each row are split between the three alignments.
+An examples of a conditional proportion is the proportion of public identity characters that are bad. Given the set-up of our contingency table (alignment as rows and id as columns), we can answer this question using the column percents (last number in each cell) within the public identity column. If you look up the public + bad cell, you can see that about 36% of public identity characters are bad.
 
-**Condition on the rows (i.e. rows sum to 1)**
+Another example of a conditional proportion is the proportion of bad characters that are secret. Given the set-up of our contingency table, we can answer this question using the row percents (third number in each cell) within the bad alignment row. If you look up the bad + secret, you can see that nearly 63% of bad characters are secret.
 
-```
-comics %>% 
-  count(id, align) %>% 
-  group_by(id) %>% 
-  mutate(prop = n / sum(n)) %>% 
-  pivot_wider(id_cols = c(id, align, prop), 
-              names_from = align, values_from = prop)
-```
+Remember, when you condition on alignment (the value in the rows), the row percents sum to 100, since all of the identities in each row are split between the three ids.
+
+Because `PROC FREQ` output can be busy, it is often helpful to use the `norow`, `nopct`, and `nocol` options to limit the output. For example:
 
 ```
-comics %>% 
-  count(id, align) %>%
-  group_by(id) %>% 
-  mutate(prop = n / sum(n)) %>% 
-  ungroup() %>%
-  pivot_wider(id_cols = c(id, align, prop), 
-              names_from = align, values_from = prop) %>% 
-  mutate_if(is.numeric, format, digits = 2) %>% 
-  gt() %>%
-  tab_style(
-    style = cell_fill(color = "lightblue"),
-    locations = cells_body(
-      columns = vars(Bad),
-      rows = Bad == .57)
-  )
-## WHY IS THIS TABLE SQASHED?
+* Check distribution of ALIGN by ID variables, row percents only;
+proc freq data=comics_no_rc;
+	tables align * id / nocol nopct;
+run;
 ```
-
-To condition on the columns rather than the rows, we change the variable we are grouping. To condition on the columns, we `group_by()` the `align` variable. After conditioning on the columns, we now see that the columns sum to one. Also, we learn, for example, that the proportion of bad characters that are secret is around 63%.
 
 As the number of cells in these tables gets large, it becomes much easier to make sense of your data using graphics. The bar chart is still a good choice, but we're going to need to add some options.
 
