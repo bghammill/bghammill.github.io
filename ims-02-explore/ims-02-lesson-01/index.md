@@ -210,171 +210,52 @@ proc freq data=comics_no_rc;
 run;
 ```
 
-As the number of cells in these tables gets large, it becomes much easier to make sense of your data using graphics. The bar chart is still a good choice, but we're going to need to add some options.
+As the number of cells in these tables gets large, it becomes much easier to make sense of your data using graphics. The bar chart is also a good choice to show the conditional probabilities. Let's create a bar chart based on the table generated above.
 
-**Condition on the columns (i.e. columns sum to 1)**
+**Bars as proportions, with categories that sum to 1**
 
-```
-comics %>% 
-  count(id, align) %>% 
-  group_by(align) %>% 
-  mutate(prop = n / sum(n)) %>% 
-  pivot_wider(id_cols = c(id, align, prop), 
-              names_from = align, values_from = prop)
-```
+Below is the code to create a bar chart of conditional proportions. In this plot, we want to condition on the variable that is on the x-axis (`align`) and have the categories of each bar (`id`) add up to a total proportion of 1. To stretch the bars this way, we add the `pctlevel=group` option to the `PROC SGPLOT` statement and the `stat=percent` option to the `VBAR` statement:
 
 ```
-comics %>% 
-  count(id, align) %>% 
-  group_by(align) %>% 
-  mutate(prop = n / sum(n)) %>% 
-  ungroup() %>% 
-  pivot_wider(id_cols = c(id, align, prop), 
-              names_from = align, values_from = prop) %>% 
-  mutate_if(is.numeric, format, digits = 2) %>% 
-  gt() %>%
-  tab_style(
-    style = cell_fill(color = "lightblue"),
-    locations = cells_body(
-      columns = vars(Bad),
-      rows = Bad >= .50)
-  )
+* Conditional bar chart of ALIGN by ID;
+proc sgplot data=comics_no_rc pctlevel=group;
+	vbar align / group=id stat=percent;
+run; 
 ```
 
-</br>
+We can see more quickly here that the majority of bad characters are secret, which different from other alignments. 
 
-Below is the code to create a bar chart of conditional proportions. In this plot, we want to condition on the variable that is on the x-axis and stretch each bar to add up to a total proportion of 1. To stretch the bars this way, we add the `position = "fill"` option inside the `geom_bar()` function. 
-
-```
-ggplot(comics, aes(x = id, fill = align)) +
-  geom_bar(position = "fill") 
-```
-
-Let's add one additional layer: A change to our y-axis to indicate we're looking at proportions rather than counts! When we run this code, we get a plot that reflects our table of proportions after we had conditioned on `id`, as the bar for every level of `id` adds up to 1.
+If we flip the `align` and `id` variables, the bar chart gives us different information:
 
 ```
-ggplot(comics, aes(x = id, fill = align)) +
-  geom_bar(position = "fill") +
-  labs(y = "Proportion of Characters")
+* Conditional bar chart of ID by ALIGN;
+proc sgplot data=comics_no_rc pctlevel=group;
+	vbar id / group=align stat=percent;
+run; 
 ```
 
- While the proportion of secret characters that are bad is still large, it's actually less than the proportion of bad characters in those that are listed as unknown. 
-
-```
-  ggplot(comics, aes(x = id, fill = align)) +
-  geom_bar(position = "fill") +
-  ylab("proportion") +
-  geom_segment(aes(x=2.55, xend=2.55, y=0.43, yend=1), linetype = 2, size = 1)+
-  geom_segment(aes(x=3.55, xend=3.55, y=0.23, yend=1), linetype = 2, size = 1)+
-  geom_segment(aes(x=3.45, xend=3.45, y=0.43, yend=1), linetype = 2, size = 1)+
-  geom_segment(aes(x=4.45, xend=4.45, y=0.23, yend=1), linetype = 2, size = 1)+
-  geom_segment(aes(x=2.55, xend=3.55, y=1, yend=1), linetype = 2, size = 1)+
-  geom_segment(aes(x=2.55, xend=3.55, y=0.43, yend=0.43), linetype = 2, size = 1)+
-  geom_segment(aes(x=3.55, xend=4.45, y=0.23, yend=0.23), linetype = 2, size = 1)+
-  geom_segment(aes(x=3.55, xend=4.45, y=1, yend=1), linetype = 2, size = 1)
-```
-
-### Conditional bar chart
-
-We get a very different picture if we condition instead on `align`ment. The only thing we need to change from the previous code is to swap the positions of the names of the variables associated with the `x` and `fill` aesthetics. These changes result in a plot that conditions on alignment. 
-
-In the plot below, we see that within characters that are bad, the greatest proportion of those are indeed secret. This might seem paradoxical, but it's just a result of having different numbers of cases in each single level.
-
-```
-ggplot(comics, aes(x = align, fill = id)) +
-  geom_bar(position = "fill") +
-  ylab("proportion") 
-```
-
-
-```
-ggplot(comics, aes(x = align, fill = id)) +
-  geom_bar(position = "fill") +
-  ylab("proportion") +
-  geom_segment(aes(x=0.55, xend=0.55, y=0, yend=0.63), linetype = 2, size = 1)+
-  # leftmost line
-  geom_segment(aes(x=1.45, xend=1.45, y=0, yend=0.63), linetype = 2, size = 1)+
-  # rightmost line
-  geom_segment(aes(x=0.55, xend=1.45, y=0, yend=0), linetype = 2, size = 1)+
-  # bottom line
-  geom_segment(aes(x=0.55, xend=1.45, y=0.63, yend=0.63), linetype = 2, size = 1)
-  # top line
-```
+Which condition bar chart you use would depend on the question you'd like to answer.
 
 ### Conditional proportions
 
-The following code generates tables of joint and conditional proportions, respectively. Go ahead and run it in the console:
+Choosing to show conditional proportions, however, can give a very different picture than showing counts. Here is code to generate two figures:
+
+1. A stacked bar chart of the *counts* of `gender` within different `align`ments
+2.  A stacked bar chart of the *proportions* of `gender` within different `align`ments 
 
 ```
-comics <- comics %>%
-  filter(align != "Reformed Criminals") %>%
-  droplevels()
+* Stacked bar chart of ALIGN by GENDER;
+proc sgplot data=comics_no_rc;
+	vbar align / group=gender;
+run;
+
+* Conditional stacked bar chart of ALIGN by GENDER;
+proc sgplot data=comics_no_rc pctlevel=group;
+	vbar align / group=gender stat=percent;
+run;
 ```
 
-```
-# Joint proportions
-comics %>% 
-  count(align, gender) %>% 
-  mutate(prop = n / sum(n)) %>% 
-  pivot_wider(id_cols = c(align, gender, prop), 
-              names_from = gender, values_from = prop)
-# Conditional on columns
-comics %>% 
-  count(align, gender) %>% 
-  group_by(gender) %>% 
-  mutate(prop = n / sum(n)) %>% 
-  pivot_wider(id_cols = c(align, gender, prop), 
-              names_from = align, values_from = prop) 
-```
-
-```
-question("Using the tables above, approximately what proportion of all female characters are good?",
-  answer("44%", message = "Nope, try again!"),
-  answer("1.3%", message = "Not quite!"),
-  answer("13%"),
-  answer("51%", correct = TRUE, message = "Nice! To answer this question, you needed to look at how `align` was distributed *within* each `gender`. That is, you wanted to *condition* on the `gender` variable."),
-  allow_retry = TRUE
-)
-```
-
-<div id="hsb2-mutate-num-char-cat-hint">
-**Hint:** "Take a look at the table that's conditional on gender!"
-</div>
-
-</br>
-
-Bar charts can tell dramatically different stories depending on how we choose to represent the data (e.g. counts or proportions). Furthermore, if proportions are chosen, what the proportions are conditioned on can have a substantial impact on the relationships seen in the plot! To demonstrate this difference, in this exercise you'll construct two bar charts: one of counts and one of proportions.
-
-1. Create a stacked barchart of the *counts* of `gender` within different `align`ments, where 
-`align` is plotted on the x-axis.
-2.  Create a stacked barchart of the *proportions* of `gender` within different `align`ments, where the bars for each `align`ment are filled, so that they sum to 1. 
-
-```
-# Plot counts of gender by align
-ggplot(comics, aes(x = ___, fill = ___)) +
-  geom_bar()
-  
-# Plot proportion of gender, conditional on align
-ggplot(comics, aes(x = ___, fill = ___)) + 
-  geom_bar(position = ___)
-```
-
-<div id="hsb2-mutate-num-char-cat-hint">
-**Hint:** The code for the second plot is the same as the first, except you'll provide a `position = "fill"` argument to `geom_bar()`.
-
-</div>
-
-```
-# Plot of gender by align
-ggplot(comics, aes(x = align, fill = gender)) +
-  geom_bar()
-  
-# Plot proportion of gender, conditional on align
-ggplot(comics, aes(x = align, fill = gender)) + 
-  geom_bar(position = "fill") +
-  labs(y = "proportion")
-```
-
+The size of each alignment group definitely gets lost when presenting conditional proportions.
 
 ## Distribution of one variable
 
@@ -382,100 +263,53 @@ You might not have noticed, but already you've been creating plots that illustra
 
 ### Marginal distribution
 
-To compute a table of counts for a single variable like `id`, we can use our previous tools for counting a variable with the `count()` function. One way to think of this simpler table is that we've taken the original two-way table (with two categorical variables) and added up the cells across each level of `align`. Since we've added over the margins of the other variables, this is sometimes known as a **marginal distribution**.
+To compute a table of counts and proportions for a single variable like `id`, we can use `PROC FREQ`, as we have seen before. (Note that we are still using the dataset without reformed criminals and ignoring missing data.)
 
 ```
-comics %>% 
-  count(id)
+* Distribution of ID;
+proc freq data=comics_no_rc;
+	tables id;
+run;
 ```
 
-```
-comics %>% 
-  count(id) %>% 
-  kable(format = "html") %>% 
-  kable_styling(full_width = F) %>%
-  row_spec(1, bold = T, background = "lightblue", color = "white") 
-  
-```
+SAS gives us the count and percent for each identity type. It also gives us the cumulative frequency and percent, which is often more useful when the variable of interest is ordinal.
 
-```
-comics %>% 
-  count(id, align) %>% 
-  pivot_wider(names_from = align, values_from = n)
-```
-
-```
-comics %$% 
-  table(id, align) %>% 
-  kable(format = "html") %>% 
-  kable_styling(full_width = F) %>%
-  row_spec(1, bold = T, background = "lightblue", color = "white") 
-```
-
-**453 + 640 + 377 = 1470**
+You may hear this type of one-way output described as a **marginal distribution**, since the counts and percentages are calculated over the entire dataset.
 
 ### Simple barchart
 
-The syntax to create the simple bar chart is straightforward as well, which we saw at the beginning of the lesson. To do this, we simply remove the `fill = align` argument from the aesthetics (`aes`).
+The syntax to create the simple bar chart is straightforward as well, which we saw at the beginning of the lesson. 
 
 ```
-ggplot(comics, aes(x = id)) +
-  geom_bar()
+* Simple bar chart of ID;
+proc sgplot data=comics;
+	vbar id;
+run;
 ```
 
 ### Faceting
 
-Another useful way to visualize the distribution of a single variable is to condition on a particular value of another variable. We might be interested, for example, in the distribution of id for all neutral characters. We could either filter the dataset and build a barchart using only cases where `align`ment was "Neutral", or we could use a technique called faceting. Faceting breaks the data into subsets based on the levels of a categorical variable and then constructs a plot for each level.
+Another useful way to visualize the distribution of a single variable is to condition on a particular value of another variable. We might be interested, for example, in the distribution of id for all neutral characters. We could either filter the dataset and build a bar chart using only cases where `align`ment was "Neutral", or we could use a technique called paneling. Paneling breaks the data into subsets based on the levels of a categorical variable and then constructs a plot for each level.
 
-### Faceted barcharts
+### Paneled barcharts
 
-To implement faceting in ggplot2, all we need to do is add another layer to our plot. To add a faceting layer we use the `facet_wrap()` function. Inside the `facet_wrap()` function we add a tilde (`~`) and then the name of the variable we want to facet by (e.g. `~align`). This can be read as create the above plot "broken down by align". The result is three simple bar charts side-by-side, the first one corresponding to the distribution of `id` within all cases that have a "Bad" alignment, and so on, for "Good" and "Neutral" alignments.
-
-If this plot feels familiar, it should!
+To implement paneling in SAS, we need to use `PROC SGPANEL` and let that procedure know which variable we would like to control the panels. Since we want to see the distribution of `id` by `align`, we add `panelby align` as below:
 
 ```
-ggplot(comics, aes(x = id)) +
-  geom_bar() +
-  facet_wrap(~align)
+* Paneled bar chart of ID by ALIGN;
+proc sgpanel data=comics_no_rc;
+	panelby align;
+	vbar id;
+run;
 ```
 
-### Faceting vs. stacking
+### Paneling vs. stacking
 
-In essence, the faceted plot is a rearrangement of the stacked bar charts that we considered at the beginning of the lesson.
+In essence, the paneled plot is a rearrangement of the stacked bar charts that we considered at the beginning of the lesson.
 
-```
-plot1 <- ggplot(comics, aes(x = id)) +
-  geom_bar() +
-  facet_wrap(~align) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-plot2 <- ggplot(comics, aes(x = align, fill = id)) +
-  geom_bar()
-gridExtra::grid.arrange(plot1, plot2, nrow = 1)
-```
+![](images/fvs-1.png)
 
-Each facet in the plot on the left corresponds to a single stacked bar in the plot on the right. They allow you to get a sense the distribution of a single variable, by looking at a single facet or a single stacked bar or the association between the variables, by looking across facets or across stacked bars.
-
-```
-plot1 <- ggplot(comics, aes(x = id))+
-  geom_bar() +
-  facet_wrap(~align) + 
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-plot2 <- ggplot(comics, aes(x = align, fill = id)) +
-  geom_bar() 
-gridExtra::grid.arrange(plot1, plot2, nrow = 1)
-grid.rect(x = 0.075, y = 0.27, width = 0.13, height = 0.7, hjust = 0, vjust = 0, gp = gpar(lty = 2, lwd = 2.5, fill = "transparent"))
-# around bad facet 
-grid.rect(x = 0.22, y = 0.27, width = 0.13, height = 0.7, hjust = 0, vjust = 0, gp = gpar(lty = 3, lwd = 2.5, fill = "transparent"))
-#around good facet
-grid.rect(x = 0.36, y = 0.27, width = 0.13, height = 0.7, hjust = 0, vjust = 0, gp = gpar(lty = 4, lwd = 2.5, fill = "transparent"))
-# around neutral facet
-grid.rect(x = 0.587, y = 0.19, width = 0.076, height = 0.75, hjust = 0, vjust = 0, gp = gpar(lty = 2, lwd = 2.5, fill = "transparent"))
-# around bad stacked bar
-grid.rect(x = 0.675, y = 0.19,width = 0.075, height = 0.65, hjust = 0, vjust = 0, gp = gpar(lty = 3, lwd = 2.5, fill = "transparent"))
-# around good stacked bar
-grid.rect(x = 0.76, y = 0.19,width = 0.075, height = 0.235, hjust = 0, vjust = 0, gp = gpar(lty = 4, lwd = 2.5, fill = "transparent"))
-# around neutral stacked bar
-```
+Each panel in the plot on the left corresponds to a single stacked bar segment in the plot on the right. Each allows you to see the distributions of each variable in different ways.
 
 A discussion of plots for categorical data wouldn't be complete without some mention of the pie chart.
 
@@ -485,179 +319,7 @@ The pie chart is a common way to display categorical data where the size of the 
 
 If we represent this data using a barchart the answer is obvious: the proportion of public is greater. For that reason, it's generally a good idea to stick to barcharts.
 
-```
-plot1 <- ggplot(comics, aes(x = "", y = id, fill = id))+
- geom_bar(stat="identity", width=1)+
- coord_polar("y", start=0) +
-   theme(axis.text = element_blank(),
-        axis.ticks = element_blank(),
-        panel.grid  = element_blank())
-plot2 <- ggplot(comics, aes(x = id)) +
-  geom_bar(aes(y = ..prop.., group = 1))
-gridExtra::grid.arrange(plot1, plot2, nrow = 1, widths = c(6, 4))
-```
-
-### Marginal barchart
-
-If you are interested in the distribution of alignment of *all* superheroes, it makes sense to construct a barchart for just that single variable.
-
-You can improve the interpretability of the plot, though, by implementing some sensible ordering. Superheroes that are `"Neutral"` show an alignment between `"Good"` and `"Bad"`, so it makes sense to put that bar in the middle. To do this, we first need to convert the `align` variable from a character (`chr`) to a factor (`fct`) data type.
-
-Luckily, R has a built-in `factor()` function specifically for these types of data type conversions. The `factor()` function has two main arguments: 
-
-1. the name of the variable you wish to convert to a factor 
-2. the levels of the factor (i.e. the order you want the levels to appear)
-
-**Note:** the `levels` of the variable must be enclosed in quotations, and they must be specified as a vector. We do this by using the concatenate (`c()`) function, which creates a vector from a list of items. 
-
-Converting a variable from a character to a factor looks something like this:
-
-```
-comics %>% 
-  mutate(gender = factor(id, 
-                         levels = c("Secret", "Public", "No Dual", "Unknown")
-                         )
-         )
-```
-
-To do this variable conversion we use the following steps:
-
-1. load in the `comics` data
-2. use the `mutate()` function to make changes to the `align` variable
-3. use the `factor()` function to specify how the `align` variable will be changed
-4. save the updated dataset into a new dataframe, named `comics_updated`
-
-Once you've reordered the `align` variable, create a barchart of counts of the
-`align` variable.
-
-```
-# Change the order of the levels in align
-comics_updated <- comics %>% 
-  mutate(align = factor(___, 
-                       levels = c("___", "___", "___"))
-  )
-# Create plot of the updated align variable
-ggplot(___, aes(x = ___)) + 
-  geom_bar()
-```
-
-```
-# Change the order of the levels in align
-comics_updated <- comics %>% 
-  mutate(align = factor(align, 
-                       levels = c("___", "___", "___"))
-  )
-```
-
-```
-# Change the order of the levels in align
-comics_updated <- comics %>% 
-  mutate(align = factor(align, 
-                       levels = c("Good", "Neutral", "Bad"))
-  )
-# Create plot of align
-ggplot(___, aes(x = ___)) + 
-  geom_bar()
-```
-
-
-```
-# Change the order of the levels in align
-comics_updated <- comics %>% 
-  mutate(align = factor(align, 
-                       levels = c("Good", "Neutral", "Bad"))
-  )
-# Create plot of align
-ggplot(comics_updated, aes(x = align)) + 
-  geom_bar()
-```
-
-
-### Conditional barchart
-
-Now, if you want to break down the distribution of alignment based on gender, you're looking for conditional distributions.
-
-You could make these by creating multiple filtered datasets (one for each gender) or by faceting the plot of alignment based on gender. As a point of comparison, we've provided your plot of the marginal distribution of alignment from the last exercise.
-
-Create a barchart of `align` faceted by `gender`.
-
-```
-comics_updated <- comics %>% 
-  mutate(align = factor(align, 
-                       levels = c("Good", "Neutral", "Bad"))
-  )
-ggplot(comics_updated, aes(x = align)) + 
-  geom_bar()
-```
-
-```
-# Plot of alignment broken down by gender
-ggplot(comics_updated, aes(x = ___)) + 
-  geom_bar() +
-  facet_wrap(~ ___)
-```
-
-```
-Specify align as the x aesthetic, then facet by gender within facet_wrap().
-```
-
-```
-ggplot(comics_updated, aes(x = align)) + 
-  geom_bar() +
-  facet_wrap(~ gender)
-```
-
-
-### Improve piechart
-
-The piechart is a very common way to represent the distribution of a single categorical variable, but they can be more difficult to interpret than barcharts.
-
-```
-flavor <- rep(c("cherry", "key lime", "boston creme", "strawberry", 
-                 "blueberry", "apple", "pumpkin"),
-               c(13, 16, 15, 11, 14, 17, 12))
-pies <- data.frame(flavor = as.factor(flavor))
-cnt <- count(pies, flavor)
-ggplot(cnt, aes(x = "", y = n, fill = flavor)) +
-  geom_bar(width = 1, stat = "identity") +
-  coord_polar("y", start = pi / 3) +
-  xlab("") + 
-  ylab("") + 
-  theme(panel.grid.minor = element_blank(),
-        panel.grid.major = element_blank(),
-        axis.ticks = element_blank(),
-        axis.text = element_blank())
-```
-
-This is a piechart of a dataset called `pies` that contains the favorite pie flavors of 98 people. Improve the representation of these data by constructing a *barchart* that is ordered in descending order of count.
-
-- Use the code provided to reorder the levels of `flavor` so that they're in descending order by count.
-- Create a barchart of `flavor`. The default coloring may look drab by comparison, so change the `fill` of the bars to `"chartreuse"`. 
-- Plot `flavor` on the y-axis, so that the labels of the flavors don't smoosh together! 
-
-```
-# Discover what the counts of pie flavors are 
-pies %>% 
-  count(flavor)
-# Put levels of flavor in descending order
-pies_updated <- pies %>% 
-  mutate(flavor = factor(flavor, 
-                         levels = c("apple", "key lime", "boston creme",
-                                    "blueberry", "cherry", "pumpkin", "strawberry")
-  )
-  )
-# Create barchart of flavor
-# Using plot flavor on y-axis so label text fits
-ggplot(___, aes(y = ___)) + 
-  geom_bar(fill = ___) 
-```
-
-```
-# Create barchart of flavor
-# Using plot flavor on y-axis so label text fits
-ggplot(pies_updated, aes(y = flavor)) + 
-  geom_bar(fill = "chartreuse") 
-```
+![](images/pie-1.png)
 
 
 ## Congratulations!
