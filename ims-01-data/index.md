@@ -1,7 +1,5 @@
 # Introduction to data
 
-## Tutorial description
-
 Scientists seek to answer questions using rigorous methods and careful observations. These observations - collected from the likes of field notes, surveys, and experiments - form the backbone of a statistical investigation and are called data. Statistics is the study of how best to collect, analyze, and draw conclusions from data. It is helpful to put statistics in the context of a general process of investigation:
 
 1. Identify a question or problem.
@@ -18,9 +16,8 @@ In this tutorial, we focus on steps 1 and 2 of this process. In future tutorials
 - Classify a study as observational or experimental, and determine whether the study’s results can be generalized to the population and whether they suggest correlation or causation between the variables studied.
 - Distinguish between various sampling strategies and recognize the benefits and drawbacks of choosing one strategy over another.
 - Identify the principles of experimental design and recognize their purposes.
-- Apply terminology and principles to a case study.
 
-## Lessons
+## Tutorials
 
 ### 1 - [Language of data](https://bghammill.github.io/ims-01-data/ims-01-lesson-01/)
 
@@ -33,9 +30,6 @@ In this tutorial, we focus on steps 1 and 2 of this process. In future tutorials
 
 - Define observational studies and experiments
 - Discuss scope of inference 2x2 grid with random assignment and sampling
-- Define Simpson’s paradox in a case with 2 categorical variables
-  - Use SAS to make a 2-way contingency table
-  - Use SAS to make a 3-way contingency table to demonstrate Simpson’s paradox
 
 ### 3 - [Sampling strategies and experimental design](https://bghammill.github.io/ims-01-data/ims-01-lesson-03/)
 
@@ -45,7 +39,5 @@ In this tutorial, we focus on steps 1 and 2 of this process. In future tutorials
 - Identify and discuss the purpose of each principle of experimental design
 - Discuss the purpose of each principle
 
-### 4 - [Case study](https://bghammill.github.io/ims-01-data/ims-01-lesson-04/)
 
-- Apply terminology, principles, and R code learned in this tutorial to a case study
 

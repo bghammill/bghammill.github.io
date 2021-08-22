@@ -254,22 +254,16 @@ And to connect the concepts of stratification and blocking...
 *Which strategy do we use to control for a variable in random assignment? Stratification or blocking?*
 
 
-## Congratulations!
 
-You have successfully completed Lesson 3 in Tutorial 1: Getting Started with Data.
+You have successfully completed Tutorial 2 in Section 1: Getting Started with Data.
 
 What's next?
 
-[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
+- [Back to the main page](https://bghammill.github.io/)
+- [Back to Section 1: Getting Started with Data](https://bghammill.github.io/ims-01-data/)
+- [Introduction to Modern Statistics textbook link](http://openintro-ims.netlify.app/)
 
-[Tutorial 1: Getting Started with Data](https://bghammill.github.io/ims-01-data/)
 
-- [Tutorial 1 - Lesson 1: Language of data](https://bghammill.github.io/ims-01-data/ims-01-lesson-01/)
-- [Tutorial 1 - Lesson 2: Types of studies](https://bghammill.github.io/ims-01-data/ims-01-lesson-02/)
-- [Tutorial 1 - Lesson 3: Sampling strategies and Experimental design](https://bghammill.github.io/ims-01-data/ims-01-lesson-03/)
-- [Tutorial 1 - Lesson 4: Case study](https://bghammill.github.io/ims-01-data/ims-01-lesson-04/)
-
-[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
 <!-- MathJax -->
 

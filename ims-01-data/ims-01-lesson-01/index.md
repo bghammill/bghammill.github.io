@@ -1,35 +1,17 @@
 ## Language of Data
 
-Hello, and welcome to **Getting Started with Data**!
-
-In this tutorial we will take you through concepts and SAS code that are essential for getting started with data analysis.
-
-Scientists seek to answer questions using rigorous methods and careful observations. These observations form the backbone of a statistical investigation and are called data. Statistics is the study of how best to collect, analyze, and draw conclusions from data. It is helpful to put statistics in the context of a general process of investigation:
-
-- **Step 1**: Identify a question or problem.
-
-- **Step 2**: Collect relevant data on the topic.
-
-- **Step 3**: Analyze the data.
-
-- **Step 4**: Form a conclusion.
-
-We will focus on **steps 1 and 2** of this process in this tutorial.
-
-Our learning goals for the tutorial are *to internalize the language of data, load and view a dataset in SAS and distinguish between various variable types and data representations, classify a study as observational or experimental, and determine the scope of inference, distinguish between various sampling strategies, and identify the principles of experimental design.*
-
 This tutorial does not assume any previous SAS experience, but you should be familiar with SAS from the SAS Bootcamp and will learn more about SAS over the course of the semester in PHS 703.
 
-## Macros
+## SAS Macros
 
-Macros in SAS are packages of pre-written code that allow users to perform specific tasks without having to write the code for those tasks themselves. We will rely on a few macros in these tutorials to do some simple things like making working copies of course data sets and checking the contents of datasets.
+Macros in SAS are packages of pre-written code that allow users to perform specific tasks without having to write the code for those tasks themselves. This may be a new concept to you, but you need to trust me that macros are extraordinary useful. We will rely on a few macros in these tutorials to do simple things like making working copies of course data sets and checking the contents of datasets.
 
 Macros in SAS are identified by the `%` sign. For example, if you see `%use_data(census2010)` in a SAS program, this line is calling the `%use_data` macro with the `census2010` argument. The name, arguments, and details of the macro can by found by looking at the macro code itself.
 
 For example, here are 2 macros that we will use frequently in these tutorials:
 
-* **%use_data(ds)**: This macro makes a working copy of a stored dataset for you to use and modify. Indicate the name of that dataset as the argument to the macro.
-* **%glimpse(ds)**: This macro outputs the contents of a dataset 
+* **%use_data()**: This macro makes a working copy of a stored dataset for you to use and modify. You indicate the name of the dataset to copy as the argument to the macro.
+* **%glimpse()**: This macro outputs the contents of a dataset. Again, you indicate the name of the dataset to examine as the argument to the macro.
 
 It is important to note that these macros are not generally available to use unless and until you define them. We will do that by running the following short SAS program every time we start a new tutorial. This program tells SAS where the course dataset library is located, how to find the relevant data formats, and defines the two macros described above.
 
@@ -37,9 +19,9 @@ It is important to note that these macros are not generally available to use unl
 %include "~/my_shared_file_links/hammi002/sasprog/run_first.sas";
 ```
 
-Run this code now by opening a new program in SAS Studio (using the F4 key), copying the code from here to that new program, and clicking ![Running man](images/running-man.png)(*Run*). You'll do with with any code in a code block like above, by the way. As with any program in SAS, after running, check to log to ensure SAS did not encounter any errors.
+Run this code now by copying the code from here into SAS Studio in SAS ODA and clicking ![Running man](images/running-man.png)(*Run*). You'll do with with any code in a code block like above, by the way. You may want or need to open a new, blank program file in SAS Studio (using the F4 key) for each tutorial. As with any program in SAS, after running, check to log to ensure SAS did not encounter any errors.
 
-If you are curious, feel free to open this file to see exactly the SAS code within the `%use_data` and `%glimpse` macros.
+Feel free to open this program file to see the SAS code associated with the `%use_data` and `%glimpse` macros.
 
 ## Data in SAS 
 
@@ -296,110 +278,15 @@ Combining is the process of reducing the number of categories (values) in a cate
 
 Neither of these processes will be covered here, since this is something covered in detail in PHS 703. If there is need to discretize or combine data in a 701 tutorial, we will give you the needed code.
 
-## Visualizing numerical data
-
-The most logical and most useful first step of any data analysis is an exploratory analysis. And a very important and informative component of exploratory data analysis is visualization.
-
-We will learn a lot more about data visualization in the tutorial on Summarizing and Visualizing Data, so we won't go into too much detail on data visualization in this tutorial. Let's, however, make a simple scatterplot to visualize the relationship between two numerical variables so that you can get some exposure to constructing plots in SAS and how to interpret them.
-
-There are many methods for visualizing data in SAS, but in this tutorial we will focus on using `PROC SGPLOT` . This is one of the newest SAS procedures for creating many different types of plots. Once you learn how to control the look and feel of graphs within `PROC SGPLOT`, it doesn't matter if you are creating a bar chart, a scatterplot, or a line graph. The concepts and syntax are largely reusable across figure types.
-
-As an example, we'll visualize the relationship between the math and science scores of the students in the High School and Beyond dataset.
-
-```
-* Basic scatterplot of math v. science scores;
-proc sgplot data=hsb2;
-	scatter x=science y=math /
-		markerattrs=(symbol=circlefilled)
-	;
-run;
-```
-
-Let's pause for a moment and review what's going on in the code above.
-
-- We use the `SGPLOT` procedure to create plots using the `HSB2` dataset.
-- We are requesting a scatterplot with to plot science test scores on the x-axis and math test scores on the y-axis.
-- The `markerattrs` option isn't necessary, but using a different symbol helps us see the data points more clearly.
-
-Now that you've learned how to make the plot, let's talk about what the plot says.
-
-### Interpreting a visualization
-
-If we add a regression line through these points, we can see that there is a positive relationship between the science and math scores of students, meaning that students who score highly in science tend to also score highly in math. Probably not that surprising a result.
-
-```
-* Scatterplot+regression line of math v. science scores;
-proc sgplot data=hsb2;
-	reg x=science y=math /
-    	markerattrs=(symbol=circlefilled)
-    ;
-run;
-```
-
-We also mentioned earlier that extending from bivariate to multivariate plots is easy in ggplot2. Let's test that out!
-
-### Math, science, and program
-
-Let's plot the same math and science test scores, but this time let's also consider the program that the student is in: general, academic, or vocational:
-
-```
-* Scatterplot of math v. science scores, by program;
-proc sgplot data=hsb2;
-	scatter x=science y=math /
-		group=prog markerattrs=(symbol=circlefilled)
-	;
-run;
-```
-
-The code looks very similar to the scatterplot code we used before, except that we added the `group=` option to color the points by program.
-
-Look at the plot generated by the code above and think about where the lines would go if we fit a separate line for each level of the program variable (each color of points). The result would be a plot that looks like the one generated by the code below:
-
-```
-* Scatterplot+regression line of math v. science scores, by program;
-proc sgplot data=hsb2;
-	reg x=science y=math /
-		group=prog markerattrs=(symbol=circlefilled)
-	;
-run;
-```
-
-The same positive relationship between math and science scores is still apparent. But we can also see that students in academic programs, shown with green points, tend to score higher than those in vocational programs, in blue, and general programs, in red.
-
-We will wrap up this lesson with some practice creating a similar plot with different variables.
-
-### Visualizing numerical and categorical data
-
-Next we'll visualize the relationship between two numerical variables from the `email50` dataset, separated by whether or not the email was spam. This means that we will use an aspect of the plot (like color or shape) to identify the levels in the `spam` variable so that we can compare plotted values between them.
-
-Let's create a scatterplot of number of exclamation points (`exclaim_mess`) on the y-axis vs. number of characters (`num_char`) on the x-axis, while coloring the points by whether or not the email is `spam`.
-
-```
-proc sgplot data=email50;
-	scatter x=num_char y=exclaim_mess /
-		group=spam markerattrs=(symbol=circlefilled)
-	;
-run;
-```
-
-*Based on the plot, does there appear to be a relationship between these variables?* 
 
 
-
-You have successfully completed Lesson 1 in Tutorial 1: Getting Started with Data.
+You have successfully completed Tutorial 1 in Section 1: Getting Started with Data.
 
 What's next?
 
-[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
-
-[Tutorial 1: Getting Started with Data](https://bghammill.github.io/ims-01-data/)
-
-- [Tutorial 1 - Lesson 1: Language of data](https://bghammill.github.io/ims-01-data/ims-01-lesson-01/)
-- [Tutorial 1 - Lesson 2: Types of studies](https://bghammill.github.io/ims-01-data/ims-01-lesson-02/)
-- [Tutorial 1 - Lesson 3: Sampling strategies and Experimental design](https://bghammill.github.io/ims-01-data/ims-01-lesson-03/)
-- [Tutorial 1 - Lesson 4: Case study](https://bghammill.github.io/ims-01-data/ims-01-lesson-04/)
-
-[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
+- [Back to the main page](https://bghammill.github.io/)
+- [Back to Section 1: Getting Started with Data](https://bghammill.github.io/ims-01-data/)
+- [Introduction to Modern Statistics textbook link](http://openintro-ims.netlify.app/)
 
 <!-- MathJax -->
 

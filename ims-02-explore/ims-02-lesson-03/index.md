@@ -4,15 +4,22 @@ What do we mean by a typical observation? For example, it sounds perfectly fine 
 
 ### County demographics
 
-Researchers in public health have compiled data on the demographics of every county in the US. We see here that we have 4 variables: the state name, the county name, then the average life expectancy, and the median income. 
+Researchers in public health have compiled data on the demographics of every county in the US. Let's initialize the SAS workspace and get/check the **county** dataset.
 
 ```
-life
+* Initialize things if you have not done this already during this SAS session;
+%include "~/my_shared_file_links/hammi002/sasprog/run_first.sas";
+
+* Makes and checks a working copy of CARS data;
+%use_data(life);
+%glimpse(life);
 ```
+
+We see that we have 4 variables: the state name, the county name, then the average life expectancy, and the median income. 
 
 ### Massachusetts
 
-We're going to focus on the state of Massachusetts, which happens to have 14 counties. Let's filter the data for counties from that state, and name the resulting data frame `life_ma`. To make the rest of the conversation simpler we'll also round the life expectancy values to whole numbers for this state.
+We're going to focus on the state of Massachusetts, which happens to have 14 counties. Let's filter the data for counties from that state, and name the resulting dataset `life_ma`. To make the rest of the conversation simpler we'll also round the life expectancy values to whole numbers for this state.
 
 ```
 life_ma <- life %>%
@@ -26,6 +33,8 @@ Here is a look at those counties.
 ```
 life_ma
 ```
+
+
 
 ```
 life_ma_summary <- life_ma %>%
@@ -228,34 +237,9 @@ life %>%
 
 As seen in the example above, `group_by()` and `summarize()` open up lots of possibilities for analysis, so let's get started.
 
-## Your turn! 
 
-In the exercises for this lesson, you'll be working with similar data, but on a global scale, in the Gapminder data.
 
-### Choice of center
 
-The choice of measure for center can have a dramatic impact on what we consider to be a typical observation, so it is important that you consider the shape of the distribution before deciding on the measure.
-
-```
-set.seed(38)
-rskew <- rexp(1000, 1)
-symm <- rnorm(1000)
-d <- data.frame(x = c(rskew, symm),
-                distribution = rep(c("A", "B"), c(1000, 1000)))
-
-ggplot(d, aes(x = x, fill = distribution)) +
-  geom_density(alpha = 0.3)
-```
-
-```
-question("Which set of measures of central tendency would be *worst* for describing the two distributions shown here?",
-  answer("A: mode, B: median", message = "Not quite, try again."),
-  answer("A: mean, B: mode", correct = TRUE, message = "Nice! Let's continue to the next exercise."),
-  answer("A: median, B: mean", message = "Incorrect, the median and mean look like they'd be good measures of central tendency."),
-  answer("A: median, B: median", message = "Hmm, I think there's a worse choice."),
-  allow_retry = TRUE
-)
-```
 
 ### Calculate centers
 
@@ -418,7 +402,7 @@ life_ma %>%
 
 By comparison, the variance of this sample is `r life_ma_summary$var` years squared, which is a unit that we have no real intuition about.
 
-### Innerquartile range
+### Interquartile range
 
 There are two more measures of spread that are good to know about. The **interquartile range**, or **IQR**, is the distance between the two numbers that cut-off the middle 50% of your data. This should sound familiar from the discussion of boxplots: the height of the box is exactly the IQR. We can either calculate the first and third quartiles using the `quantile()` function and take their difference...
 
