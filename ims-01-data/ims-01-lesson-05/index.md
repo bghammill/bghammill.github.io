@@ -1,6 +1,6 @@
-## Simpson's paradox
+# Simpson's paradox
 
-Often when one mentions "a relationship between variables" we think of a relationship between just two variables, say a so called explanatory variable, $$x$$, and response variable, $$y$$. However, truly understanding the relationship between two variables might require considering other potentially related variables as well. If we don't, we might find ourselves in a *Simpson's paradox*. So, what is Simpson's paradox?
+Often when one mentions "a relationship between variables" we think of a relationship between just two variables, say a so called explanatory variable, $$x$$, and response variable, $$y$$. However, truly understanding the relationship between two variables might require considering other potentially related variables as well, often referred to as **confounding variables**. If we don't, we might find ourselves in a *Simpson's paradox*. So, what is Simpson's paradox?
 
 First, let's clarify what we mean when we say explanatory and response variables. Labeling variables as explanatory and response does not guarantee the relationship between the two is actually causal, even if there is an association identified. We use these labels only to keep track of which variable we suspect affects the other.
 
@@ -10,15 +10,17 @@ First, let's clarify what we mean when we say explanatory and response variables
 
 And these definitions can be expanded to more than just two variables. For example, we could study the relationship between three explanatory variables and a single response variable.
 
-### Multivariate relationships
+### Multivariate relationships & confounding
 
 ![](C:\Users\hammill\Documents\GitHub\bghammill.github.io\ims-01-data\ims-01-lesson-02\images\explanatory-multivariate.png)
 
 This is often a more realistic scenario since most real world relationships are multivariable. For example, if we're interested in the relationship between calories consumed daily and heart health, we would probably also want to consider information on variables like age and fitness level of the person as well.
 
+In statistical terms, age and fitness level are potential confounders in the relationship between calories consumed and heart health. You'll talk about confounders in more detail in others classes, but just know that a confounding variable is a factor that is associated both with the response and the explanatory variable or interest. A confounding variable may distort or mask the effects of another variable on the disease in question and always needs to be considered in an analysis.
+
 ![](C:\Users\hammill\Documents\GitHub\bghammill.github.io\ims-01-data\ims-01-lesson-02\images\explanatory-multivariate-example.png)
 
-Not considering an important variable when studying a relationship can result in what we call a **Simpson's paradox**. This paradox illustrates the effect the omission of an explanatory variable can have on the measure of association between another explanatory variable and the response variable. In other words, the inclusion of a third variable in the analysis can change the apparent relationship between the other two variables. 
+Not considering an important variable when studying a relationship can result, in extreme cases, in what we call **Simpson's paradox**. This paradox illustrates the effect the omission of an explanatory variable can have on the measure of association between another explanatory variable and the response variable. In other words, the inclusion of a third variable in the analysis can change the apparent relationship between the other two variables. 
 
 Consider the eight dots in the scatter plot below (the points happen to fall on the orange and blue lines). The trend describing the points when only considering `x1` and `y`, illustrated by the black dashed line, is reversed when `x2`, the grouping variable, is also considered. If we don't consider `x2`, the relationship between `x1` and `y` is positive. If we do consider `x2`, we see that within each group the relationship between `x1` and `y` is actually negative.
 
@@ -97,9 +99,15 @@ We would have to know about the data to tease out the reasons for this, but one 
 
 Note that we were only able to discover the contradictory finding once we incorporated information about the department of the application. Examples like this highlight the importance of a good study design that considers and collects information on extraneous, but potentially confounding variables in a study.
 
-## 
 
 
+You have successfully completed this tutorial.
+
+What's next?
+
+- [Back to the main page](https://bghammill.github.io/)
+- [Back to Section 1: Getting Started with Data](https://bghammill.github.io/ims-01-data/)
+- [Introduction to Modern Statistics textbook link](http://openintro-ims.netlify.app/)
 
 
 

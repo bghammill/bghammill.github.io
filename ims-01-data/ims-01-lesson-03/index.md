@@ -54,13 +54,13 @@ Cluster and multistage sampling are often used for economical reasons. For examp
 
 Time to put these concepts into practice!
 
-### Sampling strategies, determine which
+***Sampling strategies, determine which***
 
 A consulting company is planning a pilot study on marketing in Boston. They identify all the zip codes that make up the greater Boston area, then sample 50 randomly selected addresses from each zip code and mail a coupon to these addresses. They then track whether the coupon was used in the following month.
 
 *What sampling strategy has this company used?* 
 
-### Sampling strategies, choose worst
+***Sampling strategies, choose worst***
 
 A school district has requested a survey be conducted on the socioeconomic status of their students. Their budget does not allow for a census, so they need to sample students within the school district. 
 
@@ -74,7 +74,7 @@ In this section, we'll practice sampling in SAS.
 
 Suppose we want to collect data from counties in the United States, but we do not have the resources to obtain these data from all counties. Conveniently, however, we do have a list of all counties. This is publicly available information and is contained in the `county` dataset. 
 
-### Setup
+***Setup***
 
 Let's start by initializing the SAS environment and loading/checking  the `county` dataset. 
 
@@ -228,7 +228,7 @@ This way, if we find a difference in mastery of the R language between students 
 
 Now it's time to practice these experimental design concepts.
 
-### Identifying components of a study
+***Identifying components of a study***
 
 A researcher designs a study to test the effect of light and noise levels on exam performance of students. The researcher also believes that light and noise levels might have different effects on males and females, so she wants to make sure both sexes are represented equally under different conditions.
 
@@ -239,7 +239,7 @@ A researcher designs a study to test the effect of light and noise levels on exa
 * There are 2 blocking variables (light and noise), 1 explanatory variable (sex), and 1 response variable (exam performance).
 * There are 2 explanatory variables (light and noise), 1 blocking variable (sex), and 1 response variable (exam performance).
 
-### Experimental design terminology
+***Experimental design terminology***
 
 As a check of understanding...
 

@@ -19,19 +19,24 @@ In this tutorial, we focus on steps 1 and 2 of this process. In future tutorials
 
 ## Tutorials
 
-### 1 - [Language of data](https://bghammill.github.io/ims-01-data/ims-01-lesson-01/)
+### [Language of data](https://bghammill.github.io/ims-01-data/ims-01-lesson-01/)
 
 - Load data from the course library within the [SAS On-Demand](https://welcome.oda.sas.com/home) environment
 - Introduce datasets
 - Discuss variable types connecting terminology from textbook to SAS
 - Perform basic data manipulation
 
-### 2 - [Types of studies](https://bghammill.github.io/ims-01-data/ims-01-lesson-02/)
+### [Simpson's Paradox demonstration](https://bghammill.github.io/ims-01-data/ims-01-lesson-05/)
+
+- Introduce the idea of confounding variables
+- Demonstrate Simpson's Paradox
+
+### [Types of studies](https://bghammill.github.io/ims-01-data/ims-01-lesson-02/)
 
 - Define observational studies and experiments
 - Discuss scope of inference 2x2 grid with random assignment and sampling
 
-### 3 - [Sampling strategies and experimental design](https://bghammill.github.io/ims-01-data/ims-01-lesson-03/)
+### [Sampling strategies and experimental design](https://bghammill.github.io/ims-01-data/ims-01-lesson-03/)
 
 - Define simple random sampling, stratified sampling, cluster sampling, multistage sampling
 - Use SAS to obtain different types of samples
