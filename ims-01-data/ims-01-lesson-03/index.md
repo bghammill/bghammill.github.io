@@ -255,7 +255,7 @@ And to connect the concepts of stratification and blocking...
 
 
 
-You have successfully completed Tutorial 2 in Section 1: Getting Started with Data.
+You have successfully completed this tutorial.
 
 What's next?
 

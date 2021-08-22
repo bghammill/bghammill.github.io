@@ -280,7 +280,7 @@ Neither of these processes will be covered here, since this is something covered
 
 
 
-You have successfully completed Tutorial 1 in Section 1: Getting Started with Data.
+You have successfully completed this tutorial.
 
 What's next?
 

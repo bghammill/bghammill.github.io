@@ -97,7 +97,7 @@ Yes, due to random assignment, we are able to infer a causal link between the be
 
 
 
-You have successfully completed Tutorial 2 in Section 1: Getting Started with Data.
+You have successfully completed this tutorial.
 
 What's next?
 

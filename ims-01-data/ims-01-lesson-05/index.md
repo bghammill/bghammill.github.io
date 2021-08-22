@@ -6,25 +6,25 @@ First, let's clarify what we mean when we say explanatory and response variables
 
 ### Explanatory and response
 
-![](C:\Users\hammill\Documents\GitHub\bghammill.github.io\ims-01-data\ims-01-lesson-02\images\explanatory-single.png)
+![](images/explanatory-single.png)
 
 And these definitions can be expanded to more than just two variables. For example, we could study the relationship between three explanatory variables and a single response variable.
 
 ### Multivariate relationships & confounding
 
-![](C:\Users\hammill\Documents\GitHub\bghammill.github.io\ims-01-data\ims-01-lesson-02\images\explanatory-multivariate.png)
+![](images/explanatory-multivariate.png)
 
 This is often a more realistic scenario since most real world relationships are multivariable. For example, if we're interested in the relationship between calories consumed daily and heart health, we would probably also want to consider information on variables like age and fitness level of the person as well.
 
 In statistical terms, age and fitness level are potential confounders in the relationship between calories consumed and heart health. You'll talk about confounders in more detail in others classes, but just know that a confounding variable is a factor that is associated both with the response and the explanatory variable or interest. A confounding variable may distort or mask the effects of another variable on the disease in question and always needs to be considered in an analysis.
 
-![](C:\Users\hammill\Documents\GitHub\bghammill.github.io\ims-01-data\ims-01-lesson-02\images\explanatory-multivariate-example.png)
+![](images/explanatory-multivariate-example.png)
 
 Not considering an important variable when studying a relationship can result, in extreme cases, in what we call **Simpson's paradox**. This paradox illustrates the effect the omission of an explanatory variable can have on the measure of association between another explanatory variable and the response variable. In other words, the inclusion of a third variable in the analysis can change the apparent relationship between the other two variables. 
 
 Consider the eight dots in the scatter plot below (the points happen to fall on the orange and blue lines). The trend describing the points when only considering `x1` and `y`, illustrated by the black dashed line, is reversed when `x2`, the grouping variable, is also considered. If we don't consider `x2`, the relationship between `x1` and `y` is positive. If we do consider `x2`, we see that within each group the relationship between `x1` and `y` is actually negative.
 
-![](C:\Users\hammill\Documents\GitHub\bghammill.github.io\ims-01-data\ims-01-lesson-02\images\simpson-paradox-plot.png)
+![](images/simpson-paradox-plot.png)
 
 We'll explore Simpson's paradox further with another dataset, which comes from a study carried out by the graduate Division of the University of California, Berkeley in the early 70’s to evaluate whether there was a sex bias in graduate admissions. The data come from six departments. For confidentiality we'll call them A through F. The dataset contains information on whether the applicant identified as male or female, recorded as `Gender`, and whether they were admitted or rejected, recorded as `Admit`. First, we will evaluate whether the percentage of males admitted is indeed higher than females, overall. Next, we will calculate the same percentage for each individual department.
 
