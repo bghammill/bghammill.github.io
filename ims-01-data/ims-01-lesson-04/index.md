@@ -83,26 +83,15 @@ Recreate your visualization from the previous exercise, but this time color the 
 
 - *How would you describe the relationship apparent in this visualization?*
 
-## Congratulations!
+## 
 
-You have successfully completed all of the lessons in Tutorial 1: Getting Started with Data.
+You have successfully completed this tutorial.
 
-You now know how to get started with data analysis! In this tutorial you have learned concepts and terminology related to study design and the first steps of working with a dataset. We have also laid some SAS foundations.
 
-We hope you enjoyed the tutorial and that the topics we discussed in this tutorial motivated you to learn more data analysis and statistics. What we covered in this tutorial is just the tip of the iceberg, so we hope you decide to dive deeper to learn more.
 
-What's next?
+# [< Back to Section 1](https://bghammill.github.io/ims-01-data/)
 
-[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
 
-[Tutorial 1: Getting Started with Data](https://bghammill.github.io/ims-01-data/)
-
-- [Tutorial 1 - Lesson 1: Language of data](https://bghammill.github.io/ims-01-data/ims-01-lesson-01/)
-- [Tutorial 1 - Lesson 2: Types of studies](https://bghammill.github.io/ims-01-data/ims-01-lesson-02/)
-- [Tutorial 1 - Lesson 3: Sampling strategies and Experimental design](https://bghammill.github.io/ims-01-data/ims-01-lesson-03/)
-- [Tutorial 1 - Lesson 4: Case study](https://bghammill.github.io/ims-01-data/ims-01-lesson-04/)
-
-[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
 <!-- MathJax -->
 

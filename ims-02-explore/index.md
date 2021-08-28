@@ -1,8 +1,8 @@
 # Exploratory data analysis
 
-## Tutorial description
+When your data sits in a SAS dataset or other database, it’s difficult to observe much about it beyond its size and the types of variables it contains. In this tutorial, we'll learn about summarizing and visualizing your data.  Sometimes, we refer to the techniques covered in this tutorial as **exploratory data analysis** or EDA. 
 
-When your dataset is represented as a table or a database, it’s difficult to observe much about it beyond its size and the types of variables it contains. In this tutorial, you’ll learn how to use graphical and numerical techniques to begin uncovering the structure of your data. Which variables suggest interesting relationships? Which observations are unusual? By the end of the tutorial, you’ll be able to answer these questions and more, while generating graphics that are both insightful and beautiful.
+EDA is all about learning the structure of a dataset through a series of numerical and graphical techniques. When you do EDA, you'll generate summaries of your data that help you understand the distributions of variables, uncover relationship, and find outliers. EDA can also generate questions that will help inform subsequent analysis.
 
 ## Learning objectives
 
@@ -13,6 +13,33 @@ When your dataset is represented as a table or a database, it’s difficult to o
 - Identify unusual observations
 
 ## Lessons
+
+### [Exploring single variables](https://bghammill.github.io/ims-02-explore/ims-02-lesson-05/)
+
+Create graphical and numerical summaries to understand the marginal distributions of single variables
+
+* Categorical variables
+  * Frequencies & relative frequency tables
+  * Bar charts and pie charts
+* Numerical variables
+  * Measures of center
+  * Measures of spread (variability)
+  * Histograms and box plots
+
+### [Exploring relationships between two variables](https://bghammill.github.io/ims-02-explore/ims-02-lesson-06/)
+
+Create graphics that display and calculate numeric measures that summarize the relationship between multiple variables  
+
+* Categorical variable x categorical variable
+  * Contingency tables
+  * Segmented bar charts and mosaic plots
+  * Relative risk & risk difference
+* Numerical variable x numerical variable
+  * Scatterplot
+  * Correlation coefficient
+* Categorical variable x numerical variable
+  * Paneled histograms & box plots
+  * Mean differences
 
 ### 1 - [Visualizing categorical data](https://bghammill.github.io/ims-02-explore/ims-02-lesson-01/)
 
@@ -63,4 +90,8 @@ Statistics for describing distributions of data.
 ### 4 - [Case study](https://bghammill.github.io/ims-02-explore/ims-02-lesson-04/)
 
 Apply what you’ve learned to explore and summarize a real world dataset in this case study of email spam.
+
+
+
+# [< Back to main page](https://bghammill.github.io/)
 

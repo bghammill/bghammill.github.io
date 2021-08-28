@@ -97,7 +97,7 @@ That should be enough to get started. Now it's your turn to start exploring the 
 
 Suppose you've asked 30 people, some young, some old, what their preferred flavor of pie is: apple or pumpkin. Your data could be summarized in a side-by-side bar chart. Here are three possibilities for how it might look.
 
-![](images/premch1-1.png)
+![](C:\Users\hammill\Documents\GitHub\bghammill.github.io\ims-02-explore\ims-02-lesson-01\images\premch1-1.png)
 
 *Which one of the barcharts shows no relationship between `age` and `flavor`? In other words, which plot shows that pie preference is the same for both young and old?*
 
@@ -143,20 +143,12 @@ The code below creates two bar charts:
 2. One with `gender` on the x-axis, and bars sized & colored by the `align` of the character
 
 ```
-* Side-by-side bar chart of alignment, with categories of gender;
-proc sgplot data=comics_no_rc;
-	vbar align / group=gender groupdisplay=cluster;
-run;
-
-* Side-by-side bar chart of gender, with categories of alignment;
-proc sgplot data=comics_no_rc;
-	vbar gender / group=align groupdisplay=cluster;
-run;
+* Side-by-side bar chart of alignment, with categories of gender;proc sgplot data=comics_no_rc;	vbar align / group=gender groupdisplay=cluster;run;* Side-by-side bar chart of gender, with categories of alignment;proc sgplot data=comics_no_rc;	vbar gender / group=align groupdisplay=cluster;run;
 ```
 
 ### Bar chart interpretation
 
-![](images/barchartex-1.png)
+![](C:\Users\hammill\Documents\GitHub\bghammill.github.io\ims-02-explore\ims-02-lesson-01\images\barchartex-1.png)
 
 *Which of the following interpretations of the bar charts above is **not** valid?*
 
@@ -174,17 +166,14 @@ You may have noticed in the last exercises that sometimes raw counts of cases ca
 Let's return to our table of counts of cases by identity and alignment. If we wanted to instead get a sense of the proportion of all cases that fell into each category, we can modify our previous table to add this information. `PROC FREQ` does this easily for us. Here, again, is the distribution of records for each combination of `id` and `align`. 
 
 ```
-* Check distribution of ALIGN by ID variables, include overall proportions;
-proc freq data=comics_no_rc;
-	tables align * id;
-run;
+* Check distribution of ALIGN by ID variables, include overall proportions;proc freq data=comics_no_rc;	tables align * id;run;
 ```
 
 Below each frequency count, we now see three proportions. And while this is a little busy, everything we might want to know about the distribution of these two characteristics is here.
 
 Note the legend that appears to the top left of the table:
 
-![](images/freq-props.png)
+![](C:\Users\hammill\Documents\GitHub\bghammill.github.io\ims-02-explore\ims-02-lesson-01\images\freq-props.png)
 
 This tell us what each number in each table cell represents. Right below the frequency is the overall percent, or what proportion of all records fall into that particular cell. We see, for example, that the single largest category are characters that are bad + secret at about 29% of characters.
 
@@ -204,10 +193,7 @@ Remember, when you condition on alignment (the value in the rows), the row perce
 Because `PROC FREQ` output can be busy, it is often helpful to use the `norow`, `nopct`, and `nocol` options to limit the output. For example:
 
 ```
-* Check distribution of ALIGN by ID variables, row percents only;
-proc freq data=comics_no_rc;
-	tables align * id / nocol nopct;
-run;
+* Check distribution of ALIGN by ID variables, row percents only;proc freq data=comics_no_rc;	tables align * id / nocol nopct;run;
 ```
 
 As the number of cells in these tables gets large, it becomes much easier to make sense of your data using graphics. The bar chart is also a good choice to show the conditional probabilities. Let's create a bar chart based on the table generated above.
@@ -217,10 +203,7 @@ As the number of cells in these tables gets large, it becomes much easier to mak
 Below is the code to create a bar chart of conditional proportions. In this plot, we want to condition on the variable that is on the x-axis (`align`) and have the categories of each bar (`id`) add up to a total proportion of 1. To stretch the bars this way, we add the `pctlevel=group` option to the `PROC SGPLOT` statement and the `stat=percent` option to the `VBAR` statement:
 
 ```
-* Conditional bar chart of ALIGN by ID;
-proc sgplot data=comics_no_rc pctlevel=group;
-	vbar align / group=id stat=percent;
-run; 
+* Conditional bar chart of ALIGN by ID;proc sgplot data=comics_no_rc pctlevel=group;	vbar align / group=id stat=percent;run; 
 ```
 
 We can see more quickly here that the majority of bad characters are secret, which different from other alignments. 
@@ -228,10 +211,7 @@ We can see more quickly here that the majority of bad characters are secret, whi
 If we flip the `align` and `id` variables, the bar chart gives us different information:
 
 ```
-* Conditional bar chart of ID by ALIGN;
-proc sgplot data=comics_no_rc pctlevel=group;
-	vbar id / group=align stat=percent;
-run; 
+* Conditional bar chart of ID by ALIGN;proc sgplot data=comics_no_rc pctlevel=group;	vbar id / group=align stat=percent;run; 
 ```
 
 Which condition bar chart you use would depend on the question you'd like to answer.
@@ -241,18 +221,10 @@ Which condition bar chart you use would depend on the question you'd like to ans
 Choosing to show conditional proportions, however, can give a very different picture than showing counts. Here is code to generate two figures:
 
 1. A stacked bar chart of the *counts* of `gender` within different `align`ments
-2.  A stacked bar chart of the *proportions* of `gender` within different `align`ments 
+2. A stacked bar chart of the *proportions* of `gender` within different `align`ments 
 
 ```
-* Stacked bar chart of ALIGN by GENDER;
-proc sgplot data=comics_no_rc;
-	vbar align / group=gender;
-run;
-
-* Conditional stacked bar chart of ALIGN by GENDER;
-proc sgplot data=comics_no_rc pctlevel=group;
-	vbar align / group=gender stat=percent;
-run;
+* Stacked bar chart of ALIGN by GENDER;proc sgplot data=comics_no_rc;	vbar align / group=gender;run;* Conditional stacked bar chart of ALIGN by GENDER;proc sgplot data=comics_no_rc pctlevel=group;	vbar align / group=gender stat=percent;run;
 ```
 
 The size of each alignment group definitely gets lost when presenting conditional proportions.
@@ -266,10 +238,7 @@ You might not have noticed, but already you've been creating plots that illustra
 To compute a table of counts and proportions for a single variable like `id`, we can use `PROC FREQ`, as we have seen before. (Note that we are still using the dataset without reformed criminals and ignoring missing data.)
 
 ```
-* Distribution of ID;
-proc freq data=comics_no_rc;
-	tables id;
-run;
+* Distribution of ID;proc freq data=comics_no_rc;	tables id;run;
 ```
 
 SAS gives us the count and percent for each identity type. It also gives us the cumulative frequency and percent, which is often more useful when the variable of interest is ordinal.
@@ -281,10 +250,7 @@ You may hear this type of one-way output described as a **marginal distribution*
 The syntax to create the simple bar chart is straightforward as well, which we saw at the beginning of the lesson. 
 
 ```
-* Simple bar chart of ID;
-proc sgplot data=comics;
-	vbar id;
-run;
+* Simple bar chart of ID;proc sgplot data=comics;	vbar id;run;
 ```
 
 ### Faceting
@@ -296,18 +262,14 @@ Another useful way to visualize the distribution of a single variable is to cond
 To implement paneling in SAS, we need to use `PROC SGPANEL` and let that procedure know which variable we would like to control the panels. Since we want to see the distribution of `id` by `align`, we add `panelby align` as below:
 
 ```
-* Paneled bar chart of ID by ALIGN;
-proc sgpanel data=comics_no_rc;
-	panelby align;
-	vbar id;
-run;
+* Paneled bar chart of ID by ALIGN;proc sgpanel data=comics_no_rc;	panelby align;	vbar id;run;
 ```
 
 ### Paneling vs. stacking
 
 In essence, the paneled plot is a rearrangement of the stacked bar charts that we considered at the beginning of the lesson.
 
-![](images/fvs-1.png)
+![](C:\Users\hammill\Documents\GitHub\bghammill.github.io\ims-02-explore\ims-02-lesson-01\images\fvs-1.png)
 
 Each panel in the plot on the left corresponds to a single stacked bar segment in the plot on the right. Each allows you to see the distributions of each variable in different ways.
 
@@ -319,7 +281,7 @@ The pie chart is a common way to display categorical data where the size of the 
 
 If we represent this data using a barchart the answer is obvious: the proportion of public is greater. For that reason, it's generally a good idea to stick to barcharts.
 
-![](images/pie-1.png)
+![](C:\Users\hammill\Documents\GitHub\bghammill.github.io\ims-02-explore\ims-02-lesson-01\images\pie-1.png)
 
 You have successfully completed this tutorial.
 

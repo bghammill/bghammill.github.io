@@ -257,11 +257,9 @@ And to connect the concepts of stratification and blocking...
 
 You have successfully completed this tutorial.
 
-What's next?
 
-- [Back to the main page](https://bghammill.github.io/)
-- [Back to Section 1: Getting Started with Data](https://bghammill.github.io/ims-01-data/)
-- [Introduction to Modern Statistics textbook link](http://openintro-ims.netlify.app/)
+
+# [< Back to Section 1](https://bghammill.github.io/ims-01-data/)
 
 
 

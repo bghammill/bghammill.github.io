@@ -691,22 +691,13 @@ comics %>%
   )
 ```
 
-## Congratulations!
 
-You have successfully completed Lesson 4 in Tutorial 2: Summarizing and visualizing data.
 
-What's next?
+You have successfully completed this tutorial.
 
-[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
+# [< Back to Section 2](https://bghammill.github.io/ims-02-explore/)
 
-[Tutorial 2: Getting Started with Data](https://bghammill.github.io/ims-02-explore/)
 
-- [Tutorial 2 - Lesson 1: Visualizing categorical data](https://bghammill.github.io/ims-02-explore/ims-02-lesson-01/)
-- [Tutorial 2 - Lesson 2: Visualizing numerical data](https://bghammill.github.io/ims-02-explore/ims-02-lesson-02/)
-- [Tutorial 2 - Lesson 3: Summarizing with statistics](https://bghammill.github.io/ims-02-explore/ims-02-lesson-03/)
-- [Tutorial 2 - Lesson 4: Case study](https://bghammill.github.io/ims-02-explore/ims-02-lesson-04/)
-
-[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
 <!-- MathJax -->
 

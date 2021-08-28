@@ -47,6 +47,9 @@ The goal of this exercise is to determine the numbers and proportions of male an
 Let's first load and check the **ucb_admit** dataset:
 
 ```
+* Initialize SAS workspace;
+%include "~/my_shared_file_links/hammi002/sasprog/run_first.sas";
+
 * Makes a working copy of UCB_ADMIT data and glimpse;
 %use_data(ucb_admit);
 %glimpse(ucb_admit);
@@ -103,11 +106,9 @@ Note that we were only able to discover the contradictory finding once we incorp
 
 You have successfully completed this tutorial.
 
-What's next?
 
-- [Back to the main page](https://bghammill.github.io/)
-- [Back to Section 1: Getting Started with Data](https://bghammill.github.io/ims-01-data/)
-- [Introduction to Modern Statistics textbook link](http://openintro-ims.netlify.app/)
+
+# [< Back to Section 1](https://bghammill.github.io/ims-01-data/)
 
 
 

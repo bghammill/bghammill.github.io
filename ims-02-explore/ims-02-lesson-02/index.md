@@ -23,18 +23,11 @@ What kinds of things to do we see?
 
 * The car names, `name`, are character strings, where it's likely that every observations takes a unique value.
 * There are a number of variables with a format of `YESNO.`, which appear to only have values of 0 (for No) and 1 (for Yes). (A quick `PROC FREQ` on one or more of these variables would confirm.) Having this type of variable coded as 0/1 is very common in SAS, and doesn't even really require the format. Variables like this are often called indicator variables, where the value is 1 if the condition or characteristic is true or present. 
-* We see that the last set of variables are all numeric. Most have large discrete or continuous data, but look at `ncyl`. This variable includes the number of cylinders, and while it's listed as a numeric data type, there are only a few different values that it can take. So, it actually behaves a bit like categorical variable.
-
-```
-* If you would like to check the NCYL variable distribution;
-proc freq data=cars;
-	tables ncyl / missing;
-run;
-```
+* We see that the last set of variables are all numeric, some discrete and some continuous. *Can you tell which is which?*  
 
 ### Numerical summaries
 
-Before you start creating figures to understand the distribution of values of the numerical variables in your data, it is often helpful to get numerical summaries of those variables. This includes measures of central tendency (like mean, median, and mode) and measure of variability (like standard deviation, variance, and different percentiles).
+Before you start creating figures to see the distribution of values of the numerical variables in your data, it is often helpful to get numerical summaries of those variables. This includes measures of central tendency (like mean, median, and mode) and measure of variability (like standard deviation, variance, and different percentiles).
 
 In SAS, this is typically done with `PROC UNIVARIATE` or `PROC MEANS`. See how the output from each of those procedures looks for the `weight` variable:
 
@@ -304,22 +297,15 @@ run;
 
 If we look at rear wheel drive pickups, there appear to actually be two modes, but in general, they're a bit cheaper than front wheel drive pickups. In non-pickups, however, its the rear-wheel drive ones that are generally a bit pricier.
 
-## Congratulations!
 
-You have successfully completed Lesson 2 in Tutorial 2: Summarizing and visualizing data.
 
-What's next?
+You have successfully completed this tutorial.
 
-[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
+# [< Back to Section 2](https://bghammill.github.io/ims-02-explore/)
 
-[Tutorial 2: Getting Started with Data](https://bghammill.github.io/ims-02-explore/)
 
-- [Tutorial 2 - Lesson 1: Visualizing categorical data](https://bghammill.github.io/ims-02-explore/ims-02-lesson-01/)
-- [Tutorial 2 - Lesson 2: Visualizing numerical data](https://bghammill.github.io/ims-02-explore/ims-02-lesson-02/)
-- [Tutorial 2 - Lesson 3: Summarizing with statistics](https://bghammill.github.io/ims-02-explore/ims-02-lesson-03/)
-- [Tutorial 2 - Lesson 4: Case study](https://bghammill.github.io/ims-02-explore/ims-02-lesson-04/)
 
-[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
+
 
 <!-- MathJax -->
 

@@ -44,5 +44,5 @@ In this tutorial, we focus on steps 1 and 2 of this process. In future tutorials
 - Identify and discuss the purpose of each principle of experimental design
 - Discuss the purpose of each principle
 
-
+# [< Back to main page](https://bghammill.github.io/)
 
