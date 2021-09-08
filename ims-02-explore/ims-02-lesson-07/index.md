@@ -12,7 +12,7 @@ As before, we will look at 3 different scenarios, based on the variable types in
 
 When one variable is categorical and one is numerical, the most common way to quantify the strength of the relationship between the variables is to calculate the difference in means of the numerical variable between different levels of the categorical variable.
 
-Mean $$\delta = mean_1 - mean_2$$
+Mean $$\Delta = mean_1 - mean_2$$
 
 In this formula, Group 2 is the "reference" group that Group 1 is being compared to. A positive mean difference indicates that Group 1 has a higher mean on that variable than Group 2. A negative mean differences indicates that Group 1 has a lower mean on that variable than Group 2. This idea of clearly defining your reference group is critical since you can take this difference either way.
 
@@ -68,9 +68,9 @@ run;
 
 You should see that mean elbow diameter for females is 12.37 cm, while mean elbow diameter for males is 14.46 cm. 
 
-With females as the reference group, Mean $$\delta = mean_M - mean_F = 14.46 - 12.37 = 2.09 $$ cm. You might report this as: The mean elbow diameter among males is 2.09 cm larger than it is for females.
+With females as the reference group, Mean $$\Delta = mean_M - mean_F = 14.46 - 12.37 = 2.09 $$ cm. You might report this as: The mean elbow diameter among males is 2.09 cm larger than it is for females.
 
-With males as the reference group, Mean $$\delta = mean_F - mean_M = 12.37 - 14.46 = -2.09 $$ cm. You might report this as: The mean elbow diameter among females is 2.09 cm smaller than it is for males.
+With males as the reference group, Mean $$\Delta = mean_F - mean_M = 12.37 - 14.46 = -2.09 $$ cm. You might report this as: The mean elbow diameter among females is 2.09 cm smaller than it is for males.
 
 There is a way to get this mean difference calculated for you by SAS using `PROC TTEST`. We'll see this procedure later when making inference about means.
 
