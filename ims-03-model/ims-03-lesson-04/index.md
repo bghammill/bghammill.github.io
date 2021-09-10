@@ -1,81 +1,82 @@
 # Interpreting regression models
 
-## Data set-up
-
-### Is that textbook overpriced?
-
-We’ve spent some time building our graphical intuition about regression, as well as learning the mathematical specification of the model. Now it’s time to focus on what is often the most important thing about a regression model: interpreting the value of the coefficients.
+We spent some time building our graphical intuition about regression, as well as learning the mathematical specification of the model. Now it’s time to focus on what is often the most important thing about a regression model—interpreting the value of the coefficients.
 
 Data were collected on 73 textbooks required for a few randomly selected courses at UCLA. For each textbook, we know the retail price at both the UCLA bookstore and on Amazon.com. We also know the department and course number for each corresponding course, and the ISBN of the book.
 
-> What factors are associated with the price of each book at the UCLA bookstore?
+Let's load and take a quick look at those data:
 
 ```
-glimpse(textbooks)
+* Initialize SAS session;
+%include "~/my_shared_file_links/hammi002/sasprog/run_first.sas";
+
+* Makes and checks a working copy of TEXTBOOKS data;
+%use_data(textbooks);
+%glimpse(textbooks);
 ```
 
+#### Price by course number?
 
-
-### Compared to the course number?
-
-One might suppose that more advanced books cost more. Our best guess for the level of the course is to extract the course number. The scatterplot shows the relationship between the course number and the price of the book at the UCLA bookstore.
+One might suppose that more advanced books cost more. Our best guess for the level of the course is to extract the course number. The scatterplot shows the relationship between the course number, `course_num` and the price of the book at the UCLA bookstore, `ucla_new`.
 
 ```
-textbooks %>%
-  ggplot(aes(x = course_number, y = ucla_new)) +
-    geom_point()
+* Scatterplot for UCLA_NEW v. COURSE_NUM;
+proc sgplot data=textbooks;
+	scatter x=course_num y=ucla_new;
+run;
 ```
 
 ![img](images/2-1.png)
 
 This relationship is very weak, and if anything it appears to be negative.
 
+#### Price relative to Amazon?
 
-
-### Compared to Amazon?
-
-Instead, since Amazon.com provides a ready alternative for UCLA students, let’s consider the relationship between the prices of these books at Amazon, relative to their price at the UCLA bookstore.
+Instead, since Amazon.com provides a ready alternative for UCLA students, let’s consider the relationship between the prices of these books at the UCLA bookstore relative to their price at Amazon.
 
 ```
-ggplot(data = textbooks, aes(x = amaz_new, y = ucla_new)) +
-  geom_point()
+* Scatterplot for UCLA_NEW v. AMAZ_NEW;
+proc sgplot data=textbooks;
+	scatter x=amaz_new y=ucla_new;
+run;
 ```
 
 ![img](images/3-1.png)
 
 Here we see clear evidence of a strong, positive, linear relationship.
 
-As noted previously, the regression line can be added to the plot with the `geom_smooth()` command. While this provides us with the a way to visualize our model, it doesn’t actually tell us what the fitted coefficients are.
+As noted previously, the regression line can be easily added to this scatterplot.
 
 ```
-ggplot(data = textbooks, aes(x = amaz_new, y = ucla_new)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE)
+* Scatterplot w/regression line for UCLA_NEW v. AMAZ_NEW;
+proc sgplot data=textbooks;
+	reg x=amaz_new y=ucla_new;
+run;
 ```
 
 ![img](images/4-1.png)
 
-
+And while this provides us a way to visualize our model, it doesn’t actually tell us what the estimated coefficients are.
 
 ## Slope & intercept interpretation
 
-To get those values, we’ll use the `lm()` command to actually fit the model. We specify two arguments to `lm()`:
+To get those estimated values, we’ll use `PROC REG to actually estimate the following population regression equation,
 
-1. a `formula` that indicates which variable is the response and which is the explanatory
-2. a `data` argument that identifies the data frame where those variables are located
+$$y = \beta_0 + \beta_1 x$$
+
+Or, in terms of the study,
+
+$$Price_{UCLA} = \beta_0 + \beta_1 Price_{Amazon}$$
+
+So we are regression the price of new books at the UCLA bookstore (response) on the price of new books at Amazon (explanatory).
 
 ```
-lm(ucla_new ~ amaz_new, data = textbooks)
-## 
-## Call:
-## lm(formula = ucla_new ~ amaz_new, data = textbooks)
-## 
-## Coefficients:
-## (Intercept)     amaz_new  
-##       0.929        1.199
+proc reg data=textbooks;
+	model ucla_new = amaz_new;
+run;
 ```
 
-The output from `lm()` reminds us how we called it, and then gives us the fitted coefficients. The value of the intercept coefficient—beta^0beta^0—is $0.93, while the value of the slope coefficient—β^1β^1—is $1.20.
+Again, the output from `PROC REG` is substantial, but let's pay attention to the parameter estimates in the final section. The estimated value of the intercept, $$b_0$$, is $0.93, while the estimated value of the slope, $$b_1$$, is $1.20.
 
 ### Regression equation
 
