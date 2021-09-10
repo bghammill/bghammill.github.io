@@ -6,12 +6,27 @@
 
 Before we get into the mathematical specification for a regression model, let’s build some intuition about what a regression line is.
 
-In this scatterplot, we see the relationship between the total length of a possum, and the corresponding length of its tail. Clearly there is not a perfect relationship here: the total length of the possum varies even for possums with the same tail length. But we still have some intuitive desire to describe the relationship with a line.
+We are going to use the POSSUM dataset for this exploration. Let's get things set up so you can follow along.
 
 ```
-ggplot(data = possum, aes(y = total_l, x = tail_l)) +
-  geom_point()
+* Initialize this SAS session;
+%include "~/my_shared_file_links/hammi002/sasprog/run_first.sas";
+
+* Makes and checks a working copy of POSSUM data;
+%use_data(possum);
+%glimpse(possum);
 ```
+
+Let's first look at a scatterplot of the total length of a possum (`total_l`), and the corresponding length of its tail (`tail_l`):
+
+```
+* Scatterplot of TOTAL_L v. TAIL_L;
+proc sgplot data=possum;
+	scatter x=tail_l y=total_l;
+run;
+```
+
+Clearly there is not a perfect relationship here: the total length of the possum varies even for possums with the same tail length. But we still have some intuitive desire to describe the relationship with a line.
 
 ![img](images/1-1.png)
 
@@ -19,7 +34,7 @@ ggplot(data = possum, aes(y = total_l, x = tail_l)) +
 
 ### Through the origin
 
-In the plot below, we’ve superimposed a line that goes through the origin - that is, the point where both xx and yy are equal to zero. The line has a slope of 2.5 centimeters (of total length) per centimeter (of tail length). We notice that, in some sense, the line does go “through” the points, but doesn’t capture the general trend as best we could imagine.
+In the plot below, we’ve superimposed a line that goes through the origin - that is, the point where both $x$ and $y$ are equal to zero. The line has a slope of 2.5 centimeters (of total length) per centimeter (of tail length). We notice that, in some sense, the line does go “through” the points, but doesn’t capture the general trend as best we could imagine.
 
 ![img](images/2-1.png)
 
@@ -35,7 +50,7 @@ This line also goes through the origin, but has a gentler slope of 2.3 cm (of to
 
 ### Not through the origin
 
-But why should we force the line to go through the origin? Here is a line that has a yy-intercept of 40 cm, and an even gentler slope of 1.3 . It seems like an even better fit still.
+But why should we force the line to go through the origin? Here is a line that has a $y$-intercept of 40 cm, and an even gentler slope of 1.3 . It seems like an even better fit still.
 
 Do you think you could find an even better fit? In order to do so, you need some criteria for judging which line fits better. In particular, you need a numerical measurement of how good the fit of each possible line is.
 
@@ -78,28 +93,6 @@ ggplot(data = possum, aes(y = total_l, x = tail_l)) +
 You’ll explore the “best fit” line on your own in these next exercise.
 
 
-
-## Your turn!
-
-Using the `bdims` dataset, create a scatterplot of body weight (`bwt`) as a function of height (`hgt`) for all individuals in the `bdims` dataset.
-
-Then, add a linear regression line on top of the scatterplot.
-
-R Code Start Over Hints
-
- Run Code
-
-1
-
-2
-
-3
-
- ggplot(data = ___, aes(x = ___, y = ___)) + 
-
-  ___ + 
-
-  ___(method = ___, se = FALSE)
 
 ### Uniqueness of least squares regression line
 
