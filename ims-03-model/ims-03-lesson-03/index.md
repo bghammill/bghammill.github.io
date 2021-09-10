@@ -30,117 +30,113 @@ Clearly there is not a perfect relationship here: the total length of the possum
 
 ![img](images/1-1.png)
 
+So let's just draw our own line. The code for each scatterplot is below, if you want to follow along.
+
 ## Picking a line of best fit
 
-### Through the origin
+#### Through the origin
 
-In the plot below, we’ve superimposed a line that goes through the origin - that is, the point where both $x$ and $y$ are equal to zero. The line has a slope of 2.5 centimeters (of total length) per centimeter (of tail length). We notice that, in some sense, the line does go “through” the points, but doesn’t capture the general trend as best we could imagine.
+In the plot below, we’ve superimposed a line that goes through the origin - that is, the point where both $$x$$ and $$y$$ are equal to zero. The line has a slope of 2.5 centimeters (of total length) per centimeter (of tail length). We notice that, in some sense, the line does go “through” the points, but doesn’t capture the general trend as best we could imagine.
+
+```
+* Scatterplot of TOTAL_L v. TAIL_L -- Add line y = 2.5x;
+proc sgplot data=possum;
+	scatter x=tail_l y=total_l;
+	lineparm x=0 y=0 slope=2.5 / legendlabel="y = 2.5x";
+run;
+```
 
 ![img](images/2-1.png)
 
 
 
-### Through the origin, better fit
+#### Through the origin, better fit
 
 This line also goes through the origin, but has a gentler slope of 2.3 cm (of total length) per cm (of tail length). It seems like a “better” fit, since it cuts through the points in a more central way.
 
+```
+* Scatterplot of TOTAL_L v. TAIL_L -- Add line y = 2.3x;
+proc sgplot data=possum;
+	scatter x=tail_l y=total_l;
+	lineparm x=0 y=0 slope=2.3 / legendlabel="y = 2.3x";
+run;
+```
+
 ![img](images/3-1.png)
 
+#### Not through the origin
 
+But why should we force the line to go through the origin? Here is a line that has a $$y$$-intercept of 40 cm, and an even gentler slope of 1.3 . It seems like an even better fit still.
 
-### Not through the origin
-
-But why should we force the line to go through the origin? Here is a line that has a $y$-intercept of 40 cm, and an even gentler slope of 1.3 . It seems like an even better fit still.
-
-Do you think you could find an even better fit? In order to do so, you need some criteria for judging which line fits better. In particular, you need a numerical measurement of how good the fit of each possible line is.
+```
+* Scatterplot of TOTAL_L v. TAIL_L -- Add line y = 1.3x + 40;
+proc sgplot data=possum;
+	scatter x=tail_l y=total_l;
+	lineparm x=0 y=40 slope=1.3 / legendlabel="y = 1.3x + 40";
+run;
+```
 
 ![img](images/4-1.png)
 
+Do you think you could find an even better fit? In order to do so, you need some criteria for judging which line fits better. In particular, you need a numerical measurement of how good the fit of each possible line is.
 
-
-### The “best” fit line
+#### The “best” fit line
 
 The simple linear regression model for a numeric response as a function of a numeric explanatory variable can be visualized on the corresponding scatterplot by a straight line.
 
-In regression, we use the least squares criterion to determine the best fit line. Statisticians have proven that (apart from pathological examples) if we seek the line that tries to minimize the sum of the squared distances between the line and a set of data points, a unique line exists. That line is called the “least squares regression line.”
+In regression, we use the *least squares* criterion to determine the best fit line. Statisticians have proven that (apart from pathological examples) if we seek the line that tries to minimize the sum of the squared distances between the line and a set of data points, a unique line exists. That line is called the “least squares regression line.”
 
-We might consider linear regression to be a specific example of a larger class of *smooth* models. The `geom_smooth()` function allows you to draw such models over a scatterplot of the data itself. This technique is known as visualizing the model *in the data space*. The `method` argument to `geom_smooth()` allows you to specify what class of smooth model you want to see. Since we are exploring linear models, we’ll set this argument to the value `"lm"`.
-
-We can add the line to our plot using the `geom_smooth()` function and specifying the `method` argument to be `"lm"`, which stands for “linear model”.
+This is what things look like if we add the least squares regression line to our scatterplot.
 
 ```
-ggplot(data = possum, aes(y = total_l, x = tail_l)) +
-  geom_point() + 
-  geom_smooth(method = "lm")
-```
-
-![img](images/5-1.png)
-
-
-
-### Ignore standard errors
-
-Note that by default, this will draw the regression line in blue, with gray shading for the standard error associated with the line. That should not concern us just yet, so we can turn it off by setting the `se` argument to `FALSE`.
-
-```
-ggplot(data = possum, aes(y = total_l, x = tail_l)) +
-  geom_point() + 
-  geom_smooth(method = "lm", se = FALSE)
+* Scatterplot of TOTAL_L v. TAIL_L with actual regression line;
+proc sgplot data=possum;
+	reg x=tail_l y=total_l;
+run;
 ```
 
 ![img](images/6-1.png)
 
-You’ll explore the “best fit” line on your own in these next exercise.
+#### Uniqueness of least squares regression line
 
+The least squares criterion implies that the slope of the regression line is unique. In practice, the slope and intercept of the line of best fit will be computed by SAS. But it's interesting to try and find the optimal values for a regression equation yourself, to get an intuitive sense of the process of minimizing the squared residuals.
 
+Go spend a few minutes here, https://phet.colorado.edu/sims/html/least-squares-regression/latest/least-squares-regression_en.html.
 
-### Uniqueness of least squares regression line
+![](images/fit-line.png)
 
-The least squares criterion implies that the slope of the regression line is unique. In practice, the slope is computed by R. In this exercise, you will experiment with trying to find the optimal value for the regression slope for weight as a function of height in the `bdims` dataset via trial-and-error.
+To manually fit a line to some points, do the following:
 
-We’ve built a custom function for you called `add_line()`, which takes a single argument: the proposed slope coefficient and plots it on the scatterplot of height and weight.
-
-Use the code chunk below to experiment with different values (to the nearest integer) of the `my_slope` parameter until you find one that you think fits best.
-
-
+1) Select a pre-existing data relationship (Manatee Mortality vs. Time is a great choice)
+2) Turn on the Squared Residuals option, so you can see the squared error (as light purple boxes) associated with individual points and can see the total squared error in the "sum" bar
+3) Fiddle with the sliders to change the slope and intercept of the line 
+4) When you have a line that you think is reasonable, turn on the Best-Fit Line to see how you did.
 
 ## Understanding Linear Models
 
-Models are ubiquitous in statistics. In many cases, we assume that the value of our response variable is some function of our explanatory variable, plus some random noise. The latter term is important, and in a philosophical sense, is the focus of statistical thinking.
+Models are ubiquitous in statistics. In many cases, we assume that the value of our response variable is some function of our explanatory variable, *plus some random noise*. The latter term is important, and in a philosophical sense, is the focus of statistical thinking.
 
-What we are saying here is that there is some mathematical function ff, which can translate values of one variable into values of another, except that there is some randomness in the process. What often distinguishes statisticians from other quantitative researchers is the way that we try to model that random noise.
+What we are saying here is that there is some mathematical function $$f$$, which can translate values of one variable into values of another, except that there is some randomness in the process.
 
+*Response = f(explanatory) + noise*
 
+What often distinguishes statisticians from other quantitative researchers is the way that we try to model that random noise.
 
-response=f(explanatory)+noiseresponse=f(explanatory)+noise
+#### Linear model
 
+For a linear regression model, we simply assume that $$f$$ takes the form of a linear function. Thus, our model describes the value of the response variable in terms of what creates a line (an intercept and a slope).
 
+*Response = intercept + slope ⋅ explanatory + noise*
 
-### Linear model
-
-For a linear regression model, we simply assume that ff takes the form of a linear function. Thus, our model describes the value of the response variable in terms of what creates a line (an intercept and a slope).
-
-
-
-response=intercept+slope⋅explanatory+noise
-
-
-
-### Regression model
+#### Regression model
 
 In a regression model, we use Greek letters for the intercept and slope, indicating that they are population parameters which we hope to estimate with our sample.
 
-The intercept is notated as β0β0 and the slope is notated as β1β1. The noise term in a regression is often denoted ϵϵ. In a regression, we assume that the noise terms have a Normal distribution, centered at 0 with a known standard deviation of σϵσϵ. The equation below is what we call our “population” regression equation, symbolizing that it is for the population we are interested in studying.
+The intercept is typically notated as $$\beta_0$$ and the slope is notated as $$\beta_1$$. The noise term in a regression is often denoted $$\epsilon$$. In a regression, we assume that the noise term has a Normal distribution, centered at 0 with a known standard deviation of $$\sigma_\epsilon$$. The equation below is what we call our *population regression equation*, symbolizing that it is for the population we are interested in studying.
 
+$$Y=\beta_0 + \beta_1 \dot X + \epsilon$$
 
-
-Y=β0+β1⋅X+ϵ,ϵ∼N(0,σϵ)
-
-
-
-
-
-### Fitted values
+#### Fitted values
 
 When we estimate our population regression equation with data, we need to indicate that our intercept and slope values are estimates for the *true* population intercept and slope.
 
