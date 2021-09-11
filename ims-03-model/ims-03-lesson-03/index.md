@@ -232,7 +232,7 @@ We'll talk about how to interpret these parameter estimates and about other aspe
 
 You have successfully completed this tutorial.
 
-# [< Back to Section 2](https://bghammill.github.io/ims-03-model/)
+# [< Back to Section 3](https://bghammill.github.io/ims-03-model/)
 
 
 

@@ -71,6 +71,7 @@ $$Price_{UCLA} = \beta_0 + \beta_1 Price_{Amazon}$$
 So we are regression the price of new books at the UCLA bookstore (response) on the price of new books at Amazon (explanatory).
 
 ```
+* Regression of UCLA_NEW on AMAZ_NEW;
 proc reg data=textbooks;
 	model ucla_new = amaz_new;
 run;
@@ -80,315 +81,133 @@ Again, the output from `PROC REG` is substantial, but let's pay attention to the
 
 ### Regression equation
 
+$$Price_{UCLA} = 0.929 + 1.199 Price_{Amazon}$$
 
+*For the slope...*
 
-uclanewˆ=0.929+1.199⋅amazonnewuclanew^=0.929+1.199⋅amazonnew
+<u>Key point</u>: The slope estimate, $$b_1$$, reflects the expected change in the mean level of the outcome with each +1-unit change in the explanatory variable.
 
+So the estimated slope of $1.199 (let's just round to $1.20) here means that for each additional $1 that Amazon charges for a book, the mean price of books at the UCLA bookstore increases by about $1.20. In effect, the mean price of books at the UCLA bookstore is about 20% higher than those on Amazon.
 
+*For the intercept...*
 
-What this says is that for each additional dollar that Amazon charges for a book, the mean price of books at the UCLA bookstore increase by about $1.20. In effect, the mean price of books at the UCLA bookstore is about 20% higher than those on Amazon.
+Generally, we are most interested in the slope coefficient, but occasionally the intercept coefficient is interesting as well.
 
-Generally, we are most interested in the slope coefficient, but occasionally the intercept coefficient is interesting as well. In this case, the intercept is not interesting: it merely tells us that we should expect a book that retails for 0 dollars on Amazon to cost about 93 cents at the UCLA bookstore. This, of course, is irrelevant. Furthermore, since the least expensive book present in the data set cost $8.60, to discuss a book that was free on Amazon would be to extrapolate our findings to values outside the range of the data we collected. This is always dangerous because we can never know whether a model is appropriate outside of the range of the dataset.
+<u>Key point</u>: The intercept reflects the mean value of the outcome when the explanatory variable equals 0. So the intercept is only meaningful if a value of 0 for the explanatory variable is meaningful in your sample. 
 
+In this case, the intercept is not interesting or meaningful. It merely tells us that we should expect a book that retails for $0 on Amazon to cost about $0.93 at the UCLA bookstore. This, of course, is irrelevant, since Amazon isn't giving textbooks away.
 
+Furthermore, since the least expensive book present in the data set cost $8.60, to discuss a book that was free on Amazon would be to *extrapolate* our findings to values *outside the range of the data* we collected. This is always dangerous because we can never know whether a model is appropriate outside of the range of explanatory values in the dataset. (This is also a key point.)
 
 ### Units and scale
 
 When interpreting slope coefficients, one must pay careful attention to units and scales. Note that the units of the slope coefficient is the units of the response variable per unit of the explanatory variable. In this case, the prices at both bookstores are in dollars, but that is easily changed.
 
-Here, we create a new variable for the price at Amazon in cents, and re-fit the model. Note that while the coefficient has changed, the underlying meaning has not. Here, we say that for each additional cent that a book costs on Amazon, the expected price at the UCLA bookstore increases by about 0.01199 dollars, or 1.2 cents. Thus, in both cases, the price of a book at the UCLA bookstore is about 20% higher, on average, than the corresponding price on Amazon.com.
+Suppose we represent the price at Amazon in cents, instead of dollars, and re-fit the model. Let's do that:
 
 ```
-textbooks <- textbooks %>%
-  mutate(amaz_new_cents = amaz_new * 100) 
-lm(ucla_new ~ amaz_new_cents, data = textbooks)
-## 
-## Call:
-## lm(formula = ucla_new ~ amaz_new_cents, data = textbooks)
-## 
-## Coefficients:
-##    (Intercept)  amaz_new_cents  
-##        0.92897         0.01199
+* Make Amazon price in cents;
+data textbooks;
+	set textbooks;
+	
+	amaz_cents = amaz_new * 100;
+	label amaz_cents = "New price on Amazon.com (in cents)";
+run;
+
+* Regression of UCLA_NEW on AMAZ_CENTS (REG);
+proc reg data=textbooks;
+	model ucla_new = amaz_cents;
+run;
 ```
 
-It’s time for you to start fitting your own regression models.
+Note a few things with these estimates. First, the estimate of the intercept has not changed, since the scale that has nothing to do with the Amazon price. Second, while the estimate of the slope has changed, the underlying meaning of that parameter estimate has not. Now, for each additional *cent* that a book costs on Amazon, the expected price at the UCLA bookstore increases by about $0.01199 dollars, or 1.2 cents. Thus, in both cases, the price of a book at the UCLA bookstore is about 20% higher, on average, than the corresponding price on Amazon.com.
 
-
-
-## Your turn!
-
-Recall that the fitted model for the poverty rate of U.S. counties as a function of high school graduation rate is:
-
-
-
-povertyˆ=64.594−0.591⋅hsgradpoverty^=64.594−0.591⋅hsgrad
-
-
-
-Which of the following is the correct interpretation of the slope coefficient?
-
-Among U.S. counties, each additional percentage point increase in the poverty rate is associated with about a 0.591 percentage point decrease in the mean high school graduation rate.
-
-Among U.S. counties, each additional percentage point increase in the high school graduation rate is associated with about a 0.591 percentage point decrease in the mean poverty rate.
-
-Among U.S. counties, each additional percentage point increase in the high school graduation rate is associated with a 0.591 percentage point decrease in the poverty rate for each school.
-
-Among U.S. counties, a 1% increase in the high school graduation rate is associated with about a 0.591% decrease in the poverty rate.
-
-
-
-### Interpretation in context
-
-A politician interpreting the relationship between poverty rates and high school graduation rates implores his constituents:
-
-> If we can lower the poverty rate by 59%, we’ll double the high school graduate rate in our county (i.e. raise it by 100%).
-
-Which of the following mistakes in interpretation has the politician made?
-
-Implying that the regression model establishes a cause-and-effect relationship.
-
-Switching the role of the response and explanatory variables.
-
-Confusing percentage change with percentage point change.
-
-All of the above.
-
-None of the above.
-
-
-
-## Fitting simple linear models
-
-While the `geom_smooth(method = "lm")` function is useful for drawing linear models on a scatterplot, it doesn’t actually return the characteristics of the model. As suggested by that syntax, however, the function that creates linear models is `lm()`. This function generally takes two arguments:
-
-- A `formula` that specifies the model
-- A `data` argument for the data frame that contains the data you want to use to fit the model
-
-The `lm()` function return a model object having class `"lm"`. This object contains lots of information about your regression model, including the data used to fit the model, the specification of the model, the fitted values and residuals, etc.
-
-For this exercise, fit the following regression models:
-
-1. Using the `bdims` dataset, create a linear model for the weight of people (`wgt`) as a function of their height (`hgt`).
-2. Using the `mlbBat10` dataset, create a linear model for `slg` (y) as a function of `obp` (x).
-3. Using the `mammals` dataset, create a linear model for the body weight of mammals (`body_wt`) as a function of their brain weight (`brain_wt`), after taking the natural log of both variables.
-
-
-
-### Units and scale
-
-In the previous examples, we fit two regression models:
-
-wgtˆ=−105.011+1.018⋅hgtwgt^=−105.011+1.018⋅hgt
-
-and
-
-
-
-
-
-slgˆ=0.009+1.110⋅obpslg^=0.009+1.110⋅obp
-
-
-
-Which of the following statements is **incorrect**?
-
-A person who is 170 cm tall is expected to weigh about 68 kg.
-
-Because the slope coefficient for `obp` is larger (1.110) than the slope coefficient for `hgt` (1.018), we can conclude that the association between `obp` and `slg` is stronger than the association between height and weight.
-
-None of the above.
-
-
-
-## A linear model object
-
-Previously, we learned how to fit a regression model using the `lm()` command. However, we didn’t do much with it—we only displayed the fitted coefficients in the console. The output from `lm()` is an object, and there are a lot of useful things that you can do with that object. To get started, we need to store the output from `lm()` as an object in our environment, in this case aptly named `books_mod`.
+Now let's create a variable to represent the UCLA price in cents and re-fit the regression (using cents on both sides):
 
 ```
-books_mod <- lm(ucla_new ~ amaz_new, data = textbooks)
+* Make UCLA price in cents;
+data textbooks;
+	set textbooks;
+	
+	ucla_cents = ucla_new * 100;
+	label ucla_cents = "New price at the UCLA bookstore (in cents)";
+run;
+
+* Regression of UCLA_CENTS on AMAZ_CENTS (REG);
+proc reg data=textbooks;
+	model ucla_cents = amaz_cents;
+run;
 ```
 
-Note that `mod` is of class `lm`. This object contains all of the information needed to fit our regression model, including (by default) the relevant data, and lots of other pieces of information that we can extract in various ways. It’s worth repeating that `books_mod` is an object of type `lm`—it’s not a `data.frame`, or a `function`, or a `matrix`, or a `vector`.
+Look at the estimates for both the intercept, $$b_0$$, and the slope, $$b_1$$. Interpret these estimates. Do you understand why they are taking on these values?
+
+
+
+## Fitted values & residuals
+
+One thing SAS lets you do with any regression procedure is output the fitted (predicted) values and residuals for all observations in your dataset. The fitted values are the $$\hat{y}$$ values from the estimated regression model equation; and the residuals are the differences between those predicted values of the response variable and the observed values of the response variable, $$e = \hat{y} - y$$.
+
+By the way, when we get to talking about specific observations in the data, we will use the subscript *i* with each of those measures, where *i* indexes the observations, as $$\hat{y}_i$$ and $$e_i$$. 
+
+The `output` statement below shows how we request the predicted values and residuals in `PROC REG`:
 
 ```
-class(books_mod)
-## [1] "lm"
+* Regression of UCLA_NEW on AMAZ_NEW;
+proc reg data=textbooks;
+	model ucla_new = amaz_new;
+	output out=textbooks_pred predicted=pred residual=resid;
+run;
 ```
 
-### Print
+The structure of most `output` statements in different SAS procedures takes this form. You first have to specify where to save the output dataset (using `out = <some_new_dataset>`), then you have to indicate the measures you want to save and the variable names for those measures. In our case, we are requesting the predicted values and asking that they be saved in the `pred` variable (`predicted = pred`); and we are requesting the residual values and asking that they be saved in the `resid` variable (`residual = resid`).
 
-By default, when you try to output an `lm` object, you see the “call” (the formula used to fit the model), as well as the fitted coefficients.
+There are many other quantities we could request (see [*Table 100.6: Keywords for OUTPUT Statement*](https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.3/statug/statug_reg_syntax10.htm) for the full list), but we are only interested in these two right now.
 
-```
-books_mod
-```
-
-
-
-### Fitted coefficients
-
-You can also return just the fitted coefficients as a vector using the `coef()` function. This function takes a `lm` object as an input and outputs the coefficients from the model. For our purposes, these are the pieces of information that we are most interested in.
-
-
-
-### Summary
-
-In this tutorial, we treat regression as a descriptive statistical technique—thus explaining our focus on the coefficients. In a later tutorial, you will learn about inference for regression. In that application, there is a whole host of other pieces of information about your regression model that you’ll want to inspect. The `summary()` function displays these. Just about every statistical software package has a function that displays a similar table of outputs for a regression model.
-
-However, we won’t dive into this at the moment.
+If you print this new dataset, you'll see how this comes out. Notice that all the other existing variables from the input dataset are copied into this output dataset.
 
 ```
-summary(books_mod)
+* Check PROC REG output dataset;
+proc print data=textbooks_pred(obs=10);
+run;
 ```
 
+Here are two good things to know about the fitted values and the residuals:
 
+* The least squares fitting procedure guarantees that the mean of the residuals is zero.
+* Also, the mean of the fitted values must equal the mean of the response variable.
 
-### Fitted values
-
-Since the object `books_mod` contains everything R knows about our model, we can ask R for the fitted values, using the `fitted.values()` function. This returns a vector containing the y^y^ values for each observation in our dataset.
-
-In general, the length of the vector of fitted values is the same as the number of rows in the original data frame, since each observation corresponds to exactly one value of y^y^. However, if there were any observations with missing data, those will be automatically discarded by R when the model is fit, and thus, the length of the vector of fitted values may not be a large as the number of rows in the original data frame.
-
-```
-fitted.values(books_mod)
-```
-
-
-
-### Residuals
-
-Similarly, each fitted value generates a residual. This residual is the difference between the actual observed value of the response variable, and the expected value of the response according to our model. These residuals can be retrieved using the `residuals()` function, which returns the vectors of residuals.
+Let's check those things using the dataset we just got from `PROC REG`:
 
 ```
-residuals(books_mod)
+* Get sums and means for RESID, PRED, UCLA_NEW;
+proc means data=textbooks_pred mean sum;
+	var resid pred ucla_new;
+run;
 ```
 
+Do you see how the sum of the residuals is basically zero? My output shows $$1.07x10^{-12}$$.
 
-
-### The broom package
-
-The R ecosystem is constantly evolving. In this tutorial—and series of tutorials—we have been working with a set of tools called the **tidyverse**. One of the packages in the tidyverse is called **broom**, since its goal is to help you tidy up a bit.
-
-By loading the **broom** package and then running the `augment()` function on our `lm` model object, we recover a `data.frame` that contains our original response and explanatory variable, along with the fitted values, residuals, leverage scores, and several other pieces of information relevant to each observation. Working with these tidy data frames can simplify some of the work we do with our models after they are fit.
-
-```
-augment(books_mod)
-```
-
-## Your turn!
-
-An `"lm"` object contains a host of information about the regression model that you fit. There are various ways of extracting different pieces of information.
-
-The `coef()` function displays only the values of the coefficients. Conversely, the `summary()` function displays not only that information, but a bunch of other information, including the associated standard error and p-value for each coefficient, the R2R2, adjusted R2R2, and the residual standard error. The summary of an `"lm"` object in R is very similar to the output you would see in other statistical computing environments (e.g. Stata, SPSS, etc.)
-
-We have already created the `hgt_wgt_mod` object, a linear model for the weight of individuals as a function of their height, using the `bdims` dataset and the code
-
-```
-hgt_wgt_mod <- lm(wgt ~ hgt, data = bdims)
-```
-
-Now, you will:
-
-- Use `coef()` to display the coefficients of `hgt_wgt_mod`.
-- Use `summary()` to display the full regression output of `hgt_wgt_mod`.
-
-R Code Start Over Solution
-
- Run Code
-
-1
-
-2
-
-3
-
-\# Show the coefficients
-
-\# Show the full model output
-
-### Fitted values and residuals
-
-Once you have fit a regression model, you are often interested in the fitted values (y^iy^i) and the residuals (eiei), where ii indexes the observations. Recall that:
-
-
-
-ei=yi−y^iei=yi−y^i
-
-
-
-The least squares fitting procedure guarantees that the mean of the residuals is zero. At the same time, the mean of the fitted values must equal the mean of the response variable.
-
-In this exercise, we will confirm these two mathematical facts by accessing the fitted values and residuals with the `fitted.values()` and `residuals()` functions, respectively, for the following model:
-
-```
-hgt_wgt_mod <- lm(wgt ~ hgt, data = bdims)
-```
-
-`mod` (defined above) is available in your workspace. We will use the `all.equal()` function to confirm that the mean of the body weights equals the mean of the fitted values of `hgt_wgt_mod`. This function takes two inputs (separated by a comma) that you would like to check if they are equal (up to a tolerance of 1.5e-8).
-
-*Hint*: Remember, you can extract a specific column of a `data.frame` using the `$`.
-
-Next, compute the mean of the residuals of `hgt_wgt_mod` and check if it is equal to 0.
-
-
-
-### Tidying your linear model
-
-As you fit a regression model, there are some quantities (e.g. R2R2) that apply to the model as a whole, while others apply to each observation (e.g. y^iy^i). If there are several of these per-observation quantities, it is sometimes convenient to attach them to the original data as new variables.
-
-The `augment()` function from the **broom** package (which is already loaded for you) does exactly this. It takes a model object as an argument and returns a data frame that contains the data on which the model was fit, along with several quantities specific to the regression model, including the fitted values, residuals, leverage scores, and standardized residuals.
-
-The same linear model from the last exercise, `hgt_wgt_mod`, is available in your workspace.
-
-- Create a new data frame called `hgt_wgt_tidy` that is the `augment`ation of the `hgt_wgt_mod` linear model.
-- View the `hgt_wgt_tidy` data frame using `glimpse()`.
-
-
-
-## Using your linear model
-
-### Is that textbook overpriced?
-
-Recall our previous example about textbooks at the UCLA bookstore. We fit the regression model using the `lm()` command, and stored the resulting model object.
-
-```
-books_mod <- lm(ucla_new ~ amaz_new, data = textbooks)
-```
-
-
+Do you also see that the mean of the predicted values is the same as the mean of the response variable, `ucla_new`? 
 
 ### Examining residuals
 
-By examining the residuals, we can learn about whether particular textbooks appear to be under- or over-priced. In this case, the most overpriced book cost $197 at the UCLA bookstore, but just $131 on Amazon—a markup of $66! The model predicts a cost of $158, resulting in a residual of $39.
+By examining the residuals, we can learn about whether particular textbooks appear to be under- or over-priced. Remember that a positive residual would indicate that a book's price at UCLA is higher than would be expected from this model, while a negative residual would indicate that a book's price at UCLA is lower than would be expected.
+
+Let's sort by the size of the residuals and print all the observations so you can manually find the most over-priced and most under-priced books.
 
 ```
-augment(books_mod) %>%
-  arrange(desc(.resid)) %>%
-  head()
+* Sort the data by the size of the residuals and print;
+proc sort data=textbooks_pred;
+	by resid;
+run;
+
+proc print data=textbooks_pred;
+run;
 ```
 
+In this case, the most under-priced book sells for $146.75 at UCLA (actually *less* than the Amazon price), which is nearly $35 less than the model-predicted price of $182.
 
-
-### Markup
-
-This turns out to be the management textbook “Financial Statement Analysis and Security Valuation”. Does this qualifies as irony?
-
-```
-textbooks %>%
-  filter(ucla_new == 197)
-```
-
-
-
-| dept_abbr<fct> | course<chr> | isbn<fct>      | ucla_new<dbl> | amaz_new<dbl> | more<fct> | diff<dbl> |      |
-| :------------- | :---------- | :------------- | ------------: | ------------: | :-------- | --------: | ---- |
-| Mgmt           | 228         | 978-0073379661 |           197 |           131 | Y         |        66 |      |
-
-1 row | 1-7 of 9 columns
-
-![img](images/FSSV.png)
-
-
+And the most over-priced book sells for $197 at UCLA, which is $39 *higher* than the model-predicted price of $158. You can see that this book sells for $66 more at UCLA than at Amazon, but the model expected some of that difference, just not all of it.
 
 ### Making predictions
 
@@ -398,102 +217,25 @@ For example, the OpenIntro book “Introductory Statistics with Randomization an
 
 ![img](images/ISRS.png)
 
+SAS doesn't have an easy way to do this automatically (unless you create a new observation or a new dataset), but it is very straightforward to plug a new $$x$$ value into the estimated regression to get a predicted price. In this case:
 
-
-### New data
-
-The `predict()` function, when applied to an `lm` object, will return the fitted values for the original observations by default. However, if we specify the `newdata` argument, we can use the model to make predictions about any observations we want. Note that the object passed to `newdata` must be a `data.frame` that has a variable with the same name as the explanatory variable used to fit the model. Note also that the output of the `predict()` function is a vector of fitted values.
-
-Here, we create a `data.frame` with one variable and one observation for the ISRS book.
-
-```
-new_data <- data.frame(amaz_new = 8.49)
-predict(books_mod, newdata = new_data)
-##        1 
-## 11.10849
-```
+$$\hat{y}_{ISRS_UCLA}= 0.929 + 1.199 (8.49) = $11.11$$
 
 The model returns that the expected price at the UCLA bookstore is $11.11. We don’t actually know what it sells for at UCLA, but at Smith College it is selling for $11.40, a slightly steeper markup.
 
 
 
-### Visualize new observations
+### Summary
 
-Alternatively, the `augment()` function from **broom** will also take a `newdata` argument. However, this function will return a `data.frame`. This is useful if you want to do a bit more with your predictions. Here, we first use `augment()` to create a new `data.frame` of predicted values, and then use `geom_point()` to put those observations on the scatterplot of the original data. Here the single observation for the ISRS book is shown in red.
-
-```
-isrs <- augment(books_mod, newdata = new_data)
-ggplot(data = textbooks, aes(x = amaz_new, y = ucla_new)) + 
-  geom_point() + 
-  geom_smooth(method = "lm") +
-  geom_point(data = isrs, aes(y = .fitted), size = 3, color = "red")
-```
-
-![img](images/lm5-1.png)
-
-Now it’s time for you to make some of your own predictions.
+In this tutorial, we treated regression as a descriptive statistical technique—thus explaining our focus on the coefficients. In a later tutorial, you will learn about inference for regression. In that application, there is a whole host of other information in the `PROC REG` output about your regression model that you’ll want to inspect. 
 
 
 
-## Your turn!
+You have successfully completed this tutorial.
 
-The `fitted.values()` function or the `augment()`-ed data frame provides us with the fitted values for the observations that were in the original data. However, once we have fit the model, we may want to compute expected values for observations that were **not** present in the data on which the model was fit. These types of predictions are called *out-of-sample* predictions.
-
-The `ben` data frame contains a height and weight observation for one person. The `hgt_wgt_mod` object contains the fitted model for weight as a function of height for the observations in the `bdims` dataset. We can use the `predict()` function to generate expected values for the weight of new individuals. We must pass the data frame of new observations through the `newdata` argument.
-
-The same linear model, `mod`, is defined in your workspace.
-
-- Output `ben` to the console to take a look at it!
-- Use `predict()` with the `newdata` argument to compute the expected weight of the individual in the `ben` data frame.
-
-R Code Start Over Hints
-
- Run Code
-
-1
-
-2
-
-3
-
-\# Print ben
-
-\# Predict the weight of ben
-
-### Adding a regression line to a plot manually
-
-The `geom_smooth()` function makes it easy to add a simple linear regression line to a scatterplot of the corresponding variables. And in fact, there are more complicated regression models that can be visualized in the data space with `geom_smooth()`. However, there may still be times when we will want to add regression lines to our scatterplot manually. To do this, we will use the `geom_abline()` function, which takes `slope` and `intercept` arguments. Naturally, we have to compute those values ahead of time, but we already saw how to do this (e.g. using `coef()`).
-
-The `coefs` dataframe contains the model estimates retrieved from `coef()` function. Passing this to `geom_abline()` as the `data` argument will enable you to draw a straight line on your scatterplot.
-
-Use `geom_abline()` to add a line defined in the `hgt_wgt_coefs` data frame to a scatterplot of weight vs. height for individuals in the `bdims` dataset.
+# [< Back to Section 3](https://bghammill.github.io/ims-03-model/)
 
 
-
-You have successfully completed Lesson 4 in Tutorial 3: Introduction to Linear Models.
-
-
-
-
-
-What’s next?
-
-[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
-
-[Tutorial 3: Introduction to Linear Models Data](https://bghammill.github.io/ims-03-model/)
-
-- [Tutorial 3 - Lesson 1: Visualizing two variables](https://bghammill.github.io/ims-03-model/ims-03-lesson-01/)
-- [Tutorial 3 - Lesson 2: Correlation](https://bghammill.github.io/ims-03-model/ims-03-lesson-02/)
-- [Tutorial 3 - Lesson 3: Simple linear regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-03/)
-- [Tutorial 3 - Lesson 4: Interpreting regression models](https://bghammill.github.io/ims-03-model/ims-03-lesson-04/)
-- [Tutorial 3 - Lesson 5: Model fit](https://bghammill.github.io/ims-03-model/ims-03-lesson-05/)
-- [Tutorial 3 - Lesson 6: Parallel slopes](https://bghammill.github.io/ims-03-model/ims-03-lesson-06/)
-- [Tutorial 3 - Lesson 7: Evaluating & extending parallel slopes model](https://bghammill.github.io/ims-03-model/ims-03-lesson-07/)
-- [Tutorial 3 - Lesson 8: Multiple regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-08/)
-- [Tutorial 3 - Lesson 9: Logistic regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-09/)
-- [Tutorial 3 - Lesson 10: Case study ](https://bghammill.github.io/ims-03-model/ims-03-lesson-10/)
-
-[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
 <!-- MathJax -->
 
