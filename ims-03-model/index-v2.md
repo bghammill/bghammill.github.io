@@ -31,31 +31,28 @@ Ultimately, data analysis is about understanding relationships among variables. 
 
 - Assess the quality of fit of a regression model
 - Interpret $$R^2$$
-
-### Outliers in regression models
-
 - Measure leverage and influence
 - Identify and attend to outliers
 
-### Parallel slopes
+### [Parallel slopes](https://bghammill.github.io/ims-03-model/ims-03-lesson-06/)
 
 - Visualize, fit, and interpret a parallel slopes model, which has one numeric and one categorical explanatory variable
 - Describe a model in three different ways: mathematically, graphically, and through SAS syntax
 
-### Evaluating and extending the parallel slopes model
+### [Evaluating and extending parallel slopes model](https://bghammill.github.io/ims-03-model/ims-03-lesson-07/)
 
 - Assess and interpret model fit
 - Compute residuals and predictions
 - Fit and interpret interaction models
 
-### Multiple regression
+### [Multiple regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-08/)
 
 - Visualize, fit, and interpret a multiple regression model with two numeric explanatory variables
 - Visualize, fit, and interpret a parallel planes model with two numeric explanatory variables and a categorical variable
 - Fit and interpret multiple regression models in higher dimensions
 - Understand and identify multicollinearity
 
-### Logistic regression
+### [Logistic regression](https://bghammill.github.io/ims-03-model/ims-03-lesson-09/)
 
 - Visualize, fit, and interpret logistic regression models
 - Interpret coefficients on three different scales
