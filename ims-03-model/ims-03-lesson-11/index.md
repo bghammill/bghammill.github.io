@@ -1,183 +1,219 @@
-## Unusual data points
+## Outliers, Leverage, and Influence
 
-No discussion of model fit would be complete without a discussion of In our previous discussion of outliers, we learned how to use box plots to identify points that seem to be unusual in the distribution of a single vari. Now, we will refine that understanding by introducing two related but distinct concepts: leverage and influence.
+No discussion of model fit would be complete without a discussion of extreme data points. In regression analysis, we make a distinction between outliers and high leverage observations.
 
-Recall the data we examined previously about Major League Baseball players during the 2010 season. We considered the relationship between the number of home runs hit by each player, and the corresponding number of bases that each player stole. The first statistic is a measurement of power, while the latter is a measurement of speed. As these skills are considered complementary, it should not be surprising that a simple linear regression model has a negative slope. In this case, we have fit the model to only those players with at least 400 at-bats, in a simple attempt to control for the confounding influence of playing time.
+- An **outlier** is a data point whose response *y* does not follow the general trend of the rest of the data. In other words, this data point will have a large residual value.
+- A data point has high **leverage** if it has "extreme" predictor *x* values. With a single predictor, an extreme *x* value is simply one that is particularly high or low with respect to the rest of the *x* values. With multiple predictors, extreme x values may be particularly high or low for one or more predictors, or may be "unusual" combinations of predictor values (e.g., with two predictors that are positively correlated, an unusual combination of predictor values might be a high value of one predictor paired with a low value of the other predictor).
+
+Note that, for our purposes, we consider a data point to be an outlier *only if* it is extreme with respect to the other *y* values, not the *x* values.
+
+Further, a data point is **influential** if it unduly influences any part of a regression analysis, such as the predicted responses, the estimated slope coefficients, or the hypothesis test results. Both outliers and high leverage data points have the *potential* to be influential, but we generally have to investigate further to determine whether or not they are actually influential.
+
+One advantage of the case in which we have only one predictor is that we can look at simple scatter plots in order to identify any outliers and high leverage data points. In multiple regression, we will have to rely on regression diagnostic metrics to identify such points. Let's take a look at a few examples that should help to clarify the distinction between the two types of extreme values, and the relationship between these concepts and *influence*.
+
+#### Example #1
+
+Based on the definitions above, do you think the following data set contains any outliers? Or, any high leverage data points?
+
+![](images/out-1.png)
+
+All of the data points follow the general trend of the rest of the data, so there are no outliers (in the *y* direction). And, none of the data points are extreme with respect to *x*, so there are no high leverage points. Overall, none of the data points would appear to be influential with respect to the location of the best fitting line.
+
+#### Example #2
+
+How about this example? Do you think the following data set contains any outliers? Or, any high leverage data points?
+
+![](images/out-2.png)
+
+Of course! Because the red data point does not follow the general trend of the rest of the data, it would be considered an outlier. However, this point does not have an extreme *x* value, so it does not have high leverage. Is the red data point influential? An easy way to determine if the data point is influential is to find the best fitting line twice—once with the red data point included and once with the red data point excluded. The following plot illustrates the two best fitting lines:
+
+![](images/out-3.png)
+
+It's hard to even tell the two estimated regression equations apart! The red line represents the estimated regression equation with the red data point included, while the blue line represents the estimated regression equation with the red data point excluded. The slopes of the two lines are very similar—5.04 and 5.12, respectively.
+
+If I showed you the SAS `PROC REG` output for each line, you would see very minor differences between these models. For example:
+
+* When the red data point in included, the $$R^2$$ values decreases slightly, but the relationship between *y* and *x* is still strong.
+
+- The standard error of *b*1, which will be important for inference later, is larger when the red data point is included, but not in a way that changes any conclusions we would draw from these data.
+
+In short, the regression model is not meaningfully affected by the inclusion of the red data point. Therefore, that data point is not deemed influential. In summary, the red data point is an outlier, but does not have high leverage, and is not influential.
+
+#### Example #3
+
+How about this example? Do you think the following data set contains any outliers? Or, any high leverage data points?
+
+![](images/out-4.png)
+
+In this case, the red data point does follow the general trend of the rest of the data. Therefore, it is *not* deemed an outlier here. However, this point does have an extreme *x* value, so it does have high leverage. Is the red data point influential? It certainly appears to be far removed from the rest of the data (in the *x* direction), but is that sufficient to make the data point influential in this case?
+
+The following plot illustrates two best fitting lines — one obtained when the red data point is included and one obtained when the red data point is excluded:
+
+![](images/out-5.png)
+
+Again, it's hard to even tell the two estimated regression equations apart! The red line represents the estimated regression equation with the red data point included, while the blue line represents the estimated regression equation with the red data point excluded.
+
+With respect to the model estimates and metrics, we see very few changes in the slope (4.927 v. 5.117, with and without red point, respectively), the $$R^2$$ (97.3% v. 97.7%), or the standard error of $$b_1$$.
+
+In short, the data point is not deemed influential. In summary, the red data point is not influential, nor is it an outlier, but it does have high leverage.
+
+#### Example #4
+
+One last example! Do you think the following data set contains any outliers? Or, any high leverage data points?
+
+![](images/out-6.png)
+
+In this case, the red data point is most certainly an outlier and has high leverage! The red data point does not follow the general trend of the rest of the data and it also has an extreme *x* value. And, in this case the red data point is influential. The two best fitting lines—one obtained when the red data point is included and one obtained when the red data point is excluded—look like this:
+
+![](images/out-7.png)
+
+The are (not surprisingly) substantially different. The red line represents the estimated regression equation with the red data point included, while the blue line represents the estimated regression equation with the red data point excluded. The existence of the red data point significantly reduces the slope of the regression line—dropping it from 5.117 to 3.320—and the $$R^2$$ drops from 97.3% (without the red point) to 55.2% (with the red point).
+
+So the regression model is clearly affected by the presence of the red data point. In this case, the red data point is deemed both high leverage and an outlier, and it turned out to be influential too.
+
+#### Summary
+
+The above examples—through the use of simple plots—have highlighted the distinction between outliers and high leverage data points. There were outliers in examples 2 and 4. There were high leverage data points in examples 3 and 4. However, only in example 4 did the data point that was both an outlier and a high leverage point turn out to be influential. That is, not every outlier or high leverage data point strongly influences the regression analysis. It is your job as a regression analyst to always determine if your regression analysis is unduly influenced by one or more data points.
+
+This is easy to do for simple linear regression, when we can rely on simple scatterplots to elucidate matters. Unfortunately, we don't have that luxury in the case of multiple linear regression. In that situation, we have to rely on various measures to help us determine whether a data point is an outlier, high leverage, or both. Once we've identified such points we then need to see if the points are actually influential.
+
+## Real data example
+
+Now let's look at some real data for extreme data points. For this analysis, we will use a database of salaries for employees of the city of Virginia Beach.
 
 ```
-regulars <- mlbbat10 %>%
-  filter(at_bat > 400)
+* Initialize SAS session;
+%include "~/my_shared_file_links/hammi002/sasprog/run_first.sas";
 
-ggplot(data = regulars, aes(x = stolen_base, y = home_run)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = 0)
+* Makes and checks a working copy of TEXTBOOKS data;
+%use_data(va_beach);
+%glimpse(va_beach);
 ```
 
-![img](C:\Users\hammill\Documents\GitHub\bghammill.github.io\ims-03-model\ims-03-lesson-05\images\up2-1.png)
-
-We noted previously that there were two potential outliers here: the point corresponding to the slugger Jose Bautista in the upper left, and the point belonging to speedster Juan Pierre in the lower right.
-
-Now that we have a regression model, we want to think about how individual observations might affect the slope of the line. Typically, the purpose of interpreting the slope coefficient is to learn about the overall relationship between the two variables, so it doesn’t necessarily make sense if one or two individual observations have a disproportionate effect on that slope. Unfortunately, such points of high *leverage* are quite common.
-
-### Leverage
-
-Leverage has a precise mathematical definition that you can see here. The specifics of the formula are not so important, but you should recognize that the leverage score hihi for an observation is entirely a function of the distance between each **individual** value of the explanatory variable and **mean** of the explanatory variable. This means that points that are close to the center of the scatterplot (along the x-axis) have low leverage, while points that are far from the (horizontal) center of the scatterplot have high leverage. For leverage, the yy-coordinate doesn’t matter at all.
-
-
-
-hi=1n+(xi−x¯)2∑ni=1(xi−x¯)2
-
-
-
-### Leverage computations
-
-It should not be surprising then, that the player with the largest leverage value is the aforementioned Juan Pierre (in the lower right-hand corner of the plot). The leverage scores can be retrieved using the `augment()` function, and then examining the `.hat` variable. [The name comes from the historical convention of computing leverage from the “hat” matrix.] Note that the leverage scores depend only on stolen bases. In this case, Pierre’s leverage score is nearly twice as large as that of the next player.
-
-The `slice_max()` allows for you to **both** order a dataframe and select how many entries you wish to keep. The `order_by` argument allows for you to specify what variable to order by (similar to `arrange()`), and the `n` argument allows for you to specify how many rows you wish to keep. Pretty neat!
+In fact, we are going to look at salaries within one specific department, the Registrar's office, so let's make a new data with just that department's data:
 
 ```
-mod_hr_sb <- lm(home_run ~ stolen_base, data = regulars)
-
-mod_hr_sb %>%
-  augment() %>%
-  select(home_run, stolen_base, .hat) %>%
-  slice_max(order_by = .hat,
-            n = 5)
+* Extract data for registrars office;
+data va_beach_grd;
+	set va_beach;
+	where dept = "GRD";
+run;
 ```
 
-
-
-| home_run<dbl> | stolen_base<dbl> |  .hat<dbl> |
-| ------------: | ---------------: | ---------: |
-|             1 |               68 | 0.13081869 |
-|             2 |               52 | 0.07033516 |
-|             5 |               50 | 0.06416940 |
-|            19 |               47 | 0.05550188 |
-|             5 |               47 | 0.05550188 |
-
-5 rows
-
-Observations of high leverage, by virtue of their extreme values of the explanatory variable, may or may not have a considerable effect on the slope of the regression line. An observation that does have such an effect is called “influential.” In our case, the regression line is very close to the point corresponding to Juan Pierre. So, even though this is a high leverage observation, it is not considered influential.
-
-### Consider Rickey Henderson…
-
-However, suppose that there was a player with a similar number of stolen bases, but a decent number of home runs as well. In fact, Hall of Famer Rickey Henderson was such a player, and in his MVP-winning season of 1990, he stole 65 bases while hitting 28 home runs. Let’s add this observation to our plot.
-
-![img](C:\Users\hammill\Documents\GitHub\bghammill.github.io\ims-03-model\ims-03-lesson-05\images\up4-1.png)
-
-The original regression line is plotted as the dashed black line, and the new regression line (with Rickey Henderson) is plotted as a solid blue line. Notice how the new regression line pulls upward ever so slightly from the previous dotted regression line. This is a direct result of Henderson’s influence.
-
-Because this is a point of high leverage, it has the ability to pull the slope of the regression line up. However, unlike the point corresponding to Pierre, the point corresponding to Henderson also has a large residual. The combination of high leverage and large residual determine influence.
-
-### Influence via Cook’s distance
-
-In fact, a measurement known as Cook’s distance combines these two quantities (leverage and residual) to measure influence. These figures are also reported by the `augment()` function. We note here that the observation corresponding to Henderson has a large residual, high leverage, and by far the largest value of Cook’s distance.
+Our hypothesis for this analysis is that an employee's length of employment in Virginia Beach is associated with a higher salary. Let's see, with a scatterplot, if this seems like an appropriate hypothesis:
 
 ```
-mod_hr_sb <- lm(home_run ~ stolen_base, data = regulars_plus)
-
-mod_hr_sb %>%
-  augment() %>%
-  select(home_run, stolen_base, .fitted, .resid, .hat, .cooksd) %>%
-  slice_max(order_by = .cooksd,
-            n = 5)
+* Scatterplot for SALARY by TOTALEXP;
+proc sgplot data=va_beach_grd;
+	scatter x=totalexp y=salary;
+run;
 ```
 
+Looks like a weak relationship, but there is some indication of a trend up in salary over time. Let's proceed.
 
+And first, are there any data points in this plot that look to be outliers, per the definition of above? How about high leverage data points?
 
-| home_run<dbl> | stolen_base<dbl> | .fitted<dbl> | .resid<dbl> |  .hat<dbl> | .cooksd<dbl> |
-| ------------: | ---------------: | -----------: | ----------: | ---------: | -----------: |
-|            28 |               65 |     5.769908 |   22.230092 | 0.10551931 |   0.33429976 |
-|            54 |                9 |    17.450940 |   36.549060 | 0.00607042 |   0.04210401 |
-|            34 |               26 |    13.904913 |   20.095087 | 0.01315006 |   0.02796848 |
-|            19 |               47 |     9.524525 |    9.475475 | 0.04971140 |   0.02535189 |
-|            39 |                0 |    19.328249 |   19.671751 | 0.01047891 |   0.02124300 |
+There is clearly one outlier. With a salary of nearly $140,000, this is definitely out of line from the rest of the data. If we draw a regression line to these data, that point is going to have a large residual, guaranteed.
 
-5 rows
+And you might point out the right-most data point as one with high leverage. With over 25 years of experience, this employee has been with Virginia Beach for 10 years longer than the next longest tenured employee in the department. (We'll refer to this employee as the "department veteran".)
 
-You’ll explore some more outliers in these next exercises.
+Before we run any regressions, it can be helpful to look at the data to see if we can learn anything about the outliers and leverage points.
 
-## Your turn!
+```
+* Print out dataset to check records;
+proc print data=va_beach_grd;
+run;
+```
 
-The *leverage* of an observation in a regression model is defined entirely in terms of the distance of that observation from the mean of the explanatory variable. That is, observations close to the mean of the explanatory variable have low leverage, while observations far from the mean of the explanatory variable have high leverage. Points of high leverage may or may not be influential.
+Based on this output, there is nothing necessarily special about the department veteran. He or she has just been around a long time. The outlier, however, is definitely in a different class of job. That high salary belongs to the Director of Elections. This is good to know. We'll revisit that shortly.
 
-The `augment()` function from the **broom** package automatically adds the leverage scores (`.hat`) to a model dataframe. Use `augment()` to list the top 6 observations by their leverage scores, in descending order.
+Now let's run three regressions:
 
-### Influence
+1) All data
+2) Without the director
+3) Without the department veteran
 
-As noted previously, observations of high leverage may or may not be *influential*. The influence of an observation depends not only on its leverage, but also on the magnitude of its residual. Recall that while leverage only takes into account the explanatory variable (xx), the residual depends on the response variable (yy) and the fitted value (y^y^).
+```
+* Run regression with all observations;
+proc reg data=va_beach_grd;
+	model salary = totalexp;
+run;
 
-Influential points are likely to have high leverage and deviate from the general relationship between the two variables. We measure influence using Cook’s distance, which incorporates both the leverage and residual of each observation.
+* Run regression without director;
+proc reg data=va_beach_grd;
+	model salary = totalexp;
+	where salary < 100000;
+run;
 
-Use `augment()` and `slice_max()` to list the top 6 observations by their Cook’s distance (`.cooksd`).
+* Run regression without department veteran;
+proc reg data=va_beach_grd;
+	model salary = totalexp;
+	where totalexp < 25;
+run;
+```
+
+Based on that output, fill out the following table:
+
+| Regression Quantity      | All observations | Without director | Without veteran |
+| ------------------------ | ---------------- | ---------------- | --------------- |
+| Intercept estimate       |                  |                  |                 |
+| Intercept standard error |                  |                  |                 |
+| Slope estimate           |                  |                  |                 |
+| Slope standard error     |                  |                  |                 |
+| $$R^2$$                  |                  |                  |                 |
+
+To assess influence, we're looking for things like:
+
+* Did the $$R^2$$ increase substantially when the data point was removed?
+* Did the magnitude of the parameter estimates change when the data point was removed?
+* Did the standard errors of the parameter estimates reduce in size when the data point was removed?
+
+Based on these questions, it seems clear that the data point associated with the director was influential (large jump in $$R^2$$, smaller standard errors for parameter estimates). It's less clear that the department veteran's data point was influential.
 
 ## Dealing with outliers
 
-Previously, we learned about how leverage and influence can help us understand how outliers affect our regression model. Suppose you have determined that an influential observation is affecting the slope of your regression line in a way that undermines the scientific merit of your model. What can you do about it?
+If we have determined that an influential observation is affecting the regression model in a way that potentially undermines the scientific merit of your model, what can you do about it?
 
-![img](C:\Users\hammill\Documents\GitHub\bghammill.github.io\ims-03-model\ims-03-lesson-05\images\o2-1.png)
+The short answer is that there isn’t much you can do about it other than removing the outliers. As the statistical analyst, this is a decision you can make, but it’s crucial that you understand the ramifications of this decision and act in good scientific faith.
 
-The short answer is that there isn’t much you can do about it other than removing the outliers. As the statistical modeller, this is a decision you can make, but it’s crucial that you understand the ramifications of this decision and act in good scientific faith.
+When removing influential data points, the questions you should ask yourself are:
 
-### The full model
-
-In the full model of all the regular players from 2010 and Rickey Henderson from 1990, the slope of the regression line was -0.21 home runs per stolen base. In other words, players who steal five extra bases hit about one fewer home run, on average.
-
-```
-lm(home_run ~ stolen_base, data = regulars_plus) %>%
-  coef()
-```
-
-
-
-### Removing outliers that don’t fit
-
-Now, in this case, there is an easy argument that Rickey Henderson does not fit with the rest of these data. It is a bit of a contrived argument, since we added him previously for effect, but nonetheless there are good reasons to assert that Henderson doesn’t belong. If we remove him, note how the slope of the regression line decreases. Now, it’s only four extra stolen bases that are associated with hitting one fewer home run.
-
-```
-## (Intercept) stolen_base 
-##  19.7168513  -0.2549133
-```
-
-Remember that when removing outliers, the first questions you should ask yourself are:
-
-- What is the justification for removing the observation?
+- What is the justification for removing the data point(s)?
 - How does the scope of inference change?
 
 Anytime you are thinking about removing outliers, you should ask yourself what the justification is. “Because it improves my results” is not a good justification. Indeed, conscious ignorance of valid data is not intellectually honest, and has been the cause of more than a few retractions of previously published scientific papers. Be skeptical. The burden of proof is on you to make a strong argument as to why data should be omitted.
 
 Second, you must consider how this changes the scope of inference. If you are studying countries, are you omitting only the poorest countries? If so, then your results no longer apply to all countries, just non-poor countries. Misunderstanding how the scope of inference changes can be a fatal flaw in your analysis.
 
-### Removing outliers that do fit
+#### Virginia Beach data
 
-With Henderson out of the way, we could consider removing Juan Pierre as well. Here, there really aren’t any good arguments as to why this should be done. First, the point is not influential, so whether we include it or not, it won’t affect our results much. More importantly, because Juan Pierre was just a regular major league player in 2010, there is no reason to think that he somehow doesn’t belong to the larger group of players. What is so special about Juan Pierre that would lead us to exclude him? If, hypothetically, he was a pitcher, or he was 60 years old, or he only had one arm, then you could try and make that case. But there is nothing like that going on here, and so we have no scientific reason to exclude him.
+In the Virginia Beach data, we saw one influential data point (director) and one potentially influential data point (department veteran). Let's take these one at a time.
 
-Again, ask yourself:
+*What would be the justification and impact on removing the director's data?*
 
-- What is the justification for removing the observation?
-- How does the scope of inference change?
+The justification may be that the Director of Elections is in an entirely different class of job from the other jobs in this department. If we knew more about how that job is filled, we may find out that it's not even really possible for someone in a lower lever job to ever expect to be able to move into that job, should it become vacant. Whereas the other jobs appear to be on a sort of ladder, with longer-tenured employees filling the senior staff-level jobs.
 
-```
-regulars_new <- regulars %>%
-  filter(stolen_base < 60)
+So if we remove this observation, it's possible that the scope of the inference actually becomes clearer. Our results would apply to non-director-level jobs in the registrar's office, which represent all the jobs in the office except one. 
 
-lm(home_run ~ stolen_base, data = regulars_new) %>%
-  coef()
-## (Intercept) stolen_base 
-##  19.6869686  -0.2514133
-```
+An argument for *not* removing this observation would be that we are no longer describing all the jobs with the Virginia Beach government. If that's the goal, then keeping this observation in may be very important.
 
+*What would be the justification and impact on removing the department veteran's data?*
 
+Here, there really aren’t any good arguments as to why this should be done. First, the point is less clearly influential, so whether we include it or not, it won’t affect our conclusions much. More importantly, because this employee was just a regular employee, there is no reason to think that he somehow he or she doesn’t belong with the larger group of employees. If, hypothetically, there was something exceptional about this employee, then you could try and make the case on that basis. But there is nothing like that going on here, and so we have no scientific reason to exclude them.
 
-## Your turn!
+## Summary
 
-Observations can be outliers for a number of different reasons. Statisticians must always be careful—and more importantly, transparent—when dealing with outliers. Sometimes, a better model fit can be achieved by simply removing outliers and re-fitting the model. However, one must have strong justification for doing this. A desire to have a higher R2R2 is not a good enough reason!
+Observations can be extreme or unusual data points for a number of different reasons, not all of them in ways that matter. Statisticians must always be careful—and more importantly, transparent—when dealing with these extreme data point. Sometimes, a better model fit can be achieved by simply removing influential data points and re-fitting the model. However, one must have strong justification for doing this. A desire to have a higher $$R^2$$ is not a good enough reason!
 
 
 
 You have successfully completed this tutorial.
 
 # [< Back to Section 3](https://bghammill.github.io/ims-03-model/)
+
+
+
+*Thanks to this [PSU](https://online.stat.psu.edu/stat462/node/170/) for the first half of the content above.*
 
 
 
