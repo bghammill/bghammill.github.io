@@ -1,86 +1,68 @@
 ## Multiple regression
 
-This lesson will show you how to add two, three, and even more numeric explanatory variables to a linear model.
-
-
-
-## Adding a numerical explanatory variable
-
 Thus far, we’ve only considered multiple regression models with one numeric explanatory variable. In this lesson, we will explore models that have at least two numeric explanatory variables.
 
 ### Adding a second numeric explanatory variable
 
-- Mathematical:
+*Mathematically*, adding a second numeric explanatory variable to a regression model is trivial—we just add another term to our model.
 
+$$HwyMPG = \beta_0 + \beta_1 EngSize + \beta_2 Weight + \epsilon$$
 
+In this example, we are modeling the highway fuel economy (in MPG) of cars as a function of both engine size (in liters) and vehicle weight (in pounds). [We've been talking about SUV status as a proxy for weight, but why don't we just use weight?!] Note that both engine size and weight are numeric variables, so this is not a parallel slopes model.
 
-bwt^=β^0+β^1⋅gestation+β^2⋅agebwt^=β^0+β^1⋅gestation+β^2⋅age
-
-
-
-- Syntactical:
+*Syntactically*, fitting this model in SAS is similarly trivial—we simply extend the model statement to incorporate both the engine size and weight variables, just as we did before.
 
 ```
-lm(bwt ~ gestation + age, data = babies)
+* Regression of HWY_MPG on ENG_SIZE + WEIGHT;
+proc reg data=cars;
+	model hwy_mpg = eng_size weight;
+run;
 ```
 
-Mathematically, adding a second numeric explanatory variable is trivial—we just add another term to our model. In this example, we are modeling the birthweight of babies born in San Francisco as a function of their pregnancy’s length of gestation (in weeks) and the mother’s age (in years). Note that both gestation and age are numeric variables here, so this is not a parallel slopes model.
+Unfortunately, while the mathematical and syntactical formulations of multiple regression models are easy extensions of things we already know, a *graphical* formulation of these models becomes trickier.
 
-The syntax for fitting this model in R is similarly trivial—we simply extend the formula to incorporate both the gestation and age variables, just as we did before.
+### Graphics for 3D data space
 
-Note also that since `age` is not categorical, we don’t have to worry about using the `factor()` function, or converting a categorical variable into binary variables, like we had to with `year` and `is_newer`.
+Our data space is now three dimensional, because `hwy_mpg`, `eng_size`, and `weight` are all numeric variables that our model encapsulates. So we will need to get a little bit creative in order to create a meaningful visualization of our model.
 
+#### 3D projections
 
-
-### No longer a 2D problem
-
-Unfortunately, while the mathematical and syntactical formulations of multiple regression models are easy extensions of things we already know, a visual formulation of these models becomes much trickier.
-
-You might be tempted to visualize our model using a ggplot expression like this. But unfortunately, this will not work, because ggplot only handles 2D graphics, and thus there is no z aesthetic.
+One way to visualize a 3D model is to use SAS `PROC G3D` to actually render a 3D display:
 
 ```
-# doesn't work
-ggplot(data = babies, aes(x = gestation, y = age, z = bwt)) + 
-  geom_point() + 
-  geom_smooth(method = "lm", se = FALSE)
+* Scatterplot of HWY_MPG by ENG_SIZE & WEIGHT;
+proc g3d data=cars;
+	scatter eng_size * weight = hwy_mpg / shape="balloon" size=.5 rotate=-45;
+run;
+quit;
 ```
 
+You usually need to fiddle with the `rotate` option to get an angle that works for your data.
 
+![](images/g3d-ex.png)
 
-### Data space is 3D
+This is kind of helpful. The highest mileage (points "higher" on the z-axis) is found for smaller engines in lighter cars, and the lowest mileage ("lower" points) is found for larger engines in heavier cars. 
 
-Our data space is now three dimensional, because `bwt`, `gestation`, and `age` are all numeric variables that our model encapsulates. So we will need to get a little bit creative in order to create a meaningful visualization of our model.
+#### Tiling the plane
 
-```
-data_space <- ggplot(babies, aes(x = gestation, y = age)) + 
-  geom_point(aes(color = bwt))  
-data_space
-```
-
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-03/_w_7c834edc/04-03-lesson_files/figure-html/babies-gestation-age-1.png)
-
-### Tiling the plane
-
-One way to visualize a 3D model is to tile the plane. That is, we will create a 2D plot that covers all combinations of our two explanatory variables, and we will use color to reflect the corresponding fitted values.
-
-Here, we have created that grid of values using the `data_grid()` function, and then fed those into our model using the `augment()` function with the newdata argument. These two steps create a data frame of all possible combinations of gestation and age values, along with the model prediction for each.
-
-
-
-### Tiles in the data space
-
-We then use the `geom_tile()` function to superimpose these values on our data space. Setting the `alpha` argument to 0.5 allows us to see both the actual observations (as points) and the model predictions (as a smooth surface).
-
-Note how the color of the tiles lighten as you get closer to the upper right corner. This reflects that the model predicts heavier babies for older mothers with longer gestational periods.
+Another way to visualize a 3D model is to tile the plane. That is, we will create a 2D plot that covers all combinations of our two explanatory variables, and we will use color to reflect the response variable. We can do this within `PROC SGPLOT`, with only a minor change to the syntax:
 
 ```
-model_space <- data_space + 
-  geom_tile(data = bwt_hats, aes(fill = .fitted, alpha = 0.5)) + 
-  scale_fill_continuous("bwt", limits = range(babies$bwt))
-model_space
+* Scatterplot of HWY_MPG by ENG_SIZE & WEIGHT;
+proc sgplot data=cars;
+	scatter x=eng_size y=weight / colorresponse=hwy_mpg
+		markerattrs=(symbol=circlefilled) colormodel=(red yellow green); 
+	where not missing(hwy_mpg);
+run;
 ```
 
-![img](https://openintro.shinyapps.io/ims-04-multivariable-and-logistic-models-03/_w_7c834edc/04-03-lesson_files/figure-html/babies-tiled-plane-1.png)
+The main change is the addition of the `colorresponse = hwy_mpg` option to indicate that colors should be assigned by values of `hwy_mpg`. We did also explicitly tell SAS which colors to use; and we had to explicitly remove values with missing data on the outcome, since they otherwise showed up as gray dots. Here's the result:
+
+![](images/sgplot-color.png)
+
+In this figure, orange and red dots reflect cars with lower highway fuel economy, while yellow and green dots reflect cars with higher highway fuel economy. The interpretation is the same as above. Which graph do you find easier to "see"?
+
+
 
 ### 3D visualization
 
