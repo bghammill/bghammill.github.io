@@ -2,6 +2,17 @@
 
 Thus far, we’ve only considered multiple regression models with one numeric explanatory variable. In this lesson, we will explore models that have at least two numeric explanatory variables.
 
+Let's reload the CARS dataset for this:
+
+```
+* Initialize this SAS session;
+%include "~/my_shared_file_links/hammi002/sasprog/run_first.sas";
+
+* Makes and checks a working copy of CARS data;
+%use_data(cars);
+%glimpse(cars);
+```
+
 ### Adding a second numeric explanatory variable
 
 *Mathematically*, adding a second numeric explanatory variable to a regression model is trivial—we just add another term to our model.
