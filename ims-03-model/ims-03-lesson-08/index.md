@@ -95,7 +95,7 @@ In the end, a good interpretation of this effect might be: *Controlling for a ca
 
 We can do the same for the parameter estimate for weight. The slope for weight, based on the regression output is -0.005 mpg per additional pound.
 
-Actually, before we move on, let's change the scale here. It will be easier to understand if we talk about the change in fuel economy for an additional 1000 pounds. If $$\b_2 = -0.005$$, then $$1000\b_2 = -5$$. Meaning, we can also interpret the slope for weight as -5 mpg per additional 1000 pounds.
+Actually, before we move on, let's change the scale here. It will be easier to understand if we talk about the change in fuel economy for an additional 1000 pounds. If $$b_2 = -0.005$$, then $$1000b_2 = -5$$. Meaning, we can also interpret the slope for weight as -5 mpg per additional 1000 pounds.
 
 Again, this negative slope can be seen on the plot below as the rate of color change as you move vertically through the plot along a straight line. Look at the points along the line below for a car that has a 2L engine.
 
@@ -113,11 +113,11 @@ When you interpret coefficients from a multiple regression model, be sure to alw
 
 As we did in the last tutorial, we can again check the fit of the model to see if there was an improvement in the predictive ability of this model compared to the previous models for highway fuel economy. I've summarized those measures here:
 
-| Regression Model                     | Adjusted $$R^2$$ | Root MSE |
-| ------------------------------------ | ---------------- | -------- |
-| Simple (`eng_size` only)             | 0.505            | 4.0      |
-| Parallel slopes (`eng_size` + `suv`) | 0.574            | 3.7      |
-| Multiple (`eng_size` + `weight`)     | 0.635            | 3.4      |
+| Regression Model                           | Adjusted $$R^2$$ | Root MSE |
+| ------------------------------------------ | ---------------- | -------- |
+| Simple (Engine size only)                  | 0.505            | 4.0      |
+| Parallel slopes (Engine size + SUV status) | 0.574            | 3.7      |
+| Multiple (Engine size + Weight)            | 0.635            | 3.4      |
 
 Both of these measures show substantial improvement with the multiple regression model. With the multiple regression model, we can now explain over 63% of the variation in highway fuel economy, and standard deviations of the residuals is lower than for other models, indicating tighter fit for the observed data points.
 

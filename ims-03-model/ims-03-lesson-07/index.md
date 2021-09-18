@@ -124,11 +124,11 @@ We can also used a fitted regression model to make predictions for other combina
 
 The estimated regression for the parallel slopes model is given by:
 
-$$\hat{y} = 38.5 - 3.5EngSize - 4.5SUV$$
+$$\hat{y} = 38.5 - 3.5 \cdot EngSize - 4.5 \cdot SUV$$
 
 For a new SUV with a 3.7L engine, we would expect the highway MPG to be 21.1 mpg, calculated as:
 
-$$\hat{y} = 38.5 - 3.5\cdot3.7 - 4.5=21.1$$
+$$\hat{y} = 38.5 - 3.5 \cdot 3.7 - 4.5=21.1$$
 
 ## Understanding Interaction
 
@@ -194,12 +194,12 @@ run;
 
 Interpreting the coefficients in an interaction model becomes more complicated. But if we use the equations above as our guide, here's what's what:
 
-* $$\beta_0 = 39.0$$ is the intercept of the non-SUV equation line
-* $$\beta_1 = -3.6$$ is the slope of the non-SUV equation line
-* $$\beta_2 = -8.7$$ is the difference between the intercepts of the non-SUV equation line and the SUV equation line
-* So $$\beta_0 + \beta_2 = 39.0 - 8.7=30.3$$ is the actual intercept of the SUV equation line
-* $$\beta_3 = 1.1$$ is the difference between the slopes of the non-SUV equation line and the SUV equation line
-* So $$\beta_1 + \beta_3 = -3.6 +1.1=-2.5$$ is the actual slope of the SUV equation line
+* $$b_0 = 39.0$$ is the intercept of the non-SUV equation line
+* $$b_1 = -3.6$$ is the slope of the non-SUV equation line
+* $$b_2 = -8.7$$ is the difference between the intercepts of the non-SUV equation line and the SUV equation line
+* So $$b_0 + b_2 = 39.0 - 8.7=30.3$$ is the actual intercept of the SUV equation line
+* $$b_3 = 1.1$$ is the difference between the slopes of the non-SUV equation line and the SUV equation line
+* So $$b_1 + b_3 = -3.6 +1.1=-2.5$$ is the actual slope of the SUV equation line
 
 Note the difference between the fitted coefficients of the parallel slopes model with the interaction model. The original slope of -3.5 mpg per liter for all cars is now separated into two slopes: -3.6 mpg per liter for non-SUVs and -2.5 mpg per liter for SUVs. Thus, while fuel economy for SUVs is lower overall, it declines less rapidly as engine size increases compared to the decline as engine size increases among non-SUVs.
 
