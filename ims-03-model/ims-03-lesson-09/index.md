@@ -161,17 +161,17 @@ we can exponentiate both sides so that we're working directly with the odds of a
 
 $$odds(p) = exp(b_0 + b_1 x)$$
 
-A useful notation is $$odds(p_{X=x}) $$ to indicate that this is the estimated odds of the event (having estimated probability $$p$$) for a given value of $$x$$.
+A useful notation is $$odds(p_{x}) $$ to indicate that this is the estimated odds of the event (having estimated probability $$p$$) for a given value of $$x$$.
 
-In order to understand the effect of a 1-unit increase in $$x$$, then, let's calculate the $$odds(p_{X=x})$$ and $$odds(p_{X=x+1})$$ and compare.
+In order to understand the effect of a 1-unit increase in $$x$$, then, let's calculate the $$odds(p_{x})$$ and $$odds(p_{x+1})$$ and compare.
 
-$$odds(p_{X=x}) = exp(b_0 + b_1 x)=e^{b_0}e^{b_1 x}$$
+$$odds(p_{x}) = exp(b_0 + b_1 x)=e^{b_0}e^{b_1 x}$$
 
-$$odds(p_{X=x+1}) = exp(b_0 + b_1 (x+1)) = exp(b_0 + b_1 x+ b_1))=e^{b_0}e^{b_1 x}e^{b_1}$$
+$$odds(p_{x+1}) = exp(b_0 + b_1 (x+1)) = exp(b_0 + b_1 x+ b_1))=e^{b_0}e^{b_1 x}e^{b_1}$$
 
-If we take of the ratio of $$odds(p_{X=x+1})$$ to $$odds(p_{X=x})$$, we get:
+If we take of the ratio of $$odds(p_{x+1})$$ to $$odds(p_{x})$$, we get:
 
-$$\frac{odds(p_{X=x}}{odds(p_{X=x+1}} = \frac{e^{b_0}e^{b_1 x}e^{b_1}}{e^{b_0}e^{b_1 x}}=e^{b_1}$$
+$$\frac{odds(p_{x})}{odds(p_{x+1})} = \frac{e^{b_0}e^{b_1 x}e^{b_1}}{e^{b_0}e^{b_1 x}}=e^{b_1}$$
 
 This is the **odds ratio**, the most common way to interpret logistic regression coefficients. In other words, the effect of a 1-unit increase in *x* on the odds of the outcome *y* is given by an odds ratio (OR) equal to $$e^{b_1}$$.
 
