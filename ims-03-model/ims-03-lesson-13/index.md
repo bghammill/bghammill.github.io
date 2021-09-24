@@ -4,7 +4,7 @@ Let's take a look at some model results and calculate a few predicted values, so
 
 ### Interpretation of estimates, without interaction
 
-The first model did not have an interaction effect between these 2 variables. So the population regression model equation would be:
+The first model did not include an interaction effect between these 2 variables. So the population regression model equation would be:
 
 $$Length = \beta_0 + \beta_1 GestAge + \beta_2 Toxemia + \epsilon$$
 
@@ -27,7 +27,7 @@ Adding an interaction between these variable will change all of this and allow t
 
 ### Interpretation of estimates, with interaction
 
-The second model *did* have an interaction effect between these 2 variables. So the population regression model equation would be:
+The second model *did* include an interaction effect between these 2 variables. So the population regression model equation would be:
 
 $$Length = \beta_0 + \beta_1 GestAge + \beta_2 Toxemia + \beta_3 GestAge \cdot Toxemia + \epsilon$$
 
@@ -58,7 +58,7 @@ $$Length_{Week=x+1} = b_0 + b_1 x + b_1 + b_2 Toxemia + b_3 x \cdot Toxemia + b_
 
  So the difference is:
 
-$$Length_{Week=x+1}- Length_{Week=x} = b_1 + b_3 Toxemia  = 1.06 + 0.06 Toxemia$$
+$$Length_{+1 week} = b_1 + b_3 Toxemia  = 1.06 + 0.06 Toxemia$$
 
 since the $$b_0$$, $$b_1 x$$, $$b_2 Toxemia$$, and $$b_3 x \cdot Toxemia$$ terms cancel.
 
@@ -76,22 +76,25 @@ Now let's work out the effect of toxemia. Since there are only 2 possible values
 
 When toxemia = 0, the predicted value is:
 
-$$Length_{Tox=0} = b_0 + b_1 GestAge + b_2 (0) + b_3 GestAge \cdot (0) = b_0 + b_1 GestAge$$
+$$Length_{Tox=0} = b_0 + b_1 GestAge + b_2 (0) + b_3 GestAge \cdot (0)$$
+
+$$Length_{Tox=0} = b_0 + b_1 GestAge$$
 
 When toxemia = 1, the predicted value is:
 
-$$Length_{Tox=1} = b_0 + b_1 GestAge + b_2 (1) + b_3 GestAge \cdot (1) = b_0 + b_1 GestAge + b_2 + b_3 GestAge$$
+$$Length_{Tox=1} = b_0 + b_1 GestAge + b_2 (1) + b_3 GestAge \cdot (1)$$
+
+$$Length_{Tox=1} = b_0 + b_1 GestAge + b_2 + b_3 GestAge$$
 
  So the difference is:
 
-$$Length_{Tox=1} - Length_{Tox=0} = b_2 + b_3 GestAge = -3.48 + 0.06 GestAge$$
+$$Length_{Tox} = b_2 + b_3 GestAge = -3.48 + 0.06 GestAge$$
 
 since the $$b_0$$ and $$b_1 GestAge$$ terms cancel.
 
 You should be able to see and infer a few things from this equation:
 
 * Most importantly, the effect of a mother having toxemia depends on the number of weeks gestation. This means that the $$b_2$$ term is never interpretable on its own since gestational age is always  >0, bringing the interaction term into play.
-
 * For a baby born after 30 weeks gestation, the effect of the mother having toxemia is associated with an expected decrease in length of 1.68 cm (b/c –3.48 + 0.06(30) = –1.68)
 * For a baby born after 40 weeks gestation, the effect of the mother having toxemia is associated with an expected decrease in length of 1.08 cm (b/c –3.48 + 0.06(40) = –1.08)
 

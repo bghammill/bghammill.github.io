@@ -43,12 +43,12 @@ As noted above, if we want to model salary as a function of  rank using `PROC RE
 
 To start, what if we create 4 individual 0/1 variables to represent each rank, like this:
 
-* When `PosTitle` = "Police Officer Recruit", set `Officer_Recruit` = 1, otherwise set to 0
-* When `PosTitle` = "Police Officer I", set `Officer_I` = 1, otherwise set to 0
-* When `PosTitle` = "Police Officer II", set `Officer_II` = 1, otherwise set to 0
-* When `PosTitle` = "Master Police Officer", set `Officer_Master` = 1, otherwise set to 0
+* When *PosTitle* = "Police Officer Recruit", set *Officer_Recruit* = 1, otherwise set to 0
+* When *PosTitle* = "Police Officer I", set *Officer_I* = 1, otherwise set to 0
+* When *PosTitle* = "Police Officer II", set *Officer_II* = 1, otherwise set to 0
+* When *PosTitle* = "Master Police Officer", set *Officer_Master* = 1, otherwise set to 0
 
-For our data, the cross-tabulation of `PosTitle` with these new 4 variables looks like this:
+For our data, the cross-tabulation of *PosTitle* with these new 4 variables looks like this:
 
 | PosTitle               | Officer_Recruit | Officer_I | Officer_II | Officer_Master | N    |
 | ---------------------- | --------------- | --------- | ---------- | -------------- | ---- |
@@ -57,7 +57,7 @@ For our data, the cross-tabulation of `PosTitle` with these new 4 variables look
 | Police Officer II      | 0               | 0         | 1          | 0              | 148  |
 | Master Police Officer  | 0               | 0         | 0          | 1              | 316  |
 
-We can see in this table that each rank value in the raw variable, `PosTitle`, receives a value of 1 in only one of the other variables. You can confirm this yourself in the data:
+We can see in this table that each rank value in the raw variable *PosTitle* receives a value of 1 in only one of the other variables. You can confirm this yourself in the data:
 
 ```
 * Verify coding into indicator variables;
@@ -91,7 +91,7 @@ This is a hint that the correct way reflect categorical variable with *k* levels
 
 ### Using Recruits as the reference
 
-So let's use Recruits as the reference level and include the `officer_i`, `officer_ii`, `officer_master` variables in the model. You may find it helpful to write out the population regression model equation:
+So let's use Recruits as the reference level (i.e., do not included in the model) and include the `officer_i`, `officer_ii`, `officer_master` variables in the model. You may find it helpful to write out the population regression model equation:
 
 $$Y = \beta_0 + \beta_1 Officer\_I + \beta_2 Officer\_II + \beta_3 Officer\_Master + \epsilon$$
 

@@ -59,9 +59,9 @@ A full treatment of GLMs is beyond the scope of this tutorial, but the basic ide
 
 $$logit(\pi) = ln(\frac{\pi}{1−\pi})=\beta_0 + \beta_1 x + \epsilon$$
 
-where $$\pi$$ is the probability that the event or outcome of interest occurs, $$Pr(y = 1)$$. The logit function constrains the fitted values of the model to always lie between 0 and 1, as a valid probability must.
+where $$\pi$$ is the probability that the event or outcome of interest occurs in the population, $$Pr(y = 1)$$. The logit function constrains the fitted values of the model to always lie between 0 and 1, as a valid probability must.
 
-By the way, in the equation for the *estimated regression model* here, we replace $$\pi$$ with $$p$$:
+By the way, in the equation for the *estimated regression model* here, we replace $$\pi$$ with $$p$$, which represents the probability that the event or outcome of interest occurs in our sample:
 
 $$logit(p) = ln(\frac{p}{1−p})=b_0 + b_1 x$$
 
@@ -94,13 +94,11 @@ Notice that the first set of `PROC LOGISTIC` output includes this information:
 
 ![](images/response-died.png)
 
-SAS is explicitly telling us here that it is modeling the probability of low birthweight (`lowbwt `= 1)death. Without the `descending` option, it would be modeling the probability of normal birthweight, which is not the goal. *Always make sure you check this section of the output to ensure that SAS is predicting the outcome you intend.*
-
-![](images/response-alive.png)
+SAS is explicitly telling us here that it is modeling the probability of low birthweight (`lowbwt `= 1). Without the `descending` option, it would be modeling the probability of normal birthweight, which is not the goal. *Always make sure you check this section of the output to ensure that SAS is predicting the outcome you intend.*
 
 ### Visualizing logistic regression
 
-We showed you the simple regression line through the birthweight data. Let's add the logistic regression curve through these data as well.
+We showed you the simple (linear) regression line through the birthweight data. Let's add the logistic regression line through these data as well.
 
 ![img](images/bwt-glm-1.png)
 
@@ -114,7 +112,7 @@ Unfortunately, since our model is now non-linear, it’s harder to succinctly ch
 
 As a side note, in order to estimate the probability of having low birthweight for a specific gestational age from the model, we need to reverse the logit transformation shown above. This is done as follows:
 
-$$\hat{p}=\frac{1}{1 + e^{-1\cdot(b_0 + b_1 x}}$$
+$$\hat{p}=\frac{1}{1 + e^{-1\cdot(b_0 + b_1 x}})$$
 
 Of course, SAS will compute this for you for existing observations:
 
@@ -135,7 +133,7 @@ Based on the first record printed out in the last step, we can see, for an infan
 
 This also means that the intercept estimate can be used to calculate the probability of the outcome when all the $$x$$ variable values are zero,
 
-$$\hat{p_0}=\frac{1}{1 + e^{-1\cdot(b_0}}$$
+$$\hat{p_0}=\frac{1}{1 + e^{-b_0}}$$
 
 although this is rarely done in practice.
 
@@ -145,51 +143,51 @@ As an alternative to the probability scale for the *y* variable, we could consid
 
 And while the odds scale is more useful than the probability scale for certain things, it is still non-linear in the current context. So statisticians also think about logistic regression models on the log-odds scale, which is formed by taking the **natural log** of the odds. 
 
-$$log\-odds(\hat{p}) = ln(\frac{\hat{p}}{1-\hat{p}})$$
+$$log-odds(p) = ln(\frac{p}{1-p})$$
 
 This, in fact, is just the logit function presented earlier.  When we plot predicted log-odds of having low birthweight by gestational age, we get a graph like the following:
 
 ![img](images/bwt-glm-log-odds-1.png)
 
-The benefit to this approach is clear. The logistic regression model can be visualized as a line! Unfortunately, understanding what the log of the odds of an event means is very difficult for humans. 
+The benefit to this approach is clear. The logistic regression model can be visualized as a line! (Unfortunately, understanding what the log of the odds of an event means is very difficult for humans.) 
 
 ### Odds ratios
 
 Because the predicted logistic model looks like this:
 
-$$ln[odds(p)] = ln(\frac{p}{1−p})=b_0 + b_1 x$$
+$$ln[odds(p)] = b_0 + b_1 x$$
 
 we can exponentiate both sides so that we're working directly with the odds of an event:
 
 $$odds(p) = exp(b_0 + b_1 x)$$
 
-A useful notation is $$odds(p|x) $$ to indicate that this is the estimated odds of the event (having estimated probability $$p$$) for a given value of $$x$$.
+A useful notation is $$odds(p\|x) $$ to indicate that this is the estimated odds of the event (having estimated probability $$p$$) for a given value of $$x$$.
 
-In order to understand the effect of a 1-unit increase in $$x$$, then, let's calculate the $$odds(p|x)$$ and $$odds(p|x+1)$$ and compare.
+In order to understand the effect of a 1-unit increase in $$x$$, then, let's calculate the $$odds(p\|x)$$ and $$odds(p\|x+1)$$ and compare.
 
-$$odds(p|x) = exp(b_0 + b_1 x)=e^{b_0}e^{b_1 x}$$
+$$odds(p\|x) = exp(b_0 + b_1 x)=e^{b_0}e^{b_1 x}$$
 
-$$odds(p|x+1) = exp(b_0 + b_1 (x+1)) = exp(b_0 + b_1 x+ b_1))=e^{b_0}e^{b_1 x}e^{b_1}$$
+$$odds(p\|x+1) = exp(b_0 + b_1 (x+1)) = exp(b_0 + b_1 x+ b_1))=e^{b_0}e^{b_1 x}e^{b_1}$$
 
-If we take of the ratio of $$odds(p|x+1)$$ to $$odds(p|x)$$, we get:
+If we take of the ratio of $$odds(p\|x+1)$$ to $$odds(p\|x)$$, we get:
 
-$$\frac{odds(p|x+1)}{odds(p|x)} = \frac{e^{b_0}e^{b_1 x}e^{b_1}}{e^{b_0}e^{b_1 x}}=e^{b_1}
+$$\frac{odds(p\|x+1)}{odds(p\|x)} = \frac{e^{b_0}e^{b_1 x}e^{b_1}}{e^{b_0}e^{b_1 x}}=e^{b_1}
 
 This is the **odds ratio**, the most common way to interpret logistic regression coefficients. In other words, the effect of a 1-unit increase in *x* on the odds of the outcome *y* is given by an odds ratio (OR) equal to $$e^{b_1}$$.
 
-From the estimated logistic regression model, we see that $$b_1= -.71$$. If we exponentiate this estimate, we get an odds ratio of 0.49 (b/c $$e^{-.71} = 0.49). We would interpret estimate by saying that the odds of having low birthweight are reduced by about 50% for each additional week of gestation. Or we could just report that the odds ratio for having low birthweight associated with gestational age is 0.49, indicating a substantial reduction in risk with every additional week of gestation.
+From the estimated logistic regression model, we see that $$b_1= -.71$$. If we exponentiate this estimate, we get an odds ratio of 0.49 (b/c $$e^{-.71} = 0.49$$). We would interpret estimate by saying that the odds of having low birthweight are reduced by about 50% for each additional week of gestation. Or we could just report that the odds ratio for having low birthweight associated with gestational age is 0.49, indicating a substantial reduction in risk with every additional week of gestation.
 
 As for any ratio, our interest is in how this number differs from 1. If it’s greater than one, then the odds (risk) of the event are increased. Conversely, if it’s less than one, then the odds (risk) of the event are decreased. And, as we talked about when discussion metrics of association for 2x2 tables, the odds ratio approximates the risk ratio when the incidence of an event is low.  That's true whether the odds ratio is estimated from a 2x2 table or from a logistic regression.
 
 ## Logistic regression model fit
 
-Unlike linear regression, there are no intuitive, readily-interpretable measures of model fit like $$R^2$$ () or RMSE for logistic regression. But there are a few measures that get reported and/or used for  comparisons of model fit.
+Unlike linear regression, there are no intuitive, readily-interpretable measures of model fit like $$R^2$$ or RMSE for logistic regression. But there are a few measures that get reported and/or used for  comparisons of model fit.
 
 ### C-statistic
 
 The C-statistic (sometimes called the “concordance” statistic or C-index) is a measure of goodness-of-fit for a logistic regression model. The C-statistic gives the probability that a randomly selected observation that experienced the outcome has a higher predicted risk (from the model) than another randomly selected observation who did not experience the outcome. It ranges from 0.5 to 1, where higher values indicate better fit, and generally has the following interpretation:
 
-* A value of 0.5 means that the model is no better than predicting an outcome than random chance
+* A value of 0.5 means that the model is no better at predicting an outcome than random chance
 * Values over 0.7 indicate a good model
 * Values over 0.8 indicate a strong model
 * A value of 1 means that the model perfectly predicts which observations will experience the outcome and which will not
@@ -206,7 +204,7 @@ For this model, the C-statistic is 0.88, which is very high, since the relations
 
 The Akaike information criterion (AIC) is an estimator of prediction error and another measure of model quality. Like the $$R^{2}_{adj}$$, it accounts for both the fit of the model and the complexity of the model, adding a penalty when there are too many variables. The AIC is almost exclusively a metric used for model comparison and selection, where lower AIC is better. 
 
-For the low birthweight regression, you can find the AIC in the top row of the table labeled "Model Fit Statistics":
+For the low birthweight regression, you can find the AIC in the top row of the table labeled "Model Fit Statistics". We're interested in the "Intercept and Covariates" column.
 
 ![](images/aic-1.png)
 
