@@ -91,7 +91,7 @@ This is a hint that the correct way reflect categorical variable with *k* levels
 
 ### Using Recruits as the reference
 
-So let's use Recruits as the reference level (i.e., do not included in the model) and include the `officer_i`, `officer_ii`, `officer_master` variables in the model. You may find it helpful to write out the population regression model equation:
+So let's use Recruits as the reference level (i.e., do not include in the model) and include the `officer_i`, `officer_ii`, `officer_master` variables in the model. You may find it helpful to write out the population regression model equation:
 
 $$Y = \beta_0 + \beta_1 Officer\_I + \beta_2 Officer\_II + \beta_3 Officer\_Master + \epsilon$$
 
