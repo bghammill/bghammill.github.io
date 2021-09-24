@@ -1,5 +1,3 @@
-*don't think we're doing this*
-
 # Logistic regression
 
 Thus far, we have only built models for a numeric response variable. But what if we have a dichotomous response variable? That's what logistic regression is used for.
