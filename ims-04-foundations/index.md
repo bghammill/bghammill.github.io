@@ -9,10 +9,10 @@ Statistical inference plays a role in many different data analyses (including th
 ## Learning objectives
 
 - Translate research hypotheses into statistical hypotheses
-- Perform a randomization test for two proportions using the **infer** package
+- Perform a randomization test for two proportions 
 - Interpret the results from the randomization test in the context of the research
 - Describe different (and their impact on the research conclusions) errors that might have been present
-- Create a bootstrap confidence interval for a single proportion using the **infer** package.
+- Create a bootstrap confidence interval for a single proportion 
 
 ## Lessons
 
@@ -22,13 +22,13 @@ The fundamental principle that there is variability across different samples wil
 
 ### 2 - [Randomization test](https://bghammill.github.io/ims-04-foundations/ims-04-lesson-02/)
 
-Using the **infer** package, you will be able to work through an entire randomization test. For a given dataset and research question, you will identify hypotheses and decide whether or not it is appropriate to reject the null hypothesis in favor of the research claim of interest.
+Using a custom SAS macro, you will be able to work through an entire randomization test. For a given dataset and research question, you will identify hypotheses and decide whether or not it is appropriate to reject the null hypothesis in favor of the research claim of interest.
 
-### 3 - [Errors in hypothesis testing](https://bghammill.github.io/ims-04-foundations/ims-04-lesson-03/)
+### 3 - Errors in hypothesis testing
 
-Working through another complete hypothesis test (using the **infer** package), you will focus on how and when false conclusions are sometimes drawn. You will learn to distinguish between a Type I error where you are confident in a claim that isn’t valid and a Type II error where you fail to conclude anything when your science is correct. Additionally, you will learn the important role that number of observations play in reducing error rates.
+Working through another complete hypothesis test, you will focus on how and when false conclusions are sometimes drawn. You will learn to distinguish between a Type I error where you are confident in a claim that isn’t valid and a Type II error where you fail to conclude anything when your science is correct. Additionally, you will learn the important role that number of observations play in reducing error rates.
 
-### 4 - [Parameters and confidence intervals](https://bghammill.github.io/ims-04-foundations/ims-04-lesson-04/)
+### 4 - Parameters and confidence intervals
 
-Additionally, using the **infer** package, you will learn to create confidence intervals for a single population proportion. A confidence interval will provide a range of plausible values to estimate the unknown population value. The parameter is the true unknown proportion of successes in the population, estimated using the sample proportion. Bootstrapping allows for estimation of the variability of the sample proportion which leads to an interval estimate.
+Additionally, you will learn to create confidence intervals for a single population proportion. A confidence interval will provide a range of plausible values to estimate the unknown population value. The parameter is the true unknown proportion of successes in the population, estimated using the sample proportion. Bootstrapping allows for estimation of the variability of the sample proportion which leads to an interval estimate.
 

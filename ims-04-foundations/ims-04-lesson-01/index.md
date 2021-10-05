@@ -45,7 +45,7 @@ The *null hypothesis* is that Asian and African cheetahs run at the same speed, 
 
 The *alternative hypothesis* is that African cheetahs are faster than Asian cheetahs, on average.
 
-<u>**Example: Election**</u>
+**<u>Example: Election</u>**
 
 Or consider a dataset collected to measure whether, in an election, Candidate X will win the popular vote. The number of interest is the true proportion of votes that Candidate X will receive. That number is *a population measure.*
 
@@ -67,7 +67,7 @@ We will then summarize each of these null samples by calculating the difference 
 
 This $$\Delta$$ will change with each sample and, if we do this enough times, will eventually yield a distribution of differences, the *null distribution*, that we can summarize with a histogram or other summary statistics.
 
-<u>**Data example**</u>
+**<u>Data example</u>**
 
 Suppose our original data included 100 people, 50 from the West Coast and 50 from the East Coast and that the observed data looked like:
 
@@ -76,7 +76,7 @@ Suppose our original data included 100 people, 50 from the West Coast and 50 fro
 | Cola       | 41 (82%)            | 35 (70%)            |
 | Orange     | 9 (18%)             | 15 (30%)            |
 
-This gives us observed sample proportions of $p_W = 0.82$ for the West Coast and $p_E = 0.70$ for the East Coast, for a difference of $$\pi_W - \pi_E = 0.12$$. Note that the overall proportion of those preferring cola over orange soda was 0.76. 
+This gives us observed sample proportions of $$p_W = 0.82$$ for the West Coast and $$p_E = 0.70$$ for the East Coast, for a difference of $$p_W - p_E = 0.12$$. Note that the overall proportion of those preferring cola over orange soda was 0.76. 
 
 Run the data yourself, so you can see that this is true:
 
@@ -147,7 +147,7 @@ We can plot these if we want, but, with only 5 null samples, it isn't terribly i
 
 Each null sample's difference is represented by a dot, the solid red line is our observed difference, and the dotted red line is the negative value of the observed difference. This will be important later, as we try and figure out which null samples yields differences that *were more extreme* than the observed difference. Because we didn't indicate a specific direction in our null hypothesis, we need to look for more extreme values in both directions from the null value. 
 
-<u>Key point</u>: This idea of looking in both directions away from the null value is very typical in statistical analysis. Directional hypotheses—for example, $$H_0: \pi_W \geq \pi_E$$, $$H_A: \pi_W \leq \pi_E$$— are certainly allowed, but not that common.
+<u>Key point</u>: This idea of looking in both directions away from the null value is very typical in statistical analysis. Directional hypotheses—for example, $$H_0: \pi_W \geq \pi_E$$, $$H_A: \pi_W < \pi_E$$— are certainly allowed, but not that common.
 
 Before we continue, you should run some of your own null samples.
 
