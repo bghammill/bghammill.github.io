@@ -174,7 +174,7 @@ Go ahead and run the randomization test for both of these samples:
 
 What p-value do you get for the smaller sample size? How about the larger sample size? Remember that our original p-value was something near 0.035.
 
-If your results were anything like mine, you should have seem something like the following:
+If your results were anything like mine, you should have seen something like the following:
 
 | Dataset                        | p-value for difference |
 | ------------------------------ | ---------------------- |

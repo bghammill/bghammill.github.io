@@ -1,6 +1,44 @@
-### Calculating quantiles
+# Critical regions of the null distribution
 
-Another way to measure how far the observed statistic is from the hypothesize null value is to calculate quantiles of the null statistics. After we've generated 100 different shuffles of the original data, we see that the 5% quantile is -0.208. That is, 5% of the observations are at -0.208 or below. The 95% quantile is 0.208. That is, 95% of the null observations are at 0.208 or below, meaning that our observed statistic of 0.29 is larger than 95% of the null statistics.
+Another way to measure how far the observed statistic is from the hypothesize null value is to compare the observed statistic to specific quantiles of the null statistics.
+
+Let's reload the promotion data, calculate our observed statistic, and generate a null distribution using randomization:
+
+```
+* Initialize this SAS session;
+%include "~/my_shared_file_links/hammi002/sasprog/run_first.sas";
+
+* Makes a working copy of PROMOTION data and check;
+%use_data(promotion);
+%glimpse(promotion);
+
+* Observed promotion decisions by gender;
+proc freq data=promotion;
+	tables gender * decision / nocol nopct;
+run;
+
+* Load randomization macros;
+%include "~/my_shared_file_links/hammi002/sasprog/load-randomization.sas";
+
+* Run 1000 null samples;
+%permute_freq(
+	ds = promotion,
+	groupvar = gender,
+	g1value = 1,
+	g2value = 2,
+	compvar = decision,	
+	cvalue = 1,
+	reps = 1000
+);
+```
+
+ After we've generated 1000 different permutations of the original data, we find these quantiles of the null distribution at the bottom of the output. Here is what I see:
+
+
+
+
+
+we see that the 5% quantile is -0.208. That is, 5% of the observations are at -0.208 or below. The 95% quantile is 0.208. That is, 95% of the null observations are at 0.208 or below, meaning that our observed statistic of 0.29 is larger than 95% of the null statistics.
 
 
 
