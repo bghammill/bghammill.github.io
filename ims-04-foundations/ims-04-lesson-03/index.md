@@ -24,9 +24,9 @@ Before we look at the data, let's state the research hypotheses. In words, the n
 
 In order to formally state our hypotheses, let's answer the following questions:
 
-* What type of parameters are involved? We are interested in proportions (of students in each group buying the DVD). Population proportions are denoted by $$\pi$$.
-* How many parameters are involved? Since we have two groups being compared, there are two parameters. Let's label those as "T" for the treatment group and "C" for the control group.
-* What is the nature of the difference being hypothesized, directional or non-directional? In this case, there is no interest in directionality, and we will have a 2-sided test of no difference.
+* *What type of parameters are involved*? We are interested in proportions (of students in each group buying the DVD). Population proportions are denoted by $$\pi$$.
+* *How many parameters are involved*? Since we have two groups being compared, there are two parameters. Let's label those as "T" for the treatment group and "C" for the control group.
+* *What is the nature of the difference being hypothesized, directional or non-directional*? In this case, there is no interest in directionality, and we will have a 2-sided test of no difference.
 
 So the formal hypotheses would be:
 
@@ -120,30 +120,6 @@ The logic of hypothesis testing shares many key elements with the US judicial sy
 Here's a question... what decision should jurors make if the goal is to never make a Type II error (false negative, setting a criminal free)? Perversely, it's to convict everybody. In that situation, they would only ever be committing Type I errors. But that means they would be wrongly convicting some people in order to never let a true criminal go free, which is a different kind of problem.
 
 This is the type of balance that hypothesis testing, in general, has to strike and why 5% has typically been used in science as an "acceptable" rate of Type I errors.
-
-
-
-observed statistic, `diff_obs`, are available in your workspace.
-
-Use `opp_perm` to compute the two-sided p-value, or twice the proportion of permuted differences that are less than or equal to the original difference.
-
-```
-# Calculate the two-sided p-value
-opp_perm %>%
-  summarize(p_value = ___)
-```
-
-<div id="opportunity_costs-hint">
-**Hint:** This should be double what you calculated as one-tailed p-value before.
-</div>
-
-```
-# Calculate the two-sided p-value
-opp_perm %>%
-  summarize(p_value = 2 * mean(stat <= diff_obs))
-```
-
-Great work! Take a moment to remind yourself why you used the proportion of permuted statistics that are smaller than (instead of bigger than) the observed value. Hint: Look at the histogram of permuted statistics.
 
 
 

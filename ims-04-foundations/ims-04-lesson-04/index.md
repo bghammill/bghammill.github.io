@@ -1,25 +1,21 @@
 
 ## Parameters and confidence intervals
 
-### Research questions
+Until now, the research question at hand has been a question of comparison, stated through the use of hypotheses. And the end point of the analysis has been a yes/no decision regarding the point estimate derived from the observed data. Specifically, is that point estimate consistent or inconsistent with the null hypothesis?
 
-Until now, the research question at hand has been a question of comparison. What if, instead, the research question is one of estimation?
+What if, instead, the research question is one of estimation? See some examples in the table below.
 
 ![](images/lesson4_img1.png)
 
-For example, “under which diet plan will participants lose more weight on average” is a comparative question and we use a hypothesis test. “How much should participants expect to lose on average” is an estimation question for which we use confidence intervals.
+For example, “Under which diet plan will participants lose more weight on average?” is a comparative question and we would use a hypothesis test to answer it. “How much should participants expect to lose on average” is an estimation question for which we use confidence intervals.
 
-Or another example is the comparative question: “which of two car manufacturers are drivers more likely to recommend to their friends?” Hypothesis testing is used to analyze that question. But: “what percent of users are likely to recommend Subaru to their friends” is an estimation problem and we use confidence intervals to answer that question.
+Or another example is the comparative question: “Which of two car manufacturers are drivers more likely to recommend to their friends?” Hypothesis testing is used to analyze that question. But: “What percent of users are likely to recommend Subaru to their friends” is an estimation problem and we use confidence intervals to answer that question.
 
-One more, the comparative question: “are education level and average income linearly related” is addressed with a hypothesis test. The estimation question: “for each additional year of education, what is the predicted change in average income” uses a confidence interval. OK, you see the pattern.
-
-### Parameter
-
-
-For each of the estimation problems, we need to understand what a parameter is. A parameter is a _numerical value from the population_. So in the first example, the parameter is the true average amount that all dieters will lose on a particular program. In the second example, the parameter is the proportion of individuals in the population who recommend Subaru cars. And the last parameter is the change in average income of all individuals in the population when increasing education by one year. 
+One more, the comparative question: “Are education level and average income linearly related?” is addressed with a hypothesis test. The estimation question: “For each additional year of education, what is the predicted change in average income?” uses a confidence interval. You see the pattern.
 
 ### Confidence interval
 
+Recall that a parameter is a _numerical value from the population_. So in the first example above, the parameter is the true average amount that all dieters will lose on a particular program. In the second example, the parameter is the proportion of individuals in the population who recommend Subaru cars. And the last parameter is the change in average income of all individuals in the population when increasing education by one year. 
 
 A **confidence interval** is a range of numbers that hopefully captures the true parameter value of interest. For example, at the end of the tutorial, we'll be able to make conclusions along the lines of “we are 95% confident that somewhere between 12% and 34% of the entire population recommends Subarus.”
 

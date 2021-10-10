@@ -36,7 +36,7 @@ After we've generated 1000 different permutations of the original data, we find 
 
 ![](images/null-quantiles.png)
 
-We can see that the 5% quantile is -0.208. That is, 5% of the observations in the null distribution are at -0.208 or below. And the 95% quantile is 0.208. That is, 95% of the null differences are at 0.208 or below, meaning that our observed statistic of 0.29 is larger than 95% of the null statistics, and, therefore, less extreme that *under* 5% of the null statistics in the upper tail. 
+We can see that the 5% quantile is -0.208. That is, 5% of the observations in the null distribution are at -0.208 or below. And the 95% quantile is 0.208. That is, 95% of the null differences are at 0.208 or below, meaning that our observed statistic of 0.29 is larger than 95% of the null statistics, and, therefore, there aren't even 5% of the null statistics in the upper tail that are larger. 
 
 Quantiles, like these, that describe the tails of the null distribution determine help us define what is called the **critical region**. People often use the critical region, instead of p-values, to determine when an observed statistic is considered "consistent" with the null distribution. For example, if our alternative hypothesis was a one-sided hypothesis in this direction (i.e., that male candidates had higher promotion rates than female candidates), we would typically conclude that our data were *inconsistent* with the null hypothesis, since our observed data were clearly within the 5% critical region.
 
@@ -51,7 +51,7 @@ The choice above to look at critical region that contained the most extreme 5% o
 
 As it turns out, the 5% cutoff value is consistent with what many of us consider to be unusual. Consider a situation where you as the researcher are trying to decide whether a coin is fair or not.
 
-![](C:\Users\hammill\Documents\GitHub\bghammill.github.io\ims-04-foundations\ims-04-lesson-02\images\lesson2_img8.png)
+![](images/lesson2_img8.png)
 
 Would you think that flipping one head is evidence that the coin is unfair? Probably not. What about two heads in a row? Three heads in a row?
 
