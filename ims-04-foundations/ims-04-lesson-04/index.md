@@ -1,128 +1,86 @@
 
 ## Parameters and confidence intervals
 
-Until now, the research question at hand has been a question of comparison, stated through the use of hypotheses. And the end point of the analysis has been a yes/no decision regarding the point estimate derived from the observed data. Specifically, is that point estimate consistent or inconsistent with the null hypothesis?
+Remember that once we have calculated a statistic from our data, we need to figure out a way to convey our uncertainty about that statistic—uncertainty due to sampling variability.
 
-What if, instead, the research question is one of estimation? See some examples in the table below.
+Until now, the way that we have managed this uncertainty was to perform hypothesis testing. By using randomization distributions, we were able to make a Yes/No decision regarding the point estimate derived from the observed data. Specifically, is that point estimate consistent or inconsistent with a specified null hypothesis?
+
+Some people might see that methodology as somewhat limiting. Hypothesis testing only allows us choose between two prespecified hypotheses. Another approach to dealing with uncertainty might be to ignore the idea of a null value and null hypothesis and instead convey a range of plausible values that are consistent with our observed data. This is called a confidence interval. 
+
+Both hypothesis testing and confidence intervals can be applied to the same data scenario. See some examples in the table below.
 
 ![](images/lesson4_img1.png)
 
-For example, “Under which diet plan will participants lose more weight on average?” is a comparative question and we would use a hypothesis test to answer it. “How much should participants expect to lose on average” is an estimation question for which we use confidence intervals.
+For example, in the first scenario, “Will participants lose more weight on Diet A than on Diet B?” is a Yes/No question that is best answered using a hypothesis test. Compare that to the question, "What is the difference in weight lost by participants on Diet A compared to those on Diet B?", which is asking for a quantification of the effect. This is where we would use confidence intervals.
 
-Or another example is the comparative question: “Which of two car manufacturers are drivers more likely to recommend to their friends?” Hypothesis testing is used to analyze that question. But: “What percent of users are likely to recommend Subaru to their friends” is an estimation problem and we use confidence intervals to answer that question.
+The questions for the other two scenarios are similar to these. "Does Treatment A differ..." and "Are education level and income linearly related?" are both Yes/No questions, for which we would use hypothesis tests, while "How many more...?" and "...what is the change...?" are both questions looking for actual values as answers, for which we would use confidence intervals.
 
-One more, the comparative question: “Are education level and average income linearly related?” is addressed with a hypothesis test. The estimation question: “For each additional year of education, what is the predicted change in average income?” uses a confidence interval. You see the pattern.
+Recall that a parameter is a _numerical value from the population_. So in the first example above, the parameter is the true difference in mean weight loss among dieters on one diet compared to diets on the other diet. In the second example, the parameter is the difference in the proportion of athlete's foot cases cured by the different treatments. And the last parameter is the change in average income of all individuals in the population when increasing education by one year.
 
-### Confidence interval
-
-Recall that a parameter is a _numerical value from the population_. So in the first example above, the parameter is the true average amount that all dieters will lose on a particular program. In the second example, the parameter is the proportion of individuals in the population who recommend Subaru cars. And the last parameter is the change in average income of all individuals in the population when increasing education by one year. 
-
-A **confidence interval** is a range of numbers that hopefully captures the true parameter value of interest. For example, at the end of the tutorial, we'll be able to make conclusions along the lines of “we are 95% confident that somewhere between 12% and 34% of the entire population recommends Subarus.”
-
-That is, the goal in creating a confidence interval is to calculate a range of plausible values for the parameter of interest.
-
-
-
-### What is the parameter?
-
-In November 2016, the voters elected a new president of the United States. Prior to the election, thousands of polls were taken to gauge the popularity of each of the candidates.  
-Leaving aside the idea that popular opinion changes over time, a poll can be thought of as a sample of individuals measured so as to estimate the proportion of all voters who will vote for each candidate (i.e. the population parameter).
-
-Consider an election in your home town that will take place in a week's time. You poll a randomly selected subset of the voters in your town and ask them if they plan to vote for Candidate X or Candidate Y. In this lesson, we will focus on *sampling variability*—the variability in sample proportions due to polling different randomly selected individuals from the population.
-
-```
-quiz(
-  question("Before investigating the sampling variability, what is the population parameter of interest?", 
-           correct = "Right!", 
-           allow_retry = TRUE,
-    answer("The proportion of individuals in a given poll who will vote for Candidate X.", message = "Not quite. The population parameter has to do with *all* voters."),
-    answer("The variability of the sample proportion from poll to poll.", message = "Incorrect. The variability will be the focus of this lesson, but it isn't the population parameter of interest."),
-    answer("The proportion of all voters in your town who will vote for Candidate X on election day.", correct = TRUE)
-  ), caption = ""
-)
-```
-
-### Hypothesis test or confidence interval?
-
-
-A university is trying to determine whether parking is a problem on its campus. The student
-newspaper contacts a random sample of 200 students and asks whether or not they are frustrated
-with the parking situation. They want to estimate the proportion of students at the college who are
-frustrated with the parking situation.
-
-
-
-```
-quiz(
-  question("In this setting, which is more appropriate, a hypothesis test or a confidence interval?", 
-           correct = "Correct!", 
-           allow_retry = TRUE,
-    answer("Hypothesis test because there is a particular research claim.", message = "Read the set-up carefully, the researchers do not have a particular claim to test."),
-    answer("Hypothesis test because the goal is to estimate a population parameter.", message = "False. A confidence interval is more appropriate here."),
-    answer("Confidence interval because there is a particular research claim.", message = "Close, but it's not because there's a particular research claim."),
-    answer("Confidence interval because the goal is to estimate a population parameter.", correct = TRUE)
-  ), caption = ""
-)
-```
+While you have already learned how to calculate point estimates for these types of differences from a sample of data, we need to calculate and report **confidence intervals** as a range of numbers that hopefully captures the true parameter value of interest. For example, at the end of the lesson, we'll be able to make conclusions along the lines of “We are 95% confident that Diet A leads to weight loss that is between 2.4 to 4.3 pounds higher than Diet B.”
 
 ## Bootstrapping
 
 
-With hypothesis testing, it is important to understand how samples from a null population vary. We repeatedly sample from a null population, which gives a sense for the variability of the statistic under the random chance model.
+With hypothesis testing, it is important to understand how samples from a null population vary. By repeatedly sample from a null population, we get a sense for the variability of our statistic under the random chance model.
 
-Note that the *statistic* at hand is $\hat{p}$, which is the proportion of successes in the _sample_. The *parameter*, on the other hand, is the proportion of successes in the _population_.
+In contrast, with confidence intervals, we do not need to worry about a null population. We are simply interested in how the estimate itself would vary among many different samples from the population.  
 
-In contrast, with confidence intervals, there is no null population. Instead, we need to understand how samples from the population of interest vary. 
-
-We expect the sample statistic to vary around the parameter, but how far is the statistic from the parameter? Bootstrapping is a method that allows us to estimate the distance from a statistic to the parameter. Let's see how it works.
+But how do we do this when we only have data from a single sample? **Bootstrapping**. Bootstrapping is a method that allows us to estimate the variability of a statistic by repeatedly re-sampling *from our sample data*.
 
 ![](images/lesson4_img2.png)
 
-Bootstrapping repeatedly samples from the sample in order to estimate the variability of the statistic. Each time we resample, the data are sampled from the original data with replacement. It turns out that the process of resampling from the original sample is an excellent approximation for sampling from a population!
+Each time we resample, the data are sampled from the original data with replacement. It turns out that the process of resampling from the original sample is an excellent approximation for sampling from a population!
 
-We call the bootstrapped statistic $\hat{p}^*$, which is the proportion of successes in the resample.
+We will denote bootstrapped statistics using a superscript \*. For example, we refer to the population parameter for a proportion as $$\pi$$ and the sample statistic for a proportion as $$p$$, so we will refer to a bootstrapped statistic for a proportion as $$p^*$$, which is the proportion of successes in a single resample.
 
-### Polling
+### The bootstrapping method
 
+The method of bootstrapping is fairly simple to implement:
 
-The original sample showed 4 of 7 who plan to vote for candidate X, or 57.1%. When we sample with replacement from the original sample, 71.4% of individuals will vote for candidate X. The second resample has 28.6% of individuals voting for candidate X. Note that in this second resample, the red person is repeated three times and both the brown and tan people show up twice. The third resampled proportion is 42.9%.
+* First, you compute the statistic of interest from the original data
+* Second, you generate a large number (typically 5,000 or 10,000) of re-samples from the observed sample data. This re-sampling is to be done *with replacement*, meaning some of the observations from your sample may get selected multiple times for a particular re-sample, while other observations from your sample may not get selected at all. (Sampling done without replacement would yield identical re-samples to the original dataset every time.) Each re-sample should have the same number of records as your observed sample data.
+* Third, within each re-sample, re-estimate the statistic of interest. This will yield a distribution of plausible values based on your original data.
+* Fourth, using this bootstrap distribution, compute an estimate of the confidence interval.
 
-| Candidate X |Total voters | Proportion for X    | Step            |
-|:------------|:-------------|:-----------------|:-----------------|
-| 4          |7           | 0.571          | Original data   |
-| 5          |7           | 0.714          | First resample  |
-| 2          |7           | 0.286             | Second resample |
-| 3          |7           | 0.429             | Third resample  |
+That's pretty much it. Let's walk through an an example.
 
+### Data example
 
-
-![](images/lesson4_img3.png)
-
-By repeating the resampling process many times, the resampled proportions give a measure of how $\hat{p}$ varies. 
-
-
-### Standard error
-
-
-The **standard error**, which describes how variable the statistic is around the parameter, is key to building a confidence interval. As we've already said, the bootstrap process is an excellent approximation for estimating how variable the statistic is. To demonstrate how well the bootstrap works, we set up a hypothetical situation where we actually know the number we need. The following R code calculates the standard error of the sample proportions in two ways. First, we use the population information, then we use the bootstrap.
+For this analysis we are going to look at birthweight of infants in the BABIES dataset:
 
 ```
-# Compute p-hat for each poll
-ex1_props <- all_polls %>%
-  group_by(poll) %>%
-  summarize(prop_yes = mean(vote == "yes"))
+* Initialize this SAS session;
+%include "~/my_shared_file_links/hammi002/sasprog/run_first.sas";
 
-# Select one poll from which to resample
-one_poll <- all_polls %>%
-  filter(poll == 1) %>%
-  select(vote)
-
-# Variability of p-hat
-ex1_props %>%
-  summarize(sd(prop_yes))
+* Makes a working copy of BABIES data and check;
+%use_data(babies);
+%glimpse(babies);
 ```
 
-### Variability of $\hat{p}$ from the sample (bootstrapping)
+Suppose we want to estimate and provide an estimate of uncertainty for how different the birthweight of infants born to mothers who smoked was from the birthweight of infants born to mothers who didn't smoke. This is *not* a question that requires a hypothesis test. We are really trying to quantify the difference. So we need a confidence interval to go with our point estimate.
+
+The first step is to ensure that you understand the parameters involved and know what statistic you will need to calculate. Again, let's answer some questions:
+
+* *What type of parameters are involved*? We are interested in means (of birthweight to different groups of methods). Population means are denoted by $$\mu$$.
+* *How many parameters are involved*? Since we have two groups being compared, there are two parameters. Let's label those as "S" for the smoking group and "NS" for the non-smoking group.
+
+So we are interested in $$\Delta = \mu_S - \mu_{NS}$$, which can be estimated in our original sample as $$d = \bar{X}_{S} - \bar{X}_{NS}$$ and in our bootstrapped re-samples as $$d^* = \bar{X}_{S}^* - \bar{X}_{NS}^*$$.
+
+So let's go ahead and estimate that observed difference, $$d$$:
+
+```
+* Calculate mean birthweight by smoking status;
+proc means data=babies n mean maxdec=1;
+	var bwt;
+	class smoke;
+run;
+```
+
+Based on the output, we see that $$\bar{X}_{S} = 114.1$$ ounces and $$\bar{X}_{NS} = 123.0$$ ounces for a difference of $$d = -8.9$$ ounces.
+
+Now let's generate those bootstrap samples and calculate the differences $$d^*$$ within each.
+
 
 
 To start, consider a totally unrealistic situation on voter preference, where we actually know the true population parameter is that 60% of people prefer candidate X. As a way of trying to measure the variability of $\hat{p}$ we have set up a scenario, again, totally unrealistic, where we are taking many samples from the same population. For each of the samples, $\hat{p}$ is calculated. The standard error is exactly the number we need to know and is calculated to be 0.085. But it is unrealistic to think we could take many samples from the population. Typically, the researcher has exactly one sample from the population.
@@ -1263,22 +1221,22 @@ Using measures of variability of the statistic, we can estimate how far $\hat{p}
 As with hypothesis testing, the entire bootstrap process will be repeated with different data structures and research questions in later tutorials.
 
 
-## Congratulations!
 
-You have successfully completed Lesson 4 in Tutorial 4: Foundations of Inference.  
 
-What's next?
 
-[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
 
-[Tutorial 4: Introduction to Statistical Inference](https://bghammill.github.io/ims-04-foundations/)
 
-- [Tutorial 4 - Lesson 1: Sampling variability](https://bghammill.github.io/ims-04-foundations/ims-04-lesson-01/)
-- [Tutorial 4 - Lesson 2: Randomization test](https://bghammill.github.io/ims-04-foundations/ims-04-lesson-02/)
-- [Tutorial 4 - Lesson 3: Errors in hypothesis testing](https://bghammill.github.io/ims-04-foundations/ims-04-lesson-03/)
-- [Tutorial 4 - Lesson 4: Parmeters and confidence intervals](https://bghammill.github.io/ims-04-foundations/ims-04-lesson-04/)
+### Standard error
 
-[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
+Remember that the **standard error** describes *the variability of a statistic*. For confidence intervals, the standard error (or SE, for short) of whatever statistic we are using is key, since it determines the width of interval around our point estimate. The bootstrap process is an excellent approximation for estimating how variable the statistic is. 
+
+
+
+You have successfully completed this tutorial.
+
+# [< Back to Section 4](https://bghammill.github.io/ims-04-foundations/)
+
+
 
 <!-- MathJax -->
 
