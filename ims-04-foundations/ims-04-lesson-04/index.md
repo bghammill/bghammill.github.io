@@ -115,7 +115,7 @@ Here are a few things you should notice about this histogram:
 So now let's figure out how to create a range of plausible values for the true population parameter based on this distribution.
 
 
-## Variability in $\hat{p}$
+## Variability in $$d^*$$
 
 Look at the last part of the output from the bootstrap macro:
 
@@ -123,7 +123,7 @@ Look at the last part of the output from the bootstrap macro:
 
 We see here an estimate of the standard deviation of the estimated differences. And remember, because the estimated difference is a statistic, it's standard deviation is called the standard error (SE).
 
-If you remember the **empirical rule**, we can actually leverage this SE value to tell us more about the variability of $$d^*$$. Because the distribution of $$d^*$$ values is symmetric and bell shaped, roughly 95% of samples will produce $$d^*$$s that are within two standard errors of the center. For our data, that means 95% of the estimated differences should be within the interval, centered at our observed difference, defined as $$-8.9 \pm 2 \cdot 1.0 = (-10.9, -6.9)$$ ounces.
+If you remember the **empirical rule**, we can actually leverage this SE value to tell us more about the variability of $$d^*$$. Because the distribution of $$d^*$$ values is symmetric and bell shaped, roughly 95% of samples will produce $$d^*$$s that are within two standard errors of the center. For our data, that means 95% of the estimated differences should be within the interval, centered at our observed difference, defined as $$-8.9 \pm 2(1.0) = (-10.9, -6.9)$$ ounces.
 
 This interval is based on our sample data, of course, but it allows us to say that 95% of the time, we would expect this interval to contain the value of the population parameter. I know this may feel backwards, but it is important to know that over your lifetime, 95% of the samples you collect should give you estimates that are within $$2SE$$ of the true population parameter. So if we believe (and we should) that bootstrapping gives us unbiased estimates for the SE of a difference for a particular sample size from the population, then we can apply this logic to our sample estimate.
 
