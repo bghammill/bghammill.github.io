@@ -21,7 +21,7 @@ run;
 %include "~/my_shared_file_links/hammi002/sasprog/load-randomization.sas";
 
 * Run 1000 null samples;
-%permute_freq(
+%permute_2props(
 	ds = promotion,
 	groupvar = gender,
 	g1value = 1,
@@ -71,7 +71,7 @@ Let's re-generate the randomization distributions for the small and big datasets
 %use_data(promotion_large);
 
 * Run 1000 null samples for PROMOTION_SMALL;
-%permute_freq(
+%permute_2props(
 	ds = promotion_small,
 	groupvar = gender,
 	g1value = 1,
@@ -82,7 +82,7 @@ Let's re-generate the randomization distributions for the small and big datasets
 );
 
 * Run 1000 null samples for PROMOTION_LARGE;
-%permute_freq(
+%permute_2props(
 	ds = promotion_large,
 	groupvar = gender,
 	g1value = 1,

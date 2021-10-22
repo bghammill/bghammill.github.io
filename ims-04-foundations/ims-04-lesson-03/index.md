@@ -53,7 +53,7 @@ As before, you will use a null distribution to determine whether the difference 
 
 ```
 * Run 1000 null samples;
-%permute_freq(
+%permute_2props(
 	ds = dvd,
 	groupvar = group,
 	g1value = Treatment,

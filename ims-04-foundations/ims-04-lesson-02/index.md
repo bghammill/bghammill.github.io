@@ -75,7 +75,7 @@ Ignore the chunkiness of the histogram. That's due to the relative small sample 
 
 ```
 * Run 1000 null samples;
-%permute_freq(
+%permute_2props(
 	ds = promotion,
 	groupvar = gender,
 	g1value = 1,
@@ -150,7 +150,7 @@ Go ahead and run the randomization test for both of these samples:
 %use_data(promotion_large);
 
 * Run 1000 null samples for PROMOTION_SMALL;
-%permute_freq(
+%permute_2props(
 	ds = promotion_small,
 	groupvar = gender,
 	g1value = 1,
@@ -161,7 +161,7 @@ Go ahead and run the randomization test for both of these samples:
 );
 
 * Run 1000 null samples for PROMOTION_LARGE;
-%permute_freq(
+%permute_2props(
 	ds = promotion_large,
 	groupvar = gender,
 	g1value = 1,
@@ -204,7 +204,7 @@ Go ahead and run the randomization test for both of these samples:
 %use_data(promotion_strong);
 
 * Run 1000 null samples for PROMOTION_WEAK;
-%permute_freq(
+%permute_2props(
 	ds = promotion_weak,
 	groupvar = gender,
 	g1value = 1,
@@ -215,7 +215,7 @@ Go ahead and run the randomization test for both of these samples:
 );
 
 * Run 1000 null samples for PROMOTION_STRONG;
-%permute_freq(
+%permute_2props(
 	ds = promotion_strong,
 	groupvar = gender,
 	g1value = 1,
@@ -259,7 +259,7 @@ Rerun the original randomization analysis, and look at the very bottom of the ou
 
 ```
 * Run 1000 null samples;
-%permute_freq(
+%permute_2props(
 	ds = promotion,
 	groupvar = gender,
 	g1value = 1,
@@ -278,7 +278,7 @@ Go ahead and run 10,000 null samples!
 
 ```
 * Run 1000 null samples;
-%permute_freq(
+%permute_2props(
 	ds = promotion,
 	groupvar = gender,
 	g1value = 1,

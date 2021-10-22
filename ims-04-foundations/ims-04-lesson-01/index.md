@@ -187,7 +187,7 @@ You should try and run 1000 samples, using the code below.
 
 ```
 * Run 1000 null samples;
-%permute_freq(
+%permute_2props(
 	ds = soda,
 	groupvar = coast,
 	g1value = West,

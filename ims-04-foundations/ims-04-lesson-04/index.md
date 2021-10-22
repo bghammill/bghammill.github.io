@@ -92,7 +92,7 @@ Again, you will need to load the randomization macros, since SAS doesn't offer a
 %include "~/my_shared_file_links/hammi002/sasprog/load-randomization.sas";
 
 * Run 5000 bootstrap samples;
-%boot_means(
+%boot_2means(
 	ds = babies,
 	groupvar = smoke,
 	g1value = 1,
@@ -168,7 +168,7 @@ Here is the code to run a 90% confidence interval with bootstrapping. The only c
 
 ```
 * Run 5000 bootstrap samples, 90% confidence;
-%boot_means(
+%boot_2means(
 	ds = babies,
 	groupvar = smoke,
 	g1value = 1,
@@ -183,7 +183,7 @@ Find the limits of the 90% confidence interval in the output. Is the interval wi
 
 ```
 * Run 5000 bootstrap samples, 99% confidence;
-%boot_means(
+%boot_2means(
 	ds = babies,
 	groupvar = smoke,
 	g1value = 1,

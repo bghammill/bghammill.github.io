@@ -76,7 +76,7 @@ Let's start with the easier confidence interval. The 95% bootstrap percentile co
 
 The other way to calculate a confidence interval here is to rely on the empirical rule, which states that an approximate 95% confidence interval can be found as $$CI = p \pm 2 \cdot SE$$, where, in this case, the standard error we will use is the bootstrap standard error. Here this interval is:
 
-$$CI = 0.479 \pm 2(0.014) = (45.1, 50.7)$$
+$$CI = 0.479 \pm 2(0.014) = (0.451, 0.507)$$
 
 which is very close to the bootstrap percentile interval and would have a similar interpretation.
 
@@ -100,11 +100,11 @@ $$H_A: \pi \neq 0.50$$
 
 Because a significance level is not given, we will specify $$\alpha = 0.05$$.
 
-To calculate the observed statistic and the p-value, we will create simulated datasets having the same sample size as ours, where the true proportion of those who favor legalization is 0.50, the null value. This will give us a null distribution, from which we can calculate the % of samples with proportions as or more extreme (in either direction from the null value) than our observed proportion.
+To calculate the null distribution and the p-value, we will create simulated datasets having the same sample size as ours, where the true proportion of those who favor legalization is 0.50, the null value. Using this null distribution, we can calculate the % of samples with proportions as or more extreme (in either direction from the null value) than our observed proportion.
 
 ```
 * Simulate the null distribution of a single proportion, 5000 samples;
-%sim_1freq(
+%sim_1prop(
     ds = gss2010,
     dovar = grass,
     usevalue = 1,
@@ -164,13 +164,13 @@ The approximation shortcut offers an alternative method of describing the sampli
 
 Remember, when building _any_ confidence interval, you use three ingredients: (1) the point estimate, (2) the SE, (3) and the number of standard errors to add and subtract (*z\**). We already have the first two of these ingredients. We just need *z\** for a 95% confidence level. If you look that up for the standard normal distribution, you'll see it's 1.96. So our confidence interval is just:
 
-$$CI = 0.479 \pm 1.96(0.014) = (45.2, 50.6)$$
+$$CI = 0.479 \pm 1.96(0.014) = (0.452, 0.506)$$
 
 Again, this is remarkably close to both of the bootstrap CIs. And, as above, we still interpret this interval the same way. With 95% confidence, that the true proportion of Americans who believe marijuana should be legalized is between 45.2% and 50.6%.
 
 ### Hypothesis testing via approximation
 
-Following on the test described above, where the hypotheses where
+Following on the test described above, where the hypotheses were
 
 $$H_0: \pi = 0.50$$
 
@@ -180,7 +180,7 @@ and the significance level is $$\alpha = 0.05$$, we can calculate a *z* statisti
 
 $$z = \frac{Observed Statistic - Null value}{SE}
 
-For out data, this is:
+For our data, this is:
 
 $$z = \frac{0.479 - 0.5}{0.014} = -1.5$$
 
