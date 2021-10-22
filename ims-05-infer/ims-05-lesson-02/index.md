@@ -141,7 +141,7 @@ We can use this estimate in the formulas for both the confidence interval and th
 
 For our data, using information from previous output generated above, the estimate of the standard error of the difference is:
 
-$$SE = \sqrt{\frac{ .537 \times (.463)}{136} + \frac{ .333 \times (.667)}{195}} = 0.054$$ 
+$$SE = \sqrt{\frac{ .537 \times .463}{136} + \frac{ .333 \times .667}{195}} = 0.054$$ 
 
 How does this compare to our original computational approach using the bootstrap? When rounded to 3 decimal places, it was exactly the same 0.054!
 
@@ -153,7 +153,7 @@ $$CI = Observed Statistic \pm z^* \cdot SE$$
 
 But first we need the $$z^*$$ critical value that is associated with 95% confidence (and $$\alpha = 0.05). If you look up that value, you should see that it's (still) 1.96. So our confidence interval for this difference, based on the mathematical approximation, is:
 
-$$CI = 0.203 \pm 1.96(0.054) = (0.097, 0.309)
+$$CI = 0.203 \pm 1.96(0.054) = (0.097, 0.309)$$
 
 With 95% confidence, we expect that the true difference in proportions of Americans who believe that marijuana should be legalized between those with a graduate degree, compared to those with less than a high school edcuation, is between 9.7% and 30.9%.
 
@@ -167,7 +167,7 @@ $$H_A: \pi_G \neq \pi_L$$, or $$ \pi_G - \pi_L \neq 0$$
 
 and the significance level is $$\alpha = 0.05$$, we can calculate a *z* statistic as:
 
-$$z = \frac{Observed Statistic - Null value}{SE}
+$$z = \frac{Observed Statistic - Null value}{SE}$$
 
 For our data, this is:
 

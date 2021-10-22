@@ -154,7 +154,7 @@ We can use this estimate in the formulas for both the confidence intervals and t
 
 For our data, where the observed proportion is 0.479, the estimate of the standard error is:
 
-$$SE = \sqrt{\frac{ 0.479 \times 0.521}{1259}} = 0.014$$.
+$$SE = \sqrt{\frac{ 0.479 \times 0.521}{1259}} = 0.014$$
 
 How does this compare to our original computational approach using the bootstrap? When rounded to 3 decimal places, it was exactly the same 0.014, which is remarkable.
 
@@ -178,7 +178,7 @@ $$H_A: \pi \neq 0.50$$
 
 and the significance level is $$\alpha = 0.05$$, we can calculate a *z* statistic as:
 
-$$z = \frac{Observed Statistic - Null value}{SE}
+$$z = \frac{Observed Statistic - Null value}{SE}$$
 
 For our data, this is:
 
