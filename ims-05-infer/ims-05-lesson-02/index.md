@@ -167,7 +167,7 @@ $$H_A: \pi_G \neq \pi_L$$, or $$ \pi_G - \pi_L \neq 0$$
 
 and the significance level is $$\alpha = 0.05$$, we can calculate a *z* statistic as:
 
-$$z = \frac{Observed Statistic - Null value}{SE}$$
+$$z = \frac{Observed Statistic - Null Value}{SE}$$
 
 For our data, this is:
 

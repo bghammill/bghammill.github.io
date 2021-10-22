@@ -36,3 +36,7 @@ Working through another complete hypothesis test, you will focus on how and when
 
 Additionally, you will learn to create confidence intervals for a single population proportion. A confidence interval will provide a range of plausible values to estimate the unknown population value. The parameter is the true unknown proportion of successes in the population, estimated using the sample proportion. Bootstrapping allows for estimation of the variability of the sample proportion which leads to an interval estimate.
 
+
+
+# [< Back to main page](https://bghammill.github.io/)
+
