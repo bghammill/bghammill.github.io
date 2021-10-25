@@ -1,334 +1,106 @@
+# Chi-square test of independence
 
-## Chi-square test of independence
+In the last lesson, you learned methods that allow you to test the relationship between two two-level categorical variables. In this lesson we introduce the chi-square test that is used for testing categorical variables with any number of levels.
 
-This part of the tutorial will teach you how to use both resampling methods and classical methods to test for the independence of two categorical variables. This lesson covers how to perform a Chi-squared test.
-
-## Contingency tables
-
-In the last lesson you opened up methods that allow you to learn about the relationship between two two-level categorical variables. In this lesson we expand on this to include more complex variables.
-
-### Politics and military spending
+For this tutorial, let's investigate the relationship between political party affiliation (Republican, Democrat, or Independent) and opinions on whether the government is spending too much money, too little money, or about the right amount of money on national defense and on space exploration. These data come from the 2016 General Social Survey.
 
 ```
-gss2016 %>%
-  select(party, natarms) %>%
-  glimpse()
+* Initialize this SAS session;
+%include "~/my_shared_file_links/hammi002/sasprog/run_first.sas";
+
+* Makes a working copy of GSS2010 data and check;
+%use_data(gss2016);
+%glimpse(gss2016);
 ```
 
-Let's investigate the relationship between the variables party and natarms. The first contains the political party affiliation of the respondent: Republican, Democrat, or independent. The second contains opinions on whether the government is spending too much money, too little money or about the right amount of money on national defense. A natural way to visualize the relationship between these two variables is with a stacked bar plot.
-
-
-
-### 
+We're going to create a new variable named `PARTY` to limit the number of options available in the `PARTYID` source variable. The other variables are named `NATARMS` and `NATSPAC`, which we will leave as is. Let's take a look at those variables before and after recoding.
 
 ```
-ggplot(gss2016, aes(x = party, fill = natarms)) +
-  geom_bar(position = "fill")
+* Check a few variables;
+proc freq data=gss2016;
+	tables partyid natarms natspac / missing;
+run;
+
+* Recode Party ID and add a few labels;
+data gss2016;
+	set gss2016;
+	
+	* Create new PARTY variable;
+	select(partyid);
+		when (1, 2) party = "DEM";
+		when (3, 4, 5) party = "IND";
+		when (6, 7) party = "REP";
+		otherwise delete;
+	end;
+	
+	* Label our 2 variables;
+	label
+		party = "Party affiliation"
+		natarms = "Opinion on spending for nat'l defense"
+		natspac = "Opinion on spending for space exploration"
+	;
+run;
+
+* Check our new variable;
+proc freq data=gss2016;
+	tables party natarms natspac / missing;
+run;
 ```
 
+You'll notice that we deleted one person who reported affiliation with some other party. So the final sample size is 149. 
 
-We can construct that by putting party on the x-axis and fill the bars using natarms. To make it easy to compare proportions, we can add the position equals "fill" option. If we look at the two major parties, we learn that a much larger proportion of Republicans than Democrats think we spend too little on the military.
+## Descriptive analysis of the relationship
 
-This also jumps out. It appears that all people who listed "O" or "Other" think that spending is just about right. Can this be correct? Just how many people are in this other group?
-
-
-
-### 
-
+A good way to visualize the relationship between two variables, to start, is with a stacked bar chart.
 
 ```
-ggplot(gss2016, aes(x = party, fill = natarms)) +
-  geom_bar()
+* Stack bar chart for NATARMS by PARTY;
+proc sgplot data=gss2016 pctlevel=group;
+	vbar party / group=natarms stat=percent;
+run;
 ```
 
-One way to find out is to remove this position equals "fill" argument so that the height of the bars is just the count of people. When we make this change we see that that group is very tiny. To figure out just how tiny this group is, we can represent this data as a contingency table.
+We are using percentages here since the group sizes are so different. This helps us see the patterns better. And what do we see? If we look at the two major parties, we learn that a much larger proportion of Republicans than Democrats think we spend too little on the military.
 
-This process of moving between a data frame involves working with untidy data, so let's load the broom package to help keep things clean.
-
-
-### Tables and tidy data
+Do we see similar differences regarding spending for space exploration?
 
 ```
-tab <- gss2016 %>%
-  select(natarms, party) %>%
-  table()
-tab
+* Stack bar chart for NATSPAC by PARTY;
+proc sgplot data=gss2016 pctlevel=group;
+	vbar party / group=natspac stat=percent;
+run;
 ```
 
-
-```
-ggplot(gss2016, aes(x = party, fill = natarms)) +
-  geom_bar()
-```
-
-
-
-To create a contingency table you select the columns of interest then send them to the table function. A contingency table puts one of the categorical variables along the rows and the other along the columns then counts up each of the combinations.
-
-Here we see that there was only one person that listed other and that person thought that funding was just about right. In fact, the counts inside this table are precisely what this bar plot of counts is representing visually.
-
-It's very common to run across data presented in a table like this. It's a fine format for displaying data but it's awkward for analyzing data because the rows don't represent observations of data, they represent levels of a variable.
-
-
-
-### 
-
-
-```
-tab <- gss2016 %>%
-  select(natarms, party) %>%
-  table()
-tab
-```
-
-
-
-```
-tab %>%
-  tidy()
-```
-
-
-
-To transform a contingency table back into a data frame, send it to the tidy function which reorganizes it so the variables are all across the columns. Note though, that the rows are still the aggregates counts for each group. To extend the set to the original dataset where each row is an individual person, we need to uncount this data frame.
-
-OK, now we're back to our original data frame, so we've gone from tidy to table and back again.
-
-
-
-### 
-
-
-
-```
-tab <- gss2016 %>%
-  select(natarms, party) %>%
-  table()
-tab
-```
-
-
-```
-tab %>%
-  tidy() %>%
-  uncount(n)
-```
-
-### Politics and Space
-
-While the relationship between political party and military spending is no big surprise, what about the relationship between political party and another spending priority: space exploration? 
-
-Start your exploration by simplifying the data set to include only people that identified as Republicans (Rep), Democrats (Dem), and Independents (Ind).
-
-Create a new data set called `gss_party` that is `gss2016` with a filter applied to remove people who responded `"Oth"` to `party`.
-
-
-```
-# Subset data
-gss_party <- ___
-  # Filter out the "Oth"
-  ___
-```
-
-```
-filter(party != "Oth")
-```
-
-```
-# Subset data
-gss_party <- gss2016 %>%
-  # Filter out the "Oth"
-  filter(party != "Oth")
-```
-
-
-Using `gss_party`, construct a stacked bar plot of `party` filled based on `natspac`. Modify the geometry so that the plot displays proportions.
-
-
-```
-# Visualize distribution take 1
-___
-  ___ +
-  # Add bar layer of proportions
-  ___
-```
-
-```
-geom_bar(position = "fill")
-```
-
-```
-# Visualize distribution take 1
-gss_party %>%
-  ggplot(aes(x = party, fill = natspac)) +
-  # Add bar layer of proportions
-  geom_bar(position = "fill")
-```
-
-
-
-Construct a second plot that illustrates the same relationship but this time, modify the plot to display counts.
-
-
-```
-# Visualize distribution take 2 
-___
-  ___ +
-  # Add bar layer of counts
-  ___
-```
-
-<div id="ex3-hint">
-**Hint:** Just `geom_bar()` this time!
-</div>
-
-```
-# Visualize distribution take 2 
-gss_party %>%
-  ggplot(aes(x = party, fill = natspac)) +
-  # Add bar layer of counts
-  geom_bar()
-```
-
-### Understanding contingency tables
-
-The bar plot of counts that you constructed is a visual representation of a contingency table.
-
-Which of the following is FALSE regarding contingency tables?
-
-```
-ggplot(gss_party, aes(x = party, fill = natspac)) +
-  geom_bar()
-```
-
-*Hint:* Contingency tables show the counts of different combinations of two variables.
-
-
-```
-question("Which of the following is FALSE regarding contingency tables?
-",
-  answer("They are a common method of displaying categorical data.", message="We have used contingency tables to display categorical data in this lesson."),
-  answer("They have one variable across the columns and another variable along the rows.", message="This is how contingency tables are displayed."),
-  answer("They have the variables across the columns and observations down the rows.", correct = TRUE, message="Correct! That's a description of tidy data. Contingency tables are not tidy!"),
-  answer("They should be transformed to a tidy format for analysis.", message="It's easier to analyze the data after tidying it."),
-  allow_retry = TRUE
-)
-```
-
-
-### From tidy to table to tidy
-
-
-The `gss_party` data set that you created is in a tidy format to facilitate visualization and analysis. In this exercise, you'll untidy the data to create a contingency table to display counts. As a data analyst, it's commonplace to be given data in a contingency table, so you'll also practice tidying it back up.
-
-Using `gss_party`, create a contingency `table()` of `natspac` and `party` and save it to `Obs` for observed table.
-
-
-```
-# Create table of natspac and party
-___ <- ___
-  # Select columns of interest
-  ___
-  # Create table
-  ___
-```
-
-<div id="ex4-hint">
-**Hint:** 
-- Select the `natspac` and `party` columns.
-- Call `table()` without arguments to make a contingency table.
-</div>
-
-```
-# Create table of natspac and party
-Obs <- gss_party %>%
-  # Select columns of interest
-  select(natspac, party) %>%
-  # Create table
-  table()
-```
-
-
-
-Starting with your observed contingency table `Obs`, convert it to a tidy data frame and expand the counts.
-
-
-
-```
-# From previous step
-Obs <- gss_party %>%
-  select(natspac, party) %>%
-  table()
-  
-# Convert table back to tidy df
-___
-  # Tidy the table
-  ___
-  # Expand out the counts
-  ___
-```
-
-<div id="ex5-hint">
-**Hint:** Call `tidy()`, then find the name of the column that will provide the counts that you will `uncount()`.
-</div>
-
-```
-# From previous step
-Obs <- gss_party %>%
-  select(natspac, party) %>%
-  table()
-  
-# Convert table back to tidy df
-Obs %>%
-  # Tidy the table
-  tidy() %>%
-  # Expand out the counts
-  uncount(n)
-```
+Not really. Opinions here are much more similar.
 
 ## Chi-squared test statistic
 
-When you look at the bar plots that relate party to spending on space exploration and spending on the military, you get two very different stories.
+When you look at the bar plots that relate party to spending on space exploration and spending on the military, you get two very different stories. But these figures are only suggestive of a relationship. By now you should know that we'll need to perform a hypothesis test if we want to evaluate whether or not the data behind these graphs provide convincing evidence that a relationship exists in the population of all Americans.
 
-### Comparing bar plots
-
-```
-p1 <- ggplot(gss_party, aes(x = party, fill = natspac)) +
-  geom_bar(position = "fill") +
-  ggtitle("Party and Space Spending")
-
-p2 <- ggplot(gss_party, aes(x = party, fill = natarms)) +
-  geom_bar(position = "fill")+
-  ggtitle("Party and Military Spending")
-
-p1 + p2
-```
-
-The plot on the left shows little relationship between party affiliation and space, but this plot on the right suggests that in fact opinions do differ based on party. This is the structure in our particular data set, but is it convincing evidence that this relationship exists in the population of all Americans? This is a question to be answered with a hypothesis test.
-
-
-### Hypothesis test
-
-Recall that in a hypothesis test you specify the variables you're studying, assume a hypothesis that can generate data, then for each data set calculate a relevant test statistic that you can compare to your observed test statistic. In this case, since we're interested in the association between two variables, we can use the same null as before, that these variables are in fact independent. That allows us to generate data through permutation. The question is: what test statistic should we use?
-
-```
-null <- data %>%
-  specify(var1 ~ var2) %>%
-  hypothesize(null = "independence") %>%
-  generate(reps = 100, type = "permute") %>%
-  calculate(stat = ?)
-```
+Recall that in a hypothesis test you specify the variables you're studying, assume a hypothesis of "no difference" for generating null data, then for each data set calculate a relevant test statistic that you can compare to your observed test statistic. In this case, since we're interested in the association between two variables, but there is no obvious single statistic to calculate. The null relationship is obviously that the variables are independent (not related), but what test statistic should we use?
 
 
 ### Choosing a statistic
 
-What we'd like is a test statistic that can capture how different each of these bar plots is from... 
+What we'd like is a test statistic that can capture how different each of these bar plots is from the bar plot that shows absolutely no relationship. That's the difference between this (observed)
 
-![](images/ch3v2-two-bar-plots.png)
+![](images/def-obs.png)
 
-the bar plot that shows absolutely no relationship - this one. This plot, though, is built from proportions, and a statistic will be be easier to build from counts.
+and this (null) for defense spending.
 
-![](images/ch3v2-three-bar-plots.png)
+![](images/def-null.png)
+
+When the null distribution is true, all the groups will have the same distribution of opinions. And this is what the observed
+
+![](images/space-obs.png)
+
+and null distributions look like for space exploration spending.
+
+![](images/space-null.png)
+
+These plots, though, are built from proportions, and a statistic will be be easier to build from counts. And for that, contingency tables are helpful.
+
+Let's start with the space exploration question.  
 
 So let's switch to looking at the bar plot of counts for space and the corresponding contingency table which this time we've renamed "observed_counts".
 
@@ -338,9 +110,13 @@ ggplot(gss_party, aes(x = party, fill = natspac)) +
   ggtitle("Party and Space Spending")
 ```
 
+
+
 ```
 observed_counts
 ```
+
+
 
 ```
 table(gss_party$natspac, gss_party$party)
@@ -362,6 +138,8 @@ chisq.test(table(gss_party$natspac, gss_party$party))$expected %>% round(1)
 ```
 (observed_counts - expected_counts) ^ 2
 ```
+
+
 
 ```
 x <- chisq.test(table(gss_party$natspac, gss_party$party))
