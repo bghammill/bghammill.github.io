@@ -89,13 +89,17 @@ Because a significance level is not given, we will specify $$\alpha = 0.05$$.
 To calculate the p-value, we will need to generate a distribution of differences as if the null hypothesis (of no difference) was true. When we have two groups, we can do this simply by shuffling the response variables among the observations. This is also called permuting the data. As with other permutation tests, this will give us a null distribution, from which we can calculate the % of samples with differences as or more extreme (in either direction from the null value) than our observed proportion.
 
 ```
-* Simulate the null distribution of a single proportion, 5000 samples;
-%sim_1freq(
+* Simulate the null distribution of a difference in
+* proportions, 5000 permutation samples;
+%permute_2props(
     ds = gss2010,
-    dovar = grass,
-    usevalue = 1,
+    groupvar = degree,
+    g1value = 2,
+    g2value = 5,
+    compvar = grass,
+    cvalue = 1,
     reps = 5000,
-    nullval = 0.50
+    nullval = 0
 );
 ```
 

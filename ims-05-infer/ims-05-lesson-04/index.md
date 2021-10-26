@@ -7,7 +7,7 @@ The tutorial wraps up with two case studies using election data. Here, you'll le
 
 Welcome to the final lesson of the tutorial on inference for categorical data. We have one more statistical test to add to our toolbox - the goodness of fit test. Let's introduce it in the context of a case study on election fraud.
 
-### Election fraud
+### Election fraud 
 
 The phrase election fraud can mean many things including vote buying, casting two ballots in different locations, and stuffing ballot boxes with fake ballots. We're going to focus on a version of the third, when the vote totals at a particular precinct are fiddled with by election officials.
 

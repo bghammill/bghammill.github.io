@@ -1,8 +1,8 @@
 # Chi-square test of independence
 
-In the last lesson, you learned methods that allow you to test the relationship between two two-level categorical variables. In this lesson we introduce the chi-square test that is used for testing categorical variables with any number of levels.
+In the last lesson, you learned methods that allow you to test the relationship between two two-level categorical variables. In this lesson we introduce the chi-square test that is used for testing categorical variables with any number of levels. As the book noted, we will only perform hypothesis testing (via randomization and via a mathematical model) for this data situation, since there is no readily interpretable statistic available. This means there is not confidence interval calculation to worry about.
 
-For this tutorial, let's investigate the relationship between political party affiliation (Republican, Democrat, or Independent) and opinions on whether the government is spending too much money, too little money, or about the right amount of money on national defense and on space exploration. These data come from the 2016 General Social Survey.
+For this tutorial, let's investigate the relationship between political party affiliation (Republican, Democrat, or Independent) and opinions on whether the government is spending too much money, too little money, or about the right amount of money on national defense and, separately, on space exploration. These data come from the 2016 General Social Survey.
 
 ```
 * Initialize this SAS session;
@@ -49,6 +49,22 @@ run;
 
 You'll notice that we deleted one person who reported affiliation with some other party. So the final sample size is 149. 
 
+## Research hypotheses
+
+The research hypotheses we will test are not as specific as others we have talked about to date, in that there is not a specific numerical claim about one or more parameters of the population. Instead, we will express our hypotheses using words. For the two relationships of interest, we have:
+
+*For defense spending*
+
+* $$H_0$$: Party affiliation is not associated with opinions on national defense spending
+* $$H_A$$: Party affiliation is associated with opinions on national defense spending
+
+*For space exploration*
+
+* $$H_0$$: Party affiliation is not associated with opinions on national spending for space exploration
+* $$H_A$$: Party affiliation is associated with opinions on national spending for space exploration
+
+As before, the null hypothesis reflect "no difference", it just uses words instead of an equation to get that point across.
+
 ## Descriptive analysis of the relationship
 
 A good way to visualize the relationship between two variables, to start, is with a stacked bar chart.
@@ -82,706 +98,280 @@ Recall that in a hypothesis test you specify the variables you're studying, assu
 
 ### Choosing a statistic
 
-What we'd like is a test statistic that can capture how different each of these bar plots is from the bar plot that shows absolutely no relationship. That's the difference between this (observed)
+What we'd like is a test statistic that can capture how different each of these bar plots is from the bar plot that shows absolutely no relationship. That's the difference between this observed distribution
 
 ![](images/def-obs.png)
 
-and this (null) for defense spending.
+and this null distribution for defense spending.
 
 ![](images/def-null.png)
 
-When the null distribution is true, all the groups will have the same distribution of opinions. And this is what the observed
+Hopefully it's obvious before you saw the null-based plot that when the null distribution is true, all the groups will have the same distribution of opinions. And for the space exploration spending question, this is what the observed distribution
 
 ![](images/space-obs.png)
 
-and null distributions look like for space exploration spending.
+and null distribution look like.
 
 ![](images/space-null.png)
 
 These plots, though, are built from proportions, and a statistic will be be easier to build from counts. And for that, contingency tables are helpful.
 
-Let's start with the space exploration question.  
-
-So let's switch to looking at the bar plot of counts for space and the corresponding contingency table which this time we've renamed "observed_counts".
+Let's start with the space exploration question. Here is how we generate the observed contingency tables for this question:
 
 ```
-ggplot(gss_party, aes(x = party, fill = natspac)) +
-  geom_bar()+
-  ggtitle("Party and Space Spending")
+* Contingency table of PARTY by NATSPAC;
+proc freq data=gss2016;
+	tables party * natspac / nocol nopct;
+run;
 ```
 
+This generates frequencies and percentages within each value of `party`. What we'd like to know is the counts in each table cell that we could expect if these two variables were independent from one another. It's tempting to think that the counts of all cells should be equal, but keep in mind we have to respect the marginal distributions of both variables. (A marginal distribution is just a one-way frequency distribution.) For example, we need to be sure we're still expecting that there are more independents in our data set than republicans; and we need to maintain the fact that more people think spending for space exploration is "about right" than "too little."
 
+For this particular question, the marginal distribution of `party` and `natspac` within the sample of size 149 are:
 
-```
-observed_counts
-```
+| Party affiliation (PARTY) | Marginal proportion |
+| ------------------------- | ------------------- |
+| Democrat                  | 43                  |
+| Independent               | 72                  |
+| Republican                | 34                  |
 
+| Opinion on spending (NATSPEC) | Marginal proportion |
+| ----------------------------- | ------------------- |
+| Too little                    | 30                  |
+| About right                   | 76                  |
+| Too much                      | 43                  |
 
+Computing these expected counts while respecting the marginal distributions is a bit tedious, so we'll generally rely on SAS to do this, but it's important to understand how to calculate these. For any particular cell in the contingency table, the expected count is:
 
-```
-table(gss_party$natspac, gss_party$party)
-```
+$$Expected Count = \frac{RowTotal - ColumnTotal}{SampleSize}$$
 
-What we'd like is a table of the counts that we could expect if these two variables were independent from one another. It's tempting to think that the counts of all cells should be equal, but keep in mind we have to respect the marginal distributions of both variables. For example, we need to be sure we're still expecting that there are more independents in our data set than republicans. Computing these expected counts while respecting the marginal distributions is a bit tedious, so we'll be relying upon R for this calculation. 
-This is the appropriate table of expected counts if the variables were independent of one another, we'll call it "expected_counts". The question is, how can we summarize the difference between the expected table and the observed table in just a single number?
+Some examples:
 
-```
-expected_counts
-```
+* For the combination Democrat x Too little, the expected count is $$43 \cdot 30 / 149 = 8.7$$
+* For the combination of Independent x Too much, the expected count is $$72 \cdot 43 / 149 = 20.8$$
 
-```
-chisq.test(table(gss_party$natspac, gss_party$party))$expected %>% round(1)
-```
+The total of the expected counts should add up to the total sample size.
 
-### 
-
-```
-(observed_counts - expected_counts) ^ 2
-```
-
-
+To have SAS do this for us, we add the following option to the contingency table code above:
 
 ```
-x <- chisq.test(table(gss_party$natspac, gss_party$party))
-(x$observed - x$expected)^2
+* Contingency table of PARTY by NATSPAC;
+proc freq data=gss2016;
+	tables party * natspac / nocol nopct expected;
+run;
 ```
 
-```
-sum((observed_counts - expected_counts) ^ 2)
-```
+You should have a table that looks like this:
 
-```
-sum((x$observed - x$expected)^2)
-```
+![](images/sas-exp.png)
 
-One option would be to simply find the difference in the counts in each cell and add them all up. That does result in a single number, but realize that the positive differences and the negative differences will cancel one another out, which isn't good. We can fix that by squaring each of those differences so that they're now positive. That's a big improvement but notice that the cells that have very large counts to begin with will dominate this sum. To put the cells on more even footing, we could divide each squared difference by the expected count.
+Notice that the little legend to the top left of the table now indicates that the middle value printed in each cell is the expected count. (They are right below the observed counts and above the by-group percentages.) The two expected counts we calculated above match what's here.
+
+We're halfway there. Now we just need to summarize the difference between the expected table and the observed table in a single number. One option would be to simply find the difference in the observed and expected counts in each cell and add them all up. That does result in a single number, but because the positive differences and the negative differences will cancel one another out, it won't work for us. We can fix that by squaring each of those differences so that they're now positive. That's a big improvement but notice that the cells that have very large counts to begin with will dominate this sum. To put the cells on more even footing, will divide each squared difference by the expected count.
+
+So each cell's contribution to our statistic will be $$\frac{(Observed - Expected)^2}{Expected}$$. And the test statistic will be the sum
+
+$$\chi^2 = \sum \frac{(Observed - Expected)^2}{Expected}$$
+
+Some examples:
+
+* For the combination Democrat x Too little, the observed count is 8 and the expected count is 8.7, for a contribution to the overall statistic of $$\\frac{(8 - 8.7)^2}{8} = 0.061$$.
+* For the combination Independent x Too much, the observed count is 22 and the expected is 20.8, for a contribution to the overall statistic of $$\\frac{(22 - 20.8)^2}{22} = 0.065$$.
+
+If we do that for all 9 cells in the table, we will get $$\chi^2 = 1.33$$.
+
+If we do the same for the `party` by `natarms` table, we will get $$\chi^2 = 18.97$$.
 
 ### Chi-squared distance
 
-This statistic that we've just formulated is called the chi-squared statistic. It captures the distance between a contingency table and the table you would expect if the variables were independent of one another. We found that the statistic for the relationship between party and natspac was 1.33. If we calculate the statistic for the relationship with natarms, we get a much greater distance: 18.97.
+This statistic that we've just formulated is called the *chi-squared statistic*. It captures the distance between an observed contingency table and the table you would expect if the variables were independent of one another. We found that the observed statistic for the relationship between `party` and `natspac` was 1.33 and we find a much large statistic of 18.97 for the relationship between `party` and `natarms`.
 
-![](images/ch3v2-annotated-three-bar-plots.png)
+With this statistic in hand, we can return to the hypothesis test to answer the question of if either of these observed statistics is so great as to lead you to reject the null hypothesis that these spending priorities are independent of political party.
 
-With this statistic in hand, you can return to the hypothesis test to answer the question of if either of these observed statistics: 1.33 or 18.97 is so great as to lead you to reject the null hypothesis that these spending priorities are independent of political party.
+### Randomization chi-square
 
-### A single permuted Chi-squared
+As we've seen before, the key to generating data under a null hypothesis of independence is *permutation*, where we will do the following repeatedly:
 
-The key to generating data under a null hypothesis of independence is *permutation*. Generate just a single data set to see what sort of chi-squared statistic you might observe when in fact these two variables are independent of one another.
+* Randomly shuffle the values of the response among the sample observations
+* Calculate the chi-square statistic for each permuted sample
 
-Using `gss_party`, first specify that you'd like to study `natarms` as a function of `party`, create a null hypothesis of independence, then generate a single data set via permutation. Save this as `perm_1`.
+This will generate the null distribution of chi-square statistics, against which we can compare our observed chi-square statistic. One unusual thing about the chi-square distribution, however, is that we are only interested in a 1-tailed test, not a 2-tailed test. In particular, we are interested in the number of null distances (chi-square statistics) *to the right* of our observed statistic. Because the the chi-square statistic is always positive (due to the squared term in the numerator the formula), this tail is the one that contains null statistics that are more common when the hypothesis of independence is false.
 
-
-```
-# Create one permuted data set
-___ <- ___
-  # Specify the variables of interest
-  ___
-  # Set up the null
-  ___
-  # Generate a single permuted data set
-  ___
-```
-
-<div id="ex6-hint">
-**Hint:** Take a look at some of the exercises from the last lesson for a refresher on how to create a permuted dataset.
-</div>
+Let's generate the null distribution for the space exploration by party identification analysis:
 
 ```
-# Create one permuted data set
-perm_1 <- gss_party %>%
-  # Specify the variables of interest
-  specify(natarms ~ party) %>%
-  # Set up the null
-  hypothesize(null = "independence") %>%
-  # Generate a single permuted data set
-  generate(reps = 1, type = "permute")
+* Randomization chi-square test for PARTY x  NATSPAC, 5000 reps;
+%permute_2chisq(
+    ds = gss2016,
+    groupvar = party,
+    compvar = natspac,
+    reps = 5000
+);
 ```
 
-Using `perm_1`, visualize the relationship between `natarms` and `party` by constructing a stacked bar plot of counts.
+You should get output similar to this histogram and this "extreme observations" table.
+
+![](images/null-space.png)
+
+![](images/p-space.png)
+
+From the histogram, we can see how common and not interesting our sample is for this particular comparison. Remember, values to the right are more extreme or "different from the null" than our sample. This is confirmed by the p-value of 0.86. Over 86% of the null statistics were as or more extreme than our observed statistic. This means we cannot reject the null hypothesis (at almost any $$\alpha$$!). We would conclude that we do not have enough evidence to conclude that opinions on funding for space exploration differ by party affiliation.
+
+How about for opinions about spending on national defense?
 
 ```
-# From previous step
-perm_1 <- gss_party %>%
-  specify(natarms ~ party) %>%
-  hypothesize(null = "independence") %>%
-  generate(reps = 1, type = "permute")
-  
-# Visualize permuted data
-___ +
-  # Add bar layer
-  ___
+* Randomization chi-square test for PARTY x  NATARMS, 5000 reps;
+%permute_2chisq(
+    ds = gss2016,
+    groupvar = party,
+    compvar = natarms,
+    reps = 5000
+);
 ```
 
-<div id="ex7-hint">
-**Hint:** Map `x` to `party` and `fill` to `natarms` to make your bar plot.
-</div>
+Oh, very different.
 
-```
-# From previous step
-perm_1 <- gss_party %>%
-  specify(natarms ~ party) %>%
-  hypothesize(null = "independence") %>%
-  generate(reps = 1, type = "permute")
-  
-# Visualize permuted data
-ggplot(perm_1, aes(x = party, fill = natarms)) +
-  # Add bar layer
-  geom_bar()
-```
+![](images/null-arms.png)
 
+![](images/p-arms.png)
 
+From the histogram, we can see how unusual our sample is. There are only a few values to the right that are more extreme than our sample. This is confirmed by the p-value of 0.001. Under 1% of the null statistics were as or more extreme than our observed statistic. This means we reject the null hypothesis (assuming $$\alpha = 0.05$$) and conclude opinions on funding for national defense differ by party affiliation.
 
+## Approximation via chi-squared distribution
 
+Now you have some experience conducting a hypothesis test of independence using the chi-squared statistic and permutation. Next, you'll learn how to conduct the same test using an approximation method. This is the most commonly-used way to formulate the null distribution, so let's dive in.
 
-Calculate the chi-squared test statistic associated with by running the `gss_party` data through the `chisq_stat()` function and specifying the variables using the formula notation as you did in `specify()`.
+The only approximation distribution we've talked about to date is the Normal distribution. This can be used to approximate the null distribution when the statistic is a proportion or a difference in proportions and the sample size is large.
 
+In the case of the chi-squared statistic, the distribution is called, conveniently enough, the chi-squared distribution. You'll sometimes see it written out in words and other times given the Greek letter chi, or $$\chi$$. The shape of this distribution is determined by one parameter called the *degrees of freedom*. Here are three different chi-squared distributions, with one, three, and five degrees of freedom. You'll note that they're all positive and they're all right skewed, but as the degrees of freedom increases, the mean increases. You can find the appropriate degrees of freedom for your test by taking the number of rows (*r*) minus one and multiplying it by the number of columns (*c*) minus one.
 
-```
-# Compute chi-squared stat
-gss_party %>%
-  chisq_stat(___)
-```
-
-<div id="ex8-hint">
-**Hint:** To get the statistic, add the argument that specifies the variables: `natarms ~ party`.
-</div>
-
-```
-# Compute chi-squared stat
-gss_party %>%
-  chisq_stat(natarms ~ party)
-```
-
-### Building two null distributions
-
-
-To get a sense of the full distribution that the chi-squared test statistic can take under this hypothesis, you need to generate many more data sets.
-
-Do this by first adding onto your work from the previous exercise with the `natspac` variable, then conduct a second hypothesis test to see if `party` is independent of `natarms`. Once you have both null distributions, you can visualize them to see if they're consistent with your observed statistics.
-
-```
-chi_obs_spac <- chisq_stat(gss_party, natspac ~ party)
-chi_obs_arms <- chisq_stat(gss_party, natarms ~ party)
-```
-
-- Extend your code from the previous exercise to generate 500 data sets under the null hypothesis that `natspac` is independent from `party`. Save this as `null_spac`.
-- Create a density plot of `null_spac` and add a vertical red line to indicate the location of the observed statistic (saved in your workspace as `chi_obs_spac`).
-
-
-
-```
-# Create null
-___ <- gss_party %>%
-  specify(natspac ~ party) %>%
-  hypothesize(null = "independence") %>%
-  generate(reps = ___, type = "permute") %>%
-  calculate(stat = "Chisq")
-
-# Visualize null
-___ +
-  # Add density layer
-  ___ +
-  # Add vertical line at obs stat
-  ___
-```
-
-<div id="ex9-hint">
-**Hint:** 
-- The `stat` you're after is the `"Chisq"`.
-- Use `geom_density()` to make a density plot.
-</div>
-
-```
-# Create null
-null_spac <- gss_party %>%
-  specify(natspac ~ party) %>%
-  hypothesize(null = "independence") %>%
-  generate(reps = 500, type = "permute") %>%
-  calculate(stat = "Chisq")
-  
-# Visualize null
-ggplot(null_spac, aes(x = stat)) +
-  # Add density layer
-  geom_density() +
-  # Add vertical line at obs stat
-  geom_vline(xintercept = chi_obs_spac, color = "red")
-```
-
-
-
-
-- Construct a similar null distribution under the hypothesis that `natarms` is independent from `party` using the `"Chisq"` statistic. Save this as `null_arms`.
-- Create a density plot of `null_arms` and add a vertical red line to indicate the location of the observed statistic (saved in your workspace as `chi_obs_arms`).
-
-
-
-```
-# Create null that natarms and party are indep
-___ <- gss_party %>%
-  specify(___) %>%
-  hypothesize(null = "independence") %>%
-  generate(reps = 500, type = "permute") %>%
-  calculate(stat = "Chisq")
-  
-# Visualize null
-ggplot(___, aes(x = stat)) +
-  # Add density layer
-  geom_density() +
-  # Add vertical red line at obs stat
-  geom_vline(xintercept = ___, color = "red")
-```
-
-```
-# Create null
-null_arms <- gss_party %>%
-  specify(natarms ~ party) %>%
-  hypothesize(null = "independence") %>%
-  generate(reps = 500, type = "permute") %>%
-  calculate(stat = "Chisq")
-  
-# Visualize null
-ggplot(null_arms, aes(x = stat)) +
-  # Add density layer
-  geom_density() +
-  # Add vertical red line at obs stat
-  geom_vline(xintercept = chi_obs_arms, color = "red")
-```
-
-
-### Is the data consistent with the model?
-
-
-In general, it's a good idea to use *two-tailed* p-values, which you have calculated like this:
-
-```
-# Compute two-tailed p-value
-null %>%
-  summarize(pval = 2 * mean(stat <= d_hat))
-```
-
-
-In the case of the chi-squared, however, you compute only the right tail, which makes it a *one-tailed* test. This is the tail with statistics that are more common when the hypothesis of independence is false.
-
-Using the objects that you created in the previous exercise (`null_spac`, `null_arms`, `chi_obs_spac`, and `chi_obs_arms`), compute the p-values of these two hypothesis tests and use them to select the correct answer below. Note that you'll have to tweak the code above to be sure to include only the right (greater than) tail in your p-values.
-
-
-```
-chi_obs_spac <- chisq_stat(gss_party, natspac ~ party)
-chi_obs_arms <- chisq_stat(gss_party, natarms ~ party)
-
-null_spac <- gss_party %>%
-  specify(natspac ~ party) %>%
-  hypothesize(null = "independence") %>%
-  generate(reps = 500, type = "permute") %>%
-  calculate(stat = "Chisq")
- 
-null_arms <- gss_party %>%
-  specify(natarms ~ party) %>%
-  hypothesize(null = "independence") %>%
-  generate(reps = 500, type = "permute") %>%
-  calculate(stat = "Chisq")
-```
-
-*Hint:* Remember that the null hypothesis in both tests is that there's no relationship between the variables.
-
-```
-question("Select the correct answer",
-  answer("Since both p-values are above 0.05, we fail to reject the hypotheses that both military spending and spending on space exploration are independent of political party.", message="Incorrect. The p-value corresponding to chi_obs_arms is very small."),
-  answer("The data set is consistent with the hypothesis that there is no relationship between political party and space exploration spending, but does suggestion a relationship between party and spending on the military.", correct = TRUE, message="Yep! These it seems that spending on the military is a partisan issue, while spending on space exploration is not."),
-  answer("The data set is inconsistent with the hypothesis that there is no relationship between both military spending and party as well as spending for space exploration and party.", message="Incorrect. The p-value corresponding to chi_obs_spac is actually fairly large, indicating consistency with the null."),
-  answer("The data set is consistent with the hypothesis that there is no relationship between political party and military spending, but does suggestion a relationship between party and spending on space exploration.
-", message="Incorrect. A low p-value indicates that the data is inconsistent with the null hypothesis of no relationship."),
-  allow_retry = TRUE
-)
-```
-
-
-
-## Alternate method: the chi-squared distribution
-
-Now you have some experience conducting a hypothesis test of independence using the chi-squared statistic and permutation.
-
-
-
-### Approximation distributions: normal
-
-
-- Statistics: $\hat{p}, \hat{p}\_{1} - \hat{p}\_{2}$
-
-![](images/categorical-inference-ch3v3-normal-curve.png)
-
-Next, you'll learn how to conduct the same test using an approximation method. This is the most commonly-used way to formulate the null distribution, so let's dive in.
-
-The approximation distribution that you're most familiar with is the Normal distribution. This can be used to approximate the null distribution when the statistic is a proportion or a difference in proportions and the sample size is large.
-
-
-### 
-
-
-
-- Statistics: $\hat{x}^{2}$
-- Shape is determined by degrees of freedom {{1}}
-- $df = (nrows - 1) \times (ncols - 1)$  {{2}}
+- Statistic: $$\hat{\chi}^{2}$$
+- Shape is determined by degrees of freedom
+- $$df = (r - 1) (c - 1)$$
 
 ![](images/categorical-inference-ch3v3-chisq-curve.png)
 
+For both of the questions we explored above, where each variable in the contingency table has 3 levels, the degrees of freedom for the $$\chi^2$$ statistic is:
+
+$$df = (r - 1)(c - 1) = (3-1)(3-1)=(2)(2)=4$$ 
+
+So the appropriate chi-squared distribution to use is the one with four degrees of freedom, which is somewhere between the green and the blue curves in the figure above.
+
+To find a p-value according to this distribution, we just use the Excel p-value workbook and enter our observed chi-square statistic. No further transformation of that statistic is necessary. The probability returned is the 1-sided, right-tailed probability.
+
+If we do this for our two questions:
+
+* `party` by `natspac`, $$\chi^2 = 1.33$$ (with 4 *df*), *p* = 0.856
+* `party` by `natarms`, $$\chi^2 = 18.97$$ (with 4 *df*), *p* = <0.001
+
+Not surprisingly, these are both very close to the p-values from the permutation approach.
 
 
-In the case of the chi-squared statistic, the distribution is called, conveniently enough, the chi-squared distribution. You'll sometimes see it written out in words and other times given the Greek letter that looks like and X. The shape of this distribution is determined by one parameter called the degrees of freedom. Here are three different chi-squared distributions, with one, three, and five degrees of freedom. You'll note that they're all positive and they're all right skewed, but as the degrees of freedom increases, the mean increases. You can find the appropriate degrees of freedom for your test by taking the number of rows minus one and multiplying it by the number of columns minus one.
+### Chi-squared distribution assumptions
 
+Like the normal distribution, the chi-squared distribution only becomes a good approximation when the sample size is large. A good rule of thumb is that the expected counts in each cell should be five or greater. And, of course, we need the observations in the sample to be independent of each other.
 
-### 
+Assumptions:
 
-
-```
-null_spac <- gss_party %>%
-  specify(natspac ~ party) %>%
-  hypothesize(null = "independence") %>%
-  generate(reps = 100, type = "permute") %>%
-  calculate(stat = "Chisq")
-```
-
-```
-ggplot(null_spac, aes(x = stat)) +
-  geom_density() +
-  stat_function(
-    fun = dchisq, 
-    args = list(df = 4), 
-    color = "blue"
-  ) +
-  geom_vline(xintercept = chi_obs_spac, color = "red")
-```
-
-
-
-In the last exercises, you conducted permutation test to assess if natspac was independent of party. The observed chi-squared statistic was 1.33, which you found to be not too far into the tails of your null distribution.
+- Observations are independent
+- All expected counts are $$\ge$$ 5 (sometimes you'll see this relaxed, so that $$\ge$$ 80% of the cells are $$\ge$$ 5)
 
 
 
-### H-test via approximation
+### Connection to the z-test
 
-```
-gss_party %>%
-  select(natarms, party) %>%
-  table()
-```
+You may be wondering how the results would compare if we used the chi-square test instead of the z-test for 2-group comparisons of dichotomous proportions. Well, the results are actually mathematically identical. With a 2-by-2 contingency table, the degrees of freedom is equal to 1, and for *df* = 1, the chi-square statistic is equal to the z-statistic squared ($$z^2$$). (Subject to using the pooled variance in the z-test.)
 
+You can see this using the Excel workbook if you'd like. Check what p-value you get for the following 2 statistics:
 
+* z = 1.60 (look at the 2-tailed test)
+* $$\chi^2$$ (with 1 *df*) = (1.6)(1.6) = 2.56
 
-```
-pchisq(chi_obs_spac, df = 4)
-```
+It should be 0.1096 for each.
 
 
-```
-1 - pchisq(chi_obs_spac, df = 4)
-```
 
-![](images/ch3v3-htest-approx.png)
+### Violations of the assumptions
 
-Instead of using this null distribution, we could instead rely upon the chi-squared distribution. The number of rows in this table was three and the number of columns was three, so the appropriate chi-squared distribution to use is the one with four degrees of freedom. If we plot that on top of our null distribution, we see that the two very close. 
+When the assumption for the chi-square approximation are not met, there are primarily two options: (1) Use the randomization test specified above (with the %permute_2chisq macro). One of the nice things about randomization tests is that they do not rely on any assumptions. (2) Use Fisher's Exact test.
 
-To find a p-value according to this distribution, ask for the proportion of the chisq distribution, pchisq, that is to the left of our observed statistic. We're interested in the right-tail, however, so the p-value is calculated as 1 minus this value. Not surprisingly, this is very close to the p-value from the permutation approach.
+Fisher's test is called "exact" because is it actually not an approximation at all. All possible combinations of the responses are determined and, through a very specific probability distribution, each combination is assigned a probability. From this complete distribution, it is possible to calculate the probability of getting a sample as or more extreme than the observed sample.
 
-
-### The chi-squared distribution
-
-
-Becomes a good approximation when:
-
-- $expected\\\_count >= 5$
-
-- $df >= 2$
-
-![](images/categorical-inference-ch3v3-chisq-curve.png)
-
-Like the normal distribution, the chi-squared distribution only becomes a good approximation when the sample size is large. A good rule of thumb is that the expected counts in each cell should be five or greater. Another recommendation is to only use this distribution when the degrees of freedom is two or greater. If you have one degree of freedom, you're looking at a two by two table, which means you can just compare proportions using the normal distribution.
-
-### Checking conditions
-
-There are three new data sets in your environment, `ds1`, `ds2`, and `ds3`, that all contain two columns of categorical data. You can test the independence of the two variables for all three data sets using a *permutation* chi-squared test, however the chi-squared *approximation* method will only be accurate for one of them. Which one?
-
-Note: since these data sets only have two columns, you can form a contingency table by simply running `table()` on the original data frame.
-
-
+You don't need to know the specifics of this test beyond the description above, but let's work through an example by reloading the GSS data and looking at the relationship between religious affiliation and belief in an afterlife.
 
 ```
-ds1 <- tibble(var1 = rep(c("A", "B"), times = c(22, 24)),
-              var2 = c(rep(c("X", "Y"), times = c(10, 12)),
-                     rep(c("X", "Y"), times = c(14, 10))))
-ds2 <- tibble(var1 = rep(c("A", "B", "C"), times = c(22, 24, 11)),
-              var2 = c(rep(c("X", "Y", "Z"), times = c(8, 12, 2)),
-                     rep(c("X", "Y", "Z"), times = c(15, 2, 7)),
-                     rep(c("X", "Y", "Z"), times = c(4, 5, 2))))
-ds3 <- tibble(var1 = rep(c("A", "B"), times = c(47, 62)),
-              var2 = c(rep(c("X", "Y", "Z"), times = c(14, 11, 22)),
-                     rep(c("X", "Y", "Z"), times = c(28, 20, 14))))
+* Reload GSS data and recode to keep only specific religions;
+%use_data(gss2016);
+
+data gss2016;
+	set gss2016(
+		where=(relig in (2, 3, 4))
+	);
+run;
 ```
 
-
-*Hint:* Remember, the chi-squared approximation can be invalid if there are fewer than 5 observations in any cell of the contingency table. It is also suggested that the degrees of freedom be greater than 1 (that is, the table has greater than 2 rows and 2 columns). You can view the tables using `lapply(globalenv(), table)`.
-
-```
-question("The chi-squared *approximation* method will only be accurate for one of them. Which one?",
-  answer("ds1", message="Incorrect. This is a 2x2 table, which only has 1 degree of freedom. A test of the difference of two proportions using the Normal distribution would be more appropriate here."),
-  answer("ds2", message="Nope. Some of these cell counts are very low and would correspond to expected counts less than 5."),
-  answer("ds3", correct = TRUE, message="Correct! You can expect your chi-squared approximation to provide you with accurate p-values in this setting."),
-  allow_retry = TRUE
-)
-```
-
-
-### The geography of happiness
-
-
-In addition to information regarding their opinions on policy issues, GSS survey respondents also provided the region of the United States in which they live. With this in hand, you can explore the question:
-
-*Does this data set provide evidence of an association between happiness and geography?*
-
-
-- Using `gss2016`,construct a bar plot of proportions capturing the relationship between `region` and `happy`. Plots like this are easier to read when the variable with the fewer number of levels is mapped to `fill`.
-- Use `chisq_stat()` to compute the observed chi-squared statistic associated with this bar plot and save it as `chi_obs`.
+Let's look at the expected counts for a contingency table of `relig` by `postlife`:
 
 ```
-# Visualize distribution of region and happy
-___ +
-  # Add bar layer of proportions
-  ___
-  
-# Calculate and save observed statistic
-chi_obs <- ___ %>%
-  ___
-
-# See the result
-chi_obs
+* Get expected counts;
+proc freq data=gss2016;
+	tables relig * postlife / nocol nopct norow expected;
+run;
 ```
 
-<div id="ex11-hint">
-**Hint:** 
-- Map the values of `happy` to the `fill` aesthetic.
-- `select()` the variables of interest before using the `table()` function.
-- The function `chisq_stat()` takes a formula that specifies the response and explanatory variables.
-</div>
+Do any of the cells in this table have expected counts less than 5? Yes! In fact, 3 of the 6 cells have very small expected counts. So a chi-square approximation here is not going to work. If you try, SAS will warn you.
 
 ```
-# Visualize distribution of region and happy
-ggplot(gss2016, aes(x = region, fill = happy)) +
-  # Add bar layer of proportions
-  geom_bar(position = "fill")
-  
-# Calculate and save observed statistic
-chi_obs <- gss2016 %>%
-  chisq_stat(region ~ happy)
-
-# See the result
-chi_obs
+* Perform chi-square inappropriately;
+proc freq data=gss2016;
+	tables relig * postlife / nocol nopct chisq;
+run;
 ```
 
+Do you see the warning that SAS prints?
 
+![](images/sas-warn.png)
 
+If you ever see that, you should use one of the alternatives listed above. What happens with very small cells is that the chi-square statistic is inflated, which leads to a p-value that is too small. Here, the p-value associated with the chi-square test is 0.0003.
 
-### A p-value two ways
-
-In this exercise you'll find out if the observed chi-squared statistic is unusually large under the following notion that,
-
-$H_0$: Region is independent of Happy.
-
-The competing notion is the alternative hypothesis that there is an association between these variables. For the sake of comparison, you'll be finding the p-value first from the computational approach, then use the approximation.
-
+So we could run a permutation (randomization) test, as:
 
 ```
-chi_obs <- chisq_stat(gss2016, happy ~ region)
+* Randomization chi-square test for RELIG x POSTLIFE, 10000 reps;
+%permute_2chisq(
+    ds = gss2016,
+    groupvar = relig,
+    compvar = postlife,
+    reps = 10000
+);
 ```
 
+This gives a p-value of 0.0079. Still significant, but considerably larger than 0.0003.
 
-
-Generate a distribution of the `"Chisq"` statistic under a null hypothesis of independence between `happy` and `region`. Save this object to `null`.
-
-
-```
-# Generate null distribution
-___ <- ___
-  # Specify variables
-  ___
-  # Set up null
-  ___
-  # Generated 500 permuted data sets
-  ___
-  # Calculate statistics
-  ___
-```
-
-<div id="ex12-hint">
-**Hint:** 
-- Be sure to start by specifying the response and explanatory variables, along with what constitutes a `success`.
-- Under a null hypothesis of `"independence"`, the type of data generation is `"permute"`.
-</div>
+We could also request the Fisher's exact test:
 
 ```
-# Generate null distribution
-null <- gss2016 %>%
-  # Specify variables
-  specify(happy ~ region, success = "HAPPY") %>%
-  # Set up null
-  hypothesize(null = "independence") %>%
-  # Generated 500 permuted data sets
-  generate(reps = 500, type = "permute") %>%
-  # Calculate statistics
-  calculate(stat = "Chisq")
+* Run Fishers exact test;
+proc freq data=gss2016;
+	tables relig * postlife / nocol nopct exact;
+run;
 ```
 
+This produces a small table of output:
+
+![](images/sas-fisher.png)
+
+The p-value from here is yet larger, at 0.0150.
+
+In this case, the hypothesis test would have come to the same conclusion, but in other cases, the significance of a test can change when you use a Fisher's exact test instead of an inappropriate chi-square test. So be on the look-out for violated assumptions in chi-square analyses. It happens more than you think it will.
 
 
 
-Create a density plot of `null`, add a vertical red line at `chi_obs`, and overlay the corresponding approximation from the Chi-squared distribution with the appropriate degrees of freedom.
+You have successfully completed this tutorial.
+
+# [< Back to Section 5](https://bghammill.github.io/ims-05-infer/)
 
 
-
-```
-# From previous step
-null <- gss2016 %>%
-  specify(happy ~ region, success = "HAPPY") %>%
-  hypothesize(null = "independence") %>%
-  generate(reps = 500, type = "permute") %>%
-  calculate(stat = "Chisq")
-  
-# Visualize null
-___
-  # Add density layer
-  ___ +
-  # Add red vertical line at obs stat
-  ___ +
-  # Overlay chisq approximation
-  stat_function(fun = dchisq, args = list(df = ___), color = "___")
-```
-
-<div id="ex13-hint">
-**Hint:** The degrees of freedom is calculated from the contingency table as the (number of rows - 1)x(number of columns - 1).
-</div>
-
-```
-# From previous step
-null <- gss2016 %>%
-  specify(happy ~ region, success = "HAPPY") %>%
-  hypothesize(null = "independence") %>%
-  generate(reps = 500, type = "permute") %>%
-  calculate(stat = "Chisq")
-  
-# Visualize null
-ggplot(null, aes(x = stat)) +
-  # Add density layer
-  geom_density() +
-  # Add red vertical line at obs stat
-  geom_vline(xintercept = chi_obs, color = "red") +
-  # Overlay chisq approximation
-  stat_function(fun = dchisq, args = list(df = 3), color = "blue")
-```
-
-
-
-- Compute the permutation p-value.
-- Compute the approximation p-value. Recall that `pchisq()` will return the left tail of the distribution. To return the right tail, add an argument `lower.tail = FALSE`.
-
-
-```
-# From previous step
-null <- gss2016 %>%
-  specify(happy ~ region, success = "HAPPY") %>%
-  hypothesize(null = "independence") %>%
-  generate(reps = 500, type = "permute") %>%
-  calculate(stat = "Chisq")
-  
-# Calculate computational pval
-___ %>%
-  summarize(pval = ___)
-
-# Calculate approximate pval
-pchisq(chi_obs, df = ___, lower.tail = ___)
-```
-
-<div id="ex14-hint">
-**Hint:**
-- For the permutation p-value, find the proportion (`mean()`) of `stat`s that are greater than or equal to the observed statistic.
-- Use the argument `df = 3` again.
-</div>
-
-```
-# From previous step
-null <- gss2016 %>%
-  specify(happy ~ region, success = "HAPPY") %>%
-  hypothesize(null = "independence") %>%
-  generate(reps = 500, type = "permute") %>%
-  calculate(stat = "Chisq")
-  
-# Calculate computational pval
-null %>% 
-  summarize(pval = mean(stat >= chi_obs))
-
-# Calculate approximate pval
-pchisq(chi_obs, df = 3, lower.tail = FALSE)
-```
-
-
-## Intervals for the chi-squared distribution
-
-
-At this point you should be familiar with this diagram
-
-
-
-### Classic inference
-
-![](images/3-4-2.png)
-
-which shows how we formulate the null distribution as the distribution of test statistics for data generated in a world where the null hypothesis is true. The procedure is the same when were testing independence using the chi squared statistic its just the shape of the null distribution that changes. To formulate a confidence interval for the chi squared, it makes sense to simply remove the step where we propose a null hypothesis and instead generate data simply through bootstrap resampling.
-
-### 
-
-that give us a sampling distribution
-
-![](images/3-4-3.png)
-
-of the chi squared statistic
-
-![](images/3-4-4.png)
-
-so that we can formulate an interval
-
-![](images/3-4-5.png)
-
-to capture the true chi squared parameter but hold on
-
-![](images/3-4-6.png)
-
-True chi squared parameter? What would that even mean? We know how to think about a difference in two parameters as being a meaningful parameter, but a chi squared? It turns out that the chi squared is only really a useful statistic in the context of a hypothesis test. You're unlikely to ever see a confidence interval here.
-
-![](images/4-3-6-2.png)
-
-So we can just scratch this approach. There you have it. The shortest lesson ever!
-
-![](images/3-4-7.png)
-
-
-## Congratulations!
-
-You have successfully completed Lesson 3 in Tutorial 5: Statistical Inference.  
-
-What's next?
-
-[Full list of tutorials supporting OpenIntro::Introduction to Modern Statistics](https://bghammill.github.io/)
-
-[Tutorial 5: Statistical Inference](https://bghammill.github.io/ims-05-infer/)
-
-- [Tutorial 5 - Lesson 1: Inference for a single proportion](https://bghammill.github.io/ims-05-infer/ims-05-lesson-01/)
-- [Tutorial 5 - Lesson 2: Hypothesis tests to compare proportions](https://bghammill.github.io/ims-05-infer/ims-05-lesson-02/)
-- [Tutorial 5 - Lesson 3: Chi-square test of independence](https://bghammill.github.io/ims-05-infer/ims-05-lesson-03/)
-- [Tutorial 5 - Lesson 4: Chi-square test for goodness of fit](https://bghammill.github.io/ims-05-infer/ims-05-lesson-04/)
-- [Tutorial 5 - Lesson 5: Bootstrapping to estimate a parameter](https://bghammill.github.io/ims-05-infer/ims-05-lesson-05/)
-- [Tutorial 5 - Lesson 6: T-distribution](https://bghammill.github.io/ims-05-infer/ims-05-lesson-06/)
-- [Tutorial 5 - Lesson 7: Inference for difference in two means](https://bghammill.github.io/ims-05-infer/ims-05-lesson-07/)
-- [Tutorial 5 - Lesson 8: Comparing many means](https://bghammill.github.io/ims-05-infer/ims-05-lesson-08/)
-
-[Learn more at Introduction to Modern Statistics](http://openintro-ims.netlify.app/)
 
 <!-- MathJax -->
 
