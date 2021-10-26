@@ -175,8 +175,8 @@ $$\chi^2 = \sum \frac{(Observed - Expected)^2}{Expected}$$
 
 Some examples:
 
-* For the combination Democrat x Too little, the observed count is 8 and the expected count is 8.7, for a contribution to the overall statistic of $$\\frac{(8 - 8.7)^2}{8} = 0.061$$.
-* For the combination Independent x Too much, the observed count is 22 and the expected is 20.8, for a contribution to the overall statistic of $$\\frac{(22 - 20.8)^2}{22} = 0.065$$.
+* For the combination Democrat x Too little, the observed count is 8 and the expected count is 8.7, for a contribution to the overall statistic of $$(8 - 8.7)^2 / 8 = 0.061$$.
+* For the combination Independent x Too much, the observed count is 22 and the expected is 20.8, for a contribution to the overall statistic of $$(22 - 20.8)^2 / 22 = 0.065$$.
 
 If we do that for all 9 cells in the table, we will get $$\chi^2 = 1.33$$.
 
