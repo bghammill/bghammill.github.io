@@ -297,7 +297,7 @@ When the assumption for the chi-square approximation are not met, there are prim
 
 Fisher's test is called "exact" because is it actually not an approximation at all. All possible combinations of the responses are determined and, through a very specific probability distribution, each combination is assigned a probability. From this complete distribution, it is possible to calculate the probability of getting a sample as or more extreme than the observed sample.
 
-You don't need to know the specifics of this test beyond the description above, but let's work through an example by reloading the GSS data and looking at the relationship between religious affiliation and belief in an afterlife.
+You don't need to know the specifics of this test beyond the description above, but let's work through an example by reloading the GSS data and looking at the relationship between religious affiliation and belief in an afterlife. We should note that this is not a perfect example, since only 2 of the 99 respondents in the analysis report being Jewish. In practice, we would probably not include that group in the analysis, since it's hard to learn much about a group from a sample of size 2. But this example is useful for illustrative purposes.
 
 ```
 * Reload GSS data and recode to keep only specific religions;
