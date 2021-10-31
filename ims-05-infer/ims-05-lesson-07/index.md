@@ -1,7 +1,9 @@
 
-## Inference for a difference in two means
+# Inference for a difference in two means
 
-In this lesson we demonstrate setting up and conducting a hypothesis test to compare means from two independent distributions using simulation.
+Now let's look at estimating confidence intervals and testing for differences between two means.
+
+
 
 
 ### Motivation

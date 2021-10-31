@@ -71,7 +71,7 @@ And what we just described was the bootstrapping methodology, with one twist. Be
 
 However since in a hypothesis test we assume that $$H_0$$ is true, we can shift, or **re-center**, the bootstrap distribution to be centered at the required null value, then, as with other randomization tests, calculate the p-value as the proportion of bootstrap samples that yield a sample statistic at least as extreme as the observed sample statistic.
 
-![](C:\Users\bradh\Documents\GitHub\bghammill.github.io\ims-05-infer\ims-05-lesson-05\images\chp1-vid3-boot-test.001.png)
+![](images/chp1-vid3-boot-test.001.png)
 
 Here is a graphical representation: We start with our bootstrap distribution, which is always centered at the observed sample statistic. We then shift this distribution so the center is at the null value, and calculate the p-value as the proportion of simulations that yield bootstrap statistics that are at least as extreme as the observed sample statistic.
 
@@ -138,14 +138,14 @@ This is why you might see in other resources that if the sample size is "large e
 
 If you look at the Excel p-value workbook, you'll see there is a section for the *t*-distribution. Pull up that workbook to have some practice getting probabilities associated with the *t*-distribution.
 
-- Find the probability, under the *t*-distribution with 10 degrees of freedom, of a *t*-value less than 3.0, P(*t* < 3.0) = ?
-- Find the probability, under the *t*-distribution with 10 degrees of freedom, of a *t*-value with magnitude greater than 2.0 (i.e., two-tailed), P(|*t*| > 2.0) = ?
-- Find the probability, under the *t*-distribution with <u>100</u> degrees of freedom, of a *t*-value with magnitude greater than 2.0 (i.e., two-tailed), P(|*t*| > 2.0) = ?
+- Find the probability, under the *t*-distribution with 10 degrees of freedom, of a *t*-value less than 3.0, $$P(t < 3.0) =$$ ?
+- Find the probability, under the *t*-distribution with 10 degrees of freedom, of a *t*-value with magnitude greater than 2.0 (i.e., two-tailed), $$P(|t| > 2.0) =$$ ?
+- Find the probability, under the *t*-distribution with <u>100</u> degrees of freedom, of a *t*-value with magnitude greater than 2.0 (i.e., two-tailed), $$P(|t| > 2.0) =$$ ?
 - How do the last two probabilities compare? Why?
 
 ### Cutoffs under the *t*-distribution
 
-We can also use the Excel workbook to get critical values (cutoffs) under the *t*-distribution associated with specific significance levels, $$\alpha$$. For a given $$\alpha$$ and a given degrees of freedom, $$df$$, the critical value, $$t^*$$, is the value of the *t*-distribution for which the probability of more extreme values, in one or both tails, is $$100\alpha%$$.
+We can also use the Excel workbook to get critical values (cutoffs) under the *t*-distribution associated with specific significance levels, $$\alpha$$. For a given $$\alpha$$ and a given degrees of freedom, $$df$$, the critical value, $$t^*$$, is the value of the *t*-distribution for which the probability of more extreme values, in one or both tails, is $$100\alpha$$%.
 
 Again, use the workbook to practice getting critical values associated with the *t*-distribution.
 
@@ -167,19 +167,19 @@ The NC birth data we are using as an example easily meets both of these criteria
 
 In order to use the *t*-distribution as our mathematical approximation for calculating a confidence interval, we need to adjust our formula:
 
-$$CI = SampleStatistic \pm t^{*}_{df} \times SE
+$$CI = SampleStatistic \pm t^{*}_{df} \times SE$$
 
 We already know our sample statistic. The mean weight gain in our population was 30.3 pounds. We just need $$t^*$$ and the standard error.
 
-We talked above about how to get an appropriate $$t^*$$ critical value. Let find that critical value for our data, with 973 observations, using a significance level, $$\alpha = 0.05$$. First, we calculate our degrees of freedom, $$df = n - 1 = 973 - 1 = 972$$. Now, we use Excel workbook to find that $$t^{*}_972 = 1.96$$. This should look familiar. Given enough sample size, the *t*-distribution truly does resemble the standard normal distribution.
+We talked above about how to get an appropriate $$t^*$$ critical value. Let find that critical value for our data, with 973 observations, using a significance level, $$\alpha = 0.05$$. First, we calculate our degrees of freedom, $$df = n - 1 = 973 - 1 = 972$$. Now, we use Excel workbook to find that $$t^{*}_{972} = 1.96$$. This should look familiar. Given enough sample size, the *t*-distribution truly does resemble the standard normal distribution.
 
 The standard error associated with a mean, based on sample's observed variability is:
 
-$$SE = s / \sqrt(n)$$
+$$SE = s / \sqrt{n}$$
 
 For our data, using the SD we calculated at the beginning of this lesson,
 
-$$SE = 14.2 / \sqrt(973) = 0.46$$
+$$SE = 14.2 / \sqrt{973} = 0.46$$
 
 So our approximation-based 95% confidence interval is:
 
@@ -200,16 +200,16 @@ And we specify $$\alpha = 0.05$$ as our significance level.
 
 $$T = \frac{SampleStatistic - NullValue}{SE}$$
 
-where the sample statistic is the sample mean, $$\bar{x}$$, the null value is the hypothesized value, and the SE is as described above, $$s / \sqrt(n)$$. This $t$-statistic will also have $$n - 1$$ degrees of freedom.
+where the sample statistic is the sample mean, $$\bar{x}$$, the null value is the hypothesized value, and the SE is as described above, $$s / \sqrt(n)$$. This $$t$$-statistic will also have $$n - 1$$ degrees of freedom.
 
 For our data, we have the following:
 
 * The Sample statistic, $$\bar{x}$$, is 30.3 pounds
 * The null value is 31.1 pounds
 * The SE is 0.46 (calculated in the prior section)
-* The $df$ is 972 (also calculated in the prior section)
+* The $$df$$ is 972 (also calculated in the prior section)
 
-So our $t$-statistic is:
+So our $$t$$-statistic is:
 
 $$T = \frac{30.3 - 31.1}{0.46} = -1.739$$
 
