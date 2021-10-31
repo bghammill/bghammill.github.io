@@ -139,8 +139,8 @@ This is why you might see in other resources that if the sample size is "large e
 If you look at the Excel p-value workbook, you'll see there is a section for the *t*-distribution. Pull up that workbook to have some practice getting probabilities associated with the *t*-distribution.
 
 - Find the probability, under the *t*-distribution with 10 degrees of freedom, of a *t*-value less than 3.0, $$P(t < 3.0) =$$ ?
-- Find the probability, under the *t*-distribution with 10 degrees of freedom, of a *t*-value with magnitude greater than 2.0 (i.e., two-tailed), $$P(\abs{t} > 2.0) =$$ ?
-- Find the probability, under the *t*-distribution with <u>100</u> degrees of freedom, of a *t*-value with magnitude greater than 2.0 (i.e., two-tailed), $$P(\abs{t} > 2.0) =$$ ?
+- Find the probability, under the *t*-distribution with 10 degrees of freedom, of a *t*-value with magnitude greater than 2.0 (i.e., two-tailed), $$P(abs(t) > 2.0) =$$ ?
+- Find the probability, under the *t*-distribution with <u>100</u> degrees of freedom, of a *t*-value with magnitude greater than 2.0 (i.e., two-tailed), $$P(abs(t) > 2.0) =$$ ?
 - How do the last two probabilities compare? Why?
 
 ### Cutoffs under the *t*-distribution
