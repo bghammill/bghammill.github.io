@@ -122,14 +122,14 @@ The textbook data meet both of these criteria.
 
 In order to use the *t*-distribution as our mathematical approximation for calculating a 95% confidence interval, we again use the formula:
 
-$$CI = SampleStatistic \pm t^{*}_{df} \times SE
+$$CI = SampleStatistic \pm t^{*}_{df} \times SE$$
 
 Everything we saw previously for the one-sample CI is true here, too:
 
 * The sample statistic is the sample mean. In this case, that is the mean difference, $$\bar{x}_d$$, where, in our data, $12.76.
 * The critical value, $$t^*$$, is again the value of the *t*-distribution associated with the requested confidence level, where the degrees of freedom is $$n_d - 1$$, where $$n_d$$ is the number of observations on which we calculated differences. For our data, $$df = 73 - 1 = 72$$, so $$t^*$$ is 1.99.
 
-* The standard error associated with a mean difference is $$s_d / \sqrt{n_d}$$, where $$s_d$$ is the standard deviation of the differences. For our data, $$SE = 14.26 / \sqrt{73} = 1.67.
+* The standard error associated with a mean difference is $$s_d / \sqrt{n_d}$$, where $$s_d$$ is the standard deviation of the differences. For our data, $$SE = 14.26 / \sqrt{73} = 1.67$$.
 
 So our approximation-based 95% confidence interval is:
 
@@ -143,16 +143,16 @@ And to test the hypotheses described above, we will calculate a one-sample *t*-s
 
 $$T = \frac{SampleStatistic - NullValue}{SE}$$
 
-where the sample statistic is the sample mean, $$\bar{x}_d$$, the null value is the hypothesized difference, and the SE is as described above, $$s_d / \sqrt(n_d)$$. This $t$-statistic will also have $$n - 1$$ degrees of freedom.
+where the sample statistic is the sample mean, $$\bar{x}_d$$, the null value is the hypothesized difference, and the SE is as described above, $$s_d / \sqrt{n_d}$$. This $$t$$-statistic will also have $$n - 1$$ degrees of freedom.
 
 For our data, we have the following:
 
 * The sample statistic, $$\bar{x}_d$$, is $12.76
 * The null value is $0.00
 * The SE is 1.67 (calculated in the prior section)
-* The $df$ is 72 (also calculated in the prior section)
+* The $$df$$ is 72 (also calculated in the prior section)
 
-So our $t$-statistic is:
+So our $$t$$-statistic is:
 
 $$T = \frac{12.76 - 0}{1.67} = 7.64$$
 

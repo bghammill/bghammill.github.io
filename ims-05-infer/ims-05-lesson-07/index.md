@@ -71,7 +71,7 @@ As is typical, we will generate 10,000 bootstrap re-samples. This time, we will 
 
 My results indicated a bootstrap SE of 1.5 pounds. In order to generate an approximate 95% CI, we just add and substract $$2SE$$ to our point estimate.
 
-$$CI = 1.8 \pm 2(1.5) = (-1.2, 4.8)$
+$$CI = 1.8 \pm 2(1.5) = (-1.2, 4.8)$$
 
 So, with 95% confidence, we expect the true mean weight gain during pregnancy among mothers in North Carolina who smoked to be between 1.2 pounds lower and 4.8 pounds higher than weight gain among mothers in NC who didn't smoke.
 
