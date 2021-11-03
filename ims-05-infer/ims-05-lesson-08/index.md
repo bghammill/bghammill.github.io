@@ -1,220 +1,107 @@
 
-## Comparing many means
+# Comparing many means
 
-### Vocabulary score and self-identified social class
+So far, we discussed inference on a single mean as well as inference for comparing two means. Next we move on to comparing many means simultaneously.
 
-So far in this tutorial, we discussed inference on a single mean as well as inference for comparing two means. Next we move on to comparing many means simultaneously.
+Our motivating data comes from the General Social Survey. The two variables of interest are vocabulary score, `wordsum`, and self-identified social class, `gssclass`. We'll be assessing whether or not a respondent's vocabulary score is associated with their self-reported social class or not.
 
-Our motivating data comes from the General Social Survey. The two variables of interest are vocabulary score and self-identified social class.
+The vocabulary score is calculated based on the number of correct answers on a ten-question vocabulary test, where a higher score means better vocabulary, and self-identified social class has 4 levels: lower, working, middle, and upper class.
 
-Vocabulary score is calculated based on a ten question vocabulary test, where a higher score means better vocabulary, and self-identified social class has 4 levels: lower, working, middle, and upper class.
-
-> - `wordsum`: 10 question vocabulary test (scores range from 0 to 10)
-> - `class`: self-identified social class (lower, working, middle, upper)
-
-|   | `wordsum`|`class` |
-|:--|:---------|:-------|
-|1  |         6|MIDDLE  |
-|2  |         9|WORKING |
-|3  |         6|WORKING |
-|4  |         5|WORKING |
-|5  |         6|WORKING |
-|6  |         6|WORKING |
-|...|       ...|...     |
-|795|         9|MIDDLE  |
-
-### Vocabulary score: `wordsum`
-
-
-> 1. SPACE (school, noon, captain, room, board, don't know)
-> 1. BROADEN (efface, make level, elapse, embroider, widen, don't know)
-> 3. EMANATE (populate, free, prominent, rival, come, don't know)
-> 4. EDIBLE (auspicious, eligible, fit to eat, sagacious, able to speak, don't know)
-> 5. ANIMOSITY (hatred, animation, disobedience, diversity, friendship, don't know)
-> 6. PACT (puissance, remonstrance, agreement, skillet, pressure, don't know)
-> 7. **CLOISTERED (miniature, bunched, arched, malady, secluded, don't know)**
-> 8. CAPRICE (value, a star, grimace, whim, inducement, don't know)
-> 9. ACCUSTOM (disappoint, customary, encounter, get used to, business, don't know)
-> 10. ALLUSION (reference, dream, eulogy, illusion, aria, don't know)
-
-
-The vocabulary test works as follows: respondents are given the following list of words, and are asked to choose a word from the list that comes closest to the meaning of the first word provided in the capital letters.
-
-For example, is CLOISTERED closest in meaning to miniature, bunched, arched, malady, secluded, or if you were the respondent on this survey would you mark don't know? If you're curious about the vocabulary test feel free to pause and work through the rest, but for the purpose of this example we're not going to be focusing on what these words mean, but instead we'll take a look at how people who took the survey did on the vocabulary test and whether their score is associated with their social class or not.
-
-
-
-### Distribution of vocabulary score
+Let's load the data and set up the SAS environment:
 
 ```
-ggplot(data = gss, aes(x = wordsum)) +
-  geom_histogram(binwidth = 1)
+* Initialize this SAS session;
+%include "~/my_shared_file_links/hammi002/sasprog/run_first.sas";
+
+* Load randomization macros;
+%include "~/my_shared_file_links/hammi002/sasprog/load-randomization.sas";
+
+* Makes a working copy of GSS_WORDS data and check;
+%use_data(gss_words);
+%glimpse(gss_words);
 ```
 
-The distribution of vocabulary scores is shown in this histogram. The scores range between 0 and 10. The distribution is centered around 6, and looks roughly symmetric. There is a bit of a left skew, but nothing overly dramatic. 
+### Exploratory data analysis
 
-### self-identified social class: `class`
-
-
-*If you were asked to use one of four names for your social class, which would you say you belong in: the lower class, the working class, the middle class, or the upper class?*
+Before we conduct inference, let's look at the distribution of each of these variables, alone and in combination.
 
 ```
-ggplot(data = gss, aes(x = class)) +
-  geom_bar()
+* Exploratory data analysis for WORDSUM & GSSCLASS;
+proc sgplot data=gss_words;
+	histogram wordsum / binwidth=1;
+run;
+
+proc sgplot data=gss_words;
+	vbar gssclass;
+run;
+
+proc sgplot data=gss_words;
+	hbox wordsum / group=gssclass grouporder=ascending;
+run;
 ```
 
-And the distribution of social class is shown in this bar plot.
+The distribution of vocabulary scores is shown with a histogram. The scores range between 0 and 10. The distribution is centered around 6, and looks roughly symmetric. There is a bit of a left skew, but nothing overly dramatic. 
 
-These visualizations tell us about the variables individually, but don't tell us much about their relationship.
+The distribution of social class is shown using a bar chart. The bulk of the respondents identified as working class or middle class, with many fewer in the outer categories.
 
-Time to put this into practice.
-
-### EDA for vocabulary score vs. social class
-
-Before we conduct inference, we should take a look at the distributions of vocabulary scores across the levels of (self-identified) social class.
-
-
-
-- Using `gss`, plot the distribution of vocabulary scores, `wordsum`.
-- Make this a histogram, using an appropriate binwidth.
-- Facet this histogram, wrapping by social class level.
-
-*Look at the plot! Compare the distributions of vocabulary scores across the levels of (self-identified) social class.*
-
-```
-# Using gss, plot wordsum
-ggplot(data = ___, mapping = aes(___)) +
-  # Add a histogram layer
-  ___ +
-  # Facet by class
-  facet_wrap(vars(___))
-```
-
-<div id="vocabulary-hint">
-**Hint:** 
-- Use `gss` as the plot's `data` argument, then map `x` to `wordsum` in c`aes()`. 
-- Add a histogram layer with `geom_histogram()`. Vocabulary scores can only be whole numbers, so it doesn't make sense to have a `binwidth` narrower than one (1) point.
-- The faceting formula can be specified using `vars(class)`.
-</div>
-
-```
-# Using gss, plot wordsum
-ggplot(data = gss, mapping = aes(x = wordsum)) +
-  # Add a histogram layer
-  geom_histogram(binwidth = 1) +
-  # Facet by class
-  facet_wrap(vars(class))
-```
-
-### 
-
-Great start! Before you move on, make sure you've compared all attributes of the distributions: shape, center, spread, unusual observations.
-
-### Comparing many means, visually
-
-```
-question("Which of the following plots shows groups with means that are most and least likely to be significantly different from each other?",
-  correct = "Correct! The bars in facet `1` look different to each other, so they are more likely to be significantly different to each other.",
-  allow_retry = TRUE,
-  answer("Most likely: 1, least likely: 2", correct = TRUE),
-  answer("Most likely: 1, least likely: 3", message = "No. The bars in plot `2` look more alike than those in facet `3`, so they are less likely to be significantly different to each other."),
-  answer("Most likely: 2, least likely: 3", message = "No. The bars in facet `2` look alike, so they are less likely to be significantly different to each other."),
-  answer("Most likely: 2, least likely: 1", message = "No. Bars that look different to each other are more likely to be significantly different to each other.")
-)
-```
-
-```
-set.seed(123)
-
-a1 <- rnorm(100, mean = 10, sd = 2)
-a2 <- rnorm(100, mean = 20, sd = 2)
-a3 <- rnorm(100, mean = 30, sd = 2)
-a <- c(a1, a2, a3)
-
-b1 <- rnorm(100, mean = 10, sd = 5)
-b2 <- rnorm(100, mean = 11, sd = 5)
-b3 <- rnorm(100, mean = 9, sd = 5)
-b <- c(b1, b2, b3)
-
-d1 <- rnorm(100, mean = 10, sd = 15)
-d2 <- rnorm(100, mean = 20, sd = 15)
-d3 <- rnorm(100, mean = 30, sd = 15)
-d <- c(d1, d2, d3)
-
-y <- c(a, b, d)
-x <- factor(rep(c(rep(1, 100), rep(2, 100), rep(3, 100)), 3))
-z <- c(rep("I", 300), rep("II", 300), rep("III", 300))
-
-df <- tibble(x = x, y = y, z = z)
-
-ggplot(df, aes(x = x, y = y)) +
-  geom_boxplot() +
-  facet_grid( ~ z)
-```
+And the distributions of vocabulary scores across the levels of (self-identified) social class are shown using a series of box plots. There do seem to be differences by class, with the vocabulary score increasing across the first three classes (lower to middle).
 
 
 ## ANOVA
 
+In order to conduct inference for this situation (comparing more than two means), we need to use <u>AN</u>alysis <u>O</u>f <u>VA</u>riance, or ANOVA.
 
-In this lesson we'll formally introduce analysis of variance, in other words ANOVA.
+The research hypotheses for an ANOVA are as follows:
 
-We're going to start our discussion with reviewing the hypotheses for an ANOVA. Next, we'll discuss variability partitioning, considering the different factors that contribute to variability in our response variable.
+* $$H_0$$: The mean vocabulary score is the same across all social classes; $$\mu_{lower} = \mu_{working} = \mu_{middle} = \mu_{upper}$$
+* $$H_A$$: The mean vocabulary score for __*at least one*__ social class differs from the others. 
 
+Notice that the alternative hypothesis __is not__ that the scores for all of the social classes are different! The negation (opposite) of assuming every group is equal is assuming that at least one group is different.
 
-### ANOVA for vocabulary scores vs. self-identified social class
+The general idea with ANOVA is to partition the total variability of the outcome into different buckets. The total variability of vocabulary scores is just the variance in scores of all survey respondents, ignoring social class, and we can partition it into two sets:
 
-
-> $H_0$: The average vocabulary score is the same across all social classes;  
-> $\mu_{lower} = \mu_{working} = \mu_{middle} = \mu_{upper}$.
-> 
-> $H_A$: The average vocabulary score for __*at least one*__ social class differs from the others. 
-
-
-Let's quickly remind ourselves of the data we're working with from the General Social Survey on vocabulary scores, a numerical variable, and social class, a categorical variable with four levels.
-
-Our null hypothesis is that the average vocabulary score is the same across all social classes, and the alternative hypothesis is that average vocabulary score is different for at least one social class. Notice that the alternative hypothesis __is not__ that the scores for all of the social classes are different! The negation (opposite) of assuming every group is equal is assuming that at least one group is different.
-
-
-### Variability partitioning
-
-Let's outline this idea of variability partitioning:
-
-The total variability in vocabulary scores times is basically the variance in vocabulary scores of all respondents to the general social survey.
-
-We partition the variability into two sets: 
-
-- Variability that can be attributed to differences in social class, and variability attributed to other factors.
-
-- Variability attributed to social class is called "between group" variability, since social class is the grouping variable in our analysis.
-
-Variability attributed to differences within each social group is called "within group" variability. This variability is not what we are interested in and is somewhat of a nuisance factor. If everyone within a certain social class had the same vocabulary score, then we would have no within group variability and we would be able to more easily compare the vocabulary scores across groups. However, this is almost never the case, and we need to account for the variability within the groups we are interested in. 
-
-> Total variability in vocabulary score:
-> 
-> - Variability that can be attributed to differences in social class - **between group** variability 
-> 
-> - Variability attributed to factors within a group - **within group** variability 
+- Variability that can be attributed to differences in social class, also known as **between-group** variability. This is really what we're interested in.
+- Variability attributed to other factors within social class, also known as **within-group** variability. This variability is not what we are interested in and is somewhat of a nuisance factor. If everyone within a certain social class had the same vocabulary score, then we would have no within-group variability and we would be able to more easily compare the vocabulary scores across groups. However, this is almost never the case, and we need to account for the variability within the groups we are interested in. 
 
 ## Parametric ANOVA
 
-Here is a look at what the parametric (theoretical) output of an ANOVA model looks like. The first row is about the between group variability, and the second row is about the within group variability. We often refer to the first row as the "group" row, and the second row as the "error" row. Next we'll go through some of the values on the ANOVA table and describe what they mean.
-
+To understand this partitioning, let's look at the parametric (mathematical method) output of an ANOVA model from SAS. This is
 
 ```
-aov(wordsum ~ class, gss) %>%
-  tidy()
+* ANOVA for WORDSUM by GSSCLASS;
+proc anova;
+	class gssclass;
+	model wordsum = gssclass;
+run;
 ```
 
+The key output is this table, which is referred to as the ANOVA table:
 
-### Sum of squares
+![](images/sas-anova.png)
 
-Let's start with the Sum of Squares column. 
+The first row (Model) reflects the between-group variability of the vocabulary score. The second row (Error) reflects the within-group variability of the vocabulary score. And the third row (Total) reflects total variability of the vocabulary score. We often refer to the first row as the "group", or "model" row, and the second row as the "error" row. 
 
-These values measure the variability attributed to the two components: the variability in vocabulary scores explained by social class and the unexplained variability -- that is, unexplained by the explanatory variable in this particular analysis. 
+The values in the Sum of Squares column are calculated similarly to how we calculate the variance, except that they are not scaled by the sample size.
 
-The sum of these two values makes up sum of squares total, which measures the total variability in the response variable, in this case this would be the total variability of the vocabulary scores. 
+* Row #1: Sum of squares between (SSB) = $$\Sigma n_j (\bar{X}_j - \bar{X})^2$$, where $$n_j$$ is the number of observations and $$\bar{X}_j$$ is the mean value within within group $$j$$ 
+* Row #2: Sum of squares error (SSE) = $$\Sigma \Sigma (X - \bar{X}_j)^2$$
+* Row #3: Sum of squares total (SST) = $$\Sigma \Sigma (X - \bar{X})^2$$
 
-This value is calculated similarly to the variance, except that it's not scaled it by the sample size. More specifically, this is calculated as the total squared deviation from the mean of the response variable.
+See how each of these is a sum of squared deviations?
+
+The values in the Mean Square column *are* scaled, but not by sample size. They are scaled by the degrees of freedom listed for each column.
+
+* Row #1: Mean square between (MSB) = $$SSB / df_{SSB}$$ 
+* Row #2: Mean square error (MSE) = $$SSE / df_{SSE}$$
+* Row #3: Total variance (not shown) = $$SST / df_{SST}$$
+
+If the mean square value in the final row were listed, you would be able to see and confirm that it was the total variance in vocab scores within the sample.
+
+So, they reflect various versions of the total squared deviation from the mean (whichMore specifically, this is calculated as the total squared deviation from the mean of the response variable.
+
+The first two values measure the total variability attributed to (a) the variability in vocabulary scores explained by social class, and (b) the variability left unexplained by social class. The sum of these two values makes up sum of squares total, in the last row, which measures the total variability in the response variable, in this case this would be the total variability of the vocabulary scores. 
+
+
 
 One statistic not presented on the ANOVA table that might be of interest is the percentage of the variability in vocabulary scores explained by the social class variable. We can find this as the ratio of the sum of squares for class divided by the total sum of squares.  
 
