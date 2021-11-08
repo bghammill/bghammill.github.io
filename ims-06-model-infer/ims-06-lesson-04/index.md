@@ -1,121 +1,80 @@
 
-## Checking technical conditions for slope inference
+# Technical conditions for slope inference
 
-Additionally, you will consider the technical conditions that are important when using linear models to make claims about a larger population.
+We can also use mathematical methods for making inference from regression model output. But, as with any approximation-based statistical inference, there are specific conditions that need to be met. We will only be able to apply these methods if the data points are linear, independent, normally distributed, and have equal variability around the line.  These conditions are given by the linear model equation as well as spelled out using the LINE mnemonic.
 
-In the previous lesson you saw that sometimes the mathematical model was not appropriate for inferential analysis (that is, for calculating p-values and confidence intervals).  In this lesson, we'll provide details for when the mathematical model is appropriate.
-
-### What are the technical conditions?
-
-
-
-$$Y = \beta_0 + \beta_1 \cdot X + \epsilon$$
-
-$$\epsilon \sim N(0, \sigma_\epsilon)$$ 
-
-* L: __linear__ model 
-* I: __independent__ observations 
-* N: points are __normally__ distributed around the line 
-* E: __equal__ variability around the line for all values of the explanatory variable 
-
-
-```
-ggplot(lineardata, aes(x=explanatory, y=response)) + geom_point() +
-  stat_smooth(method="lm", se=FALSE)
-```
-
-Because your goal in this tutorial is to perform inferential calculations on the linear regression model, it is important that the sampling distribution for the estimated slope has the expected form.  That is, we will be able to apply our methods only if the points are linear, independent, normally distributed, and have equal variability around the line.  Note that the conditions are given by the linear model equation as well as spelled out using the LINE mnemonic.
-
+> Model: $$Y = \beta_0 + \beta_1 \cdot X + \epsilon$$, where $$\epsilon \sim N(0, \sigma_\epsilon)$$
+>
+> Conditions:
+>
+> * L: __linear__ model 
+> * I: __independent__ observations 
+> * N: points are __normally__ distributed around the line 
+> * E: __equal__ variability around the line for all values of the explanatory variable 
 
 If the sampling distribution isn't accurate, the p-values and confidence intervals that you calculate could be wrong.
 
+Apart from the assumption of independence, there are specific figures that SAS generates which are useful for assessing these conditions. Independence, of course, is only assessable by understanding how the sample and data were generated
 
-
-### Linear model: residuals
-
-
-```
-linear_lm <- augment(
-  lm(response ~ explanatory,
-     data = lineardata)
-)
-
-ggplot(linear_lm, 
-       aes(x =. fitted, 
-           y = .resid)) +
-  geom_point() +
-  geom_hline(yintercept=0)
-```
-
-
-fitted value: 
-$\hat{Y}_i = b_0 + b_1 X_i$
-
-residual:
-$e_i= Y_i - \hat{Y}_i$
-
+Let's take a look at the others conditions one by one. We need to load a few specific contrived datasets for this, along with the Starbucks data.
 
 ```
-ggplot(linear_lm, aes(x=.fitted, y=.resid)) + geom_point() +
-  geom_hline(yintercept=0)
+* Initialize this SAS session;
+%include "~/my_shared_file_links/hammi002/sasprog/run_first.sas";
+
+* Makes a working copy of needed data;
+%use_data(linear);
+%use_data(nonnormal);
+%use_data(nonlinear);
+%use_data(nonequal);
+%use_data(starbucks);
 ```
 
-The `augment` function in the **broom** package calculates the fitted and residual values for every point in the dataset.  The output of the `augment` function defaults to `.fitted` and `.resid`.
+We will be relying on a number of different plots that SAS PROC REG generates as regression diagnostics when ODS graphics are requested. We turn on this setting in the `run_first.sas` program, but in your own projects, if you aren't seeing the diagnostic graphs, issue the following command and try again: `ods graphics on;`.
 
-If the linear model is appropriate, a plot of the residuals versus the fitted values should show a non-patterned scattering of the points.  The fitted model is usually described by Roman letters (b0 and b1), whereas the population model we want to find is described by Greek letters (beta0 and beta1).
+The full panel of diagnostic graphs looks like this:
 
-The residual plot here (fitted value plotted on the x-axis, residual values plotted on the y-axis) shows a scattering of points which do not indicate any violation of the regression technical conditions.
+![](images/reg-diag.png)
 
+For each plot shown in the sections below, make sure you can locate the plot in the panel of graphs that is generated for that regression model.
 
+### Condition: Linear model
 
-### Not linear
+If the linear model is appropriate, a plot of the residuals versus the fitted values should show a non-patterned scattering of the points. Remember that we calculate the fitted value as $$\hat{Y}_i = b_0 + b_1 X_i$$ and the residual as $$e_i= Y_i - \hat{Y}_i$$. This plot is located at the top-left plot of the Fit Diagnostics output panel. 
 
-
-$$Y = \beta_0 + \beta_1 \cdot X + \epsilon$$
-
-$$\epsilon \sim N(0, \sigma_\epsilon)$$
-
-* L: linear model
-* I: independent observations
-* N: points are normally distributed around the line
-* E: equal variability around the line for all values of the explanatory variable
-
+Let's first look at the output for data that meet this condition:
 
 ```
-ggplot(nonlineardata, aes(x=explanatory, y=response)) + geom_point()
+* Regression of OUTCOME on EXPLANATORY (linear data);
+proc reg data=linear;
+	model response = explanatory;
+run;
 ```
 
-The plot here demonstrates a clear violation of the linear model.  The variables have a quadratic relationship, not a linear one!
+In fact, these data meet all the conditions, so we'll keep coming back to this output to demonstrate well-behaved data.
+
+The residual plot below from this regression—with fitted values plotted on the x-axis and residuals plotted on the y-axis—shows a scattering of points which do not indicate any violation of this technical condition.
+
+![](images/resid-normal.png)
 
 
 
-### Not linear: residuals
-
+The residual plot for truly non-linear data, however, will demonstrate a clear violation of the linear model condition.  
 
 ```
-nonlinear_lm <- augment(
-  lm(response ~ explanatory, data = nonlineardata)
-  )
-
-ggplot(nonlinear_lm, 
-       aes(x = .fitted, y = .resid)) + 
-  geom_point() +
-  geom_hline(yintercept=0)
+* Regression of OUTCOME on EXPLANATORY (non-linear data);
+proc reg data=nonlinear;
+	model response = explanatory;
+run;
 ```
 
+![](images/resid-nonnormal.png)
 
-fitted value: 
-$\hat{Y}_i = b_0 + b_1 X_i$
-
-residual:
-$e_i= Y_i - \hat{Y}_i$
-
-
-The residuals associated with the quadratic model also look curved.  For the technical conditions to hold, you need a non-patterned scattering of points.  Just like the original scatter plot, the residual plot with fitted value on the x-axis, and residual on the y-axis continues to demonstrates a violation of the linear technical condition.
+The variables have a quadratic relationship, not a linear one! For the technical conditions to hold, you need a non-patterned scattering of points. 
 
 
 
-### Not normal
+### Condition: Normally distributed
 
 
 
