@@ -221,7 +221,7 @@ Those are the basics for now.
 
 You have successfully completed this tutorial. 
 
-# [< Back to Section 6](https://bghammill.github.io/ims-06-model-infer/)
+# [< Back to Section 5](https://bghammill.github.io/ims-05-infer/)
 
 
 

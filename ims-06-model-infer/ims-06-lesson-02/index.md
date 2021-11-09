@@ -1,4 +1,4 @@
-# Statistical inference for simple regression
+# Randomization methods for simple regression
 
 So far in this class, we have used regression models (linear & logistic) to summarize the relationship between one or more explanatory variables and an outcome variable. And while this descriptive analysis of the sample data is useful, we would now like to use regression models to draw conclusions about the larger population using statistical inference. Specifically, by performing a statistical test of a regression slope, we will be able to say whether or not our sample data support the hypothesis that there is a relationship between two variables; and by estimating confidence intervals, we will be able to quantify a plausible range of values for the true slope of the linear regression line.
 
@@ -96,7 +96,7 @@ We would normally segue right into the mathematical approximation methods here, 
 
 You have successfully completed this tutorial. 
 
-# [< Back to Section 6](https://bghammill.github.io/ims-06-model-infer/)
+# [< Back to Section 5](https://bghammill.github.io/ims-05-infer/)
 
 
 
