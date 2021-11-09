@@ -176,7 +176,7 @@ This little table has pretty much everything we need for inference.
 
 First, the appropriate standard error estimates for both the intercept and slope estimates are found in the Standard Error columns. We'll use those for some manual calculations shortly.
 
-Second, there are *t*-statistics ("t Value" column) and p-values ("Pr >|t|" column) which address the null hypotheses:
+Second, there are *t*-statistics ("t Value" column) and p-values ("Pr >abs(t)" column) which address the null hypotheses:
 
 * For $$\beta_0$$, $$H_0: \beta_0 = 0$$
 * For $$\beta_1$$, $$H_0: \beta_1 = 0$$
